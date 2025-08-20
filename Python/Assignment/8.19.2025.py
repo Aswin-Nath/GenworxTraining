@@ -397,7 +397,6 @@
 
 
 # 26.Pyramid Pattern with rectangular frame 
-
 # Write a program that prints a pyramid pattern within a rectangular frame of asterisks (*). The height of the pyramid will be specified by the user, and the rectangle will encompass the pyramid, ensuring it's centered. 
 
 # Dimensions: 
@@ -498,29 +497,30 @@
 # print(n)
 
 
-days_in_month = {
-    1: ["January", 31],
-    2: ["February", 28],
-    3: ["March", 31],
-    4: ["April", 30],
-    5: ["May", 31],
-    6: ["June", 30],
-    7: ["July", 31],
-    8: ["August", 31],
-    9: ["September", 30],
-    10: ["October", 31],
-    11: ["November", 30],
-    12: ["December", 31]
-}
+# days_in_month = {
+#     1: ["January", 31],
+#     2: ["February", 28],
+#     3: ["March", 31],
+#     4: ["April", 30],
+#     5: ["May", 31],
+#     6: ["June", 30],
+#     7: ["July", 31],
+#     8: ["August", 31],
+#     9: ["September", 30],
+#     10: ["October", 31],
+#     11: ["November", 30],
+#     12: ["December", 31]
+# }
 
 
+# year,month=[int(i) for i in input().split()]
+# prefix=f"{days_in_month[month][0]} {year} has "
+# if month==2:
+#     if (year%400==0) or (year%4==0 and year%100!=0):
+#         print(prefix,days_in_month[month][1]+1,"days")
+#     else:
+#         print(prefix,days_in_month[month][1],"days")
+# else:
+#     print(prefix,days_in_month[month][1],"days")
 
-year,month=[int(i) for i in input().split()]
-prefix=f"{days_in_month[month][0]} {year} has "
-if month==2:
-    if (year%400==0) or (year%4==0 and year%100!=0):
-        print(prefix,days_in_month[month][1]+1,"days")
-    else:
-        print(prefix,days_in_month[month][1],"days")
-else:
-    print(prefix,days_in_month[month][1],"days")
+
