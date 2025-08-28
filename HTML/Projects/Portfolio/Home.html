@@ -2,6 +2,7 @@
 
 <html>
     <head>
+        <link rel="stylesheet" href="style.css">
         <title>
             Aswinnath's Portfolio
         </title>
@@ -11,10 +12,18 @@
             <center>
                 <h1>Welcome to my portofolio website</h1>
             </center>
-            <hr>
         </header>
+        <nav>
+            <a href="#about_me">About me</a>
+            <a href="#internships">Internships</a>
+            <a href="#skills">Skills and Tech stack</a>
+            <a href="#projectts">Projects</a>
+            <a href="#cp">Competetive Programming</a>
+            <a href="#contact_me">Contact me</a>
+        </nav>
+        <hr>
         <main>
-            <div>
+            <div id="about_me">
                     <center>
                     <h1>
                         About me
@@ -23,26 +32,29 @@
                 <div>
                     <img src="./Images/linkedin_dp.jpg" width="120px" height="120px">
                 </div>
-                <div>
-                        <h3>I'm a Final year student from CIT Chennai in the department of AI & Data Science.</h3>
-                        <h3>E-mail:aswinnathte125@gmail.com</h3>
-                        <h3>Contact Number:+91-8610476491</h3>
-                        <h3>Location:Chennai,TamilNadu</h3>
-                        <button>
+                <div class="about_me_content">
+                        <h4>I'm a Final year student from CIT Chennai in the department of AI & Data Science.</h4>
+                        <div class="about_me_button">
+                            <button><a target="_blank" href="https://mail.google.com/mail/?view=cm&to=aswinnathte125@gmail.com">Mail me</a></button>
+                            <button><a href="tel:+918610476491">Call me</a></button>
+                            
+                        </div>
+                        <h4>Location:Chennai,TamilNadu</h4>
+                        <button class="resume_button">
                                 <a href="https://drive.google.com/file/d/1K0lZlX3iIgArXL5ZCVQeFYt4P9o4Thxj/view?usp=sharing" target="_blank">Click here for viewing Resume</a>
                         </button>
 
                 </div>
             </div>
             <hr>
-            <div>
+            <div id="internships">
                 <center>
                     <h1>Internships</h1>
                 </center>
                 <div>
                     <p>
                         <h3>
-                            Developer Intern, Cognizant – Chennai Nov 2023 - Mar 2024
+                            Developer Intern, Cognizant – Chennai (Nov 2023 - Mar 2024)
                         </h3>
                     </p>
                     <p>
@@ -58,78 +70,56 @@
                 </div>
             </div>   
             <hr>
-            <div>
+            <div id="skills">
                 <center>
-                    <h1>Skills and Tech stack</h1>
-                    <table border="1">
-                    <tr>
-                        <td>Skills</td>
-                        <td>
-                            <ul>
-                                <li>
-                                    Frontend Developing
-                                </li>
-                                <li>
-                                    Backend and API Developing
-                                </li>
-                                <li>
-                                    Software Engineering
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Tech Stack
-                        </td>
-                        <td>
-                            <ul>
-                                <li>
-                                    Languages
-                                    <ul>
-                                        <li>Python</li>
-                                        <li>JavaScript</li>
-                                        <li>TypeScript</li>
-                                        <li>Java</li>
-                                    </ul>
-                                </li>
-                                <li>Frameworks
-                                    <ul>
-                                        <li>React</li>
-                                        <li>Angular</li>
-                                        <li>Flask</li>
-                                        <li>FastApi</li>
-                                        <li>Django</li>
-                                        <li>Express.js</li>
-                                        
-                                    </ul>
-                                </li>
-
-                            </ul>
-                        </td>
-                    </tr>
-                </table>
+                    <h1>Tech stack</h1>
                 </center>
+
+                    <br>
+                    <div>
+                        <div>
+                            <h2>
+                                Languages
+                            </h2>
+                            <div class="Languages-images">
+                                <img src="./Images/python.png">
+                                <img src="./Images/js.png">
+                                <img src="./Images/java.webp">
+                                <img src="./Images/cpp.png">
+                            </div>
+                        </div>
+                        <div>
+                            <h2>
+                                Frameworks
+                            </h2>
+                            <div class="Frameworks-images">
+                                <img src="./Images/flask.jpg">
+                                <img src="./Images/django.jpg">
+                                <img src="./Images/react.png">
+                            </div>
+                        </div>
+                    </div>
 
                 
             </div>
             <hr>  
-            <div>
+            <div id="project">
                 <center>
                     <h1>Projects</h1>
                 </center>
-                <table border="1">
+                <br>
+                <table border="1" class="project_table">
                     <tr>
                         <th>Name</th>
                         <th>Explanation</th>
                         <th>Repo Link</th>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="project_name">
                             Recipepedia
                         </td>
                         <td>
-                                
+                            <ul>
                                 <li>
                                     Created a dynamic recipe-sharing platform where users can explore, upload, and interact with a diverse collection of recipes,
                                     featuring personalized recommendations and interactive engagement through comments, likes, and reviews.
@@ -146,7 +136,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="project_name">
                             Rento
                         </td>
                         <td>
@@ -169,7 +159,9 @@ search speed, minimize database latency, and ensure reliable data retrieval for 
                         </td>
                     </tr>
                     <tr>
-                        <td>Finance for Organizations</td>
+                        <td class="project_name">
+                            Finance for Organizations
+                        </td>
                         <td>
                             <ul>
                                 <li>
@@ -187,16 +179,17 @@ search speed, minimize database latency, and ensure reliable data retrieval for 
                 </table>
             </div>     
             <hr>
-                <div>
+                <div id="cp" class="competetive_programming">
                 <center>
                     <h1>
                     Competetive Programming
                     </h1>
-                    
                 </center>
+
+                <br>
                 <center>
                 <div>
-                    <table border="1">
+                    <table class="cp_table" border="1">
                         <tr>
                             <th>Platform name</th>
                             <th>Account Link</th>
@@ -222,23 +215,30 @@ search speed, minimize database latency, and ensure reliable data retrieval for 
                 </center>
             </div>
             <hr>
-            <div>
+            <div id="contact_me">
                 <center>
                     <h1>Contact me</h1>
-                    <form>
-                        <p><input type="text" placeholder=" Your Name"></p>
-                        <p><input type="email" placeholder="Your E-mail"></p>
-                        <textarea placeholder="Your Message" rows="4" cols="40"></textarea>
-                        <p><input type="submit" value="Send message"></p>
+                    <form class="form-instance">
+                        <div class="form-row">
+                            <label>
+                                Your Name: <input type="text">
+                            </label>
+                        </div>
+                        <div class="form-row">
+                            <label>
+                                Your E-mail:<input type="email">
+                            </label>
+                        </div>
+                        <div class="form-row">
+                             <textarea placeholder="Your Message" rows="4" cols="40"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <input type="submit" value="Send message">
+                        </div>
                     </form>
                 </center>
+
             </div>  
-            <hr> 
-            <div>
-                <center>
-                    <h1>Learning journey time-line</h1>
-                </center>
-            </div>
         </main>
     </body>
 </html>

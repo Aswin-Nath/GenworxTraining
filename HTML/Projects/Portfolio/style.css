@@ -1,0 +1,328 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --text-color: #2c3e50;
+    --background-color: #ecf0f1;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+h1 {
+    display: inline-block;
+    border-radius: 10px;
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 10px 20px;
+    margin: 20px 0;
+    transition: transform 0.3s ease;
+}
+
+h1:hover {
+    transform: scale(1.05);
+}
+
+a {
+    text-decoration: none;
+    color: var(--secondary-color);
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+
+
+.about_me_content {
+    color: var(--text-color);
+    font-size: 18px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.project_table {
+    border: 2px solid var(--secondary-color);
+    border-radius: 10px;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.project_table td, .project_table th {
+    padding: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.project_table tr:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+}
+
+.project_table li {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.project_table ul {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    padding-left: 20px;
+}
+
+.project_name {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--secondary-color);
+}
+
+.competetive_programming {
+    font-size: 18px;
+}
+
+.about_me_button {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    margin: 20px 0;
+}
+
+.about_me_button button {
+    border-radius: 25px;
+    width: 120px;
+    padding: 10px;
+    border: none;
+    background-color: var(--secondary-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.about_me_button button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: var(--accent-color);
+}
+
+.about_me_button button a {
+    color: white;
+}
+
+.resume_button {
+    display: inline-block;
+    border-radius: 25px;
+    background-color: var(--secondary-color);
+    padding: 10px 20px;
+    margin: 20px 0;
+    transition: all 0.3s ease;
+}
+
+.resume_button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: var(--accent-color);
+}
+
+.resume_button a {
+    color: white;
+    font-weight: bold;
+}
+
+nav {
+    justify-content: space-evenly;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    margin: 20px 10px;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 10px;
+    z-index: 1000;
+}
+
+nav a {
+    padding: 12px 20px;
+    font-size: clamp(14px, 2vw, 18px);
+    color: white;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    background-color: var(--secondary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+
+#internships {
+    font-size: 18px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#internships ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+#internships li {
+    position: relative;
+    padding-left: 25px;
+    margin: 10px 0;
+}
+
+#internships li::before {
+    content: "•";
+    color: var(--secondary-color);
+    font-size: 24px;
+    position: absolute;
+    left: 0;
+}
+
+.form-instance {
+    padding: 30px;
+    border: 2px solid var(--secondary-color);
+    margin: 20px auto;
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    border-radius: 15px;
+    flex-direction: column;
+    row-gap: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+.form-instance div {
+    margin-bottom: 15px;
+}
+
+.form-instance input[type="text"],
+.form-instance input[type="email"],
+.form-instance textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.form-instance input[type="text"]:focus,
+.form-instance input[type="email"]:focus,
+.form-instance textarea:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+}
+
+.form-instance textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-instance input[type="submit"] {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.form-instance input[type="submit"]:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cp_table {
+    width: 100%;
+    max-width: 1000px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cp_table th {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px;
+    text-align: left;
+}
+
+.cp_table td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.cp_table tr:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+}
+
+.Languages-images, .Frameworks-images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.Languages-images img, .Frameworks-images img {
+    width: 150px;
+    height: 150px;
+    border-radius: 15px;
+    border: 2px solid var(--secondary-color);
+    transition: all 0.3s ease;
+    object-fit: cover;
+}
+
+.Languages-images img:hover, .Frameworks-images img:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-color: var(--accent-color);
+}
+
+/* Add responsive design */
+@media (max-width: 768px) {
+    .Languages-images img, .Frameworks-images img {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .form-instance {
+        width: 90%;
+        padding: 20px;
+    }
+    
+    .project_table {
+        font-size: 14px;
+    }
+    
+    nav {
+        margin: 10px 5px;
+    }
+    
+    nav a {
+        padding: 8px 12px;
+    }
+}
+

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        .flex-parent{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            column-gap: 10px;
+            width: 600px;
+            border: 5px solid red;
+        }
+        .flex-item{
+            color: blue;
+        }
+        .flex-item:nth-child(odd){
+            color: red;
+        }
+        .background-holder{
+            background-image: url("cat.jpg");
+            background-repeat: repeat-y;
+            color: red;
+            display:  block;
+            background-attachment: fixed;
+            background-position: right top;
+        }
+        .floater img{
+            float: right;
+        }
+        .float-clear{
+            display: flex;
+            flex-direction: column;
+        }
+        .scroll-overflow{
+            width: 300px;
+            overflow: scroll;
+            height: 100px;
+        }
+        .hidden-overflow{
+            width: 300px;
+            overflow: hidden;
+            height: 200px;
+        }
+
+        .rotate-cat:hover{
+            transition: 10s;
+
+        }
+        @keyframes rotate-cats{
+            from{
+                opacity: 0.5;
+            }
+            to{
+                opacity: 1;
+            }
+        }
+        .menu_bar{ 
+            background-color: red;
+            display: flex;
+            justify-content: space-evenly;
+            column-gap: 10px;
+
+        }
+        .menu-elements{
+            font-size: 100px;
+        }
+        @media screen and (max-width:480px){
+            .menu_bar{
+                background-color: yellow;
+                flex-direction: column;
+            }
+
+        }
+    </style>
+    <meta charset="UTF-81">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head> 
+<body>
+    
+
+
+<div class="flex-parent">
+
+        <h1 class="flex-item">
+            Aswinnath
+        </h1>
+        <h1 class="flex-item">
+            Aswinnath1
+        </h1>
+        <h1 class="flex-item">
+            Aswinnath2
+        </h1>
+        <h1 class="flex-item">
+            Aswinnath3
+        </h1>
+        <h1 class="flex-item">
+            Aswinnath4
+        </h1>
+        <h1 class="flex-item">
+            Aswinnath5
+        </h1>
+        <h1 class="flex-item">
+            Aswinnath6
+        </h1>
+        <h1 class="flex-item">
+            Aswinnath7
+        </h1>
+        <h1 class="flex-item">
+            Aswinnath8
+        </h1>
+    </div>
+    <hr>
+    <div class="background-holder">
+        <h1>Hello</h1>
+        <h1>Hello</h1>        
+        <h1>Hello</h1>        
+        <h1>Hello</h1>        
+          <h1>Hello</h1>        
+
+        <h1>Hello</h1>        
+          <h1>Hello</h1>        
+
+        <h1>Hello</h1>        
+          <h1>Hello</h1>        
+
+        <h1>Hello</h1>        
+          <h1>Hello</h1>        
+
+        <h1>Hello</h1>        
+          <h1>Hello</h1>        
+
+        <h1>Hello</h1>        
+          <h1>Hello</h1>        
+
+    </div>
+    <hr>
+    <div class="float-clear">
+        <div class="floater">
+            <img src="cat.jpg">
+            <p>
+                Hello
+            </p>
+        </div>
+        
+        <div class="clearer">
+            <img src="cat.jpg">
+            <p style="clear:left">
+                Hellow
+            </p>
+        </div>
+        <div>
+
+        </div>
+    </div>
+    <hr>
+    <div>
+        <div class="scroll-overflow">
+            <h1>
+                The rose is a type of flowering shrub. Its name comes from the Latin word Rosa. The
+flowers of the rose grow in many different colors, from the well-known red rose or
+yellow rose and sometimes white or purple rose. Roses belong to the family of plants
+called Rosaceae.
+The rose is a type of flowering shrub. Its name comes from the Latin word Rosa. The
+flowers of the rose grow in many different colors, from the well-known red rose or
+yellow rose and sometimes white or purple rose. Roses belong to the family of plants
+called Rosaceae.
+The rose is a type of flowering shrub. Its name comes from the Latin word Rosa. The
+flowers of the rose grow in many different colors, from the well-known red rose or
+yellow rose and sometimes white or purple rose. Roses belong to the family of plants
+called Rosaceae.
+The rose is a type of flowering shrub. Its name comes from the Latin word Rosa. The
+flowers of the rose grow in many different colors, from the well-known red rose or
+yellow rose and sometimes white or purple rose. Roses belong to the family of plants
+called Rosaceae.
+            </h1>
+        </div>
+        <div class="hidden-overflow">
+            <h1>
+                The rose is a type of flowering shrub. Its name comes from the Latin word Rosa. The
+flowers of the rose grow in many different colors, from the well-known red rose or
+yellow rose and sometimes white or purple rose. Roses belong to the family of plants
+called Rosaceae.
+            </h1>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <div class="rotate-cat">
+            <h1>Cat</h1>
+            <img src="cat.jpg">
+        </div>
+    </div>
+    <hr>
+    <div class="menu_bar">
+        <div class="menu-elements">A</div>
+        <div class="menu-elements">B</div>
+        <div class="menu-elements">C</div>
+    </div>
+</body>
+</html>
