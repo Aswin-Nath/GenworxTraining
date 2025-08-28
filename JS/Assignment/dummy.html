@@ -1,0 +1,34 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+        </head>
+        <body>
+        <script>
+            let current_state = "Red"; 
+            let cycles = 0; 
+            while (true) {
+                switch (current_state) {
+                    case "Red":
+                        current_state = "Green";
+                        break;
+                    case "Green":
+                        current_state = "Yellow";
+                        break;
+                    case "Yellow":
+                        current_state = "Red";
+                        cycles++;
+                        break;
+                }
+                alert(`Current state: ${current_state}`);
+                if (cycles === 5) {
+                    break;
+                }
+            }
+            alert("Stopped after 5 cycles");
+        </script>
+
+        </body>
+        </html>
