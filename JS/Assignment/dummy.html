@@ -7,27 +7,20 @@
         </head>
         <body>
         <script>
-            let current_state = "Red"; 
-            let cycles = 0; 
-            while (true) {
-                switch (current_state) {
-                    case "Red":
-                        current_state = "Green";
-                        break;
-                    case "Green":
-                        current_state = "Yellow";
-                        break;
-                    case "Yellow":
-                        current_state = "Red";
-                        cycles++;
-                        break;
+            var arr=prompt("Give array: ").split(" ");
+            var n=arr.length;
+            var seen=new HashMap();
+            seen[0]=1;
+            var cur=0;
+            for(let i=0;i<n;i++){
+                cur+=parseInt(arr[i]);
+                if(seen.has(cur)){
+                    ans+=seen[cur];
                 }
-                alert(`Current state: ${current_state}`);
-                if (cycles === 5) {
-                    break;
-                }
+                seen[cur]+=1;
             }
-            alert("Stopped after 5 cycles");
+            var ans=0;
+            alert(ans);
         </script>
 
         </body>
