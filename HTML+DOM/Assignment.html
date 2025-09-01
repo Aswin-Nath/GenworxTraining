@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>User Registration</title>
+  <style>
+    form { display: flex; flex-direction: column; row-gap: 8px}
+    label { display: flex; flex-direction: column}
+    .error { color: red; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <h2>User Registration</h2>
+  <form id="forms" onsubmit="return validateForm(event)">
+    <label>Enter your name:<input id="name" type="text"><span class="error" id="err-name"></span></label>
+    <label>Enter your email:<input id="email" type="email"><span class="error" id="err-email"></span></label>
+    <label>Enter your age:<input id="age" type="number"><span class="error" id="err-age"></span></label>
+    <label>Enter your password:<input id="password" type="password"><span class="error" id="err-password"></span></label>
+    <label>Confirm password:<input id="confirm-password" type="password"><span class="error" id="err-cf-password"></span></label>
+    <label>
+      Gender:
+      <div>
+        <input name="gender" id="male" type="radio" value="Male"> Male
+        <input name="gender" id="female" type="radio" value="Female"> Female
+      </div>
+      <span class="error" id="err-gender"></span>
+    </label>
+
+    <label>
+      Interests:
+      <div>
+        <input type="checkbox" name="interest" value="Sports"> Sports
+        <input type="checkbox" name="interest" value="Music"> Music
+        <input type="checkbox" name="interest" value="Coding"> Coding
+      </div>
+      <span class="error" id="err-interest"></span>
+    </label>
+
+    <label>
+      Country:
+      <select id="country">
+        <option>Default</option>
+        <option>India</option>
+        <option>Australia</option>
+        <option>USA</option>
+      </select>
+      <span class="error" id="err-country"></span>
+    </label>
+    <label>Date of Birth:<input id="date" type="date"><span class="error" id="err-date"></span></label>
+    <label>Upload Profile Picture:<input id="image" type="file" accept="image/jpg,image/png"><span class="error" id="err-image"></span></label>
+    <label>Bio:<textarea id="bio" placeholder="Bio"></textarea><span class="error" id="err-bio"></span></label>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    function validateForm(event) {
+      event.preventDefault();
+      let isValid = true;
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const age = parseInt(document.getElementById("age").value.trim());
+      const password = document.getElementById("password").value;
+      const cfPassword = document.getElementById("confirm-password").value;
+      const gender = document.querySelector('input[name="gender"]:checked');
+      const interests = document.querySelectorAll('input[name="interest"]:checked');
+      const country = document.getElementById("country").value;
+      const dob = document.getElementById("date").value;
+      const image = document.getElementById("image").files[0];
+      const bio = document.getElementById("bio").value.trim();
+
+      document.querySelectorAll(".error").forEach(e => e.innerText = "");
+
+      if (!name) {
+        document.getElementById("err-name").innerText = "Name cannot be empty";
+        isValid = false;
+      }
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        document.getElementById("err-email").innerText = "Invalid email format";
+        isValid = false;
+      }
+      if (isNaN(age) || age < 18 || age > 60) {
+        document.getElementById("err-age").innerText = "Age must be between 18 and 60";
+        isValid = false;
+      }
+      const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
+      if (!passwordPattern.test(password)) {
+        document.getElementById("err-password").innerText = "Password must be 6+ chars, include 1 number & 1 uppercase";
+        isValid = false;
+      }
+      if (password !== cfPassword) {
+        document.getElementById("err-cf-password").innerText = "Passwords do not match";
+        isValid = false;
+      }
+      if (!gender) {
+        document.getElementById("err-gender").innerText = "Please select a gender";
+        isValid = false;
+      }
+      if (interests.length === 0) {
+        document.getElementById("err-interest").innerText = "Select at least one interest";
+        isValid = false;
+      }
+      if (country === "Default") {
+        document.getElementById("err-country").innerText = "Please select a country";
+        isValid = false;
+      }
+      if (!dob) {
+        document.getElementById("err-date").innerText = "Please select a DOB";
+        isValid = false;
+      } else {
+        const birthDate = new Date(dob);
+        const today = new Date();
+        const ageCalc = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        const realAge = (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) ? ageCalc - 1 : ageCalc;
+        if (realAge < 18) {
+          document.getElementById("err-date").innerText = "You must be 18+";
+          isValid = false;
+        }
+      }
+      if (!image) {
+        document.getElementById("err-image").innerText = "Please upload a profile picture";
+        isValid = false;
+      } else if (!(image.type === "image/jpeg" || image.type === "image/png")) {
+        document.getElementById("err-image").innerText = "Only JPG or PNG allowed";
+        isValid = false;
+      } else if (image.size > 2 * 1024 * 1024) {
+        document.getElementById("err-image").innerText = "Image must be less than 2MB";
+        isValid = false;
+      }
+      if (bio.length > 200) {
+        document.getElementById("err-bio").innerText = "Bio cannot exceed 200 characters";
+        isValid = false;
+      }
+      if (isValid) {
+        alert("Form submitted successfully!");
+      }
+      return isValid;
+    }
+  </script>
+</body>
+</html>
