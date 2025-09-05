@@ -1,0 +1,23 @@
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
+    .table_
+    {
+        @apply grid grid-cols-1 bg-purple-900  gap-x-[10px] gap-y-[10px] h-[1100px] w-[300px] md:h-[600px] w-[300px] md:grid-cols-2 lg:grid-cols-4 ml-[10px]  mt-[10px] border-[4px] border-black rounded-md
+    }
+    .table_ h1
+    {
+        @apply shadow-lg text-6xl sm:text-5xl md:text-3xl bg-secondary text-center rounded-md m-[10px]
+    } 
+    .slide_in
+    {
+        @apply bg-primary
+    }
+
+    .table_ h1:hover
+    {
+        @apply bg-secondary
+    }
+
+

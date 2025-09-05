@@ -1,0 +1,65 @@
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Document</title>  
+    <link href="./output.css" rel="stylesheet">
+</head>  
+<body>
+    <script>
+        const toggle_=()=>{
+            console.log("ok");
+            var element=document.getElementById("slide_bar");
+            var value=element.style.display;
+            console.log(element.style);
+            var button_=document.getElementsByTagName("button")[0];
+            var button_value=button_.textContent;
+            if(button_value=="Slide in"){
+                button_.textContent="Slide out";
+            }
+            else{
+                button_.textContent="Slide in";
+            }
+            if(value!="none"){
+                element.style.display="none";
+            }
+            else{
+                element.style.display="flex";
+            }
+        }
+    </script>
+    <div class="flex flex-row h-screen">
+        <button class="slide_in" onclick="toggle_()">
+            Slide in
+        </button>
+        <div id="slide_bar" class="p-[10px] bg-blue-100 flex flex-col gap-[10px] border-black">  
+            <div class="rounded-lg pl-[5px] sm:pl-[0px] md:pl-[5px] text-center border-[2px] border-black">  
+                <h1>Content 1</h1>  
+            </div>  
+            <div class="rounded-lg pl-[5px] sm:pl-[0px] md:pl-[5px] text-center border-[2px] border-black">  
+                <h1>Content 2</h1> 
+            </div>  
+            <div class="rounded-lg pl-[5px] sm:pl-[0px] md:pl-[5px] text-center border-[2px] border-black">  
+                <h1>Content 3</h1>  
+            </div>  
+            <div class="rounded-lg pl-[5px] sm:pl-[0px] md:pl-[5px] text-center border-[2px] border-black">  
+                <h1>Content 4</h1>  
+            </div>
+        </div>
+        <div class="table_"> 
+            <h1>1</h1>
+            <h1>2</h1> 
+            <h1>1</h1> 
+            <h1>2</h1> 
+            <h1>1</h1> 
+            <h1>2</h1> 
+            <h1>1</h1> 
+            <h1>2</h1> 
+            <h1>1</h1> 
+            <h1>2</h1>
+            <h1>1</h1>
+            <h1>2</h1> 
+        </div>  
+    </div>     
+</body>  
+</html> 
