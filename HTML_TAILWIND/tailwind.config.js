@@ -1,18 +1,22 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode:"class",
-  content: [
-    "./*.html"
-  ],
+  darkMode: "class",
+  content: ["./*.html", "./src/**/*.js"],
   theme: {
     extend: {
-      screens:{
-        "xs":"200px","sm":"400px","md":"700px","lg":"1000px"
+      colors: {
+        primary: "#4F46E5",
+        secondary: "#F59E0B",
+        accent: "#10B981",
       },
-      colors:{
-        "primary":"red","secondary":"yellow","ternary":"orange"
-      }
+      screens: {
+        xs: "400px",
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+      },
     },
   },
   plugins: [],
-}
+};

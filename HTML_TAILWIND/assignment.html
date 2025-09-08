@@ -1,65 +1,63 @@
-<html lang="en">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Document</title>  
-    <link href="./output.css" rel="stylesheet">
-</head>  
-<body>
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Dashboard</title>
+  <link href="./output.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
     <script>
-        const toggle_=()=>{
-            console.log("ok");
-            var element=document.getElementById("slide_bar");
-            var value=element.style.display;
-            console.log(element.style);
-            var button_=document.getElementsByTagName("button")[0];
-            var button_value=button_.textContent;
-            if(button_value=="Slide in"){
-                button_.textContent="Slide out";
+        const call_=()=>{
+            var content=document.getElementsByTagName("button")[0];
+            if(content.textContent!="Toggle Dark Mode"){
+                document.documentElement.classList.remove("dark");
+                content.textContent="Toggle Dark Mode";
             }
             else{
-                button_.textContent="Slide in";
-            }
-            if(value!="none"){
-                element.style.display="none";
-            }
-            else{
-                element.style.display="flex";
+                document.documentElement.classList.add("dark");
+                content.textContent="Toggle Light Mode";
             }
         }
     </script>
-    <div class="flex flex-row h-screen">
-        <button class="slide_in" onclick="toggle_()">
-            Slide in
-        </button>
-        <div id="slide_bar" class="p-[10px] bg-blue-100 flex flex-col gap-[10px] border-black">  
-            <div class="rounded-lg pl-[5px] sm:pl-[0px] md:pl-[5px] text-center border-[2px] border-black">  
-                <h1>Content 1</h1>  
-            </div>  
-            <div class="rounded-lg pl-[5px] sm:pl-[0px] md:pl-[5px] text-center border-[2px] border-black">  
-                <h1>Content 2</h1> 
-            </div>  
-            <div class="rounded-lg pl-[5px] sm:pl-[0px] md:pl-[5px] text-center border-[2px] border-black">  
-                <h1>Content 3</h1>  
-            </div>  
-            <div class="rounded-lg pl-[5px] sm:pl-[0px] md:pl-[5px] text-center border-[2px] border-black">  
-                <h1>Content 4</h1>  
-            </div>
+  <header class="navbar">
+    <h1 class="text-xl text-black dark:text-white font-bold">Dashboard</h1>
+    <button onclick="call_()" id="darkModeToggle" class="dark-toggle">Toggle Dark Mode</button>
+  </header>
+  <div class="flex">
+    <aside class="sidebar hidden md:block">
+      <nav class="flex flex-col">
+        <a href="#">Home</a>
+        <a href="#">Analytics</a>
+        <a href="#">Settings</a>
+      </nav>
+    </aside>
+    <main class="flex-1 p-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+        <div class="card">Card 1</div>
+        <div class="card">Card 2</div>
+        <div class="card">Card 3</div>
+        <div class="card">Card 4</div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2">
+          <div class="card">
+            <h2 class="text-xl font-semibold mb-2">Sales Chart</h2>
+            <div class="chart">Chart Placeholder</div>
+          </div>
         </div>
-        <div class="table_"> 
-            <h1>1</h1>
-            <h1>2</h1> 
-            <h1>1</h1> 
-            <h1>2</h1> 
-            <h1>1</h1> 
-            <h1>2</h1> 
-            <h1>1</h1> 
-            <h1>2</h1> 
-            <h1>1</h1> 
-            <h1>2</h1>
-            <h1>1</h1>
-            <h1>2</h1> 
-        </div>  
-    </div>     
-</body>  
-</html> 
+        <div>
+          <div class="card">
+            <h2 class="text-xl font-semibold mb-2">Recent Activity</h2>
+            <div class="flex flex-col gap-2">
+              <div class="activity-item">User A logged in</div>
+              <div class="activity-item">User B made a purchase</div>
+              <div class="activity-item">User C updated profile</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

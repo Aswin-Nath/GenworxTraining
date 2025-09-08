@@ -1,23 +1,25 @@
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-    .table_
-    {
-        @apply grid grid-cols-1 bg-purple-900  gap-x-[10px] gap-y-[10px] h-[1100px] w-[300px] md:h-[600px] w-[300px] md:grid-cols-2 lg:grid-cols-4 ml-[10px]  mt-[10px] border-[4px] border-black rounded-md
-    }
-    .table_ h1
-    {
-        @apply shadow-lg text-6xl sm:text-5xl md:text-3xl bg-secondary text-center rounded-md m-[10px]
-    } 
-    .slide_in
-    {
-        @apply bg-primary
-    }
-
-    .table_ h1:hover
-    {
-        @apply bg-secondary
-    }
-
-
+.navbar {
+  @apply flex justify-between text-white;
+}
+.sidebar {
+  @apply bg-white dark:bg-gray-800 w-64 p-4;
+}
+.card {
+  @apply bg-white dark:bg-gray-700;
+}
+.chart {
+  @apply bg-gray-200 dark:bg-gray-600 flex;
+}
+.activity-item {
+  @apply flex p-2 hover:bg-gray-100 dark:hover:bg-gray-70 transition-colors;
+}
+.dark-toggle {
+  @apply bg-secondary text-white hover:bg-secondary/80;
+}
+nav a{
+   @apply p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700
+}

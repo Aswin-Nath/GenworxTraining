@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="p-10 flex flex-col items-center gap-y-[10px]">
+        <!-- input form -->
+        <div class="rounded-lg border-[2px] border-black">
+            <div class="p-2 flex flex-col gap-y-[30px] items-center">
+                <div class="grid grid-cols-1 gap-x-[10px] gap-y-[10px]">
+                    <input placeholder="First Name" class="w-[400px] font-bold h-[50px] rounded-md border-[2px] border-black text-center">
+                    <input class="w-[400px] font-bold h-[50px] rounded-md border-[2px] border-black text-center" placeholder="Last name">
+                    <input class="w-[400px] font-bold h-[50px] rounded-md border-[2px] border-black text-center" placeholder="Enter mail">
+                    <input class="w-[400px] font-bold h-[50px] rounded-md border-[2px] border-black text-center"  type="date" placeholder="Enter your DOB">
+                    <input class="w-[400px] font-bold h-[50px] rounded-md border-[2px] border-black text-center" placeholder="Enter your password" type="password">
+                    <input class="w-[400px] font-bold h-[50px] rounded-md border-[2px] border-black text-center" placeholder="Confirm Password" type="password"> 
+                </div>
+                <button onclick="verify()" class="bg-red-500 font-extrabold rounded-lg w-[200px] h-[40px] text-white">Signup</button>
+            </div>
+    </div>
+    <script>
+        const verify=()=>{
+            var Firstname=document.getElementsByTagName("input")[0].value;
+            var Lastname=document.getElementsByTagName("input")[1].value;
+            var email=document.getElementsByTagName("input")[2].value;
+            var date=document.getElementsByTagName("input")[3].value;
+            var password=document.getElementsByTagName("input")[4].value;
+            var confirm_password=document.getElementsByTagName("input")[5].value;
+            if(password.length<8){
+                return alert("password length should be atleast 8");
+            }
+            
+            console.log(Firstname,Lastname,email,date,password,confirm_password);
+        }
+    </script>
+</body>
+</html>
+
+<!-- testcases
+
+Password Should contain {Uppercase,Lowercase,number,Special character{@,#,$},len>=8,should not contain your name}
+Both the 10th and 12th percentage should be a number and don’t include % -->
