@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.signup-container {
+  @apply bg-white w-full max-w-md rounded-md shadow-md overflow-hidden;
+}
+
+.topbar {
+  @apply bg-gray-200 h-10 w-full;
+}
+
+
+.logo {
+  @apply  px-6 py-2 mb-2 font-bold ;
+  display: inline-block,
+}
+
+.title {
+  @apply text-xl font-semibold text-center;
+}
+
+.signup_div{
+  @apply mt-[30px]
+}
+
+.form {
+  @apply flex flex-col space-y-3 px-6 pb-6;
+}
+
+.label {
+  @apply text-sm font-medium;
+}
+
+.input {
+  @apply w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500;
+}
+
+.btn {
+  @apply w-full bg-black text-white py-2 rounded-md mt-2 hover:bg-gray-800;
+}
+
+.link {
+  @apply text-indigo-600 hover:underline;
+}

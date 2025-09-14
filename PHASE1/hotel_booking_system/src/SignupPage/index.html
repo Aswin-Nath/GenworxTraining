@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign up Page</title>
+  <link href="../../dist/SignupPage/style.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 flex justify-center items-center min-h-screen">
+  <div class="signup-container">
+    <!-- Grey Top Bar -->
+    <div class="topbar">
+      <div class="logo">Logo</div>
+    </div>
+    <div class="signup_div">
+      <h2 class="title">Sign up</h2>
+      <form id="signupForm" class="form" novalidate>
+        
+        <label class="label">Name<span class="text-red-500">*</span></label>
+        <input type="text" name="name" placeholder="Enter your name" class="input">
+
+        <label class="label">Gender<span class="text-red-500">*</span></label>
+        <select id="genderSelect" name="gender" class="input">
+          <option value="">Choose your gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <!-- Extra input for "Other" gender -->
+        <input 
+          type="text" 
+          id="otherGenderInput" 
+          name="otherGender" 
+          placeholder="Please specify" 
+          class="input hidden"
+        >
+
+        <label class="label">Provide your DOB<span class="text-red-500">*</span></label>
+        <input type="date" name="dob" class="input">
+
+        <label class="label">Email<span class="text-red-500">*</span></label>
+        <input type="email" name="email" placeholder="Enter your email" class="input">
+
+        <label class="label">Password<span class="text-red-500">*</span></label>
+        <input type="password" name="password" placeholder="Enter your password" class="input">
+
+        <button type="submit" class="btn">Create Account</button>
+
+        <p class="text-sm text-center mt-2">Already have an account?
+          <a href="../LoginPage/index.html" class="link">Login</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("signupForm");
+    const genderSelect = document.getElementById("genderSelect");
+    const otherGenderInput = document.getElementById("otherGenderInput");
+
+    // Show extra input if "Other" is selected
+    genderSelect.addEventListener("change", () => {
+      if (genderSelect.value === "Other") {
+        otherGenderInput.classList.remove("hidden");
+      } else {
+        otherGenderInput.classList.add("hidden");
+        otherGenderInput.value = "";
+      }
+    });
+
+    // Form validation
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Remove previous error messages
+      form.querySelectorAll(".error-msg").forEach(el => el.remove());
+
+      let isValid = true;
+
+      form.querySelectorAll(".input").forEach(input => {
+        // Required fields check (by label *)
+        if (input.previousElementSibling?.innerText.includes("*") && !input.value.trim()) {
+          isValid = false;
+          showError(input, "This field is required");
+        }
+
+        // Email validation
+        if (input.type === "email" && input.value.trim() !== "") {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(input.value)) {
+            isValid = false;
+            showError(input, "Enter a valid email address");
+          }
+        }
+      });
+
+      if (isValid) {
+        alert("Form submitted successfully!");
+        form.reset();
+        otherGenderInput.classList.add("hidden");
+      }
+    });
+
+    // Append error message
+    function showError(input, message) {
+      const error = document.createElement("p");
+      error.className = "error-msg text-red-500 text-xs mt-1";
+      error.innerText = message;
+      input.insertAdjacentElement("afterend", error);
+    }
+  </script>
+</body>
+</html>

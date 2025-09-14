@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Body */
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 font-sans;
+  }
+}
+
+/* Header */
+.topbar {
+  @apply flex justify-between items-center bg-gray-900 text-white p-4 sticky top-0 z-50 shadow-md;
+}
+
+.logo {
+  @apply text-2xl font-bold;
+}
+
+.nav-links {
+  @apply flex gap-6 list-none;
+}
+
+.nav-links a {
+  @apply text-white font-medium no-underline hover:underline;
+}
+
+/* Sections */
+.section {
+  @apply py-12 px-6 text-center;
+}
+
+.section h2 {
+  @apply mb-6 text-3xl font-semibold;
+}
+
+/* Card container */
+.card-container {
+  @apply flex flex-wrap justify-center gap-6;
+}
+
+/* Individual cards */
+.card {
+  @apply bg-white p-6 rounded-lg w-64 text-center shadow-md hover:shadow-xl transition-shadow duration-300;
+}
+
+.card button {
+  @apply mt-4 px-4 py-2 bg-gray-900 text-white rounded cursor-pointer hover:bg-gray-700 transition-colors duration-300;
+}
+
+/* Contact Section */
+.contact-links {
+  @apply flex justify-center gap-8 my-4 flex-wrap;
+}
+
+.contact-links a {
+  @apply text-gray-900 font-bold no-underline hover:underline;
+}
+
+.map {
+  @apply bg-gray-300 p-8 mt-6 rounded-lg;
+}
