@@ -1,88 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Landing Page</title>
-  <link href="../../dist/LandingPage/style.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page - Luxury Hotel</title>
+    <link href="../../dist/LandingPage/style.css" rel="stylesheet">
 </head>
 <body>
-  <!-- Header -->
-  <header class="topbar">
-    <div class="logo">Logo</div>
-    <nav>
-      <ul class="nav-links">
-        <li><a href="#rooms">Rooms</a></li>
-        <li><a href="#offers">Offers</a></li>
-        <li><a href="#destinations">Destinations</a></li>
-        <li><a href="#testimonials">Testimonials</a></li>
-        <li><a href="#restaurant">Restaurant</a></li>
-      </ul>
-    </nav>
-  </header>
+    <header class="topbar">
+        <div class="logo">
+            <img class="logo-image" src="../../assets/Hotel_logo.png" alt="Hotel Logo">
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#rooms" aria-label="Navigate to Rooms section">Rooms</a></li>
+                <li><a href="#offers" aria-label="Navigate to Offers section">Offers</a></li>
+                <li><a href="#destinations" aria-label="Navigate to Destinations section">Destinations</a></li>
+                <li><a href="#testimonials" aria-label="Navigate to Testimonials section">Testimonials</a></li>
+                <li><a href="#restaurant" aria-label="Navigate to Restaurant section">Restaurant</a></li>
+            </ul>
+            <div class="entry">
+                <button class="entry-button">
+                    <a href="../LoginPage/index.html" aria-label="Go to Login page">Login</a>
+                </button>
+                <button class="entry-button">
+                    <a href="../SignupPage/index.html" aria-label="Go to Signup page">Signup</a>
+                </button>
+            </div>
+        </nav>
+    </header>
 
-  <!-- Available Rooms -->
-  <section id="rooms" class="section">
-    <h2>Available Rooms</h2>
-    <div class="card-container">
-      <div class="card">Room 1<br><button>Book Now</button></div>
-      <div class="card">Room 2<br><button>Book Now</button></div>
-      <div class="card">Room 3<br><button>Book Now</button></div>
-    </div>
-  </section>
+    <section id="rooms" class="section">
+        <h2>Available Rooms</h2>
+        <div class="carousel-container relative w-full overflow-hidden">
+            <div class="carousel-track flex transition-transform duration-500 ease-in-out">
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=300&h=200&fit=crop&crop=entropy" alt="Deluxe Single Room">
+                    <h3>Deluxe Single Room</h3>
+                    <p>A cozy room perfect for solo travelers, featuring a comfortable queen bed, modern amenities, and city views. Starting at $150/night.</p>
+                    <button aria-label="Book Deluxe Single Room">Book Now</button>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=300&h=200&fit=crop&crop=entropy" alt="Executive Double Room">
+                    <h3>Executive Double Room</h3>
+                    <p>Spacious double room with two queen beds, a work desk, and access to the executive lounge. Ideal for couples. Starting at $220/night.</p>
+                    <button aria-label="Book Executive Double Room">Book Now</button>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=300&h=200&fit=crop&crop=entropy" alt="Executive Double Room">
+                    <h3>Luxury Suite</h3>
+                    <p>Opulent suite with a king bed, living area, private balcony, and premium services. Perfect for special occasions. Starting at $350/night.</p>
+                    <button aria-label="Book Luxury Suite">Book Now</button>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=300&h=200&fit=crop&crop=entropy" alt="Deluxe Single Room">
+                    <h3>Deluxe Single Room</h3>
+                    <p>A cozy room perfect for solo travelers, featuring a comfortable queen bed, modern amenities, and city views. Starting at $150/night.</p>
+                    <button aria-label="Book Deluxe Single Room">Book Now</button>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=300&h=200&fit=crop&crop=entropy" alt="Executive Double Room">
+                    <h3>Executive Double Room</h3>
+                    <p>Spacious double room with two queen beds, a work desk, and access to the executive lounge. Ideal for couples. Starting at $220/night.</p>
+                    <button aria-label="Book Executive Double Room">Book Now</button>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=300&h=200&fit=crop&crop=entropy" alt="Executive Double Room">
+                    <h3>Luxury Suite</h3>
+                    <p>Opulent suite with a king bed, living area, private balcony, and premium services. Perfect for special occasions. Starting at $350/night.</p>
+                    <button aria-label="Book Luxury Suite">Book Now</button>
+                </div>
+            </div>
+            <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10094;</button>
+            <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10095;</button>
+        </div>
+    </section>
 
-  <!-- Offers -->
-  <section id="offers" class="section">
-    <h2>Available Offers</h2>
-    <div class="card-container">
-      <div class="card">Offer 1<br><button>View Offer</button></div>
-      <div class="card">Offer 2<br><button>View Offer</button></div>
-      <div class="card">Offer 3<br><button>View Offer</button></div>
-    </div>
-  </section>
+    <section id="offers" class="section">
+        <h2>Available Offers</h2>
+        <div class="carousel-container relative w-full overflow-hidden">
+            <div class="carousel-track flex transition-transform duration-500 ease-in-out">
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=300&h=200&fit=crop&crop=entropy" alt="Summer Escape Package">
+                    <h3>Summer Escape Package</h3>
+                    <p>Enjoy 20% off on 3-night stays, including breakfast and spa access. Valid through September 2025.</p>
+                    <button aria-label="View Summer Escape Package">View Offer</button>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop&crop=entropy" alt="Weekend Getaway Deal">
+                    <h3>Weekend Getaway Deal</h3>
+                    <p>Buy one night, get the second 50% off. Includes late checkout and complimentary parking.</p>
+                    <button aria-label="View Weekend Getaway Deal">View Offer</button>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=300&h=200&fit=crop&crop=entropy" alt="Family Vacation Special">
+                    <h3>Family Vacation Special</h3>
+                    <p>Kids stay free with paying adults. Plus, free access to the pool and kids' club activities.</p>
+                    <button aria-label="View Family Vacation Special">View Offer</button>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=300&h=200&fit=crop&crop=entropy" alt="Summer Escape Package">
+                    <h3>Summer Escape Package</h3>
+                    <p>Enjoy 20% off on 3-night stays, including breakfast and spa access. Valid through September 2025.</p>
+                    <button aria-label="View Summer Escape Package">View Offer</button>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop&crop=entropy" alt="Weekend Getaway Deal">
+                    <h3>Weekend Getaway Deal</h3>
+                    <p>Buy one night, get the second 50% off. Includes late checkout and complimentary parking.</p>
+                    <button aria-label="View Weekend Getaway Deal">View Offer</button>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=300&h=200&fit=crop&crop=entropy" alt="Family Vacation Special">
+                    <h3>Family Vacation Special</h3>
+                    <p>Kids stay free with paying adults. Plus, free access to the pool and kids' club activities.</p>
+                    <button aria-label="View Family Vacation Special">View Offer</button>
+                </div>
+            </div>
+            <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10094;</button>
+            <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10095;</button>
+        </div>
+    </section>
 
-  <!-- Destinations -->
-  <section id="destinations" class="section">
-    <h2>Destinations Near Hotel</h2>
-    <div class="card-container">
-      <div class="card">Dest 1</div>
-      <div class="card">Dest 2</div>
-      <div class="card">Dest 3</div>
-    </div>
-  </section>
+    <section id="destinations" class="section">
+        <h2>Destinations Near Hotel</h2>
+        <div class="carousel-container relative w-full overflow-hidden">
+            <div class="carousel-track flex transition-transform duration-500 ease-in-out">
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=300&h=200&fit=crop&crop=entropy" alt="Central Park">
+                    <h3>Central Park</h3>
+                    <p>Just a 10-minute walk away, enjoy scenic walks, boating, and outdoor concerts in this iconic urban oasis.</p>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=300&h=200&fit=crop&crop=entropy" alt="Times Square">
+                    <h3>Times Square</h3>
+                    <p>15 minutes by taxi, immerse yourself in the bright lights, Broadway shows, and vibrant street performances.</p>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=300&h=200&fit=crop&crop=entropy" alt="Museum of Modern Art">
+                    <h3>Museum of Modern Art (MoMA)</h3>
+                    <p>A short stroll to world-class art exhibits, featuring works by Van Gogh, Picasso, and contemporary masters.</p>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=300&h=200&fit=crop&crop=entropy" alt="Central Park">
+                    <h3>Central Park</h3>
+                    <p>Just a 10-minute walk away, enjoy scenic walks, boating, and outdoor concerts in this iconic urban oasis.</p>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=300&h=200&fit=crop&crop=entropy" alt="Times Square">
+                    <h3>Times Square</h3>
+                    <p>15 minutes by taxi, immerse yourself in the bright lights, Broadway shows, and vibrant street performances.</p>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=300&h=200&fit=crop&crop=entropy" alt="Museum of Modern Art">
+                    <h3>Museum of Modern Art (MoMA)</h3>
+                    <p>A short stroll to world-class art exhibits, featuring works by Van Gogh, Picasso, and contemporary masters.</p>
+                </div>
+            </div>
+            <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10094;</button>
+            <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10095;</button>
+        </div>
+    </section>
 
-  <!-- Testimonials -->
-  <section id="testimonials" class="section">
-    <h2>Testimonials</h2>
-    <div class="card-container">
-      <div class="card">Testimonial 1</div>
-      <div class="card">Testimonial 2</div>
-      <div class="card">Testimonial 3</div>
-    </div>
-  </section>
+    <section id="testimonials" class="section">
+        <h2>Testimonials</h2>
+        <div class="carousel-container relative w-full overflow-hidden">
+            <div class="carousel-track flex transition-transform duration-500 ease-in-out">
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=200&fit=crop&crop=face" alt="Sarah Johnson">
+                    <h3>Sarah Johnson</h3>
+                    <p>"The service was impeccable, and the room had the most stunning view. I'll be back next year!"</p>
+                    <p class="stars">★★★★★</p>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=200&fit=crop&crop=face" alt="Mike Chen">
+                    <h3>Mike Chen</h3>
+                    <p>"Fantastic location and delicious breakfast. The staff made our family vacation unforgettable."</p>
+                    <p class="stars">★★★★★</p>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=200&fit=crop&crop=face" alt="Sarah Johnson">
+                    <h3>Emily Rodriguez</h3>
+                    <p>"Luxurious amenities and spotless rooms. Perfect for a business trip with all the comforts of home."</p>
+                    <p class="stars">★★★★★</p>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=200&fit=crop&crop=face" alt="Sarah Johnson">
+                    <h3>Sarah Johnson</h3>
+                    <p>"The service was impeccable, and the room had the most stunning view. I'll be back next year!"</p>
+                    <p class="stars">★★★★★</p>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=200&fit=crop&crop=face" alt="Mike Chen">
+                    <h3>Mike Chen</h3>
+                    <p>"Fantastic location and delicious breakfast. The staff made our family vacation unforgettable."</p>
+                    <p class="stars">★★★★★</p>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=200&fit=crop&crop=face" alt="Sarah Johnson">
+                    <h3>Emily Rodriguez</h3>
+                    <p>"Luxurious amenities and spotless rooms. Perfect for a business trip with all the comforts of home."</p>
+                    <p class="stars">★★★★★</p>
+                </div>
+            </div>
+            <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10094;</button>
+            <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10095;</button>
+        </div>
+    </section>
 
-  <!-- Restaurant / Foods -->
-  <section id="restaurant" class="section">
-    <h2>Foods</h2>
-    <div class="card-container">
-      <div class="card">Food 1</div>
-      <div class="card">Food 2</div>
-      <div class="card">Food 3</div>
-    </div>
-  </section>
+    <section id="restaurant" class="section">
+        <h2>Our Restaurant Menu</h2>
+        <div class="carousel-container relative w-full overflow-hidden">
+            <div class="carousel-track flex transition-transform duration-500 ease-in-out">
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop&crop=entropy" alt="Grilled Salmon">
+                    <h3>Grilled Salmon</h3>
+                    <p>Fresh Atlantic salmon grilled to perfection, served with seasonal vegetables and lemon herb sauce. $28.</p>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop&crop=entropy" alt="Grilled Salmon">
+                    <h3>Beef Tenderloin</h3>
+                    <p>Prime beef tenderloin with red wine reduction, mashed potatoes, and asparagus. $42.</p>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop&crop=entropy" alt="Grilled Salmon">
+                    <h3>Vegetarian Risotto</h3>
+                    <p>Creamy arborio rice with wild mushrooms, parmesan, and truffle oil. $24.</p>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop&crop=entropy" alt="Grilled Salmon">
+                    <h3>Grilled Salmon</h3>
+                    <p>Fresh Atlantic salmon grilled to perfection, served with seasonal vegetables and lemon herb sauce. $28.</p>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop&crop=entropy" alt="Grilled Salmon">
+                    <h3>Beef Tenderloin</h3>
+                    <p>Prime beef tenderloin with red wine reduction, mashed potatoes, and asparagus. $42.</p>
+                </div>
+                <div class="card shrink-0">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop&crop=entropy" alt="Grilled Salmon">
+                    <h3>Vegetarian Risotto</h3>
+                    <p>Creamy arborio rice with wild mushrooms, parmesan, and truffle oil. $24.</p>
+                </div>
+            </div>
+            <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10094;</button>
+            <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10095;</button>
+        </div>
+    </section>
 
-  <!-- Contact Section -->
-  <section id="contact" class="section contact">
-    <h2>Contact us</h2>
-    <div class="contact-links">
-      <a href="mailto:example@email.com">Email</a>
-      <a href="tel:+911234567890">Phone Number</a>
-      <a href="#">Instagram</a>
-      <a href="#">Whatsapp</a>
-    </div>
-    <div class="map">
-      Google Map location of the Hotel
-    </div>
-  </section>
+    <section id="contact" class="section contact">
+        <h2>Contact Us</h2>
+        <div class="contact-links">
+            <a href="mailto:info@luxuryhotel.com" aria-label="Email us">Email</a>
+            <a href="tel:+1234567890" aria-label="Call us">Phone Number</a>
+            <a href="https://instagram.com/luxuryhotel" aria-label="Follow us on Instagram">Instagram</a>
+            <a href="https://wa.me/1234567890" aria-label="Contact us on WhatsApp">WhatsApp</a>
+        </div>
+        <div class="map">
+            <img src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=600&h=400&fit=crop&crop=entropy" alt="Google Map placeholder of the Hotel location">
+        </div>
+    </section>
+    <script src="../../carousel.js"></script>
 </body>
 </html>

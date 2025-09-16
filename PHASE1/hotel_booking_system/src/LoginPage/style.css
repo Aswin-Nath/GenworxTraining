@@ -1,22 +1,23 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 .login-container {
-  @apply bg-white w-full max-w-md rounded-md shadow-md overflow-hidden;
+  @apply  w-full max-w-md rounded-md shadow-md overflow-hidden;
 }
 
+.login-holder{
+  @apply flex justify-center items-center min-h-screen
+}
+.logo-image{
+  @apply h-[30px] w-[30px] pb-[5px]
+}
 .topbar {
-  @apply bg-gray-200 h-10 w-full;
-}
-
-.header {
-  @apply flex flex-col items-center mt-4 mb-4;
+  @apply bg-gray-500 h-10 w-full;
 }
 
 .logo {
-  @apply px-6 py-2 mb-2 font-bold;
-  
+  @apply text-xl text-white px-6 py-2 mb-2 font-bold;
 }
 
 .title {

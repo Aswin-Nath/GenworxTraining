@@ -2,62 +2,124 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Body */
-@layer base {
-  body {
-    @apply bg-gray-50 text-gray-900 font-sans;
-  }
+/* ===== Body ===== */
+body {
+    @apply bg-gray-50 text-gray-700 font-sans leading-relaxed;
 }
 
-/* Header */
+/* ===== Header / Topbar ===== */
 .topbar {
-  @apply flex justify-between items-center bg-gray-900 text-white p-4 sticky top-0 z-50 shadow-md;
+    @apply flex flex-col items-start bg-gray-800 text-white p-3 sticky top-0 z-50 shadow-md w-full sm:flex-row sm:justify-between sm:items-center sm:p-4;
 }
 
 .logo {
-  @apply text-2xl font-bold;
+    @apply flex items-center;
+}
+
+.logo-image {
+    @apply h-[36px] w-auto max-w-[75px] object-contain sm:h-[42px] sm:max-w-[90px];
+}
+
+nav {
+    @apply flex flex-col w-full mt-3 gap-y-3 sm:flex-row sm:items-center sm:gap-x-8 sm:mt-0;
 }
 
 .nav-links {
-  @apply flex gap-6 list-none;
+    @apply flex flex-col w-full text-center gap-y-2 list-none sm:flex-row sm:gap-6 sm:items-center;
 }
 
 .nav-links a {
-  @apply text-white font-medium no-underline hover:underline;
+    @apply text-white font-medium no-underline hover:text-indigo-300 transition-colors duration-200 sm:text-base;
 }
 
-/* Sections */
+/* ===== Login / Signup Buttons ===== */
+.entry {
+    @apply flex justify-center gap-x-3 w-full sm:w-auto;
+}
+
+.entry-button {
+    @apply
+        text-white
+        bg-gradient-to-r from-indigo-600 to-blue-500
+        rounded-md
+        px-4
+        py-1.5
+        font-medium
+        text-sm
+        transition-all
+        duration-300
+        hover:from-indigo-700
+        hover:to-blue-600
+        hover:shadow-lg
+        focus:outline-none
+        focus:ring-2
+        focus:ring-indigo-400
+        focus:ring-opacity-60;
+}
+
+.entry-button a {
+    @apply text-white no-underline;
+}
+
+/* ===== Sections ===== */
 .section {
-  @apply py-12 px-6 text-center;
+    @apply py-10 px-4 text-center sm:py-12 sm:px-6 lg:px-12;
 }
 
 .section h2 {
-  @apply mb-6 text-3xl font-semibold;
+    @apply mb-6 text-2xl font-bold text-gray-800 sm:text-3xl lg:text-4xl;
 }
 
-/* Card container */
-.card-container {
-  @apply flex flex-wrap justify-center gap-6;
+/* ===== Carousel Styles ===== */
+/* This container is the window for the carousel */
+.carousel-container {
+    @apply relative w-full overflow-hidden px-4; /* Add padding here to avoid cutting off cards */
 }
 
-/* Individual cards */
+/* This is the track that holds all the cards and slides */
+.carousel-track {
+    @apply flex gap-6 sm:gap-8 transition-transform duration-500 ease-in-out;
+}
+
+/* ===== Individual Card ===== */
 .card {
-  @apply bg-white p-6 rounded-lg w-64 text-center shadow-md hover:shadow-xl transition-shadow duration-300;
+    @apply bg-white p-5 rounded-xl text-center shadow-md hover:shadow-xl transition-transform duration-300 transform hover:-translate-y-2 shrink-0 w-full max-w-[360px];
+}
+
+.card img {
+    @apply w-full h-[200px] object-cover rounded-lg mb-4 sm:h-[220px];
+}
+
+.card h3 {
+    @apply text-lg font-semibold text-gray-800 mb-2 sm:text-xl;
+}
+
+.card p {
+    @apply text-gray-600 text-sm sm:text-base;
 }
 
 .card button {
-  @apply mt-4 px-4 py-2 bg-gray-900 text-white rounded cursor-pointer hover:bg-gray-700 transition-colors duration-300;
+    @apply mt-4 px-5 py-2 bg-gray-700 text-white rounded-md font-medium text-sm hover:bg-gray-900 transition-colors duration-300;
 }
 
-/* Contact Section */
+/* ===== Stars in Testimonials ===== */
+.card .stars {
+    @apply text-yellow-500 font-bold mt-2;
+}
+
+/* ===== Contact Section ===== */
 .contact-links {
-  @apply flex justify-center gap-8 my-4 flex-wrap;
+    @apply flex flex-wrap justify-center gap-5 my-6 sm:gap-8;
 }
 
 .contact-links a {
-  @apply text-gray-900 font-bold no-underline hover:underline;
+    @apply text-gray-700 font-semibold no-underline hover:text-indigo-600 hover:underline transition-colors duration-200;
 }
 
 .map {
-  @apply bg-gray-300 p-8 mt-6 rounded-lg;
+    @apply flex justify-center items-center bg-gray-200 p-5 mt-6 rounded-xl sm:p-8;
+}
+
+.map img {
+    @apply w-full max-w-[700px] h-[320px] object-cover rounded-lg;
 }

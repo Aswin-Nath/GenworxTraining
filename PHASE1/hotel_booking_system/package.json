@@ -3,15 +3,22 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  
   "scripts": {
-    "build": "npm run build:main && npm run build:login && npm run build:signup && npm run build:landing",
-    "build:main": "npx tailwindcss -i ./src/style.css -o ./dist/style.css --minify",
+    "build": "npm run build:landing && npm run build:login && npm run build:signup && npm run build:headerAdmin && npm run build:headerCustomer && npm run build:sidebarAdmin && npm run build:sidebarCustomer && npm run build:baseCustomer && npm run build:profileDisplay && npm run build:profileUpdate",
+    "build:landing": "npx tailwindcss -i ./src/LandingPage/style.css -o ./dist/LandingPage/style.css --minify",
     "build:login": "npx tailwindcss -i ./src/LoginPage/style.css -o ./dist/LoginPage/style.css --minify",
-    "build:landing":"npx tailwindcss -i ./src/LandingPage/style.css -o ./dist/LandingPage/style.css --minify",
     "build:signup": "npx tailwindcss -i ./src/SignupPage/style.css -o ./dist/SignupPage/style.css --minify",
-    "dev": "concurrently \"npx tailwindcss -i ./src/style.css -o ./dist/style.css --watch\" \"npx tailwindcss -i ./src/LoginPage/style.css -o ./dist/LoginPage/style.css --watch\" \"npx tailwindcss -i ./src/SignupPage/style.css -o ./dist/SignupPage/style.css --watch\" \" npx tailwindcss -i ./src/LandingPage/style.css -o ./dist/LandingPage/style.css --watch \""
-  },
+    "build:headerAdmin": "npx tailwindcss -i ./src/HeaderAdmin/style.css -o ./dist/HeaderAdmin/style.css --minify",
+    "build:headerCustomer": "npx tailwindcss -i ./src/HeaderCustomer/style.css -o ./dist/HeaderCustomer/style.css --minify",
+    "build:sidebarAdmin": "npx tailwindcss -i ./src/SidebarAdmin/style.css -o ./dist/SidebarAdmin/style.css --minify",
+    "build:sidebarCustomer": "npx tailwindcss -i ./src/SidebarCustomer/style.css -o ./dist/SidebarCustomer/style.css --minify",
+    "build:profileDisplay": "npx tailwindcss -i ./src/ProfileDisplayCustomer/style.css -o ./dist/ProfileDisplayCustomer/style.css --minify",
+    "build:profileUpdate": "npx tailwindcss -i ./src/ProfileUpdateCustomer/style.css -o ./dist/ProfileUpdateCustomer/style.css --minify",
+    "build:MainPageCustomer":"npx tailwindcss -i ./src/MainPageCustomer/style.css -o ./dist/MainPageCustomer/style.css --minify",
+    "build:MainPageAdmin":"npx tailwindcss -i ./src/MainPageAdmin/style.css -o ./dist/MainPageAdmin/style.css --minify",
+    "dev": "concurrently \"npx tailwindcss -i ./src/MainPageCustomer/style.css -o ./dist/MainPageCustomer/style.css --watch\" \"npx tailwindcss -i ./src/MainPageAdmin/style.css -o ./dist/MainPageAdmin/style.css --watch\" \"npx tailwindcss -i ./src/LandingPage/style.css -o ./dist/LandingPage/style.css --watch\" \"npx tailwindcss -i ./src/LoginPage/style.css -o ./dist/LoginPage/style.css --watch\" \"npx tailwindcss -i ./src/SignupPage/style.css -o ./dist/SignupPage/style.css --watch\" \"npx tailwindcss -i ./src/HeaderAdmin/style.css -o ./dist/HeaderAdmin/style.css --watch\" \"npx tailwindcss -i ./src/HeaderCustomer/style.css -o ./dist/HeaderCustomer/style.css --watch\" \"npx tailwindcss -i ./src/SidebarAdmin/style.css -o ./dist/SidebarAdmin/style.css --watch\" \"npx tailwindcss -i ./src/SidebarCustomer/style.css -o ./dist/SidebarCustomer/style.css --watch\" \"npx tailwindcss -i ./src/ProfileDisplayCustomer/style.css -o ./dist/ProfileDisplayCustomer/style.css --watch\" \"npx tailwindcss -i ./src/ProfileUpdateCustomer/style.css -o ./dist/ProfileUpdateCustomer/style.css --watch\""
+  }   
+,
   "keywords": [],
   "author": "",
   "license": "ISC",

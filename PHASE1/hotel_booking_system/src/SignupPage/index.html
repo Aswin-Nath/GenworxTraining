@@ -6,109 +6,207 @@
   <title>Sign up Page</title>
   <link href="../../dist/SignupPage/style.css" rel="stylesheet">
 </head>
-<body class="bg-gray-900 flex justify-center items-center min-h-screen">
-  <div class="signup-container">
-    <!-- Grey Top Bar -->
-    <div class="topbar">
-      <div class="logo">Logo</div>
+<body>
+  <!-- Grey Top Bar -->
+  <div class="topbar">
+      <div class="logo">
+        <a href="../LandingPage/index.html">
+          <img class="logo-image" src="../../assets/Hotel_logo.png">
+        </a>
+      </div>
     </div>
-    <div class="signup_div">
-      <h2 class="title">Sign up</h2>
-      <form id="signupForm" class="form" novalidate>
-        
-        <label class="label">Name<span class="text-red-500">*</span></label>
-        <input type="text" name="name" placeholder="Enter your name" class="input">
+  <div class="signup-holder">
+      <div class="signup-container">
+        <div class="signup_div">
+          <h2 class="title">Sign up</h2>
+          <form id="signupForm" class="form" novalidate>
+            
+            <label class="label">Name<span class="text-red-500">*</span></label>
+            <input type="text" name="name" placeholder="Enter your name" class="input">
 
-        <label class="label">Gender<span class="text-red-500">*</span></label>
-        <select id="genderSelect" name="gender" class="input">
-          <option value="">Choose your gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-        </select>
+            <label class="label">Gender<span class="text-red-500">*</span></label>
+            <select id="genderSelect" name="gender" class="input">
+              <option value="">Choose your gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
 
-        <!-- Extra input for "Other" gender -->
-        <input 
-          type="text" 
-          id="otherGenderInput" 
-          name="otherGender" 
-          placeholder="Please specify" 
-          class="input hidden"
-        >
+            <!-- Extra input for "Other" gender -->
+            <input 
+              type="text" 
+              id="otherGenderInput" 
+              name="otherGender" 
+              placeholder="Please specify" 
+              class="input hidden"
+            >
 
-        <label class="label">Provide your DOB<span class="text-red-500">*</span></label>
-        <input type="date" name="dob" class="input">
+            <label class="label">Provide your DOB<span class="text-red-500">*</span></label>
+            <input type="date" name="dob" class="input">
 
-        <label class="label">Email<span class="text-red-500">*</span></label>
-        <input type="email" name="email" placeholder="Enter your email" class="input">
+            <label class="label">Email<span class="text-red-500">*</span></label>
+            <input type="email" name="email" placeholder="Enter your email" class="input">
 
-        <label class="label">Password<span class="text-red-500">*</span></label>
-        <input type="password" name="password" placeholder="Enter your password" class="input">
+            <label class="label">Phone Number<span class="text-red-500">*</span></label>
+            <input type="tel" name="phone" placeholder="Enter your phone number" class="input">
 
-        <button type="submit" class="btn">Create Account</button>
+            <label class="label">Password<span class="text-red-500">*</span></label>
+            <input type="password" name="password" placeholder="Enter your password" class="input">
 
-        <p class="text-sm text-center mt-2">Already have an account?
-          <a href="../LoginPage/index.html" class="link">Login</a>
-        </p>
-      </form>
-    </div>
+            <button type="submit" class="btn">Create Account</button>
+
+            <p class="text-sm text-center mt-2">Already have an account?
+              <a href="../LoginPage/index.html" class="link">Login</a>
+            </p>
+          </form>
+        </div>
+      </div>
   </div>
 
   <script>
-    const form = document.getElementById("signupForm");
-    const genderSelect = document.getElementById("genderSelect");
-    const otherGenderInput = document.getElementById("otherGenderInput");
+  const form = document.getElementById("signupForm");
+  const nameInput = form.querySelector('input[name="name"]');
+  const genderSelect = form.querySelector('select[name="gender"]');
+  const otherGenderInput = document.getElementById("otherGenderInput");
+  const dobInput = form.querySelector('input[name="dob"]');
+  const emailInput = form.querySelector('input[name="email"]');
+  const phoneInput = form.querySelector('input[name="phone"]');
+  const passwordInput = form.querySelector('input[name="password"]');
 
-    // Show extra input if "Other" is selected
-    genderSelect.addEventListener("change", () => {
-      if (genderSelect.value === "Other") {
-        otherGenderInput.classList.remove("hidden");
-      } else {
-        otherGenderInput.classList.add("hidden");
-        otherGenderInput.value = "";
-      }
-    });
+  // Disable email, phone, and password fields initially
+  emailInput.disabled = true;
+  phoneInput.disabled = true;
+  passwordInput.disabled = true;
 
-    // Form validation
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      // Remove previous error messages
-      form.querySelectorAll(".error-msg").forEach(el => el.remove());
-
-      let isValid = true;
-
-      form.querySelectorAll(".input").forEach(input => {
-        // Required fields check (by label *)
-        if (input.previousElementSibling?.innerText.includes("*") && !input.value.trim()) {
-          isValid = false;
-          showError(input, "This field is required");
-        }
-
-        // Email validation
-        if (input.type === "email" && input.value.trim() !== "") {
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(input.value)) {
-            isValid = false;
-            showError(input, "Enter a valid email address");
-          }
-        }
-      });
-
-      if (isValid) {
-        alert("Form submitted successfully!");
-        form.reset();
-        otherGenderInput.classList.add("hidden");
-      }
-    });
-
-    // Append error message
-    function showError(input, message) {
-      const error = document.createElement("p");
-      error.className = "error-msg text-red-500 text-xs mt-1";
-      error.innerText = message;
-      input.insertAdjacentElement("afterend", error);
+  // Show extra input if "Other" is selected
+  genderSelect.addEventListener("change", () => {
+    if (genderSelect.value === "Other") {
+      otherGenderInput.classList.remove("hidden");
+    } else {
+      otherGenderInput.classList.add("hidden");
+      otherGenderInput.value = "";
     }
-  </script>
+    checkBasicDetails();
+  });
+
+  // Check if basic details (name, gender, DOB) are filled to enable email and phone
+  function checkBasicDetails() {
+    const isNameFilled = nameInput.value.trim() !== "";
+    const isGenderFilled = genderSelect.value !== "" && (genderSelect.value !== "Other" || otherGenderInput.value.trim() !== "");
+    const isDobFilled = dobInput.value.trim() !== "";
+    const canEnable = isNameFilled && isGenderFilled && isDobFilled;
+    emailInput.disabled = !canEnable;
+    phoneInput.disabled = !canEnable;
+  }
+
+  // Update password enable based on valid email and phone
+  function updatePasswordEnable() {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d{10}$/;
+    const isEmailValid = emailRegex.test(emailInput.value.trim());
+    const isPhoneValid = phoneRegex.test(phoneInput.value.replace(/\s/g, ''));
+    passwordInput.disabled = !(isEmailValid && isPhoneValid);
+  }
+
+  // Add input listeners to basic details to enable email and phone fields
+  nameInput.addEventListener("input", checkBasicDetails);
+  dobInput.addEventListener("input", checkBasicDetails);
+  otherGenderInput.addEventListener("input", checkBasicDetails);
+
+  // Add input listeners for email and phone to enable password
+  emailInput.addEventListener("input", updatePasswordEnable);
+  phoneInput.addEventListener("input", updatePasswordEnable);
+
+  // Form validation
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // Remove previous error messages
+    form.querySelectorAll(".error-msg").forEach(el => el.remove());
+
+    let isValid = true;
+
+    // Name validation
+    if (!nameInput.value.trim()) {
+      isValid = false;
+      showError(nameInput, "This field is required");
+    }
+
+    // Gender validation
+    if (!genderSelect.value) {
+      isValid = false;
+      showError(genderSelect, "This field is required");
+    } else if (genderSelect.value === "Other" && !otherGenderInput.value.trim()) {
+      isValid = false;
+      showError(otherGenderInput, "Please specify your gender");
+    }
+
+    // DOB validation
+    if (!dobInput.value.trim()) {
+      isValid = false;
+      showError(dobInput, "This field is required");
+    }
+    
+    // Email validation
+    if (!emailInput.value.trim()) {
+      isValid = false;
+      showError(emailInput, "This field is required");
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(emailInput.value)) {
+        isValid = false;
+        showError(emailInput, "Enter a valid email address");
+      }
+    }
+
+    // Phone validation
+    if (!phoneInput.value.trim()) {
+      isValid = false;
+      showError(phoneInput, "This field is required");
+    } else {
+      const phoneRegex = /^\d{10}$/;
+      if (!phoneRegex.test(phoneInput.value.replace(/\s/g, ''))) {
+        isValid = false;
+        showError(phoneInput, "Enter a valid 10-digit phone number");
+      }
+    }
+
+    // Password validation
+    if (!passwordInput.value.trim()) {
+      isValid = false;
+      showError(passwordInput, "This field is required");
+    }
+
+    if (isValid) {
+      // Store form data in localStorage
+      localStorage.setItem("name", nameInput.value.trim());
+      localStorage.setItem("gender", genderSelect.value);
+      if (genderSelect.value === "Other") {
+        localStorage.setItem("otherGender", otherGenderInput.value.trim());
+      } else {
+        localStorage.removeItem("otherGender"); // Clear if not "Other"
+      }
+      localStorage.setItem("dob", dobInput.value);
+      localStorage.setItem("email", emailInput.value.trim());
+      localStorage.setItem("phone", phoneInput.value.trim());
+      localStorage.setItem("password", passwordInput.value.trim());
+
+      alert("Form submitted successfully! Data saved to localStorage.");
+      form.reset();
+      otherGenderInput.classList.add("hidden");
+      emailInput.disabled = true;
+      phoneInput.disabled = true;
+      passwordInput.disabled = true;
+    }
+  });
+
+  // Append error message
+  function showError(input, message) {
+    const error = document.createElement("p");
+    error.className = "error-msg text-red-500 text-xs mt-1";
+    error.innerText = message;
+    input.insertAdjacentElement("afterend", error);
+  }
+</script>
 </body>
 </html>

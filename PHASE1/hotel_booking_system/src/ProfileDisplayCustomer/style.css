@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.profile-container {
+  @apply p-6 bg-gray-200;
+}
+
+.profile-photo {
+  @apply w-20 h-20 bg-gray-300 rounded-full flex items-center justify-center text-sm;
+}
+
+.profile-label {
+  @apply block text-sm font-medium text-gray-700;
+}
+
+.profile-input {
+  @apply w-full p-2 border rounded mt-1 bg-gray-100;
+}
+
+.edit-button {
+  @apply ml-4 text-gray-600 hover:text-gray-800;
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../dist/ProfileDisplayCustomer/style.css">
+  <title>Profile Display</title>
+</head>
+<body>
+  <div id="header-container" class="w-full h-[80px]"></div>
+  <div class="flex">
+    <div id="sidebar-container" class="w-64 h-screen"></div>
+<div class="flex-1 p-6 bg-gray-100">
+  <div class="max-w-2xl mx-auto bg-white shadow-lg rounded-2xl p-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">Profile Details</h2>
+    
+    <!-- Profile Photo -->
+    <div class="flex items-center justify-center mb-6">
+      <div class="w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 text-sm shadow-inner">Profile</div>
+      <a href="../ProfileUpdateCustomer/index.html" class="ml-4 text-gray-500 hover:text-cyan-600 transition">
+        <span class="text-2xl">✎</span>
+      </a>
+    </div>
+
+    <!-- Profile Info -->
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-600">Name</label>
+        <p id="name-display" class="w-full p-3 border rounded-lg mt-1 bg-gray-50"></p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-600">Gender</label>
+        <p id="gender-display" class="w-full p-3 border rounded-lg mt-1 bg-gray-50"></p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-600">Email</label>
+        <p id="email-display" class="w-full p-3 border rounded-lg mt-1 bg-gray-50"></p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-600">Phone</label>
+        <p id="phone-display" class="w-full p-3 border rounded-lg mt-1 bg-gray-50"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+
+  <script>
+    // Fetch and load HeaderCustomer content
+    fetch('../HeaderCustomer/index.html')
+      .then(response => response.text())
+      .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const headerContent = doc.body.innerHTML;
+        document.getElementById('header-container').innerHTML = headerContent;
+      })
+      .catch(error => console.error('Error loading header:', error));
+
+    // Fetch and load SidebarCustomer content
+    fetch('../SidebarCustomer/index.html')
+      .then(response => response.text())
+      .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const sidebarContent = doc.body.innerHTML;
+        document.getElementById('sidebar-container').innerHTML = sidebarContent;
+      })
+      .catch(error => console.error('Error loading sidebar:', error));
+
+    // Load data from localStorage and populate the display
+    document.addEventListener('DOMContentLoaded', () => {
+      const name = localStorage.getItem('name') || 'Not set';
+      const gender = localStorage.getItem('gender') || 'Not set';
+      const otherGender = localStorage.getItem('otherGender');
+      const email = localStorage.getItem('email') || 'Not set';
+      const phone = localStorage.getItem('phone') || 'Not set';
+
+      document.getElementById('name-display').textContent = name;
+      document.getElementById('gender-display').textContent = gender === 'Other' && otherGender ? otherGender : gender;
+      document.getElementById('email-display').textContent = email;
+      document.getElementById('phone-display').textContent = phone;
+    });
+  </script>
+</body>
+</html>

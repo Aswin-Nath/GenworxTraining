@@ -4,81 +4,115 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login Page</title>
+  <script src="https://cdn.tailwindcss.com"></script> 
   <link href="../../dist/LoginPage/style.css" rel="stylesheet">
 </head>
-<body class="bg-gray-900 flex justify-center items-center min-h-screen">
-  <div class="login-container">
-    <!-- Grey Top Bar -->
-    <div class="topbar">
-      <div class="logo">Logo</div>
+<body>
+  <!-- Grey Top Bar -->
+  <div class="topbar">
+    <div class="logo">
+      <a href="../LandingPage/index.html">
+        <img class="logo-image" src="../../assets/Hotel_logo.png">
+      </a>
     </div>
-    <div class="login_div">
-      <h2 class="title">Log in</h2>
-      <form id="loginForm" class="form" novalidate>
-        
-        <label class="label">Email address<span class="text-red-500">*</span></label>
-        <input type="email" name="email" placeholder="Enter your email" class="input">
+  </div>
+  <div class="login-holder">
+    <div class="login-container">
+      <div class="login_div">
+        <h2 class="title">Log in</h2>
+        <form id="loginForm" class="form" novalidate>
+          <label class="label">Email address<span class="text-red-500">*</span></label>
+          <input type="email" name="email" placeholder="Enter your email" class="input">
 
-        <label class="label">Password<span class="text-red-500">*</span></label>
-        <input type="password" name="password" placeholder="Enter your password" class="input">
+          <label class="label">Password<span class="text-red-500">*</span></label>
+          <input type="password" name="password" placeholder="Enter your password" class="input">
 
-        <a href="#" class="forgot">Forgot password?</a>
+          <a href="#" class="forgot">Forgot password?</a>
 
-        <label class="flex items-center space-x-2 mt-2">
-          <input type="checkbox" class="w-4 h-4">
-          <span class="text-sm">Login as Admin</span>
-        </label>
+          <button type="submit" class="btn">Sign in</button>
 
-        <button type="submit" class="btn">Sign in</button>
-
-        <p class="text-sm text-center mt-2">Don’t have an account?
-          <a href="../SignupPage/index.html" class="link">Sign up</a>
-        </p>
-      </form>
+          <p class="text-sm text-center mt-2">Don’t have an account?
+            <a href="../SignupPage/index.html" class="link">Sign up</a>
+          </p>
+        </form>
+      </div>
     </div>
   </div>
 
   <script>
-    const loginForm = document.getElementById("loginForm");
+  const loginForm = document.getElementById("loginForm");
+  const emailInput = loginForm.querySelector('input[name="email"]');
+  const passwordInput = loginForm.querySelector('input[name="password"]');
 
-    loginForm.addEventListener("submit", (e) => {
-      e.preventDefault();
+  // Disable password field initially
+  passwordInput.disabled = true;
 
-      // Remove previous error messages
-      loginForm.querySelectorAll(".error-msg").forEach(el => el.remove());
+  // Enable password field only when email is valid
+  emailInput.addEventListener("input", () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    passwordInput.disabled = !emailRegex.test(emailInput.value.trim());
+  });
 
-      let isValid = true;
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-      loginForm.querySelectorAll(".input").forEach(input => {
-        // Check required fields
-        if (input.previousElementSibling?.innerText.includes("*") && !input.value.trim()) {
-          isValid = false;
-          showError(input, "This field is required");
-        }
+    // Remove previous error messages
+    loginForm.querySelectorAll(".error-msg").forEach(el => el.remove());
+    let isValid = true;
 
-        // Email validation
-        if (input.type === "email" && input.value.trim() !== "") {
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(input.value)) {
-            isValid = false;
-            showError(input, "Enter a valid email address");
-          }
-        }
-      });
+    // Immediate redirect for admin@gmail.com
+    if (emailInput.value.trim() === "admin@gmail.com") {
+      window.location.href = "../MainPageAdmin/index.html";
+      return; // Exit the function to prevent further processing
+    }
+
+    // Email validation for non-admin emails
+    if (!emailInput.value.trim()) {
+      isValid = false;
+      showError(emailInput, "This field is required");
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(emailInput.value)) {
+        isValid = false;
+        showError(emailInput, "Enter a valid email address");
+      }
+    }
+
+    // Password validation
+    if (!passwordInput.value.trim()) {
+      isValid = false;
+      showError(passwordInput, "This field is required");
+    }
+
+    // Check against localStorage for non-admin emails
+    if (isValid) {
+      const storedEmail = localStorage.getItem("email");
+      const storedPassword = localStorage.getItem("password");
+
+      if (!storedEmail || emailInput.value.trim() !== storedEmail) {
+        isValid = false;
+        showError(emailInput, "Email not found");
+      } else if (passwordInput.value.trim() !== storedPassword) {
+        isValid = false;
+        showError(passwordInput, "Incorrect password");
+      }
 
       if (isValid) {
+        window.location.href = "../MainPageCustomer/index.html"; // Redirect to customer page
         alert("Login successful!");
         loginForm.reset();
+        passwordInput.disabled = true; // Reset to initial state
       }
-    });
-
-    // Append error message under input
-    function showError(input, message) {
-      const error = document.createElement("p");
-      error.className = "error-msg text-red-500 text-xs mt-1";
-      error.innerText = message;
-      input.insertAdjacentElement("afterend", error);
     }
-  </script>
+  });
+
+  // Append error message under input
+  function showError(input, message) {
+    const error = document.createElement("p");
+    error.className = "error-msg text-red-500 text-xs mt-1";
+    error.innerText = message;
+    input.insertAdjacentElement("afterend", error);
+  }
+</script>
 </body>
 </html>
