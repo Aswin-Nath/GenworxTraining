@@ -5,34 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login Page</title>
   <script src="https://cdn.tailwindcss.com"></script> 
-  <link href="../../dist/LoginPage/style.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-gray-50">
+
   <!-- Grey Top Bar -->
-  <div class="topbar">
-    <div class="logo">
+  <div class="bg-gray-500 h-10 w-full flex items-center">
+    <div class="px-6 py-2 font-bold">
       <a href="../LandingPage/index.html">
-        <img class="logo-image" src="../../assets/Hotel_logo.png">
+        <img class="h-[30px] w-[30px] pb-[5px]" src="../../assets/Hotel_logo.png" alt="Hotel Logo">
       </a>
     </div>
   </div>
-  <div class="login-holder">
-    <div class="login-container">
-      <div class="login_div">
-        <h2 class="title">Log in</h2>
-        <form id="loginForm" class="form" novalidate>
-          <label class="label">Email address<span class="text-red-500">*</span></label>
-          <input type="email" name="email" placeholder="Enter your email" class="input">
 
-          <label class="label">Password<span class="text-red-500">*</span></label>
-          <input type="password" name="password" placeholder="Enter your password" class="input">
+  <!-- Login Holder -->
+  <div class="flex justify-center items-center min-h-screen">
+    <div class="w-full max-w-md rounded-md shadow-md overflow-hidden bg-white">
+      <div class="mt-[30px]">
+        <h2 class="text-xl font-semibold text-center">Log in</h2>
+        <form id="loginForm" class="flex flex-col space-y-3 px-6 pb-6" novalidate>
+          
+          <label class="text-sm font-medium">Email address<span class="text-red-500">*</span></label>
+          <input type="email" name="email" placeholder="Enter your email"
+                 class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
 
-          <a href="#" class="forgot">Forgot password?</a>
+          <label class="text-sm font-medium">Password<span class="text-red-500">*</span></label>
+          <input type="password" name="password" placeholder="Enter your password"
+                 class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
 
-          <button type="submit" class="btn">Sign in</button>
+          <a href="#" class="text-sm text-indigo-600 hover:underline text-right">Forgot password?</a>
 
-          <p class="text-sm text-center mt-2">Don’t have an account?
-            <a href="../SignupPage/index.html" class="link">Sign up</a>
+          <button type="submit"
+                  class="w-full bg-indigo-600 text-white py-2 rounded-md mt-2 hover:bg-indigo-700">
+            Sign in
+          </button>
+
+          <p class="text-sm text-center mt-2">
+            Don’t have an account?
+            <a href="../SignupPage/index.html" class="text-indigo-600 hover:underline">Sign up</a>
           </p>
         </form>
       </div>
@@ -55,18 +64,16 @@
 
   loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
-
-    // Remove previous error messages
     loginForm.querySelectorAll(".error-msg").forEach(el => el.remove());
     let isValid = true;
 
     // Immediate redirect for admin@gmail.com
     if (emailInput.value.trim() === "admin@gmail.com") {
       window.location.href = "../MainPageAdmin/index.html";
-      return; // Exit the function to prevent further processing
+      return;
     }
 
-    // Email validation for non-admin emails
+    // Email validation
     if (!emailInput.value.trim()) {
       isValid = false;
       showError(emailInput, "This field is required");
@@ -84,7 +91,7 @@
       showError(passwordInput, "This field is required");
     }
 
-    // Check against localStorage for non-admin emails
+    // Check against localStorage for non-admin
     if (isValid) {
       const storedEmail = localStorage.getItem("email");
       const storedPassword = localStorage.getItem("password");
@@ -98,21 +105,20 @@
       }
 
       if (isValid) {
-        window.location.href = "../MainPageCustomer/index.html"; // Redirect to customer page
+        window.location.href = "../MainPageCustomer/index.html";
         alert("Login successful!");
         loginForm.reset();
-        passwordInput.disabled = true; // Reset to initial state
+        passwordInput.disabled = true;
       }
     }
   });
 
-  // Append error message under input
   function showError(input, message) {
     const error = document.createElement("p");
     error.className = "error-msg text-red-500 text-xs mt-1";
     error.innerText = message;
     input.insertAdjacentElement("afterend", error);
   }
-</script>
+  </script>
 </body>
 </html>

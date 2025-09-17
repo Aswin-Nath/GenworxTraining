@@ -4,59 +4,59 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign up Page</title>
-  <link href="../../dist/SignupPage/style.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
   <!-- Grey Top Bar -->
-  <div class="topbar">
-      <div class="logo">
+  <div class="bg-gray-500 h-10 w-full">
+      <div class="text-xl px-6 py-2 mb-2 font-bold text-white inline-block">
         <a href="../LandingPage/index.html">
-          <img class="logo-image" src="../../assets/Hotel_logo.png">
+          <img class="h-[30px] w-[30px] pb-[5px]" src="../../assets/Hotel_logo.png">
         </a>
       </div>
-    </div>
-  <div class="signup-holder">
-      <div class="signup-container">
-        <div class="signup_div">
-          <h2 class="title">Sign up</h2>
-          <form id="signupForm" class="form" novalidate>
-            
-            <label class="label">Name<span class="text-red-500">*</span></label>
-            <input type="text" name="name" placeholder="Enter your name" class="input">
+  </div>
 
-            <label class="label">Gender<span class="text-red-500">*</span></label>
-            <select id="genderSelect" name="gender" class="input">
+  <div class="flex justify-center items-center min-h-screen">
+      <div class="bg-white w-full max-w-md rounded-md shadow-md overflow-hidden">
+        <div class="mt-[30px]">
+          <h2 class="text-xl font-semibold text-center">Sign up</h2>
+          <form id="signupForm" class="flex flex-col space-y-3 px-6 pb-6" novalidate>
+            
+            <label class="text-sm font-medium">Name<span class="text-red-500">*</span></label>
+            <input type="text" name="name" placeholder="Enter your name" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+
+            <label class="text-sm font-medium">Gender<span class="text-red-500">*</span></label>
+            <select id="genderSelect" name="gender" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
               <option value="">Choose your gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
               <option value="Other">Other</option>
             </select>
 
-            <!-- Extra input for "Other" gender -->
             <input 
               type="text" 
               id="otherGenderInput" 
               name="otherGender" 
               placeholder="Please specify" 
-              class="input hidden"
+              class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 hidden"
             >
 
-            <label class="label">Provide your DOB<span class="text-red-500">*</span></label>
-            <input type="date" name="dob" class="input">
+            <label class="text-sm font-medium">Provide your DOB<span class="text-red-500">*</span></label>
+            <input type="date" name="dob" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
 
-            <label class="label">Email<span class="text-red-500">*</span></label>
-            <input type="email" name="email" placeholder="Enter your email" class="input">
+            <label class="text-sm font-medium">Email<span class="text-red-500">*</span></label>
+            <input type="email" name="email" placeholder="Enter your email" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
 
-            <label class="label">Phone Number<span class="text-red-500">*</span></label>
-            <input type="tel" name="phone" placeholder="Enter your phone number" class="input">
+            <label class="text-sm font-medium">Phone Number<span class="text-red-500">*</span></label>
+            <input type="tel" name="phone" placeholder="Enter your phone number" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
 
-            <label class="label">Password<span class="text-red-500">*</span></label>
-            <input type="password" name="password" placeholder="Enter your password" class="input">
+            <label class="text-sm font-medium">Password<span class="text-red-500">*</span></label>
+            <input type="password" name="password" placeholder="Enter your password" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
 
-            <button type="submit" class="btn">Create Account</button>
+            <button type="submit" class="w-full bg-black text-white py-2 rounded-md mt-2 hover:bg-gray-800">Create Account</button>
 
             <p class="text-sm text-center mt-2">Already have an account?
-              <a href="../LoginPage/index.html" class="link">Login</a>
+              <a href="../LoginPage/index.html" class="text-indigo-600 hover:underline">Login</a>
             </p>
           </form>
         </div>
@@ -73,12 +73,10 @@
   const phoneInput = form.querySelector('input[name="phone"]');
   const passwordInput = form.querySelector('input[name="password"]');
 
-  // Disable email, phone, and password fields initially
   emailInput.disabled = true;
   phoneInput.disabled = true;
   passwordInput.disabled = true;
 
-  // Show extra input if "Other" is selected
   genderSelect.addEventListener("change", () => {
     if (genderSelect.value === "Other") {
       otherGenderInput.classList.remove("hidden");
@@ -89,7 +87,6 @@
     checkBasicDetails();
   });
 
-  // Check if basic details (name, gender, DOB) are filled to enable email and phone
   function checkBasicDetails() {
     const isNameFilled = nameInput.value.trim() !== "";
     const isGenderFilled = genderSelect.value !== "" && (genderSelect.value !== "Other" || otherGenderInput.value.trim() !== "");
@@ -99,40 +96,30 @@
     phoneInput.disabled = !canEnable;
   }
 
-  // Update password enable based on valid email and phone
   function updatePasswordEnable() {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^\d{10}$/;
+    const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+    const phoneRegex = /^\\d{10}$/;
     const isEmailValid = emailRegex.test(emailInput.value.trim());
-    const isPhoneValid = phoneRegex.test(phoneInput.value.replace(/\s/g, ''));
+    const isPhoneValid = phoneRegex.test(phoneInput.value.replace(/\\s/g, ''));
     passwordInput.disabled = !(isEmailValid && isPhoneValid);
   }
 
-  // Add input listeners to basic details to enable email and phone fields
   nameInput.addEventListener("input", checkBasicDetails);
   dobInput.addEventListener("input", checkBasicDetails);
   otherGenderInput.addEventListener("input", checkBasicDetails);
-
-  // Add input listeners for email and phone to enable password
   emailInput.addEventListener("input", updatePasswordEnable);
   phoneInput.addEventListener("input", updatePasswordEnable);
 
-  // Form validation
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-
-    // Remove previous error messages
     form.querySelectorAll(".error-msg").forEach(el => el.remove());
-
     let isValid = true;
 
-    // Name validation
     if (!nameInput.value.trim()) {
       isValid = false;
       showError(nameInput, "This field is required");
     }
 
-    // Gender validation
     if (!genderSelect.value) {
       isValid = false;
       showError(genderSelect, "This field is required");
@@ -141,50 +128,45 @@
       showError(otherGenderInput, "Please specify your gender");
     }
 
-    // DOB validation
     if (!dobInput.value.trim()) {
       isValid = false;
       showError(dobInput, "This field is required");
     }
-    
-    // Email validation
+
     if (!emailInput.value.trim()) {
       isValid = false;
       showError(emailInput, "This field is required");
     } else {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
       if (!emailRegex.test(emailInput.value)) {
         isValid = false;
         showError(emailInput, "Enter a valid email address");
       }
     }
 
-    // Phone validation
     if (!phoneInput.value.trim()) {
       isValid = false;
       showError(phoneInput, "This field is required");
     } else {
-      const phoneRegex = /^\d{10}$/;
-      if (!phoneRegex.test(phoneInput.value.replace(/\s/g, ''))) {
+      const phoneRegex = /^\\d{10}$/;
+      if (!phoneRegex.test(phoneInput.value.replace(/\\s/g, ''))) {
         isValid = false;
         showError(phoneInput, "Enter a valid 10-digit phone number");
       }
     }
 
-    // Password validation
     if (!passwordInput.value.trim()) {
       isValid = false;
       showError(passwordInput, "This field is required");
     }
 
     if (isValid) {
-      // Store form data in localStorage
       localStorage.setItem("name", nameInput.value.trim());
       localStorage.setItem("gender", genderSelect.value);
       if (genderSelect.value === "Other") {
         localStorage.setItem("otherGender", otherGenderInput.value.trim());
       } else {
-        localStorage.removeItem("otherGender"); // Clear if not "Other"
+        localStorage.removeItem("otherGender");
       }
       localStorage.setItem("dob", dobInput.value);
       localStorage.setItem("email", emailInput.value.trim());
@@ -200,13 +182,12 @@
     }
   });
 
-  // Append error message
   function showError(input, message) {
     const error = document.createElement("p");
     error.className = "error-msg text-red-500 text-xs mt-1";
     error.innerText = message;
     input.insertAdjacentElement("afterend", error);
   }
-</script>
+  </script>
 </body>
 </html>
