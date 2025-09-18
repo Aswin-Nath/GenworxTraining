@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Issue Details</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-r from-gray-100 via-gray-50 to-gray-100 h-screen flex flex-col font-sans">
+
+  <!-- ✅ Header -->
+<!-- ✅ Compact Header -->
+<header class="flex justify-between items-center px-4 py-2 bg-white border-b-4 border-yellow-600 shadow-md flex-shrink-0">
+  <div class="flex items-center space-x-2">
+    <a href="../LandingPage/index.html">
+      <img class="logo-image h-8 w-auto" src="../../assets/Hotel_logo.png" alt="Hotel Logo">
+    </a>
+    <h1 class="text-lg font-bold text-gray-700">HotelEase</h1>
+  </div>
+  <div class="flex items-center">
+    <button class="bg-yellow-100 text-yellow-600 p-1.5 rounded-full border hover:bg-yellow-200">
+      <span class="material-icons text-sm">notifications</span>
+    </button>
+    <button class="bg-yellow-600 text-white ml-2 px-3 py-1.5 rounded-lg hover:bg-yellow-700 shadow-md text-sm">
+      Find Rooms
+    </button>
+  </div>
+</header>
+
+
+  <div class="flex flex-1 overflow-hidden">
+    <!-- ✅ Sidebar -->
+    <aside class="w-64 bg-white h-full p-6 border-r-4 border-yellow-600 shadow-xl flex-shrink-0">
+      <ul class="space-y-4 text-gray-700 font-medium">
+        <li><a href="#" class="block p-2 rounded hover:bg-yellow-100">Dashboard</a></li>
+        <li><a href="#" class="block p-2 rounded hover:bg-yellow-100">Booking Management</a></li>
+        <li><a href="#" class="block p-2 rounded hover:bg-yellow-100">Saved Rooms</a></li>
+        <li><a href="#" onclick="openIssues()" class="block p-2 rounded bg-yellow-200 text-yellow-700 font-semibold"> My Issues</a></li>
+        <li><a href="#" onclick="openRefunds()" class="block p-2 rounded hover:bg-yellow-100"> My Refunds</a></li>
+        <li><a href="#" onclick="openProfile()" class="block p-2 rounded hover:bg-yellow-100"> Profile</a></li>
+        <li><a href="#" class="block p-2 rounded hover:bg-yellow-100"> Reports</a></li>
+      </ul>
+    </aside>
+
+    <!-- ✅ Main Content -->
+    <main class="flex-1 p-8 overflow-y-auto bg-gray-50 border-l-4 border-yellow-600 shadow-inner">
+      <div class="max-w-4xl mx-auto space-y-6">
+
+        <!-- Back Button -->
+        <div>
+          <button onclick="history.back()" class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-yellow-600 text-white hover:bg-yellow-700 shadow-md">
+            <span class="material-icons text-sm">arrow_back</span>
+            <span>Back</span>
+          </button>
+        </div>
+
+        <!-- Issue Details -->
+        <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">Issue Details</h2>
+          <div class="grid gap-3 text-gray-700">
+            <p><span class="font-semibold">Issue Title:</span> AC Not Working</p>
+            <p><span class="font-semibold">Booking ID:</span> #B67890</p>
+            <p><span class="font-semibold">Room Number:</span> 415</p>
+            <p><span class="font-semibold">Issue Description:</span> AC cooling stopped working suddenly.</p>
+          </div>
+        </div>
+
+        <!-- Media Section -->
+<div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">Issue Media</h2>
+  
+  <!-- Button to Open Carousel -->
+  <button onclick="openCarousel()" class="mb-4 px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 shadow-md">
+    Open Carousel
+  </button>
+
+  <!-- Carousel Container -->
+  <div id="carousel" class="relative w-full h-52 bg-gray-100 border rounded-lg overflow-hidden hidden">
+    <!-- Images -->
+        <div class="absolute inset-0 flex transition-transform duration-500" id="carouselInner">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80" 
+            class="w-full object-cover flex-shrink-0" alt="Hotel Room 1">
+        <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1000&q=80" 
+            class="w-full object-cover flex-shrink-0" alt="Hotel Room 2">
+        <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1000&q=80" 
+            class="w-full object-cover flex-shrink-0" alt="Hotel Room 3">
+        </div>
+
+    <!-- Controls -->
+    <button onclick="prevSlide()" class="absolute top-1/2 left-3 -translate-y-1/2 bg-white border px-3 py-1 rounded-full shadow hover:bg-gray-200">⟨</button>
+    <button onclick="nextSlide()" class="absolute top-1/2 right-3 -translate-y-1/2 bg-white border px-3 py-1 rounded-full shadow hover:bg-gray-200">⟩</button>
+  </div>
+</div>
+
+<!-- Chat Section -->
+<div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">Chat with the Issue Raiser</h2>
+  
+  <!-- Chat Messages -->
+  <div id="chatBox" class="h-48 bg-gray-100 border rounded-lg p-4 overflow-y-auto text-gray-600 mb-4">
+    <p class="text-gray-500">[Chat messages will appear here]</p>
+  </div>
+
+  <!-- Message Input Bar -->
+  <div class="flex space-x-2">
+    <input id="chatInput" type="text" placeholder="Type a message..." class="flex-1 p-3 border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+    <button onclick="sendMessage()" class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700">Send</button>
+  </div>
+</div>
+
+<script>
+  // Carousel Logic
+  let currentSlide = 0;
+  const carousel = document.getElementById("carousel");
+  const carouselInner = document.getElementById("carouselInner");
+  const totalSlides = carouselInner.children.length;
+
+  function openCarousel() {
+    carousel.classList.toggle("hidden");
+  }
+
+  function showSlide(index) {
+    if (index < 0) index = totalSlides - 1;
+    if (index >= totalSlides) index = 0;
+    currentSlide = index;
+    carouselInner.style.transform = `translateX(-${100 * currentSlide}%)`;
+  }
+
+  function prevSlide() {
+    showSlide(currentSlide - 1);
+  }
+
+  function nextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  // Chat Logic
+  function sendMessage() {
+    const chatBox = document.getElementById("chatBox");
+    const input = document.getElementById("chatInput");
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    const newMsg = document.createElement("p");
+    newMsg.className = "text-gray-800 bg-yellow-100 p-2 rounded-lg my-1";
+    newMsg.textContent = msg;
+    chatBox.appendChild(newMsg);
+
+    input.value = "";
+    chatBox.scrollTop = chatBox.scrollHeight; // auto-scroll
+  }
+</script>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function openRefunds() {
+      window.location.href = "../MyRefunds/index.html";
+    }
+    function openProfile() {
+      window.location.href = "../ProfileDisplayCustomer/index.html";
+    }
+    function openIssues() {
+      window.location.href = "./index.html";
+    }
+  </script>
+</body>
+</html>

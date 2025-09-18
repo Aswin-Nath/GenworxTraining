@@ -1,265 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing Page - Luxury Hotel</title>
-    <link href="../../dist/LandingPage/style.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay Hotel - Official Site</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <header class="topbar">
-        <div class="logo">
-            <img class="logo-image" src="../../assets/Hotel_logo.png" alt="Hotel Logo">
-        </div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="#rooms" aria-label="Navigate to Rooms section">Rooms</a></li>
-                <li><a href="#offers" aria-label="Navigate to Offers section">Offers</a></li>
-                <li><a href="#destinations" aria-label="Navigate to Destinations section">Destinations</a></li>
-                <li><a href="#testimonials" aria-label="Navigate to Testimonials section">Testimonials</a></li>
-                <li><a href="#restaurant" aria-label="Navigate to Restaurant section">Restaurant</a></li>
-            </ul>
-            <div class="entry">
-                <button class="entry-button">
-                    <a href="../LoginPage/index.html" aria-label="Go to Login page">Login</a>
-                </button>
-                <button class="entry-button">
-                    <a href="../SignupPage/index.html" aria-label="Go to Signup page">Signup</a>
-                </button>
-            </div>
-        </nav>
-    </header>
+<body class="bg-gray-50 text-gray-700 font-sans leading-relaxed">
 
-    <section id="rooms" class="section">
-        <h2>Available Rooms</h2>
-        <div class="carousel-container relative w-full overflow-hidden">
-            <div class="carousel-track flex transition-transform duration-500 ease-in-out">
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=300&h=200&fit=crop&crop=entropy" alt="Deluxe Single Room">
-                    <h3>Deluxe Single Room</h3>
-                    <p>A cozy room perfect for solo travelers, featuring a comfortable queen bed, modern amenities, and city views. Starting at $150/night.</p>
-                    <button aria-label="Book Deluxe Single Room">Book Now</button>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=300&h=200&fit=crop&crop=entropy" alt="Executive Double Room">
-                    <h3>Executive Double Room</h3>
-                    <p>Spacious double room with two queen beds, a work desk, and access to the executive lounge. Ideal for couples. Starting at $220/night.</p>
-                    <button aria-label="Book Executive Double Room">Book Now</button>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=300&h=200&fit=crop&crop=entropy" alt="Executive Double Room">
-                    <h3>Luxury Suite</h3>
-                    <p>Opulent suite with a king bed, living area, private balcony, and premium services. Perfect for special occasions. Starting at $350/night.</p>
-                    <button aria-label="Book Luxury Suite">Book Now</button>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=300&h=200&fit=crop&crop=entropy" alt="Deluxe Single Room">
-                    <h3>Deluxe Single Room</h3>
-                    <p>A cozy room perfect for solo travelers, featuring a comfortable queen bed, modern amenities, and city views. Starting at $150/night.</p>
-                    <button aria-label="Book Deluxe Single Room">Book Now</button>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=300&h=200&fit=crop&crop=entropy" alt="Executive Double Room">
-                    <h3>Executive Double Room</h3>
-                    <p>Spacious double room with two queen beds, a work desk, and access to the executive lounge. Ideal for couples. Starting at $220/night.</p>
-                    <button aria-label="Book Executive Double Room">Book Now</button>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=300&h=200&fit=crop&crop=entropy" alt="Executive Double Room">
-                    <h3>Luxury Suite</h3>
-                    <p>Opulent suite with a king bed, living area, private balcony, and premium services. Perfect for special occasions. Starting at $350/night.</p>
-                    <button aria-label="Book Luxury Suite">Book Now</button>
-                </div>
-            </div>
-            <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10094;</button>
-            <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10095;</button>
-        </div>
-    </section>
+  <!-- ✅ Header -->
+  <header class="flex justify-between items-center bg-white shadow-md px-6 py-4 sticky top-0 z-50">
+    <div class="flex items-center space-x-3">
+        <img class="h-8 w-auto" src="../../assets/Hotel_logo.png" alt="Hotel Logo">
+      <h1 class="text-xl font-bold text-yellow-700">LuxuryStay</h1>
+    </div>
+    <nav class="hidden md:flex space-x-6 font-medium">
+      <a href="#rooms" class="hover:text-yellow-600 transition">Rooms</a>
+      <a href="#offers" class="hover:text-yellow-600 transition">Offers</a>
+      <a href="#destinations" class="hover:text-yellow-600 transition">Destinations</a>
+      <a href="#testimonials" class="hover:text-yellow-600 transition">Testimonials</a>
+      <a href="#restaurant" class="hover:text-yellow-600 transition">Restaurant</a>
+      <a href="#contact" class="hover:text-yellow-600 transition">Contact</a>
+    </nav>
+    <div class="flex space-x-3">
+      <a href="../LoginPage/index.html" class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition">Login</a>
+      <a href="../SignupPage/index.html" class="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition">Signup</a>
+    </div>
+  </header>
 
-    <section id="offers" class="section">
-        <h2>Available Offers</h2>
-        <div class="carousel-container relative w-full overflow-hidden">
-            <div class="carousel-track flex transition-transform duration-500 ease-in-out">
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=300&h=200&fit=crop&crop=entropy" alt="Summer Escape Package">
-                    <h3>Summer Escape Package</h3>
-                    <p>Enjoy 20% off on 3-night stays, including breakfast and spa access. Valid through September 2025.</p>
-                    <button aria-label="View Summer Escape Package">View Offer</button>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop&crop=entropy" alt="Weekend Getaway Deal">
-                    <h3>Weekend Getaway Deal</h3>
-                    <p>Buy one night, get the second 50% off. Includes late checkout and complimentary parking.</p>
-                    <button aria-label="View Weekend Getaway Deal">View Offer</button>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=300&h=200&fit=crop&crop=entropy" alt="Family Vacation Special">
-                    <h3>Family Vacation Special</h3>
-                    <p>Kids stay free with paying adults. Plus, free access to the pool and kids' club activities.</p>
-                    <button aria-label="View Family Vacation Special">View Offer</button>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=300&h=200&fit=crop&crop=entropy" alt="Summer Escape Package">
-                    <h3>Summer Escape Package</h3>
-                    <p>Enjoy 20% off on 3-night stays, including breakfast and spa access. Valid through September 2025.</p>
-                    <button aria-label="View Summer Escape Package">View Offer</button>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop&crop=entropy" alt="Weekend Getaway Deal">
-                    <h3>Weekend Getaway Deal</h3>
-                    <p>Buy one night, get the second 50% off. Includes late checkout and complimentary parking.</p>
-                    <button aria-label="View Weekend Getaway Deal">View Offer</button>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=300&h=200&fit=crop&crop=entropy" alt="Family Vacation Special">
-                    <h3>Family Vacation Special</h3>
-                    <p>Kids stay free with paying adults. Plus, free access to the pool and kids' club activities.</p>
-                    <button aria-label="View Family Vacation Special">View Offer</button>
-                </div>
-            </div>
-            <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10094;</button>
-            <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10095;</button>
-        </div>
-    </section>
+  <!-- ✅ Hero Section -->
+  <section class="relative bg-cover bg-center h-[60vh]" style="background-image:url('https://images.unsplash.com/photo-1501117716987-c8e1ecb2107c?auto=format&fit=crop&w=1600&q=80');">
+    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      <div class="text-center text-white">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Welcome to LuxuryStay</h2>
+        <p class="text-lg md:text-xl mb-6">Experience comfort, elegance, and premium hospitality</p>
+        <a href="#rooms" class="px-6 py-3 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition">Book Your Stay</a>
+      </div>
+    </div>
+  </section>
 
-    <section id="destinations" class="section">
-        <h2>Destinations Near Hotel</h2>
-        <div class="carousel-container relative w-full overflow-hidden">
-            <div class="carousel-track flex transition-transform duration-500 ease-in-out">
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=300&h=200&fit=crop&crop=entropy" alt="Central Park">
-                    <h3>Central Park</h3>
-                    <p>Just a 10-minute walk away, enjoy scenic walks, boating, and outdoor concerts in this iconic urban oasis.</p>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=300&h=200&fit=crop&crop=entropy" alt="Times Square">
-                    <h3>Times Square</h3>
-                    <p>15 minutes by taxi, immerse yourself in the bright lights, Broadway shows, and vibrant street performances.</p>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=300&h=200&fit=crop&crop=entropy" alt="Museum of Modern Art">
-                    <h3>Museum of Modern Art (MoMA)</h3>
-                    <p>A short stroll to world-class art exhibits, featuring works by Van Gogh, Picasso, and contemporary masters.</p>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=300&h=200&fit=crop&crop=entropy" alt="Central Park">
-                    <h3>Central Park</h3>
-                    <p>Just a 10-minute walk away, enjoy scenic walks, boating, and outdoor concerts in this iconic urban oasis.</p>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=300&h=200&fit=crop&crop=entropy" alt="Times Square">
-                    <h3>Times Square</h3>
-                    <p>15 minutes by taxi, immerse yourself in the bright lights, Broadway shows, and vibrant street performances.</p>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=300&h=200&fit=crop&crop=entropy" alt="Museum of Modern Art">
-                    <h3>Museum of Modern Art (MoMA)</h3>
-                    <p>A short stroll to world-class art exhibits, featuring works by Van Gogh, Picasso, and contemporary masters.</p>
-                </div>
-            </div>
-            <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10094;</button>
-            <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10095;</button>
+  <!-- ✅ Rooms -->
+  <section id="rooms" class="py-14 px-6 text-center">
+    <h2 class="text-3xl font-bold text-gray-800 mb-10">Our Rooms</h2>
+    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div class="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-xl transition">
+        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=600&q=80" class="h-56 w-full object-cover" alt="Deluxe Room">
+        <div class="p-5">
+          <h3 class="font-semibold text-xl mb-2">Deluxe Room</h3>
+          <p class="text-gray-600 mb-4">Spacious comfort with modern design. From $150/night.</p>
+          <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700">Book Now</button>
         </div>
-    </section>
+      </div>
+      <div class="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-xl transition">
+        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=600&q=80" class="h-56 w-full object-cover" alt="Deluxe Room">
+        <div class="p-5">
+          <h3 class="font-semibold text-xl mb-2">Executive Suite</h3>
+          <p class="text-gray-600 mb-4">Premium luxury with a king bed and city views. From $250/night.</p>
+          <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700">Book Now</button>
+        </div>
+      </div>
+      <div class="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-xl transition">
+        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=600&q=80" class="h-56 w-full object-cover" alt="Deluxe Room">
+        <div class="p-5">
+          <h3 class="font-semibold text-xl mb-2">Presidential Suite</h3>
+          <p class="text-gray-600 mb-4">Unparalleled elegance with private lounge access. From $400/night.</p>
+          <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700">Book Now</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <section id="testimonials" class="section">
-        <h2>Testimonials</h2>
-        <div class="carousel-container relative w-full overflow-hidden">
-            <div class="carousel-track flex transition-transform duration-500 ease-in-out">
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=200&fit=crop&crop=face" alt="Sarah Johnson">
-                    <h3>Sarah Johnson</h3>
-                    <p>"The service was impeccable, and the room had the most stunning view. I'll be back next year!"</p>
-                    <p class="stars">★★★★★</p>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=200&fit=crop&crop=face" alt="Mike Chen">
-                    <h3>Mike Chen</h3>
-                    <p>"Fantastic location and delicious breakfast. The staff made our family vacation unforgettable."</p>
-                    <p class="stars">★★★★★</p>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=200&fit=crop&crop=face" alt="Sarah Johnson">
-                    <h3>Emily Rodriguez</h3>
-                    <p>"Luxurious amenities and spotless rooms. Perfect for a business trip with all the comforts of home."</p>
-                    <p class="stars">★★★★★</p>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=200&fit=crop&crop=face" alt="Sarah Johnson">
-                    <h3>Sarah Johnson</h3>
-                    <p>"The service was impeccable, and the room had the most stunning view. I'll be back next year!"</p>
-                    <p class="stars">★★★★★</p>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=200&fit=crop&crop=face" alt="Mike Chen">
-                    <h3>Mike Chen</h3>
-                    <p>"Fantastic location and delicious breakfast. The staff made our family vacation unforgettable."</p>
-                    <p class="stars">★★★★★</p>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=200&fit=crop&crop=face" alt="Sarah Johnson">
-                    <h3>Emily Rodriguez</h3>
-                    <p>"Luxurious amenities and spotless rooms. Perfect for a business trip with all the comforts of home."</p>
-                    <p class="stars">★★★★★</p>
-                </div>
-            </div>
-            <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10094;</button>
-            <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10095;</button>
-        </div>
-    </section>
+  <!-- ✅ Offers -->
+  <section id="offers" class="py-14 px-6 bg-gray-100 text-center">
+    <h2 class="text-3xl font-bold text-gray-800 mb-10">Special Offers</h2>
+    <div class="flex flex-col md:flex-row gap-8 justify-center max-w-5xl mx-auto">
+      <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg">
+        <h3 class="text-xl font-semibold mb-2">Weekend Getaway</h3>
+        <p class="text-gray-600 mb-4">Stay 2 nights, get 20% off on spa treatments.</p>
+        <button class="px-5 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900">View Offer</button>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg">
+        <h3 class="text-xl font-semibold mb-2">Family Package</h3>
+        <p class="text-gray-600 mb-4">Kids stay free with complimentary breakfast.</p>
+        <button class="px-5 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900">View Offer</button>
+      </div>
+    </div>
+  </section>
 
-    <section id="restaurant" class="section">
-        <h2>Our Restaurant Menu</h2>
-        <div class="carousel-container relative w-full overflow-hidden">
-            <div class="carousel-track flex transition-transform duration-500 ease-in-out">
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop&crop=entropy" alt="Grilled Salmon">
-                    <h3>Grilled Salmon</h3>
-                    <p>Fresh Atlantic salmon grilled to perfection, served with seasonal vegetables and lemon herb sauce. $28.</p>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop&crop=entropy" alt="Grilled Salmon">
-                    <h3>Beef Tenderloin</h3>
-                    <p>Prime beef tenderloin with red wine reduction, mashed potatoes, and asparagus. $42.</p>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop&crop=entropy" alt="Grilled Salmon">
-                    <h3>Vegetarian Risotto</h3>
-                    <p>Creamy arborio rice with wild mushrooms, parmesan, and truffle oil. $24.</p>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop&crop=entropy" alt="Grilled Salmon">
-                    <h3>Grilled Salmon</h3>
-                    <p>Fresh Atlantic salmon grilled to perfection, served with seasonal vegetables and lemon herb sauce. $28.</p>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop&crop=entropy" alt="Grilled Salmon">
-                    <h3>Beef Tenderloin</h3>
-                    <p>Prime beef tenderloin with red wine reduction, mashed potatoes, and asparagus. $42.</p>
-                </div>
-                <div class="card shrink-0">
-                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop&crop=entropy" alt="Grilled Salmon">
-                    <h3>Vegetarian Risotto</h3>
-                    <p>Creamy arborio rice with wild mushrooms, parmesan, and truffle oil. $24.</p>
-                </div>
-            </div>
-            <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10094;</button>
-            <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 z-10 hover:bg-gray-700">&#10095;</button>
-        </div>
-    </section>
+    <!-- ✅ Destinations -->
+  <section id="destinations" class="py-14 px-6 text-center bg-white">
+    <h2 class="text-3xl font-bold text-gray-800 mb-10">Popular Destinations</h2>
+    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
 
-    <section id="contact" class="section contact">
-        <h2>Contact Us</h2>
-        <div class="contact-links">
-            <a href="mailto:info@luxuryhotel.com" aria-label="Email us">Email</a>
-            <a href="tel:+1234567890" aria-label="Call us">Phone Number</a>
-            <a href="https://instagram.com/luxuryhotel" aria-label="Follow us on Instagram">Instagram</a>
-            <a href="https://wa.me/1234567890" aria-label="Contact us on WhatsApp">WhatsApp</a>
+      <!-- Destination 1 -->
+      <div class="bg-gray-50 shadow-md rounded-xl overflow-hidden hover:shadow-xl transition">
+        <img src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=600&q=80" 
+             alt="New York City" class="h-56 w-full object-cover">
+        <div class="p-5 text-left">
+          <h3 class="font-semibold text-xl mb-2">New York City</h3>
+          <p class="text-gray-600 mb-4">The city that never sleeps. Enjoy skyline views, Broadway shows, and premium luxury hotels.</p>
+          <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700">Explore</button>
         </div>
-        <div class="map">
-            <img src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=600&h=400&fit=crop&crop=entropy" alt="Google Map placeholder of the Hotel location">
+      </div>
+
+      <!-- Destination 2 -->
+      <div class="bg-gray-50 shadow-md rounded-xl overflow-hidden hover:shadow-xl transition">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" 
+             alt="Maldives" class="h-56 w-full object-cover">
+        <div class="p-5 text-left">
+          <h3 class="font-semibold text-xl mb-2">Maldives</h3>
+          <p class="text-gray-600 mb-4">Crystal-clear waters, private villas, and a paradise retreat for couples and families.</p>
+          <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700">Explore</button>
         </div>
-    </section>
-    <script src="../../carousel.js"></script>
+      </div>
+
+      <!-- Destination 3 -->
+      <div class="bg-gray-50 shadow-md rounded-xl overflow-hidden hover:shadow-xl transition">
+        <img src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=600&q=80" 
+             alt="Paris" class="h-56 w-full object-cover">
+        <div class="p-5 text-left">
+          <h3 class="font-semibold text-xl mb-2">Paris</h3>
+          <p class="text-gray-600 mb-4">Romantic evenings by the Eiffel Tower, fine dining, and timeless luxury experiences.</p>
+          <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700">Explore</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ✅ Testimonials -->
+  <section id="testimonials" class="py-14 px-6 text-center">
+    <h2 class="text-3xl font-bold text-gray-800 mb-10">What Our Guests Say</h2>
+    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg">
+        <p class="italic text-gray-600 mb-3">“Amazing stay! The staff was so friendly and the rooms were spotless.”</p>
+        <h4 class="font-semibold">Sarah Johnson</h4>
+        <p class="text-yellow-500">★★★★★</p>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg">
+        <p class="italic text-gray-600 mb-3">“Perfect location near attractions. I’ll definitely come back.”</p>
+        <h4 class="font-semibold">David Lee</h4>
+        <p class="text-yellow-500">★★★★★</p>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg">
+        <p class="italic text-gray-600 mb-3">“The restaurant served the best breakfast. Truly 5-star experience.”</p>
+        <h4 class="font-semibold">Emily Davis</h4>
+        <p class="text-yellow-500">★★★★★</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ Restaurant -->
+  <section id="restaurant" class="py-14 px-6 bg-gray-100 text-center">
+    <h2 class="text-3xl font-bold text-gray-800 mb-10">Our Restaurant</h2>
+    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div class="bg-white p-5 rounded-xl shadow hover:shadow-lg">
+        <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=600&q=80" alt="Salmon Dish" class="h-48 w-full object-cover rounded-lg mb-3">
+        <h3 class="font-semibold">Grilled Salmon</h3>
+        <p class="text-gray-600">$28 | Served with vegetables and sauce</p>
+      </div>
+      <div class="bg-white p-5 rounded-xl shadow hover:shadow-lg">
+        <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=600&q=80" alt="Salmon Dish" class="h-48 w-full object-cover rounded-lg mb-3">
+        <h3 class="font-semibold">Beef Tenderloin</h3>
+        <p class="text-gray-600">$42 | Served with mashed potatoes</p>
+      </div>
+      <div class="bg-white p-5 rounded-xl shadow hover:shadow-lg">
+        <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=600&q=80" alt="Salmon Dish" class="h-48 w-full object-cover rounded-lg mb-3">
+        <h3 class="font-semibold">Vegetarian Risotto</h3>
+        <p class="text-gray-600">$24 | Creamy rice with wild mushrooms</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ Footer Contact -->
+  <footer id="contact" class="bg-gray-900 text-gray-300 py-12 px-6">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-10">
+      <!-- About -->
+      <div>
+        <h3 class="text-white text-xl font-bold mb-4">LuxuryStay</h3>
+        <p class="text-gray-400">Your comfort, our priority. Experience unmatched hospitality and elegance in the heart of the city.</p>
+      </div>
+      <!-- Contact Info -->
+      <div>
+        <h4 class="text-white font-semibold mb-4">Contact</h4>
+        <p>Email: info@luxurystay.com</p>
+        <p>Phone: +1 234 567 890</p>
+        <p>Address: 123 Luxury Street, New York, USA</p>
+      </div>
+      <!-- Quick Links -->
+      <div>
+        <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+        <ul class="space-y-2">
+          <li><a href="#rooms" class="hover:text-yellow-500">Rooms</a></li>
+          <li><a href="#offers" class="hover:text-yellow-500">Offers</a></li>
+          <li><a href="#restaurant" class="hover:text-yellow-500">Restaurant</a></li>
+          <li><a href="#testimonials" class="hover:text-yellow-500">Testimonials</a></li>
+        </ul>
+      </div>
+      <!-- Social -->
+      <div>
+        <h4 class="text-white font-semibold mb-4">Follow Us</h4>
+        <div class="flex space-x-4">
+          <a href="#" class="hover:text-yellow-500">Facebook</a>
+          <a href="#" class="hover:text-yellow-500">Instagram</a>
+          <a href="#" class="hover:text-yellow-500">Twitter</a>
+        </div>
+      </div>
+    </div>
+    <div class="mt-10 text-center text-gray-500 border-t border-gray-700 pt-4">
+      © 2025 LuxuryStay Hotel. All rights reserved.
+    </div>
+  </footer>
+
 </body>
 </html>

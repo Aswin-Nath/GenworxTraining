@@ -3,71 +3,111 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Page</title>
-  <script src="https://cdn.tailwindcss.com"></script> 
+  <title>HotelEase - Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 font-sans">
 
-  <!-- Grey Top Bar -->
-  <div class="bg-gray-500 h-10 w-full flex items-center">
-    <div class="px-6 py-2 font-bold">
+  <!-- ✅ Header -->
+  <header class="flex justify-between items-center p-4 bg-gray-800 text-white shadow-md">
+    <div class="flex items-center space-x-3">
       <a href="../LandingPage/index.html">
-        <img class="h-[30px] w-[30px] pb-[5px]" src="../../assets/Hotel_logo.png" alt="Hotel Logo">
+        <img src="../../assets/Hotel_logo.png" alt="Hotel Logo" class="h-10 rounded-full">
       </a>
+      <h1 class="text-xl font-bold tracking-wide">HotelEase</h1>
     </div>
-  </div>
+    <nav class="hidden sm:flex space-x-6 font-medium">
+      <a href="../LandingPage/index.html#rooms" class="hover:text-indigo-300 transition">Rooms</a>
+      <a href="../LandingPage/index.html#offers" class="hover:text-indigo-300 transition">Offers</a>
+      <a href="../LandingPage/index.html#restaurant" class="hover:text-indigo-300 transition">Restaurant</a>
+      <a href="../LandingPage/index.html#contact" class="hover:text-indigo-300 transition">Contact</a>
+    </nav>
+  </header>
 
-  <!-- Login Holder -->
-  <div class="flex justify-center items-center min-h-screen">
-    <div class="w-full max-w-md rounded-md shadow-md overflow-hidden bg-white">
-      <div class="mt-[30px]">
-        <h2 class="text-xl font-semibold text-center">Log in</h2>
-        <form id="loginForm" class="flex flex-col space-y-3 px-6 pb-6" novalidate>
-          
-          <label class="text-sm font-medium">Email address<span class="text-red-500">*</span></label>
-          <input type="email" name="email" placeholder="Enter your email"
-                 class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-
-          <label class="text-sm font-medium">Password<span class="text-red-500">*</span></label>
-          <input type="password" name="password" placeholder="Enter your password"
-                 class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-
-          <a href="#" class="text-sm text-indigo-600 hover:underline text-right">Forgot password?</a>
-
-          <button type="submit"
-                  class="w-full bg-indigo-600 text-white py-2 rounded-md mt-2 hover:bg-indigo-700">
-            Sign in
-          </button>
-
-          <p class="text-sm text-center mt-2">
-            Don’t have an account?
-            <a href="../SignupPage/index.html" class="text-indigo-600 hover:underline">Sign up</a>
-          </p>
-        </form>
+  <!-- ✅ Main Login Container -->
+  <div class="flex justify-center items-center min-h-[calc(100vh-64px)] p-6">
+    <div class="w-full max-w-md bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-200">
+      
+      <!-- Top Banner -->
+      <div class="bg-gradient-to-r from-indigo-600 to-blue-500 text-white text-center py-6">
+        <h2 class="text-2xl font-bold">Welcome Back</h2>
+        <p class="text-sm opacity-90">Log in to continue your HotelEase journey</p>
       </div>
+
+      <!-- Form Section -->
+      <form id="loginForm" class="flex flex-col space-y-4 px-8 py-6" novalidate>
+        
+        <!-- Email -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Email Address<span class="text-red-500">*</span></label>
+          <input type="email" name="email" placeholder="example@email.com"
+                 class="w-full mt-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Password<span class="text-red-500">*</span></label>
+          <input type="password" name="password" placeholder="••••••••"
+                 class="w-full mt-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" disabled>
+          <a href="#" class="text-xs text-indigo-600 hover:underline block text-right mt-1">Forgot password?</a>
+        </div>
+
+        <!-- Button -->
+        <button type="submit"
+                class="w-full bg-gradient-to-r from-indigo-600 to-blue-500 text-white py-2.5 rounded-lg mt-2 hover:from-indigo-700 hover:to-blue-600 shadow-md transition">
+          Sign In
+        </button>
+
+        <!-- Signup Link -->
+        <p class="text-sm text-center text-gray-600">
+          Don’t have an account?
+          <a href="../SignupPage/index.html" class="text-indigo-600 font-medium hover:underline">Sign up</a>
+        </p>
+      </form>
     </div>
   </div>
 
-  <script>
+<script>
   const loginForm = document.getElementById("loginForm");
   const emailInput = loginForm.querySelector('input[name="email"]');
   const passwordInput = loginForm.querySelector('input[name="password"]');
 
-  // Disable password field initially
+  // Disable password initially
   passwordInput.disabled = true;
 
-  // Enable password field only when email is valid
-  emailInput.addEventListener("input", () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    passwordInput.disabled = !emailRegex.test(emailInput.value.trim());
-  });
+  // Regex
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // Live check email → enable/disable password
+  function checkEmailValidity() {
+    const value = emailInput.value.trim();
+    if (emailRegex.test(value)) {
+      clearError(emailInput);
+      passwordInput.disabled = false;
+    } else {
+      passwordInput.disabled = true;
+      if (value !== "") {
+        showError(emailInput, "Enter a valid email");
+      }
+    }
+  }
+
+  emailInput.addEventListener("input", checkEmailValidity);
+  emailInput.addEventListener("blur", checkEmailValidity);
 
   loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
     loginForm.querySelectorAll(".error-msg").forEach(el => el.remove());
     let isValid = true;
+    let firstErrorField = null;
 
-    // Immediate redirect for admin@gmail.com
+    function setError(input, msg) {
+      showError(input, msg);
+      if (!firstErrorField) firstErrorField = input;
+      isValid = false;
+    }
+
+    // Admin shortcut
     if (emailInput.value.trim() === "admin@gmail.com") {
       window.location.href = "../MainPageAdmin/index.html";
       return;
@@ -75,50 +115,55 @@
 
     // Email validation
     if (!emailInput.value.trim()) {
-      isValid = false;
-      showError(emailInput, "This field is required");
-    } else {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(emailInput.value)) {
-        isValid = false;
-        showError(emailInput, "Enter a valid email address");
-      }
+      setError(emailInput, "This field is required");
+    } else if (!emailRegex.test(emailInput.value)) {
+      setError(emailInput, "Enter a valid email");
     }
 
     // Password validation
     if (!passwordInput.value.trim()) {
-      isValid = false;
-      showError(passwordInput, "This field is required");
+      setError(passwordInput, "This field is required");
     }
 
-    // Check against localStorage for non-admin
+    // LocalStorage check
     if (isValid) {
       const storedEmail = localStorage.getItem("email");
       const storedPassword = localStorage.getItem("password");
 
       if (!storedEmail || emailInput.value.trim() !== storedEmail) {
-        isValid = false;
-        showError(emailInput, "Email not found");
+        setError(emailInput, "Email not found");
       } else if (passwordInput.value.trim() !== storedPassword) {
-        isValid = false;
-        showError(passwordInput, "Incorrect password");
+        setError(passwordInput, "Incorrect password");
       }
 
       if (isValid) {
-        window.location.href = "../MainPageCustomer/index.html";
         alert("Login successful!");
+        window.location.href = "../MainPageCustomer/index.html";
         loginForm.reset();
         passwordInput.disabled = true;
       }
     }
+
+    if (!isValid && firstErrorField) {
+      firstErrorField.focus();
+    }
   });
 
   function showError(input, message) {
+    clearError(input);
     const error = document.createElement("p");
     error.className = "error-msg text-red-500 text-xs mt-1";
     error.innerText = message;
     input.insertAdjacentElement("afterend", error);
   }
-  </script>
+
+  function clearError(input) {
+    const next = input.nextElementSibling;
+    if (next && next.classList.contains("error-msg")) {
+      next.remove();
+    }
+  }
+</script>
+
 </body>
 </html>

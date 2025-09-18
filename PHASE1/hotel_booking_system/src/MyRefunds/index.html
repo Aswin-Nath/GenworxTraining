@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HotelEase - My Refunds</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script>
+    let currentPage = 1;
+    const rowsPerPage = 5;
+
+    function showPage(page) {
+      const table = document.querySelector("tbody");
+      const rows = table.querySelectorAll("tr");
+      const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+      if (page < 1) page = 1;
+      if (page > totalPages) page = totalPages;
+
+      currentPage = page;
+
+      rows.forEach((row, index) => {
+        row.style.display = (index >= (page - 1) * rowsPerPage && index < page * rowsPerPage) 
+          ? "" : "none";
+      });
+    }
+
+    function prevPage() { showPage(currentPage - 1); }
+    function nextPage() { showPage(currentPage + 1); }
+    function goToPage(page) { showPage(page); }
+    function jumpToPage() {
+      const pageInput = document.getElementById("pageInput").value;
+      if (pageInput) goToPage(parseInt(pageInput));
+    }
+
+    document.addEventListener("DOMContentLoaded", () => showPage(1));
+  </script>
+</head>
+
+<body class="bg-gray-100 h-screen flex flex-col">
+
+  <!-- ✅ Header -->
+  <header class="flex justify-between items-center px-4 py-2 bg-white border-b-4 border-yellow-600 shadow-md flex-shrink-0">
+    <div class="flex items-center space-x-2">
+      <a href="../LandingPage/index.html">
+        <img class="h-8 w-auto" src="../../assets/Hotel_logo.png" alt="Hotel Logo">
+      </a>
+      <h1 class="text-lg font-bold text-gray-700">HotelEase</h1>
+    </div>
+    <div class="flex items-center">
+      <button class="bg-yellow-100 text-yellow-600 p-1.5 rounded-full border hover:bg-yellow-200">
+        <span class="material-icons text-sm">notifications</span>
+      </button>
+      <button class="bg-yellow-600 text-white ml-2 px-3 py-1.5 rounded-lg hover:bg-yellow-700 shadow-md text-sm">
+        Find Rooms
+      </button>
+    </div>
+  </header>
+
+  <!-- ✅ Layout -->
+  <div class="flex flex-1 overflow-hidden">
+
+    <!-- ✅ Sidebar -->
+    <aside class="w-64 bg-white h-full p-6 border-r-4 border-yellow-600 shadow-lg flex-shrink-0">
+      <ul class="space-y-4 text-gray-700 font-medium">
+        <li><a href="#" class="block p-2 rounded hover:bg-yellow-100">Dashboard</a></li>
+        <li><a href="#" class="block p-2 rounded hover:bg-yellow-100">Booking Management</a></li>
+        <li><a href="#" class="block p-2 rounded hover:bg-yellow-100">Saved Rooms</a></li>
+        <li><a href="../MyIssues/index.html" class="block p-2 rounded hover:bg-yellow-100"> My Issues</a></li>
+        <li><a href="./index.html" class="block p-2 rounded bg-yellow-200 text-yellow-700 font-semibold"> My Refunds</a></li>
+        <li><a href="../ProfileDisplayCustomer/index.html" class="block p-2 rounded hover:bg-yellow-100"> Profile</a></li>
+        <li><a href="#" class="block p-2 rounded hover:bg-yellow-100"> Reports</a></li>
+      </ul>
+    </aside>
+
+    <!-- ✅ Main Content -->
+    <main class="flex-1 overflow-y-auto p-6 bg-gray-50 border-l-4">
+
+      <!-- Page Header -->
+      <div class="mb-6">
+        <h1 class="text-2xl font-bold text-gray-800 mb-3">My Refund Requests</h1>
+        <input type="text" placeholder="🔍 Search by Category, Room, Status, Date"
+               class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm">
+      </div>
+
+      <!-- Refund Table -->
+      <div class="overflow-x-auto bg-white shadow-lg border border-gray-200 rounded-xl">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-yellow-50 border-b border-gray-300">
+              <th class="p-3 text-left font-semibold text-gray-700">Refund ID</th>
+              <th class="p-3 text-left font-semibold text-gray-700">Date</th>
+              <th class="p-3 text-left font-semibold text-gray-700">Category</th>
+              <th class="p-3 text-left font-semibold text-gray-700">Total Amount</th>
+              <th class="p-3 text-left font-semibold text-gray-700">Refund Amount</th>
+              <th class="p-3 text-left font-semibold text-gray-700">Status</th>
+              <th class="p-3 text-center font-semibold text-gray-700">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <!-- ✅ Row 1 -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">R-1001</td>
+              <td class="p-3 border-t">2025-09-17</td>
+              <td class="p-3 border-t">Deluxe Room</td>
+              <td class="p-3 border-t font-medium text-gray-800">$250</td>
+              <td class="p-3 border-t font-medium text-green-600">$200</td>
+              <td class="p-3 border-t">
+                <span class="px-2 py-1 rounded-full text-white bg-green-500 text-xs font-medium">Approved</span>
+              </td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+                <button onclick="openChildRefunds()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              </td>
+            </tr>
+
+            <!-- ✅ Row 2 -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">R-1002</td>
+              <td class="p-3 border-t">2025-09-16</td>
+              <td class="p-3 border-t">Standard Room</td>
+              <td class="p-3 border-t font-medium text-gray-800">$150</td>
+              <td class="p-3 border-t font-medium text-yellow-600">$0</td>
+              <td class="p-3 border-t">
+                <span class="px-2 py-1 rounded-full text-white bg-yellow-500 text-xs font-medium">Pending</span>
+              </td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+                <button onclick="openChildRefunds()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              </td>
+            </tr>
+
+            <!-- ✅ Row 3 -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">R-1003</td>
+              <td class="p-3 border-t">2025-09-15</td>
+              <td class="p-3 border-t">Suite</td>
+              <td class="p-3 border-t font-medium text-gray-800">$500</td>
+              <td class="p-3 border-t font-medium text-red-600">$0</td>
+              <td class="p-3 border-t">
+                <span class="px-2 py-1 rounded-full text-white bg-red-500 text-xs font-medium">Rejected</span>
+              </td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+                <button onclick="openChildRefunds()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              </td>
+            </tr>
+            <!-- ✅ Row 1 -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">R-1001</td>
+              <td class="p-3 border-t">2025-09-17</td>
+              <td class="p-3 border-t">Deluxe Room</td>
+              <td class="p-3 border-t font-medium text-gray-800">$250</td>
+              <td class="p-3 border-t font-medium text-green-600">$200</td>
+              <td class="p-3 border-t">
+                <span class="px-2 py-1 rounded-full text-white bg-green-500 text-xs font-medium">Approved</span>
+              </td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+                <button onclick="openChildRefunds()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              </td>
+            </tr>
+
+            <!-- ✅ Row 2 -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">R-1002</td>
+              <td class="p-3 border-t">2025-09-16</td>
+              <td class="p-3 border-t">Standard Room</td>
+              <td class="p-3 border-t font-medium text-gray-800">$150</td>
+              <td class="p-3 border-t font-medium text-yellow-600">$0</td>
+              <td class="p-3 border-t">
+                <span class="px-2 py-1 rounded-full text-white bg-yellow-500 text-xs font-medium">Pending</span>
+              </td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+                <button onclick="openChildRefunds()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              </td>
+            </tr>
+
+            <!-- ✅ Row 3 -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">R-1003</td>
+              <td class="p-3 border-t">2025-09-15</td>
+              <td class="p-3 border-t">Suite</td>
+              <td class="p-3 border-t font-medium text-gray-800">$500</td>
+              <td class="p-3 border-t font-medium text-red-600">$0</td>
+              <td class="p-3 border-t">
+                <span class="px-2 py-1 rounded-full text-white bg-red-500 text-xs font-medium">Rejected</span>
+              </td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+                <button onclick="openChildRefunds()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              </td>
+            </tr>
+            <!-- ✅ Row 1 -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">R-1001</td>
+              <td class="p-3 border-t">2025-09-17</td>
+              <td class="p-3 border-t">Deluxe Room</td>
+              <td class="p-3 border-t font-medium text-gray-800">$250</td>
+              <td class="p-3 border-t font-medium text-green-600">$200</td>
+              <td class="p-3 border-t">
+                <span class="px-2 py-1 rounded-full text-white bg-green-500 text-xs font-medium">Approved</span>
+              </td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+                <button onclick="openChildRefunds()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              </td>
+            </tr>
+
+            <!-- ✅ Row 2 -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">R-1002</td>
+              <td class="p-3 border-t">2025-09-16</td>
+              <td class="p-3 border-t">Standard Room</td>
+              <td class="p-3 border-t font-medium text-gray-800">$150</td>
+              <td class="p-3 border-t font-medium text-yellow-600">$0</td>
+              <td class="p-3 border-t">
+                <span class="px-2 py-1 rounded-full text-white bg-yellow-500 text-xs font-medium">Pending</span>
+              </td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+                <button onclick="openChildRefunds()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              </td>
+            </tr>
+
+            <!-- ✅ Row 3 -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">R-1003</td>
+              <td class="p-3 border-t">2025-09-15</td>
+              <td class="p-3 border-t">Suite</td>
+              <td class="p-3 border-t font-medium text-gray-800">$500</td>
+              <td class="p-3 border-t font-medium text-red-600">$0</td>
+              <td class="p-3 border-t">
+                <span class="px-2 py-1 rounded-full text-white bg-red-500 text-xs font-medium">Rejected</span>
+              </td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+                <button onclick="openChildRefunds()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              </td>
+            </tr>
+            <!-- ✅ Row 1 -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">R-1001</td>
+              <td class="p-3 border-t">2025-09-17</td>
+              <td class="p-3 border-t">Deluxe Room</td>
+              <td class="p-3 border-t font-medium text-gray-800">$250</td>
+              <td class="p-3 border-t font-medium text-green-600">$200</td>
+              <td class="p-3 border-t">
+                <span class="px-2 py-1 rounded-full text-white bg-green-500 text-xs font-medium">Approved</span>
+              </td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+                <button onclick="openChildRefunds()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              </td>
+            </tr>
+
+            <!-- ✅ Row 2 -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">R-1002</td>
+              <td class="p-3 border-t">2025-09-16</td>
+              <td class="p-3 border-t">Standard Room</td>
+              <td class="p-3 border-t font-medium text-gray-800">$150</td>
+              <td class="p-3 border-t font-medium text-yellow-600">$0</td>
+              <td class="p-3 border-t">
+                <span class="px-2 py-1 rounded-full text-white bg-yellow-500 text-xs font-medium">Pending</span>
+              </td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+                <button onclick="openChildRefunds()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              </td>
+            </tr>
+
+            <!-- ✅ Row 3 -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">R-1003</td>
+              <td class="p-3 border-t">2025-09-15</td>
+              <td class="p-3 border-t">Suite</td>
+              <td class="p-3 border-t font-medium text-gray-800">$500</td>
+              <td class="p-3 border-t font-medium text-red-600">$0</td>
+              <td class="p-3 border-t">
+                <span class="px-2 py-1 rounded-full text-white bg-red-500 text-xs font-medium">Rejected</span>
+              </td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+                <button onclick="openChildRefunds()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              </td>
+            </tr>
+            <!-- ✅ Row 1 -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">R-1001</td>
+              <td class="p-3 border-t">2025-09-17</td>
+              <td class="p-3 border-t">Deluxe Room</td>
+              <td class="p-3 border-t font-medium text-gray-800">$250</td>
+              <td class="p-3 border-t font-medium text-green-600">$200</td>
+              <td class="p-3 border-t">
+                <span class="px-2 py-1 rounded-full text-white bg-green-500 text-xs font-medium">Approved</span>
+              </td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+                <button onclick="openChildRefunds()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              </td>
+            </tr>
+
+            <!-- ✅ Row 2 -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">R-1002</td>
+              <td class="p-3 border-t">2025-09-16</td>
+              <td class="p-3 border-t">Standard Room</td>
+              <td class="p-3 border-t font-medium text-gray-800">$150</td>
+              <td class="p-3 border-t font-medium text-yellow-600">$0</td>
+              <td class="p-3 border-t">
+                <span class="px-2 py-1 rounded-full text-white bg-yellow-500 text-xs font-medium">Pending</span>
+              </td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+                <button onclick="openChildRefunds()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              </td>
+            </tr>
+
+            <!-- ✅ Row 3 -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">R-1003</td>
+              <td class="p-3 border-t">2025-09-15</td>
+              <td class="p-3 border-t">Suite</td>
+              <td class="p-3 border-t font-medium text-gray-800">$500</td>
+              <td class="p-3 border-t font-medium text-red-600">$0</td>
+              <td class="p-3 border-t">
+                <span class="px-2 py-1 rounded-full text-white bg-red-500 text-xs font-medium">Rejected</span>
+              </td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+                <button onclick="openChildRefunds()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <nav class="flex justify-between items-center mt-6">
+        <!-- Prev/Next -->
+        <div class="flex space-x-2">
+          <button class="px-3 py-1 border rounded-md bg-gray-200 hover:bg-gray-300" onclick="prevPage()">Previous</button>
+          <button class="px-3 py-1 border rounded-md bg-gray-200 hover:bg-gray-300" onclick="nextPage()">Next</button>
+        </div>
+
+        <!-- Page Numbers -->
+        <ul class="flex space-x-2">
+          <li><button class="px-3 py-1 border rounded-md bg-gray-200 hover:bg-gray-300" onclick="goToPage(1)">1</button></li>
+          <li><button class="px-3 py-1 border rounded-md bg-gray-200 hover:bg-gray-300" onclick="goToPage(2)">2</button></li>
+          <li><button class="px-3 py-1 border rounded-md bg-gray-200 hover:bg-gray-300" onclick="goToPage(3)">3</button></li>
+          <li><span class="px-3 py-1">...</span></li>
+          <li><button class="px-3 py-1 border rounded-md bg-gray-200 hover:bg-gray-300" onclick="goToPage(10)">10</button></li>
+        </ul>
+
+        <!-- Jump to Page -->
+        <div class="flex items-center space-x-2">
+          <input id="pageInput" type="number" min="1" placeholder="Page #" class="w-20 p-1 border rounded-md focus:ring-2 focus:ring-yellow-500">
+          <button class="px-3 py-1 border rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm" onclick="jumpToPage()">Go</button>
+        </div>
+      </nav>
+    </main>
+  </div>
+
+  <script>
+    function openRefunds() { window.location.href = "../MyRefunds/index.html"; }
+    function openProfile() { window.location.href = "../ProfileDisplayCustomer/index.html"; }
+    function openIssues() { window.location.href = "../MyIssues/index.html"; }
+    function openChildRefunds() { window.location.href = "../RefundDetailsCustomer/index.html"; }
+  </script>
+
+</body>
+</html>

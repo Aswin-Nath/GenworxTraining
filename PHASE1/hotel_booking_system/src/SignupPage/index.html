@@ -1,193 +1,319 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign up Page</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>HotelEase - Sign Up</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <!-- Grey Top Bar -->
-  <div class="bg-gray-500 h-10 w-full">
-      <div class="text-xl px-6 py-2 mb-2 font-bold text-white inline-block">
-        <a href="../LandingPage/index.html">
-          <img class="h-[30px] w-[30px] pb-[5px]" src="../../assets/Hotel_logo.png">
-        </a>
+<body class="bg-gray-50 font-sans">
+
+  <!-- ✅ Header -->
+  <header class="flex justify-between items-center p-4 bg-gray-800 text-white shadow-md">
+    <div class="flex items-center space-x-3">
+      <a href="../LandingPage/index.html">
+        <img src="../../assets/Hotel_logo.png" alt="Hotel Logo" class="h-10 rounded-full">
+      </a>
+      <h1 class="text-xl font-bold tracking-wide">HotelEase</h1>
+    </div>
+    <nav class="hidden sm:flex space-x-6 font-medium">
+      <a href="../LandingPage/index.html#rooms" class="hover:text-indigo-300 transition">Rooms</a>
+      <a href="../LandingPage/index.html#offers" class="hover:text-indigo-300 transition">Offers</a>
+      <a href="../LandingPage/index.html#restaurant" class="hover:text-indigo-300 transition">Restaurant</a>
+      <a href="../LandingPage/index.html#contact" class="hover:text-indigo-300 transition">Contact</a>
+    </nav>
+  </header>
+
+  <!-- ✅ Main Container -->
+  <div class="flex justify-center items-center min-h-[calc(100vh-64px)] p-4">
+    <div class="w-full max-w-md bg-white shadow-2xl rounded-2xl border border-gray-200">
+
+      <!-- Top Banner -->
+      <div class="bg-gradient-to-r from-indigo-600 to-blue-500 text-white text-center py-4 rounded-t-2xl">
+        <h2 class="text-lg sm:text-xl font-bold">Create Your Account</h2>
+        <p class="text-xs sm:text-sm opacity-90">Join HotelEase and start booking luxury stays</p>
       </div>
-  </div>
 
-  <div class="flex justify-center items-center min-h-screen">
-      <div class="bg-white w-full max-w-md rounded-md shadow-md overflow-hidden">
-        <div class="mt-[30px]">
-          <h2 class="text-xl font-semibold text-center">Sign up</h2>
-          <form id="signupForm" class="flex flex-col space-y-3 px-6 pb-6" novalidate>
-            
-            <label class="text-sm font-medium">Name<span class="text-red-500">*</span></label>
-            <input type="text" name="name" placeholder="Enter your name" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-
-            <label class="text-sm font-medium">Gender<span class="text-red-500">*</span></label>
-            <select id="genderSelect" name="gender" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-              <option value="">Choose your gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-
-            <input 
-              type="text" 
-              id="otherGenderInput" 
-              name="otherGender" 
-              placeholder="Please specify" 
-              class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 hidden"
-            >
-
-            <label class="text-sm font-medium">Provide your DOB<span class="text-red-500">*</span></label>
-            <input type="date" name="dob" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-
-            <label class="text-sm font-medium">Email<span class="text-red-500">*</span></label>
-            <input type="email" name="email" placeholder="Enter your email" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-
-            <label class="text-sm font-medium">Phone Number<span class="text-red-500">*</span></label>
-            <input type="tel" name="phone" placeholder="Enter your phone number" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-
-            <label class="text-sm font-medium">Password<span class="text-red-500">*</span></label>
-            <input type="password" name="password" placeholder="Enter your password" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-
-            <button type="submit" class="w-full bg-black text-white py-2 rounded-md mt-2 hover:bg-gray-800">Create Account</button>
-
-            <p class="text-sm text-center mt-2">Already have an account?
-              <a href="../LoginPage/index.html" class="text-indigo-600 hover:underline">Login</a>
-            </p>
-          </form>
+      <!-- Form Section -->
+      <form id="signupForm" class="px-6 py-4 space-y-3" novalidate>
+        <!-- Name -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Name<span class="text-red-500">*</span></label>
+          <input type="text" name="name" placeholder="Enter your name"
+                 class="input-field" />
         </div>
-      </div>
+
+        <!-- Gender -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Gender<span class="text-red-500">*</span></label>
+          <select id="genderSelect" name="gender" class="input-field">
+            <option value="">Choose your gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <input type="text" id="otherGenderInput" name="otherGender" placeholder="Please specify"
+                 class="hidden input-field mt-2" />
+        </div>
+
+        <!-- DOB -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Date of Birth<span class="text-red-500">*</span></label>
+          <input type="date" name="dob" class="input-field" />
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Email<span class="text-red-500">*</span></label>
+          <input type="email" name="email" placeholder="Enter your email" class="input-field" disabled />
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Phone Number<span class="text-red-500">*</span></label>
+          <input type="tel" name="phone" placeholder="10-digit number" class="input-field" disabled />
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Password<span class="text-red-500">*</span></label>
+          <input type="password" name="password" placeholder="••••••••" class="input-field" disabled />
+        </div>
+
+        <!-- Button -->
+        <button type="submit"
+                class="w-full bg-gradient-to-r from-indigo-600 to-blue-500 text-white py-2 rounded-lg hover:from-indigo-700 hover:to-blue-600 shadow-md transition">
+          Create Account
+        </button>
+
+        <!-- Already have account -->
+        <p class="text-xs sm:text-sm text-center text-gray-600">
+          Already have an account?
+          <a href="../LoginPage/index.html" class="text-indigo-600 font-medium hover:underline">Login</a>
+        </p>
+      </form>
+    </div>
   </div>
 
+  <!-- ✅ Script -->
   <script>
-  const form = document.getElementById("signupForm");
-  const nameInput = form.querySelector('input[name="name"]');
-  const genderSelect = form.querySelector('select[name="gender"]');
-  const otherGenderInput = document.getElementById("otherGenderInput");
-  const dobInput = form.querySelector('input[name="dob"]');
-  const emailInput = form.querySelector('input[name="email"]');
-  const phoneInput = form.querySelector('input[name="phone"]');
-  const passwordInput = form.querySelector('input[name="password"]');
 
-  emailInput.disabled = true;
-  phoneInput.disabled = true;
-  passwordInput.disabled = true;
+    const form = document.getElementById("signupForm");
+    const nameInput = form.querySelector('input[name="name"]');
+    const genderSelect = form.querySelector('select[name="gender"]');
+    const otherGenderInput = document.getElementById("otherGenderInput");
+    const dobInput = form.querySelector('input[name="dob"]');
+    const emailInput = form.querySelector('input[name="email"]');
+    const phoneInput = form.querySelector('input[name="phone"]');
+    const passwordInput = form.querySelector('input[name="password"]');
 
-  genderSelect.addEventListener("change", () => {
-    if (genderSelect.value === "Other") {
-      otherGenderInput.classList.remove("hidden");
-    } else {
-      otherGenderInput.classList.add("hidden");
-      otherGenderInput.value = "";
-    }
-    checkBasicDetails();
-  });
+    /* Add baseline tailwind classes to .input-field elements */
+    document.querySelectorAll(".input-field").forEach(el => {
+      el.classList.add("w-full","mt-1","border","border-gray-300","rounded-lg","px-3","py-2","focus:ring-2","focus:ring-indigo-500");
+    });
 
-  function checkBasicDetails() {
-    const isNameFilled = nameInput.value.trim() !== "";
-    const isGenderFilled = genderSelect.value !== "" && (genderSelect.value !== "Other" || otherGenderInput.value.trim() !== "");
-    const isDobFilled = dobInput.value.trim() !== "";
-    const canEnable = isNameFilled && isGenderFilled && isDobFilled;
-    emailInput.disabled = !canEnable;
-    phoneInput.disabled = !canEnable;
-  }
+    // initially disabled advanced fields
+    emailInput.disabled = true;
+    phoneInput.disabled = true;
+    passwordInput.disabled = true;
 
-  function updatePasswordEnable() {
-    const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
-    const phoneRegex = /^\\d{10}$/;
-    const isEmailValid = emailRegex.test(emailInput.value.trim());
-    const isPhoneValid = phoneRegex.test(phoneInput.value.replace(/\\s/g, ''));
-    passwordInput.disabled = !(isEmailValid && isPhoneValid);
-  }
-
-  nameInput.addEventListener("input", checkBasicDetails);
-  dobInput.addEventListener("input", checkBasicDetails);
-  otherGenderInput.addEventListener("input", checkBasicDetails);
-  emailInput.addEventListener("input", updatePasswordEnable);
-  phoneInput.addEventListener("input", updatePasswordEnable);
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    form.querySelectorAll(".error-msg").forEach(el => el.remove());
-    let isValid = true;
-
-    if (!nameInput.value.trim()) {
-      isValid = false;
-      showError(nameInput, "This field is required");
+    // --- helper: remove any error message right after the field ---
+    function clearError(input) {
+      const next = input.nextElementSibling;
+      if (next && next.classList.contains("error-msg")) next.remove();
+      input.classList.remove("ring-2","ring-red-400","border-red-400"); // optional visual reset
     }
 
-    if (!genderSelect.value) {
-      isValid = false;
-      showError(genderSelect, "This field is required");
-    } else if (genderSelect.value === "Other" && !otherGenderInput.value.trim()) {
-      isValid = false;
-      showError(otherGenderInput, "Please specify your gender");
+    // --- helper: show an error message just below input/select ---
+    function showError(input, message) {
+      clearError(input);
+      const error = document.createElement("p");
+      error.className = "error-msg text-red-500 text-xs mt-1";
+      error.innerText = message;
+      input.insertAdjacentElement("afterend", error);
+      // visual highlight
+      input.classList.add("ring-2","ring-red-400","border-red-400");
     }
 
-    if (!dobInput.value.trim()) {
-      isValid = false;
-      showError(dobInput, "This field is required");
-    }
+    // Email field validation (live + on blur)
+      emailInput.addEventListener("blur", () => validateField(emailInput));
 
-    if (!emailInput.value.trim()) {
-      isValid = false;
-      showError(emailInput, "This field is required");
-    } else {
-      const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
-      if (!emailRegex.test(emailInput.value)) {
-        isValid = false;
-        showError(emailInput, "Enter a valid email address");
+      emailInput.addEventListener("input", () => {
+        const value = emailInput.value.trim();
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (re.test(value)) {
+          clearError(emailInput);
+        } else {
+          showError(emailInput, "Enter a valid email");
+        }
+        updatePasswordEnable();
+      });
+
+    // --- validation function that only returns boolean (no DOM changes) ---
+    function isFieldValid(input) {
+      const name = input.name;
+      const value = (input.value || "").trim();
+
+      if (name === "name") return value.length > 0;
+      if (name === "gender") return value !== "";
+      if (name === "otherGender") {
+        // valid only if visible
+        if (input.classList.contains("hidden")) return true;
+        return value.length > 0;
       }
-    }
-
-    if (!phoneInput.value.trim()) {
-      isValid = false;
-      showError(phoneInput, "This field is required");
-    } else {
-      const phoneRegex = /^\\d{10}$/;
-      if (!phoneRegex.test(phoneInput.value.replace(/\\s/g, ''))) {
-        isValid = false;
-        showError(phoneInput, "Enter a valid 10-digit phone number");
+      if (name === "dob") return value.length > 0;
+      if (name === "email") {
+        if (!value) return false;
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(value);
       }
+      if (name === "phone") {
+        if (!value) return false;
+        const re = /^\d{10}$/;
+        return re.test(value.replace(/\s/g,""));
+      }
+      if (name === "password") return value.length > 0;
+      return true;
     }
 
-    if (!passwordInput.value.trim()) {
-      isValid = false;
-      showError(passwordInput, "This field is required");
+    // --- validate and show error (used on blur & submit) ---
+    function validateField(input) {
+      clearError(input);
+      const name = input.name;
+      const value = (input.value || "").trim();
+
+      if (name === "name" && !value) { showError(input, "This field is required"); return false; }
+      if (name === "gender" && !value) { showError(input, "This field is required"); return false; }
+      if (name === "otherGender" && !input.classList.contains("hidden") && !value) { showError(input, "Please specify your gender"); return false; }
+      if (name === "dob" && !value) { showError(input, "This field is required"); return false; }
+      if (name === "email") {
+        if (!value) { showError(input, "This field is required"); return false; }
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!re.test(value)) { showError(input, "Enter a valid email"); return false; }
+      }
+      if (name === "phone") {
+        if (!value) { showError(input, "This field is required"); return false; }
+        const re = /^\d{10}$/;
+        if (!re.test(value.replace(/\s/g,""))) { showError(input, "Enter a valid 10-digit number"); return false; }
+      }
+      if (name === "password" && !value) { showError(input, "This field is required"); return false; }
+
+      // valid
+      clearError(input);
+      return true;
     }
 
-    if (isValid) {
-      localStorage.setItem("name", nameInput.value.trim());
-      localStorage.setItem("gender", genderSelect.value);
+    // --- when the core basics are filled, enable email & phone ---
+    function checkBasicDetails() {
+      const isName = nameInput.value.trim() !== "";
+      const isGender = genderSelect.value !== "" && (genderSelect.value !== "Other" || otherGenderInput.value.trim() !== "");
+      const isDob = dobInput.value.trim() !== "";
+      const canEnable = isName && isGender && isDob;
+      emailInput.disabled = !canEnable;
+      phoneInput.disabled = !canEnable;
+
+      // clear errors for email/phone if they become disabled
+      if (emailInput.disabled) clearError(emailInput);
+      if (phoneInput.disabled) clearError(phoneInput);
+    }
+
+    // --- enable password only when email & phone valid ---
+    function updatePasswordEnable() {
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const phoneRe = /^\d{10}$/;
+      const emailValid = emailRe.test(emailInput.value.trim());
+      const phoneValid = phoneRe.test(phoneInput.value.replace(/\s/g,""));
+      passwordInput.disabled = !(emailValid && phoneValid);
+      if (passwordInput.disabled) clearError(passwordInput);
+    }
+
+    // attach blur validators (show errors)
+    [nameInput, genderSelect, otherGenderInput, dobInput, emailInput, phoneInput, passwordInput].forEach(el => {
+      el.addEventListener("blur", () => validateField(el));
+    });
+
+    // attach input/change listeners that REMOVE errors as soon as the field becomes valid
+    nameInput.addEventListener("input", () => {
+      if (isFieldValid(nameInput)) clearError(nameInput);
+      checkBasicDetails();
+    });
+
+    genderSelect.addEventListener("change", () => {
+      // show/hide other field
       if (genderSelect.value === "Other") {
-        localStorage.setItem("otherGender", otherGenderInput.value.trim());
+        otherGenderInput.classList.remove("hidden");
       } else {
-        localStorage.removeItem("otherGender");
+        otherGenderInput.classList.add("hidden");
+        otherGenderInput.value = "";
+        clearError(otherGenderInput);
       }
-      localStorage.setItem("dob", dobInput.value);
-      localStorage.setItem("email", emailInput.value.trim());
-      localStorage.setItem("phone", phoneInput.value.trim());
-      localStorage.setItem("password", passwordInput.value.trim());
+      if (isFieldValid(genderSelect)) clearError(genderSelect);
+      checkBasicDetails();
+    });
 
-      alert("Form submitted successfully! Data saved to localStorage.");
+    otherGenderInput.addEventListener("input", () => {
+      if (isFieldValid(otherGenderInput)) clearError(otherGenderInput);
+      checkBasicDetails();
+    });
+
+    dobInput.addEventListener("input", () => {
+      if (isFieldValid(dobInput)) clearError(dobInput);
+      checkBasicDetails();
+    });
+
+    emailInput.addEventListener("input", () => {
+      if (isFieldValid(emailInput)) clearError(emailInput);
+      updatePasswordEnable();
+    });
+
+    phoneInput.addEventListener("input", () => {
+      if (isFieldValid(phoneInput)) clearError(phoneInput);
+      updatePasswordEnable();
+    });
+
+    passwordInput.addEventListener("input", () => {
+      if (isFieldValid(passwordInput)) clearError(passwordInput);
+    });
+
+    // run initial basics check
+    checkBasicDetails();
+
+    // final submit: validate all enabled fields and focus first error
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      // remove old errors
+      form.querySelectorAll(".error-msg").forEach(el => el.remove());
+      let allValid = true;
+      let firstError = null;
+
+      const fields = [nameInput, genderSelect, otherGenderInput, dobInput, emailInput, phoneInput, passwordInput];
+      for (const f of fields) {
+        // skip disabled fields (they're not required yet)
+        if (f.disabled) continue;
+        const ok = validateField(f);
+        if (!ok) {
+          allValid = false;
+          if (!firstError) firstError = f;
+        }
+      }
+
+      if (!allValid) {
+        firstError.focus();
+        return;
+      }
+
+      // success flow (example)
+      alert("Signup successful!");
       form.reset();
       otherGenderInput.classList.add("hidden");
       emailInput.disabled = true;
       phoneInput.disabled = true;
       passwordInput.disabled = true;
-    }
-  });
+      // clear any lingering errors / styling
+      form.querySelectorAll(".error-msg").forEach(el => el.remove());
+      document.querySelectorAll(".input-field").forEach(el => el.classList.remove("ring-2","ring-red-400","border-red-400"));
+    });
 
-  function showError(input, message) {
-    const error = document.createElement("p");
-    error.className = "error-msg text-red-500 text-xs mt-1";
-    error.innerText = message;
-    input.insertAdjacentElement("afterend", error);
-  }
   </script>
 </body>
 </html>
