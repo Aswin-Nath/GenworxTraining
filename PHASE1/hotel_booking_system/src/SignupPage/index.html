@@ -3,35 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>HotelEase - Sign Up</title>
+  <title>LuxuryStay - Sign Up</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 font-sans">
 
-  <!-- ✅ Header -->
-  <header class="flex justify-between items-center p-4 bg-gray-800 text-white shadow-md">
+<!-- ✅ Header -->
+<header class="flex justify-between items-center bg-white shadow-md px-6 py-4 sticky top-0 z-50">
     <div class="flex items-center space-x-3">
-      <a href="../LandingPage/index.html">
-        <img src="../../assets/Hotel_logo.png" alt="Hotel Logo" class="h-10 rounded-full">
-      </a>
-      <h1 class="text-xl font-bold tracking-wide">HotelEase</h1>
+    <a href="../LandingPage/index.html">
+      <!-- Added border & padding to logo -->
+      <img src="../../assets/Hotel_logo.png" alt="Hotel Logo" 
+            class="h-8 sm:h-10 rounded-full border-2 border-yellow-600 p-1">
+    </a>
+    <h1 class="text-lg sm:text-xl md:text-2xl font-bold text-yellow-700">LuxuryStay</h1>
     </div>
-    <nav class="hidden sm:flex space-x-6 font-medium">
-      <a href="../LandingPage/index.html#rooms" class="hover:text-indigo-300 transition">Rooms</a>
-      <a href="../LandingPage/index.html#offers" class="hover:text-indigo-300 transition">Offers</a>
-      <a href="../LandingPage/index.html#restaurant" class="hover:text-indigo-300 transition">Restaurant</a>
-      <a href="../LandingPage/index.html#contact" class="hover:text-indigo-300 transition">Contact</a>
-    </nav>
-  </header>
+</header>
 
-  <!-- ✅ Main Container -->
-  <div class="flex justify-center items-center min-h-[calc(100vh-64px)] p-4">
+<!-- ✅ Main Container -->
+<div class="flex min-h-[calc(100vh-64px)]">
+
+  <!-- Left Column (Rich Hotel Experience) -->
+  <div class="hidden md:flex w-1/2 bg-cover bg-center relative"
+       style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80');">
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+    <div class="relative z-10 flex flex-col justify-center items-center text-center px-10">
+      <h2 class="text-4xl font-extrabold text-white mb-4">Join the World of Luxury</h2>
+      <p class="text-lg text-gray-200 leading-relaxed mb-6">
+        Become a LuxuryStay member and unlock premium benefits:  
+        exclusive discounts, priority bookings, and personalized experiences designed for you.
+      </p>
+    </div>
+  </div>
+
+  <!-- Divider -->
+  <div class="hidden md:block w-px bg-gray-300"></div>
+
+  <!-- Right Column (Sign Up Form) -->
+  <div class="flex justify-center items-center w-full md:w-1/2 p-6">
     <div class="w-full max-w-md bg-white shadow-2xl rounded-2xl border border-gray-200">
 
       <!-- Top Banner -->
-      <div class="bg-gradient-to-r from-indigo-600 to-blue-500 text-white text-center py-4 rounded-t-2xl">
+      <div class="bg-gradient-to-r from-amber-600 to-yellow-500 text-white text-center py-4 rounded-t-2xl">
         <h2 class="text-lg sm:text-xl font-bold">Create Your Account</h2>
-        <p class="text-xs sm:text-sm opacity-90">Join HotelEase and start booking luxury stays</p>
+        <p class="text-xs sm:text-sm opacity-90">Join LuxuryStay and start booking luxury stays</p>
       </div>
 
       <!-- Form Section -->
@@ -39,8 +54,7 @@
         <!-- Name -->
         <div>
           <label class="block text-sm font-medium text-gray-700">Name<span class="text-red-500">*</span></label>
-          <input type="text" name="name" placeholder="Enter your name"
-                 class="input-field" />
+          <input type="text" name="name" placeholder="Enter your name" class="input-field" />
         </div>
 
         <!-- Gender -->
@@ -82,238 +96,133 @@
 
         <!-- Button -->
         <button type="submit"
-                class="w-full bg-gradient-to-r from-indigo-600 to-blue-500 text-white py-2 rounded-lg hover:from-indigo-700 hover:to-blue-600 shadow-md transition">
+                class="w-full bg-gradient-to-r from-amber-600 to-yellow-500 text-white py-2 rounded-lg hover:from-amber-700 hover:to-yellow-600 shadow-md transition">
           Create Account
         </button>
 
         <!-- Already have account -->
         <p class="text-xs sm:text-sm text-center text-gray-600">
           Already have an account?
-          <a href="../LoginPage/index.html" class="text-indigo-600 font-medium hover:underline">Login</a>
+          <a href="../LoginPage/index.html" class="text-amber-600 font-medium hover:underline">Login</a>
         </p>
       </form>
     </div>
   </div>
+</div>
 
-  <!-- ✅ Script -->
-  <script>
+<!-- ✅ Script -->
+<script>
+  const form = document.getElementById("signupForm");
+  const nameInput = form.querySelector('input[name="name"]');
+  const genderSelect = form.querySelector('select[name="gender"]');
+  const otherGenderInput = document.getElementById("otherGenderInput");
+  const dobInput = form.querySelector('input[name="dob"]');
+  const emailInput = form.querySelector('input[name="email"]');
+  const phoneInput = form.querySelector('input[name="phone"]');
+  const passwordInput = form.querySelector('input[name="password"]');
 
-    const form = document.getElementById("signupForm");
-    const nameInput = form.querySelector('input[name="name"]');
-    const genderSelect = form.querySelector('select[name="gender"]');
-    const otherGenderInput = document.getElementById("otherGenderInput");
-    const dobInput = form.querySelector('input[name="dob"]');
-    const emailInput = form.querySelector('input[name="email"]');
-    const phoneInput = form.querySelector('input[name="phone"]');
-    const passwordInput = form.querySelector('input[name="password"]');
+  // baseline classes
+  document.querySelectorAll(".input-field").forEach(el => {
+    el.classList.add("w-full","mt-1","border","border-gray-300","rounded-lg","px-3","py-2","focus:ring-2","focus:ring-amber-500","focus:border-amber-500");
+  });
 
-    /* Add baseline tailwind classes to .input-field elements */
-    document.querySelectorAll(".input-field").forEach(el => {
-      el.classList.add("w-full","mt-1","border","border-gray-300","rounded-lg","px-3","py-2","focus:ring-2","focus:ring-indigo-500");
-    });
+  // Initially disabled advanced fields
+  emailInput.disabled = true;
+  phoneInput.disabled = true;
+  passwordInput.disabled = true;
 
-    // initially disabled advanced fields
-    emailInput.disabled = true;
-    phoneInput.disabled = true;
-    passwordInput.disabled = true;
+  // Error helpers
+  function clearError(input) {
+    const next = input.nextElementSibling;
+    if (next && next.classList.contains("error-msg")) next.remove();
+    input.classList.remove("ring-2","ring-red-400","border-red-400");
+  }
+  function showError(input, message) {
+    clearError(input);
+    const error = document.createElement("p");
+    error.className = "error-msg text-red-500 text-xs mt-1";
+    error.innerText = message;
+    input.insertAdjacentElement("afterend", error);
+    input.classList.add("ring-2","ring-red-400","border-red-400");
+  }
 
-    // --- helper: remove any error message right after the field ---
-    function clearError(input) {
-      const next = input.nextElementSibling;
-      if (next && next.classList.contains("error-msg")) next.remove();
-      input.classList.remove("ring-2","ring-red-400","border-red-400"); // optional visual reset
-    }
+  // Validators
+  function validateEmail(value) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); }
+  function validatePhone(value) { return /^\d{10}$/.test(value); }
+  function validatePassword(value) {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value);
+  }
+  function validateDob(value) {
+    if (!value) return false;
+    const today = new Date();
+    return new Date(value) < today;
+  }
 
-    // --- helper: show an error message just below input/select ---
-    function showError(input, message) {
-      clearError(input);
-      const error = document.createElement("p");
-      error.className = "error-msg text-red-500 text-xs mt-1";
-      error.innerText = message;
-      input.insertAdjacentElement("afterend", error);
-      // visual highlight
-      input.classList.add("ring-2","ring-red-400","border-red-400");
-    }
+  // Enable email/phone after basics valid
+  function checkBasicDetails() {
+    const isName = nameInput.value.trim() !== "";
+    const isGender = genderSelect.value !== "" && (genderSelect.value !== "Other" || otherGenderInput.value.trim() !== "");
+    const isDob = validateDob(dobInput.value.trim());
+    const canEnable = isName && isGender && isDob;
 
-    // Email field validation (live + on blur)
-      emailInput.addEventListener("blur", () => validateField(emailInput));
+    emailInput.disabled = !canEnable;
+    phoneInput.disabled = !canEnable;
+  }
 
-      emailInput.addEventListener("input", () => {
-        const value = emailInput.value.trim();
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (re.test(value)) {
-          clearError(emailInput);
-        } else {
-          showError(emailInput, "Enter a valid email");
-        }
-        updatePasswordEnable();
-      });
+  // Enable password after email & phone valid
+  function updatePasswordEnable() {
+    const emailValid = validateEmail(emailInput.value.trim());
+    const phoneValid = validatePhone(phoneInput.value.trim());
+    passwordInput.disabled = !(emailValid && phoneValid);
+  }
 
-    // --- validation function that only returns boolean (no DOM changes) ---
-    function isFieldValid(input) {
-      const name = input.name;
-      const value = (input.value || "").trim();
-
-      if (name === "name") return value.length > 0;
-      if (name === "gender") return value !== "";
-      if (name === "otherGender") {
-        // valid only if visible
-        if (input.classList.contains("hidden")) return true;
-        return value.length > 0;
-      }
-      if (name === "dob") return value.length > 0;
-      if (name === "email") {
-        if (!value) return false;
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(value);
-      }
-      if (name === "phone") {
-        if (!value) return false;
-        const re = /^\d{10}$/;
-        return re.test(value.replace(/\s/g,""));
-      }
-      if (name === "password") return value.length > 0;
-      return true;
-    }
-
-    // --- validate and show error (used on blur & submit) ---
-    function validateField(input) {
-      clearError(input);
-      const name = input.name;
-      const value = (input.value || "").trim();
-
-      if (name === "name" && !value) { showError(input, "This field is required"); return false; }
-      if (name === "gender" && !value) { showError(input, "This field is required"); return false; }
-      if (name === "otherGender" && !input.classList.contains("hidden") && !value) { showError(input, "Please specify your gender"); return false; }
-      if (name === "dob" && !value) { showError(input, "This field is required"); return false; }
-      if (name === "email") {
-        if (!value) { showError(input, "This field is required"); return false; }
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!re.test(value)) { showError(input, "Enter a valid email"); return false; }
-      }
-      if (name === "phone") {
-        if (!value) { showError(input, "This field is required"); return false; }
-        const re = /^\d{10}$/;
-        if (!re.test(value.replace(/\s/g,""))) { showError(input, "Enter a valid 10-digit number"); return false; }
-      }
-      if (name === "password" && !value) { showError(input, "This field is required"); return false; }
-
-      // valid
-      clearError(input);
-      return true;
-    }
-
-    // --- when the core basics are filled, enable email & phone ---
-    function checkBasicDetails() {
-      const isName = nameInput.value.trim() !== "";
-      const isGender = genderSelect.value !== "" && (genderSelect.value !== "Other" || otherGenderInput.value.trim() !== "");
-      const isDob = dobInput.value.trim() !== "";
-      const canEnable = isName && isGender && isDob;
-      emailInput.disabled = !canEnable;
-      phoneInput.disabled = !canEnable;
-
-      // clear errors for email/phone if they become disabled
-      if (emailInput.disabled) clearError(emailInput);
-      if (phoneInput.disabled) clearError(phoneInput);
-    }
-
-    // --- enable password only when email & phone valid ---
-    function updatePasswordEnable() {
-      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const phoneRe = /^\d{10}$/;
-      const emailValid = emailRe.test(emailInput.value.trim());
-      const phoneValid = phoneRe.test(phoneInput.value.replace(/\s/g,""));
-      passwordInput.disabled = !(emailValid && phoneValid);
-      if (passwordInput.disabled) clearError(passwordInput);
-    }
-
-    // attach blur validators (show errors)
-    [nameInput, genderSelect, otherGenderInput, dobInput, emailInput, phoneInput, passwordInput].forEach(el => {
-      el.addEventListener("blur", () => validateField(el));
-    });
-
-    // attach input/change listeners that REMOVE errors as soon as the field becomes valid
-    nameInput.addEventListener("input", () => {
-      if (isFieldValid(nameInput)) clearError(nameInput);
-      checkBasicDetails();
-    });
-
-    genderSelect.addEventListener("change", () => {
-      // show/hide other field
-      if (genderSelect.value === "Other") {
-        otherGenderInput.classList.remove("hidden");
-      } else {
-        otherGenderInput.classList.add("hidden");
-        otherGenderInput.value = "";
-        clearError(otherGenderInput);
-      }
-      if (isFieldValid(genderSelect)) clearError(genderSelect);
-      checkBasicDetails();
-    });
-
-    otherGenderInput.addEventListener("input", () => {
-      if (isFieldValid(otherGenderInput)) clearError(otherGenderInput);
-      checkBasicDetails();
-    });
-
-    dobInput.addEventListener("input", () => {
-      if (isFieldValid(dobInput)) clearError(dobInput);
-      checkBasicDetails();
-    });
-
-    emailInput.addEventListener("input", () => {
-      if (isFieldValid(emailInput)) clearError(emailInput);
-      updatePasswordEnable();
-    });
-
-    phoneInput.addEventListener("input", () => {
-      if (isFieldValid(phoneInput)) clearError(phoneInput);
-      updatePasswordEnable();
-    });
-
-    passwordInput.addEventListener("input", () => {
-      if (isFieldValid(passwordInput)) clearError(passwordInput);
-    });
-
-    // run initial basics check
+  // Realtime validation
+  nameInput.addEventListener("input", () => { 
+    if (!nameInput.value.trim()) showError(nameInput,"Name is required"); else clearError(nameInput); 
     checkBasicDetails();
+  });
+  genderSelect.addEventListener("change", () => {
+    if (genderSelect.value === "Other") otherGenderInput.classList.remove("hidden");
+    else { otherGenderInput.classList.add("hidden"); otherGenderInput.value=""; clearError(otherGenderInput); }
+    checkBasicDetails();
+  });
+  otherGenderInput.addEventListener("input", checkBasicDetails);
+  dobInput.addEventListener("input", () => {
+    if (!validateDob(dobInput.value.trim())) showError(dobInput,"Enter a valid past date"); else clearError(dobInput);
+    checkBasicDetails();
+  });
+  emailInput.addEventListener("input", () => {
+    if (!validateEmail(emailInput.value.trim())) showError(emailInput,"Enter a valid email"); else clearError(emailInput);
+    updatePasswordEnable();
+  });
+  phoneInput.addEventListener("input", () => {
+    if (!validatePhone(phoneInput.value.trim())) showError(phoneInput,"Enter a valid 10-digit Indian number"); else clearError(phoneInput);
+    updatePasswordEnable();
+  });
+  passwordInput.addEventListener("input", () => {
+    if (!validatePassword(passwordInput.value.trim())) showError(passwordInput,"Password must be at least 8 chars, include uppercase, lowercase, number & special char");
+    else clearError(passwordInput);
+  });
 
-    // final submit: validate all enabled fields and focus first error
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      // remove old errors
-      form.querySelectorAll(".error-msg").forEach(el => el.remove());
-      let allValid = true;
-      let firstError = null;
-
-      const fields = [nameInput, genderSelect, otherGenderInput, dobInput, emailInput, phoneInput, passwordInput];
-      for (const f of fields) {
-        // skip disabled fields (they're not required yet)
-        if (f.disabled) continue;
-        const ok = validateField(f);
-        if (!ok) {
-          allValid = false;
-          if (!firstError) firstError = f;
-        }
-      }
-
-      if (!allValid) {
-        firstError.focus();
-        return;
-      }
-
-      // success flow (example)
-      alert("Signup successful!");
-      form.reset();
-      otherGenderInput.classList.add("hidden");
-      emailInput.disabled = true;
-      phoneInput.disabled = true;
-      passwordInput.disabled = true;
-      // clear any lingering errors / styling
-      form.querySelectorAll(".error-msg").forEach(el => el.remove());
-      document.querySelectorAll(".input-field").forEach(el => el.classList.remove("ring-2","ring-red-400","border-red-400"));
-    });
-
-  </script>
+  // ✅ Submit
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!nameInput.value.trim() || !validateDob(dobInput.value.trim()) ||
+        !validateEmail(emailInput.value.trim()) || !validatePhone(phoneInput.value.trim()) ||
+        !validatePassword(passwordInput.value.trim())) {
+      alert("Please correct the errors before submitting."); return;
+    }
+    // Save to localStorage
+    localStorage.setItem("name", nameInput.value.trim());
+    localStorage.setItem("gender", genderSelect.value);
+    if (genderSelect.value==="Other") localStorage.setItem("otherGender",otherGenderInput.value.trim());
+    localStorage.setItem("dob", dobInput.value.trim());
+    localStorage.setItem("email", emailInput.value.trim());
+    localStorage.setItem("phone", phoneInput.value.trim());
+    localStorage.setItem("password", passwordInput.value.trim());
+    alert("Signup successful! You can now login.");
+    window.location.href="../LoginPage/index.html";
+  });
+</script>
 </body>
 </html>

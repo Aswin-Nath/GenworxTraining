@@ -3,167 +3,186 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HotelEase - Login</title>
+  <title>LuxuryStay - Login</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 font-sans">
 
-  <!-- ✅ Header -->
-  <header class="flex justify-between items-center p-4 bg-gray-800 text-white shadow-md">
-    <div class="flex items-center space-x-3">
-      <a href="../LandingPage/index.html">
-        <img src="../../assets/Hotel_logo.png" alt="Hotel Logo" class="h-10 rounded-full">
-      </a>
-      <h1 class="text-xl font-bold tracking-wide">HotelEase</h1>
-    </div>
-    <nav class="hidden sm:flex space-x-6 font-medium">
-      <a href="../LandingPage/index.html#rooms" class="hover:text-indigo-300 transition">Rooms</a>
-      <a href="../LandingPage/index.html#offers" class="hover:text-indigo-300 transition">Offers</a>
-      <a href="../LandingPage/index.html#restaurant" class="hover:text-indigo-300 transition">Restaurant</a>
-      <a href="../LandingPage/index.html#contact" class="hover:text-indigo-300 transition">Contact</a>
-    </nav>
-  </header>
+<!-- ✅ Header -->
+<header class="flex justify-between items-center bg-white shadow-md px-6 py-4 sticky top-0 z-50">
+  <div class="flex items-center space-x-3">
+    <a href="../LandingPage/index.html">
+      <!-- Added border & padding to logo -->
+      <img src="../../assets/Hotel_logo.png" alt="Hotel Logo" 
+            class="h-8 sm:h-10 rounded-full border-2 border-yellow-600 p-1">
+    </a>
+    <h1 class="text-lg sm:text-xl md:text-2xl font-bold text-yellow-700">LuxuryStay</h1>
+  </div>
+</header>
 
-  <!-- ✅ Main Login Container -->
-  <div class="flex justify-center items-center min-h-[calc(100vh-64px)] p-6">
-    <div class="w-full max-w-md bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-200">
-      
-      <!-- Top Banner -->
-      <div class="bg-gradient-to-r from-indigo-600 to-blue-500 text-white text-center py-6">
-        <h2 class="text-2xl font-bold">Welcome Back</h2>
-        <p class="text-sm opacity-90">Log in to continue your HotelEase journey</p>
-      </div>
 
-      <!-- Form Section -->
-      <form id="loginForm" class="flex flex-col space-y-4 px-8 py-6" novalidate>
-        
-        <!-- Email -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Email Address<span class="text-red-500">*</span></label>
-          <input type="email" name="email" placeholder="example@email.com"
-                 class="w-full mt-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
-        </div>
-
-        <!-- Password -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Password<span class="text-red-500">*</span></label>
-          <input type="password" name="password" placeholder="••••••••"
-                 class="w-full mt-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" disabled>
-          <a href="#" class="text-xs text-indigo-600 hover:underline block text-right mt-1">Forgot password?</a>
-        </div>
-
-        <!-- Button -->
-        <button type="submit"
-                class="w-full bg-gradient-to-r from-indigo-600 to-blue-500 text-white py-2.5 rounded-lg mt-2 hover:from-indigo-700 hover:to-blue-600 shadow-md transition">
-          Sign In
-        </button>
-
-        <!-- Signup Link -->
-        <p class="text-sm text-center text-gray-600">
-          Don’t have an account?
-          <a href="../SignupPage/index.html" class="text-indigo-600 font-medium hover:underline">Sign up</a>
+  <!-- ✅ Main Container -->
+  <div class="flex min-h-[calc(100vh-64px)]">
+    
+    <!-- Left Column (Image + Text Overlay) -->
+    <div class="hidden md:flex w-1/2 bg-cover bg-center relative" 
+         style="background-image: url('../../assets/hotel_luxury.jpg');">
+      <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+      <div class="relative z-10 flex flex-col justify-center items-center text-center px-8">
+        <h2 class="text-4xl font-extrabold text-white mb-4">Experience Luxury</h2>
+        <p class="text-lg text-gray-200 leading-relaxed">
+          Discover elegance, comfort, and premium hospitality at LuxuryStay.  
+          Enjoy exclusive offers, world-class amenities, and an unforgettable stay.
         </p>
-      </form>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="hidden md:block w-px bg-gray-300"></div>
+
+    <!-- Right Column (Login Form) -->
+<div class="flex justify-center items-center w-full md:w-1/2 p-6">
+  <div class="w-full max-w-md bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-200">
+    
+    <!-- Top Banner -->
+    <div class="bg-gradient-to-r from-amber-600 to-yellow-500 text-white text-center py-6">
+      <h2 class="text-2xl font-bold">Welcome Back</h2>
+      <p class="text-sm opacity-90">Log in to continue your LuxuryStay journey</p>
+    </div>
+
+    <!-- Tabs for Email / Mobile -->
+    <!-- Tabs for Email / Mobile -->
+<div class="flex border-b border-gray-200">
+  <button id="emailTab" 
+          class="w-1/2 py-3 text-center font-medium text-amber-600 border-b-2 border-amber-600 focus:outline-none">
+    Email
+  </button>
+  <button id="mobileTab" 
+          class="w-1/2 py-3 text-center font-medium text-gray-600 hover:text-amber-600 focus:outline-none">
+    Mobile
+  </button>
+</div>
+
+<!-- Form Section -->
+<form id="loginForm" class="flex flex-col space-y-4 px-8 py-6 relative" novalidate>
+
+  <!-- Wrapper to prevent shaking -->
+  <div class="relative h-[80px]">
+    <!-- Email Input -->
+    <div id="emailLogin" class="absolute inset-0 transition-opacity duration-300">
+      <label class="block text-sm font-medium text-gray-700">Email Address<span class="text-red-500">*</span></label>
+      <input type="email" name="email" placeholder="example@email.com"
+             class="w-full mt-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition">
+    </div>
+
+    <!-- Mobile Input -->
+    <div id="mobileLogin" class="absolute inset-0 opacity-0 pointer-events-none transition-opacity duration-300">
+      <label class="block text-sm font-medium text-gray-700">Mobile Number<span class="text-red-500">*</span></label>
+      <input type="tel" name="mobile" placeholder="+91 98765 43210"
+             class="w-full mt-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition">
     </div>
   </div>
 
-<script>
-  const loginForm = document.getElementById("loginForm");
-  const emailInput = loginForm.querySelector('input[name="email"]');
-  const passwordInput = loginForm.querySelector('input[name="password"]');
+  <!-- Password -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700">Password<span class="text-red-500">*</span></label>
+    <input type="password" name="password" placeholder="••••••••"
+           class="w-full mt-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition" disabled>
+    <a href="#" class="text-xs text-amber-600 hover:underline block text-right mt-1">Forgot password?</a>
+  </div>
 
-  // Disable password initially
-  passwordInput.disabled = true;
+  <!-- Button -->
+  <button type="submit"
+          class="w-full bg-gradient-to-r from-amber-600 to-yellow-500 text-white py-2.5 rounded-lg mt-2 hover:from-amber-700 hover:to-yellow-600 shadow-md transition">
+    Sign In
+  </button>
+
+  <!-- Signup Link -->
+  <p class="text-sm text-center text-gray-600">
+    Don’t have an account?
+    <a href="../SignupPage/index.html" class="text-amber-600 font-medium hover:underline">Sign up</a>
+  </p>
+</form>
+
+<script>
+  const emailTab = document.getElementById("emailTab");
+  const mobileTab = document.getElementById("mobileTab");
+  const emailLogin = document.getElementById("emailLogin");
+  const mobileLogin = document.getElementById("mobileLogin");
+  const passwordInput = document.querySelector('input[name="password"]');
+
+  const emailInput = emailLogin.querySelector('input[name="email"]');
+  const mobileInput = mobileLogin.querySelector('input[name="mobile"]');
+  const loginForm = document.getElementById("loginForm");
 
   // Regex
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^\+?\d{10,15}$/; // handles +91 98765... or 10-15 digits
 
-  // Live check email → enable/disable password
-  function checkEmailValidity() {
-    const value = emailInput.value.trim();
-    if (emailRegex.test(value)) {
-      clearError(emailInput);
+  // Switch Tabs
+  function switchTo(tab) {
+    if (tab === "email") {
+      emailLogin.classList.remove("opacity-0", "pointer-events-none");
+      mobileLogin.classList.add("opacity-0", "pointer-events-none");
+      emailTab.classList.add("text-amber-600", "border-amber-600");
+      emailTab.classList.remove("text-gray-600");
+      mobileTab.classList.remove("text-amber-600", "border-amber-600");
+      mobileTab.classList.add("text-gray-600");
+    } else {
+      mobileLogin.classList.remove("opacity-0", "pointer-events-none");
+      emailLogin.classList.add("opacity-0", "pointer-events-none");
+      mobileTab.classList.add("text-amber-600", "border-amber-600");
+      mobileTab.classList.remove("text-gray-600");
+      emailTab.classList.remove("text-amber-600", "border-amber-600");
+      emailTab.classList.add("text-gray-600");
+    }
+    passwordInput.disabled = true; // reset on switch
+  }
+
+  emailTab.addEventListener("click", () => switchTo("email"));
+  mobileTab.addEventListener("click", () => switchTo("mobile"));
+
+  // Enable password when email is valid
+  emailInput.addEventListener("input", () => {
+    if (emailRegex.test(emailInput.value.trim())) {
       passwordInput.disabled = false;
     } else {
       passwordInput.disabled = true;
-      if (value !== "") {
-        showError(emailInput, "Enter a valid email");
-      }
-    }
-  }
-
-  emailInput.addEventListener("input", checkEmailValidity);
-  emailInput.addEventListener("blur", checkEmailValidity);
-
-  loginForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    loginForm.querySelectorAll(".error-msg").forEach(el => el.remove());
-    let isValid = true;
-    let firstErrorField = null;
-
-    function setError(input, msg) {
-      showError(input, msg);
-      if (!firstErrorField) firstErrorField = input;
-      isValid = false;
-    }
-
-    // Admin shortcut
-    if (emailInput.value.trim() === "admin@gmail.com") {
-      window.location.href = "../MainPageAdmin/index.html";
-      return;
-    }
-
-    // Email validation
-    if (!emailInput.value.trim()) {
-      setError(emailInput, "This field is required");
-    } else if (!emailRegex.test(emailInput.value)) {
-      setError(emailInput, "Enter a valid email");
-    }
-
-    // Password validation
-    if (!passwordInput.value.trim()) {
-      setError(passwordInput, "This field is required");
-    }
-
-    // LocalStorage check
-    if (isValid) {
-      const storedEmail = localStorage.getItem("email");
-      const storedPassword = localStorage.getItem("password");
-
-      if (!storedEmail || emailInput.value.trim() !== storedEmail) {
-        setError(emailInput, "Email not found");
-      } else if (passwordInput.value.trim() !== storedPassword) {
-        setError(passwordInput, "Incorrect password");
-      }
-
-      if (isValid) {
-        alert("Login successful!");
-        window.location.href = "../MainPageCustomer/index.html";
-        loginForm.reset();
-        passwordInput.disabled = true;
-      }
-    }
-
-    if (!isValid && firstErrorField) {
-      firstErrorField.focus();
     }
   });
 
-  function showError(input, message) {
-    clearError(input);
-    const error = document.createElement("p");
-    error.className = "error-msg text-red-500 text-xs mt-1";
-    error.innerText = message;
-    input.insertAdjacentElement("afterend", error);
-  }
-
-  function clearError(input) {
-    const next = input.nextElementSibling;
-    if (next && next.classList.contains("error-msg")) {
-      next.remove();
+  // Enable password when mobile is valid
+  mobileInput.addEventListener("input", () => {
+    if (phoneRegex.test(mobileInput.value.trim())) {
+      passwordInput.disabled = false;
+    } else {
+      passwordInput.disabled = true;
     }
-  }
+  });
+
+  // ✅ Login check using localStorage
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const currentTab = emailLogin.classList.contains("opacity-0") ? "mobile" : "email";
+    const userInput = currentTab === "email" ? emailInput.value.trim() : mobileInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    const storedEmail = localStorage.getItem("email");
+    const storedPhone = localStorage.getItem("phone");
+    const storedPassword = localStorage.getItem("password");
+
+    console.log(storedPassword,"pasword");
+    if ((userInput === storedEmail || userInput === storedPhone) && password === storedPassword) {
+      alert("Login successful!");
+      window.location.href = "../MainPageCustomer/index.html"; // ✅ Redirect after login
+    } else {
+      alert("Invalid credentials. Please try again.");
+    }
+  });
 </script>
+
+
 
 </body>
 </html>
