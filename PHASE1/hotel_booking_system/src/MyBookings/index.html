@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HotelEase - My Bookings</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script>
+    let currentPage = 1;
+    const rowsPerPage = 5;
+
+    function showPage(page) {
+      const table = document.querySelector("tbody");
+      const rows = table.querySelectorAll("tr");
+      const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+      if (page < 1) page = 1;
+      if (page > totalPages) page = totalPages;
+
+      currentPage = page;
+
+      rows.forEach((row, index) => {
+        row.style.display = (index >= (page - 1) * rowsPerPage && index < page * rowsPerPage) 
+          ? "" : "none";
+      });
+    }
+
+    function prevPage() { showPage(currentPage - 1); }
+    function nextPage() { showPage(currentPage + 1); }
+    function goToPage(page) { showPage(page); }
+    function jumpToPage() {
+      const pageInput = document.getElementById("pageInput").value;
+      if (pageInput) goToPage(parseInt(pageInput));
+    }
+
+    document.addEventListener("DOMContentLoaded", () => showPage(1));
+  </script>
+</head>
+
+<body class="bg-gray-100 h-screen flex flex-col">
+
+  <!-- Header -->
+  <div id="header"></div>
+
+  <!-- Layout -->
+  <div class="flex flex-1 overflow-hidden">
+
+    <!-- Sidebar -->
+    <div id="sidebar"></div>
+
+    <!-- ✅ Main Content -->
+    <main class="flex-1 overflow-y-auto p-6 bg-gray-50 border-l-4">
+
+      <!-- Page Header -->
+      <div class="mb-6 text-center">
+        <h1 class="text-3xl font-bold text-gray-800 mb-3">My Bookings</h1>
+        <input type="text" placeholder="🔍 Search by Stay ID, Room, Dates, Amount"
+               class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm">
+      </div>
+
+      <!-- Bookings Table -->
+      <div class="overflow-x-auto bg-white shadow-lg border border-gray-200 rounded-xl">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-yellow-50 border-b border-gray-300">
+              <th class="p-3 text-left font-semibold text-gray-700">Stay ID</th>
+              <th class="p-3 text-left font-semibold text-gray-700">Rooms</th>
+              <th class="p-3 text-left font-semibold text-gray-700">Check-in</th>
+              <th class="p-3 text-left font-semibold text-gray-700">Check-out</th>
+              <th class="p-3 text-left font-semibold text-gray-700">Guests</th>
+              <th class="p-3 text-left font-semibold text-gray-700">Amount</th>
+              <th class="p-3 text-center font-semibold text-gray-700">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <!-- ✅ Upcoming Stay (can cancel) -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">B-1001</td>
+              <td class="p-3 border-t">2 Deluxe Rooms</td>
+              <td class="p-3 border-t">2025-09-15</td>
+              <td class="p-3 border-t">2025-09-20</td>
+              <td class="p-3 border-t">3 Adults, 1 Child</td>
+              <td class="p-3 border-t">₹ 15,000</td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+<button onclick="window.location.href='../IndividualBookingsCustomer/index.html'" 
+        class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+  View
+</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+                <button class="px-3 py-1 rounded-md bg-red-500 text-white hover:bg-red-600 shadow-sm">Cancel</button>
+              </td>
+            </tr>
+
+            <!-- ✅ Upcoming Stay (can cancel) -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">B-1002</td>
+              <td class="p-3 border-t">1 Suite</td>
+              <td class="p-3 border-t">2025-10-10</td>
+              <td class="p-3 border-t">2025-10-13</td>
+              <td class="p-3 border-t">2 Adults</td>
+              <td class="p-3 border-t">₹ 20,000</td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+<button onclick="window.location.href='../IndividualBookingsCustomer/index.html'" 
+        class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+  View
+</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+                <button class="px-3 py-1 rounded-md bg-red-500 text-white hover:bg-red-600 shadow-sm">Cancel</button>
+              </td>
+            </tr>
+
+            <!-- ✅ Completed Stay (no cancel) -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">B-1003</td>
+              <td class="p-3 border-t">1 Standard Room</td>
+              <td class="p-3 border-t">2025-08-01</td>
+              <td class="p-3 border-t">2025-08-05</td>
+              <td class="p-3 border-t">1 Adult</td>
+              <td class="p-3 border-t">₹ 5,500</td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+<button onclick="window.location.href='../IndividualBookingsCustomer/index.html'" 
+        class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+  View
+</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+                <button class="px-3 py-1 rounded-md bg-gray-400 text-white cursor-not-allowed" disabled>Cancel</button>
+              </td>
+            </tr>
+            <!-- ✅ Upcoming Stay (can cancel) -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">B-1001</td>
+              <td class="p-3 border-t">2 Deluxe Rooms</td>
+              <td class="p-3 border-t">2025-09-15</td>
+              <td class="p-3 border-t">2025-09-20</td>
+              <td class="p-3 border-t">3 Adults, 1 Child</td>
+              <td class="p-3 border-t">₹ 15,000</td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+<button onclick="window.location.href='../IndividualBookingsCustomer/index.html'" 
+        class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+  View
+</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+                <button class="px-3 py-1 rounded-md bg-red-500 text-white hover:bg-red-600 shadow-sm">Cancel</button>
+              </td>
+            </tr>
+
+            <!-- ✅ Upcoming Stay (can cancel) -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">B-1002</td>
+              <td class="p-3 border-t">1 Suite</td>
+              <td class="p-3 border-t">2025-10-10</td>
+              <td class="p-3 border-t">2025-10-13</td>
+              <td class="p-3 border-t">2 Adults</td>
+              <td class="p-3 border-t">₹ 20,000</td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+<button onclick="window.location.href='../IndividualBookingsCustomer/index.html'" 
+        class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+  View
+</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+                <button class="px-3 py-1 rounded-md bg-red-500 text-white hover:bg-red-600 shadow-sm">Cancel</button>
+              </td>
+            </tr>
+
+            <!-- ✅ Completed Stay (no cancel) -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">B-1003</td>
+              <td class="p-3 border-t">1 Standard Room</td>
+              <td class="p-3 border-t">2025-08-01</td>
+              <td class="p-3 border-t">2025-08-05</td>
+              <td class="p-3 border-t">1 Adult</td>
+              <td class="p-3 border-t">₹ 5,500</td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+<button onclick="window.location.href='../IndividualBookingsCustomer/index.html'" 
+        class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+  View
+</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+                <button class="px-3 py-1 rounded-md bg-gray-400 text-white cursor-not-allowed" disabled>Cancel</button>
+              </td>
+            </tr>
+            <!-- ✅ Upcoming Stay (can cancel) -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">B-1001</td>
+              <td class="p-3 border-t">2 Deluxe Rooms</td>
+              <td class="p-3 border-t">2025-09-15</td>
+              <td class="p-3 border-t">2025-09-20</td>
+              <td class="p-3 border-t">3 Adults, 1 Child</td>
+              <td class="p-3 border-t">₹ 15,000</td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+<button onclick="window.location.href='../IndividualBookingsCustomer/index.html'" 
+        class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+  View
+</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+                <button class="px-3 py-1 rounded-md bg-red-500 text-white hover:bg-red-600 shadow-sm">Cancel</button>
+              </td>
+            </tr>
+
+            <!-- ✅ Upcoming Stay (can cancel) -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">B-1002</td>
+              <td class="p-3 border-t">1 Suite</td>
+              <td class="p-3 border-t">2025-10-10</td>
+              <td class="p-3 border-t">2025-10-13</td>
+              <td class="p-3 border-t">2 Adults</td>
+              <td class="p-3 border-t">₹ 20,000</td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+<button onclick="window.location.href='../IndividualBookingsCustomer/index.html'" 
+        class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+  View
+</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+                <button class="px-3 py-1 rounded-md bg-red-500 text-white hover:bg-red-600 shadow-sm">Cancel</button>
+              </td>
+            </tr>
+
+            <!-- ✅ Completed Stay (no cancel) -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">B-1003</td>
+              <td class="p-3 border-t">1 Standard Room</td>
+              <td class="p-3 border-t">2025-08-01</td>
+              <td class="p-3 border-t">2025-08-05</td>
+              <td class="p-3 border-t">1 Adult</td>
+              <td class="p-3 border-t">₹ 5,500</td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+<button onclick="window.location.href='../IndividualBookingsCustomer/index.html'" 
+        class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+  View
+</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+                <button class="px-3 py-1 rounded-md bg-gray-400 text-white cursor-not-allowed" disabled>Cancel</button>
+              </td>
+            </tr>
+            <!-- ✅ Upcoming Stay (can cancel) -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">B-1001</td>
+              <td class="p-3 border-t">2 Deluxe Rooms</td>
+              <td class="p-3 border-t">2025-09-15</td>
+              <td class="p-3 border-t">2025-09-20</td>
+              <td class="p-3 border-t">3 Adults, 1 Child</td>
+              <td class="p-3 border-t">₹ 15,000</td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+<button onclick="window.location.href='../IndividualBookingsCustomer/index.html'" 
+        class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+  View
+</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+                <button class="px-3 py-1 rounded-md bg-red-500 text-white hover:bg-red-600 shadow-sm">Cancel</button>
+              </td>
+            </tr>
+
+            <!-- ✅ Upcoming Stay (can cancel) -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">B-1002</td>
+              <td class="p-3 border-t">1 Suite</td>
+              <td class="p-3 border-t">2025-10-10</td>
+              <td class="p-3 border-t">2025-10-13</td>
+              <td class="p-3 border-t">2 Adults</td>
+              <td class="p-3 border-t">₹ 20,000</td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+<button onclick="window.location.href='../IndividualBookingsCustomer/index.html'" 
+        class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+  View
+</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+                <button class="px-3 py-1 rounded-md bg-red-500 text-white hover:bg-red-600 shadow-sm">Cancel</button>
+              </td>
+            </tr>
+
+            <!-- ✅ Completed Stay (no cancel) -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">B-1003</td>
+              <td class="p-3 border-t">1 Standard Room</td>
+              <td class="p-3 border-t">2025-08-01</td>
+              <td class="p-3 border-t">2025-08-05</td>
+              <td class="p-3 border-t">1 Adult</td>
+              <td class="p-3 border-t">₹ 5,500</td>
+              <td class="p-3 border-t flex space-x-2 justify-center">
+<button onclick="window.location.href='../IndividualBookingsCustomer/index.html'" 
+        class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+  View
+</button>
+                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+                <button class="px-3 py-1 rounded-md bg-gray-400 text-white cursor-not-allowed" disabled>Cancel</button>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <nav class="flex justify-between items-center mt-6">
+        <!-- Prev/Next -->
+        <div class="flex space-x-2">
+          <button class="px-3 py-1 border rounded-md bg-gray-200 hover:bg-gray-300" onclick="prevPage()">Previous</button>
+          <button class="px-3 py-1 border rounded-md bg-gray-200 hover:bg-gray-300" onclick="nextPage()">Next</button>
+        </div>
+
+        <!-- Page Numbers -->
+        <ul class="flex space-x-2">
+          <li><button class="px-3 py-1 border rounded-md bg-gray-200 hover:bg-gray-300" onclick="goToPage(1)">1</button></li>
+          <li><button class="px-3 py-1 border rounded-md bg-gray-200 hover:bg-gray-300" onclick="goToPage(2)">2</button></li>
+          <li><button class="px-3 py-1 border rounded-md bg-gray-200 hover:bg-gray-300" onclick="goToPage(3)">3</button></li>
+          <li><span class="px-3 py-1">...</span></li>
+          <li><button class="px-3 py-1 border rounded-md bg-gray-200 hover:bg-gray-300" onclick="goToPage(10)">10</button></li>
+        </ul>
+
+        <!-- Jump to Page -->
+        <div class="flex items-center space-x-2">
+          <input id="pageInput" type="number" min="1" placeholder="Page #" class="w-20 p-1 border rounded-md focus:ring-2 focus:ring-yellow-500">
+          <button class="px-3 py-1 border rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm" onclick="jumpToPage()">Go</button>
+        </div>
+      </nav>
+
+    </main>
+  </div>
+
+  <script>
+    // Sidebar + Header loading
+    fetch("../SidebarCustomer/index.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("sidebar").innerHTML = data;
+        const links = document.querySelectorAll("#sidebar a");
+        links.forEach(link => {
+          if (link.dataset.page === "booking") {
+            link.classList.add("bg-yellow-200", "text-yellow-700", "font-semibold");
+          }
+        });
+      })
+      .catch(error => console.error("Sidebar load failed:", error));
+
+    fetch("../HeaderCustomer/index.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("header").innerHTML = data;
+      })
+      .catch(error => console.error("Header load failed:", error));
+  </script>
+
+</body>
+</html>

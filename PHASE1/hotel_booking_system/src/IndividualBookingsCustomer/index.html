@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HotelEase - Booking Details</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+</head>
+<body class="bg-gray-100 h-screen flex flex-col">
+
+  <!-- Header -->
+  <div id="header"></div>
+
+  <!-- Layout -->
+  <div class="flex flex-1 overflow-hidden">
+
+    <!-- Sidebar -->
+    <div id="sidebar"></div>
+
+    <!-- ✅ Main Content -->
+    <main class="flex-1 overflow-y-auto p-6 bg-gray-50 border-l-4">
+      
+      <!-- Back Button -->
+      <button onclick="window.history.back()" class="mb-6 flex items-center text-blue-600 hover:text-blue-800 font-medium">
+        ← Back to My Bookings
+      </button>
+
+      <!-- Booking Details Card -->
+      <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Booking Details</h2>
+        <ul class="text-gray-700 space-y-2 text-sm">
+          <li><strong>Rooms Booked:</strong> 1, 2, 3, 4</li>
+          <li><strong>Total People:</strong> 14</li>
+          <li><strong>Check-in:</strong> 2025-09-15</li>
+          <li><strong>Check-out:</strong> 2025-09-20</li>
+        </ul>
+      </div>
+
+      <!-- Reported Issues -->
+      <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Reported Issues During This Stay</h2>
+        <ul class="list-disc pl-6 text-gray-700 text-sm space-y-2">
+          <li>Room Service Delay</li>
+          <li>WiFi Connectivity Issue</li>
+          <li>AC Not Cooling Properly</li>
+          <li>Late Cleaning Service</li>
+        </ul>
+      </div>
+
+      <!-- Invoice Section -->
+      <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Invoice of the Stay</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm border border-gray-200 rounded-lg overflow-hidden">
+            <thead class="bg-yellow-50 border-b border-gray-300">
+              <tr>
+                <th class="p-3 text-left font-semibold text-gray-700">Room</th>
+                <th class="p-3 text-left font-semibold text-gray-700">Rent</th>
+                <th class="p-3 text-left font-semibold text-gray-700">Tax</th>
+                <th class="p-3 text-left font-semibold text-gray-700">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="hover:bg-gray-50">
+                <td class="p-3 border-t">Room 1</td>
+                <td class="p-3 border-t">₹ 4,000</td>
+                <td class="p-3 border-t">₹ 400</td>
+                <td class="p-3 border-t">₹ 4,400</td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="p-3 border-t">Room 2</td>
+                <td class="p-3 border-t">₹ 3,500</td>
+                <td class="p-3 border-t">₹ 350</td>
+                <td class="p-3 border-t">₹ 3,850</td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="p-3 border-t">Room 3</td>
+                <td class="p-3 border-t">₹ 3,500</td>
+                <td class="p-3 border-t">₹ 350</td>
+                <td class="p-3 border-t">₹ 3,850</td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="p-3 border-t">Room 4</td>
+                <td class="p-3 border-t">₹ 3,000</td>
+                <td class="p-3 border-t">₹ 300</td>
+                <td class="p-3 border-t">₹ 3,300</td>
+              </tr>
+              <!-- Total Row -->
+              <tr class="bg-gray-100 font-semibold">
+                <td class="p-3 border-t text-right" colspan="3">Total Amount</td>
+                <td class="p-3 border-t">₹ 15,400</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // Sidebar + Header loading
+    fetch("../SidebarCustomer/index.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("sidebar").innerHTML = data;
+      })
+      .catch(error => console.error("Sidebar load failed:", error));
+
+    fetch("../HeaderCustomer/index.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("header").innerHTML = data;
+      })
+      .catch(error => console.error("Header load failed:", error));
+  </script>
+
+</body>
+</html>
