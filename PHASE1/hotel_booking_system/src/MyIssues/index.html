@@ -41,40 +41,14 @@
 
 <body class="bg-gray-100 h-screen flex flex-col">
 
-  <!-- ✅ Header -->
-  <header class="flex justify-between items-center px-4 py-2 bg-white border-b-4 border-yellow-600 shadow-md flex-shrink-0">
-    <div class="flex items-center space-x-2">
-      <a href="../LandingPage/index.html">
-        <img class="h-8 w-auto" src="../../assets/Hotel_logo.png" alt="Hotel Logo">
-      </a>
-      <h1 class="text-lg font-bold text-gray-700">HotelEase</h1>
-    </div>
-    <div class="flex items-center">
-      <button class="bg-yellow-100 text-yellow-600 p-1.5 rounded-full border hover:bg-yellow-200">
-        <span class="material-icons text-sm">notifications</span>
-      </button>
-      <button class="bg-yellow-600 text-white ml-2 px-3 py-1.5 rounded-lg hover:bg-yellow-700 shadow-md text-sm">
-        Find Rooms
-      </button>
-    </div>
-  </header>
+  <div id="header"></div>
+
 
   <!-- ✅ Layout -->
   <div class="flex flex-1 overflow-hidden">
 
-    <!-- ✅ Sidebar -->
-    <aside class="w-64 bg-white h-full p-6 border-r-4 border-yellow-600 shadow-lg flex-shrink-0">
-      <ul class="space-y-4 text-gray-700 font-medium">
-        <li><a href="#" class="block p-2 rounded hover:bg-yellow-100">Dashboard</a></li>
-        <li><a href="#" class="block p-2 rounded hover:bg-yellow-100">Booking Management</a></li>
-        <li><a href="#" class="block p-2 rounded hover:bg-yellow-100">Saved Rooms</a></li>
-        <li><a href="#" onclick="openIssues()" class="block p-2 rounded bg-yellow-200 text-yellow-700 font-semibold"> My Issues</a></li>
-        <li><a href="#" onclick="openRefunds()" class="block p-2 rounded hover:bg-yellow-100 font-semibold text-yellow-700"> My Refunds</a></li>
-        <li><a href="#" onclick="openProfile()" class="block p-2 rounded hover:bg-yellow-100"> Profile</a></li>
-        <li><a href="#" class="block p-2 rounded hover:bg-yellow-100"> Reports</a></li>
-      </ul>
-    </aside>
-
+    <!-- Sidebar Placeholder -->
+    <div id="sidebar"></div>
     <!-- ✅ Main Content -->
     <main class="flex-1 overflow-y-auto p-6 bg-gray-50 border-l-4">
 
@@ -402,6 +376,29 @@
     function openProfile() { window.location.href = "../ProfileDisplayCustomer/index.html"; }
     function openIssues() { window.location.href = "../MyIssues/index.html"; }
     function openChildIssues() { window.location.href = "../IssueDetailsCustomer/index.html"; }
+       fetch("../SidebarCustomer/index.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("sidebar").innerHTML = data;
+
+        // Highlight active link based on data-page
+        const links = document.querySelectorAll("#sidebar a");
+
+        links.forEach(link => {
+          if (link.dataset.page === "issues") {
+            link.classList.add("bg-yellow-200", "text-yellow-700", "font-semibold");
+          }
+        });
+      })
+      .catch(error => console.error("Sidebar load failed:", error));
+
+    fetch("../HeaderCustomer/index.html") // adjust path as needed
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById("header").innerHTML = data;
+    })
+    .catch(error => console.error("Hidebar load failed:", error));
+
   </script>
 
 </body>
