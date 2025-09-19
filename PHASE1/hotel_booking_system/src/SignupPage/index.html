@@ -5,20 +5,21 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>LuxuryStay - Sign Up</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 <body class="bg-gray-50 font-sans">
 
 <!-- ✅ Header -->
 <header class="flex justify-between items-center bg-white shadow-md px-6 py-4 sticky top-0 z-50">
-    <div class="flex items-center space-x-3">
-    <a href="../LandingPage/index.html">
-      <!-- Added border & padding to logo -->
-      <img src="../../assets/Hotel_logo.png" alt="Hotel Logo" 
+  <!-- Logo + Title -->
+        <a href="../LandingPage/index.html" class="flex items-center space-x-2">
+        <img src="../../assets/Hotel_logo.png" 
+            alt="Hotel Logo" 
             class="h-8 sm:h-10 rounded-full border-2 border-yellow-600 p-1">
-    </a>
-    <h1 class="text-lg sm:text-xl md:text-2xl font-bold text-yellow-700">LuxuryStay</h1>
-    </div>
+        <h1 class="text-lg sm:text-xl font-bold text-yellow-700">LuxuryStay</h1>
+        </a>
 </header>
+
 
 <!-- ✅ Main Container -->
 <div class="flex min-h-[calc(100vh-64px)]">
@@ -39,75 +40,87 @@
   <!-- Divider -->
   <div class="hidden md:block w-px bg-gray-300"></div>
 
-  <!-- Right Column (Sign Up Form) -->
-  <div class="flex justify-center items-center w-full md:w-1/2 p-6">
-    <div class="w-full max-w-md bg-white shadow-2xl rounded-2xl border border-gray-200">
+<!-- Right Column (Sign Up Form) -->
+<div class="flex justify-center items-center w-full md:w-1/2 p-6">
+  <div class="relative w-full max-w-xl bg-white rounded-3xl overflow-hidden border-4 border-amber-400">
 
-      <!-- Top Banner -->
-      <div class="bg-gradient-to-r from-amber-600 to-yellow-500 text-white text-center py-4 rounded-t-2xl">
-        <h2 class="text-lg sm:text-xl font-bold">Create Your Account</h2>
-        <p class="text-xs sm:text-sm opacity-90">Join LuxuryStay and start booking luxury stays</p>
+    <!-- Back Arrow -->
+<a href="../LandingPage/index.html"
+   class="absolute top-3 left-3 text-gray-700 hover:text-gray-900 transition">
+  <!-- Heroicon: Arrow Left -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+       viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round"
+          d="M15 19l-7-7 7-7" />
+  </svg>
+</a>
+
+    <!-- Top Banner -->
+    <div class="bg-gradient-to-r from-amber-600 to-yellow-500 text-white text-center py-4 rounded-t-2xl">
+      <h2 class="text-lg sm:text-xl font-bold">Create Your Account</h2>
+      <p class="text-xs sm:text-sm opacity-90">Join LuxuryStay and start booking luxury stays</p>
+    </div>
+
+    <!-- Form Section -->
+    <form id="signupForm" class="px-6 py-4 space-y-3" novalidate>
+      <!-- Name -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Name<span class="text-red-500">*</span></label>
+        <input type="text" name="name" placeholder="Enter your name" class="input-field" />
       </div>
 
-      <!-- Form Section -->
-      <form id="signupForm" class="px-6 py-4 space-y-3" novalidate>
-        <!-- Name -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Name<span class="text-red-500">*</span></label>
-          <input type="text" name="name" placeholder="Enter your name" class="input-field" />
-        </div>
+      <!-- Gender -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Gender<span class="text-red-500">*</span></label>
+        <select id="genderSelect" name="gender" class="input-field">
+          <option value="">Choose your gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        <input type="text" id="otherGenderInput" name="otherGender" placeholder="Please specify"
+               class="hidden input-field mt-2" />
+      </div>
 
-        <!-- Gender -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Gender<span class="text-red-500">*</span></label>
-          <select id="genderSelect" name="gender" class="input-field">
-            <option value="">Choose your gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
-          <input type="text" id="otherGenderInput" name="otherGender" placeholder="Please specify"
-                 class="hidden input-field mt-2" />
-        </div>
+      <!-- DOB -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Date of Birth<span class="text-red-500">*</span></label>
+        <input type="date" name="dob" class="input-field" />
+      </div>
 
-        <!-- DOB -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Date of Birth<span class="text-red-500">*</span></label>
-          <input type="date" name="dob" class="input-field" />
-        </div>
+      <!-- Email -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Email<span class="text-red-500">*</span></label>
+        <input type="email" name="email" placeholder="Enter your email" class="input-field" disabled />
+      </div>
 
-        <!-- Email -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Email<span class="text-red-500">*</span></label>
-          <input type="email" name="email" placeholder="Enter your email" class="input-field" disabled />
-        </div>
+      <!-- Phone -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Phone Number<span class="text-red-500">*</span></label>
+        <input type="tel" name="phone" placeholder="10-digit number" class="input-field" disabled />
+      </div>
 
-        <!-- Phone -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Phone Number<span class="text-red-500">*</span></label>
-          <input type="tel" name="phone" placeholder="10-digit number" class="input-field" disabled />
-        </div>
+      <!-- Password -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Password<span class="text-red-500">*</span></label>
+        <input type="password" name="password" placeholder="••••••••" class="input-field" disabled />
+      </div>
 
-        <!-- Password -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Password<span class="text-red-500">*</span></label>
-          <input type="password" name="password" placeholder="••••••••" class="input-field" disabled />
-        </div>
+      <!-- Button -->
+      <button type="submit"
+              class="w-full bg-gradient-to-r from-amber-600 to-yellow-500 text-white py-2 rounded-lg hover:from-amber-700 hover:to-yellow-600 shadow-md transition">
+        Create Account
+      </button>
 
-        <!-- Button -->
-        <button type="submit"
-                class="w-full bg-gradient-to-r from-amber-600 to-yellow-500 text-white py-2 rounded-lg hover:from-amber-700 hover:to-yellow-600 shadow-md transition">
-          Create Account
-        </button>
-
-        <!-- Already have account -->
-        <p class="text-xs sm:text-sm text-center text-gray-600">
-          Already have an account?
-          <a href="../LoginPage/index.html" class="text-amber-600 font-medium hover:underline">Login</a>
-        </p>
-      </form>
-    </div>
+      <!-- Already have account -->
+      <p class="text-xs sm:text-sm text-center text-gray-600">
+        Already have an account?
+        <a href="../LoginPage/index.html" class="text-amber-600 font-medium hover:underline">Login</a>
+      </p>
+    </form>
   </div>
+</div>
+
 </div>
 
 <!-- ✅ Script -->
