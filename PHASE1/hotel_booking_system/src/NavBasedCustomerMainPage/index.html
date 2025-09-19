@@ -25,7 +25,7 @@
       <div class="text-center text-white max-w-lg sm:max-w-2xl px-4">
         <h2 class="text-3xl sm:text-5xl font-bold mb-4">Welcome to LuxuryStay</h2>
         <p class="text-base sm:text-lg md:text-xl mb-6">Experience comfort, elegance, and premium hospitality</p>
-        <a href="#" class="bookingModal px-6 sm:px-8 py-3 hover:scale-105 bg-gradient-to-r from-yellow-500 to-red-500 text-white rounded-xl text-base sm:text-lg font-semibold hover:opacity-90 shadow-lg transform inline-block">
+        <a href="#" class="open-booking px-6 sm:px-8 py-3 hover:scale-105 bg-gradient-to-r from-yellow-500 to-red-500 text-white rounded-xl text-base sm:text-lg font-semibold hover:opacity-90 shadow-lg transform inline-block">
           Book Now →
         </a>
       </div>
@@ -456,13 +456,13 @@
     </div>
   </footer>
 
-<!-- ✅ Script -->
+
 <script>
-  fetch("../CustomerNavbarLanding/index.html")
+  fetch("../CustomerNavbarAfterLogin/index.html")
     .then(res => res.text())
     .then(data => {
       document.getElementById("navbar").innerHTML = data;
-
+      
       // mobile menu toggle
       const menuBtn = document.getElementById("menuBtn");
       const mobileMenu = document.getElementById("mobileMenu");
@@ -481,25 +481,65 @@
     const closeModal = document.getElementById("closeModal");
     const addRoomBtn = document.getElementById("addRoomBtn");
     const roomsContainer = document.getElementById("roomsContainer");
+    let roomCount = 1;
 
-    if (!modal) return;
-
-    // Open modal
-    document.querySelectorAll(".bookingModal").forEach(btn => {
+    // Open modal from all Book Now buttons
+    document.querySelectorAll(".open-booking").forEach(btn => {
       btn.addEventListener("click", (e) => {
         e.preventDefault();
         modal.classList.remove("hidden");
         modal.classList.add("flex");
+
+        if (window.innerWidth < 768) {
+          document.querySelector("body > :not(#bookingModal)").style.display = "none";
+        }
       });
     });
 
-    // Close modal
-    closeModal?.addEventListener("click", () => {
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
+    // ✅ Check-in & Check-out date validation
+    const checkIn = document.getElementById("checkIn");
+    const checkOut = document.getElementById("checkOut");
+    const dateError = document.getElementById("dateError");
+
+    checkOut.disabled = true;
+
+    checkIn.addEventListener("change", () => {
+      if (checkIn.value) {
+        checkOut.disabled = false;
+        checkOut.min = checkIn.value;
+
+        if (checkOut.value && checkOut.value < checkIn.value) {
+          checkOut.value = "";
+          dateError.textContent = "Check-out date must be on or after check-in date.";
+        } else {
+          dateError.textContent = "";
+        }
+      } else {
+        checkOut.disabled = true;
+        checkOut.value = "";
+        dateError.textContent = "";
+      }
     });
 
-    // Add counter listeners
+    checkOut.addEventListener("change", () => {
+      if (checkIn.value && checkOut.value < checkIn.value) {
+        dateError.textContent = "Check-out date must be on or after check-in date.";
+        checkOut.value = "";
+      } else {
+        dateError.textContent = "";
+      }
+    });
+
+    // Close modal
+    closeModal.addEventListener("click", () => {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      if (window.innerWidth < 768) {
+        document.querySelector("body > :not(#bookingModal)").style.display = "";
+      }
+    });
+
+    // Function to add counter listeners (+ / -)
     function addCounterListeners(roomDiv) {
       roomDiv.querySelectorAll(".increase").forEach(btn => {
         btn.addEventListener("click", () => {
@@ -517,69 +557,52 @@
       });
     }
 
-    // ✅ Reindex rooms after add/remove
-    function reindexRooms() {
-      document.querySelectorAll(".room-card").forEach((room, index) => {
-        room.querySelector(".room-title").textContent = `Room ${index + 1}`;
-      });
-    }
-
-    // Add room
-    addRoomBtn?.addEventListener("click", () => {
+    // Add new room
+    addRoomBtn.addEventListener("click", () => {
+      roomCount++;
       const roomDiv = document.createElement("div");
-      roomDiv.className = "room-card border p-5 rounded-xl mb-6 bg-gray-50 shadow-sm";
+      roomDiv.className = "room-card border p-4 rounded-xl mb-4 bg-gray-50";
       roomDiv.innerHTML = `
-        <!-- Row 1: Room no + type -->
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="room-title font-semibold text-lg">Room</h3>
-          <select class="border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
-            <option>Deluxe Room</option>
-            <option>Executive Suite</option>
-            <option>Presidential Suite</option>
-          </select>
-        </div>
+        <h3 class="font-semibold text-lg mb-4">Room ${roomCount}</h3>
 
-        <!-- Row 2: Adults + Children -->
-        <div class="grid grid-cols-2 gap-6">
-          <div class="flex items-center justify-between">
-            <label class="text-sm font-medium">Adults</label>
-            <div class="flex items-center space-x-3">
-              <button class="decrease w-8 h-8 rounded-full bg-gray-200">−</button>
-              <input type="number" value="1" min="1" class="w-12 text-center border rounded-md p-1">
-              <button class="increase w-8 h-8 rounded-full bg-yellow-500 text-white">+</button>
-            </div>
-          </div>
-          <div class="flex items-center justify-between">
-            <label class="text-sm font-medium">Children</label>
-            <div class="flex items-center space-x-3">
-              <button class="decrease w-8 h-8 rounded-full bg-gray-200">−</button>
-              <input type="number" value="0" min="0" class="w-12 text-center border rounded-md p-1">
-              <button class="increase w-8 h-8 rounded-full bg-yellow-500 text-white">+</button>
-            </div>
+        <!-- Adults -->
+        <div class="flex items-center justify-between mb-3">
+          <label class="text-sm font-medium">Adults</label>
+          <div class="flex items-center space-x-3">
+            <button class="decrease w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center">−</button>
+            <input type="number" value="1" min="1" class="w-12 text-center border rounded-md p-1">
+            <button class="increase w-8 h-8 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center">+</button>
           </div>
         </div>
 
-        <button class="remove-room mt-4 text-sm text-red-500 hover:underline">Remove Room</button>
+        <!-- Children -->
+        <div class="flex items-center justify-between">
+          <label class="text-sm font-medium">Children (0–12 yrs)</label>
+          <div class="flex items-center space-x-3">
+            <button class="decrease w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center">−</button>
+            <input type="number" value="0" min="0" class="w-12 text-center border rounded-md p-1">
+            <button class="increase w-8 h-8 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center">+</button>
+          </div>
+        </div>
+
+        <button class="remove-room mt-3 text-sm text-red-500 hover:underline">Remove Room</button>
       `;
 
       roomsContainer.appendChild(roomDiv);
 
       addCounterListeners(roomDiv);
 
-      // Remove room + reindex
       roomDiv.querySelector(".remove-room").addEventListener("click", () => {
         roomDiv.remove();
-        reindexRooms();
       });
-
-      reindexRooms();
     });
 
-    // Init counters for first room
+    // Initialize counters for first room
     addCounterListeners(document.querySelector(".room-card"));
-    reindexRooms();
   }
 </script>
+
+
 
 </body>
 </html>

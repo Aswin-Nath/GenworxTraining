@@ -11,13 +11,12 @@
 
   <!-- ✅ Header -->
 
-  <div id="header"></div>
 
-  <!-- ✅ Layout -->
-  <div class="flex flex-1 overflow-hidden">
 
     <!-- Sidebar Placeholder -->
     <div id="sidebar"></div>
+  <!-- ✅ Layout -->
+  <div class="flex flex-1 overflow-hidden">
 
     <!-- ✅ Main Content -->
     <main class="flex-1 p-8 overflow-y-auto bg-gray-50 border-l-4">
@@ -140,7 +139,7 @@
     function openIssues() {
       window.location.href = "./index.html";
     }
-    fetch("../SidebarCustomer/index.html")
+    fetch("../NavbarCustomer/index.html")
       .then(response => response.text())
       .then(data => {
         document.getElementById("sidebar").innerHTML = data;

@@ -172,7 +172,7 @@
     const storedPassword = localStorage.getItem("password");
 
     if ((value === storedEmail || value === storedPhone) && password === storedPassword) {
-      window.location.href = "../MainPageCustomer/index.html"; // ✅ Redirect after login
+      window.location.href = "../NavBasedCustomerMainPage/index.html"; // ✅ Redirect after login
     } else {
       passwordError.textContent = "Invalid credentials. Please try again.";
       passwordError.classList.remove("hidden");

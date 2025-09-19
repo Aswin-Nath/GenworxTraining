@@ -9,13 +9,12 @@
 </head>
 <body class="bg-gray-100 h-screen flex flex-col">
 
-  <div id="header"></div>
 
-  <!-- ✅ Layout -->
-  <div class="flex flex-1 overflow-hidden">
 
     <!-- Sidebar Placeholder -->
     <div id="sidebar"></div>
+  <!-- ✅ Layout -->
+  <div class="flex flex-1 overflow-hidden">
 
     <!-- ✅ Main Content -->
     <main class="flex-1 p-6 overflow-y-auto bg-gray-50 border-l-4">
@@ -148,7 +147,7 @@
         alert('⚠️ Please fill in all password fields.');
       }
     }
-    fetch("../SidebarCustomer/index.html")
+    fetch("../NavbarCustomer/index.html")
       .then(response => response.text())
       .then(data => {
         document.getElementById("sidebar").innerHTML = data;

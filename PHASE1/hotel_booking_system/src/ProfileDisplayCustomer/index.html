@@ -9,14 +9,14 @@
 </head>
 <body class="bg-gray-100 h-screen flex flex-col">
 
+    <div id="sidebar"></div>
 
-  <div id="header"></div>
+
 
   <!-- ✅ Layout -->
   <div class="flex flex-1 overflow-hidden">
 
     <!-- Sidebar Placeholder -->
-    <div id="sidebar"></div>
     <!-- ✅ Profile Main -->
     <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
       <div class="max-w-3xl mx-auto bg-white shadow-xl border border-gray-200 rounded-2xl p-8">
@@ -86,7 +86,7 @@
       document.getElementById('email-display').textContent = email;
       document.getElementById('phone-display').textContent = phone;
     });
-    fetch("../SidebarCustomer/index.html")
+    fetch("../NavbarCustomer/index.html")
       .then(response => response.text())
       .then(data => {
         document.getElementById("sidebar").innerHTML = data;

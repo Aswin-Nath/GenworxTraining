@@ -42,13 +42,12 @@
 <body class="bg-gray-100 h-screen flex flex-col">
 
 
-  <div id="header"></div>
 
-  <!-- ✅ Layout -->
-  <div class="flex flex-1 overflow-hidden">
 
     <!-- Sidebar Placeholder -->
     <div id="sidebar"></div>
+  <!-- ✅ Layout -->
+  <div class="flex flex-1 overflow-hidden">
   
     <!-- ✅ Main Content -->
     <main class="flex-1 overflow-y-auto p-6 bg-gray-50 border-l-4">
@@ -346,7 +345,7 @@
     function openProfile() { window.location.href = "../ProfileDisplayCustomer/index.html"; }
     function openIssues() { window.location.href = "../MyIssues/index.html"; }
     function openChildRefunds() { window.location.href = "../RefundDetailsCustomer/index.html"; }
-    fetch("../SidebarCustomer/index.html")
+    fetch("../NavbarCustomer/index.html")
       .then(response => response.text())
       .then(data => {
         document.getElementById("sidebar").innerHTML = data;

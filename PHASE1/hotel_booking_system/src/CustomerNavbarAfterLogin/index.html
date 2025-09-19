@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Mobile dropdown slide effect */
+    #mobileMenu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    #mobileMenu.open {
+      max-height: 500px; /* enough for links */
+    }
+
+    .glow-btn {
+      position: relative;
+      transition: all 0.3s ease;
+      animation: glow-pulse 2s infinite ease-in-out;
+      box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
+    }
+
+    @keyframes glow-pulse {
+      0% {
+        box-shadow: 0 0 12px rgba(255, 193, 7, 0.6),
+                    0 0 25px rgba(255, 87, 34, 0.3),
+                    0 6px 15px rgba(0, 0, 0, 0.2);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(255, 193, 7, 0.9),
+                    0 0 40px rgba(255, 87, 34, 0.4),
+                    0 8px 20px rgba(0, 0, 0, 0.25);
+        transform: scale(1.05);
+      }
+      100% {
+        box-shadow: 0 0 12px rgba(255, 193, 7, 0.6),
+                    0 0 25px rgba(255, 87, 34, 0.3),
+                    0 6px 15px rgba(0, 0, 0, 0.2);
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ✅ Navbar -->
+  <header class="flex justify-between items-center bg-white shadow-md px-4 sm:px-6 py-2 fixed top-0 left-0 w-full z-50">
+    <!-- Logo + Title -->
+    <a href="../LandingPage/index.html" class="flex items-center space-x-2">
+      <img src="../../assets/Hotel_logo.png" 
+           alt="Hotel Logo" 
+           class="h-8 sm:h-10 rounded-full border-2 border-yellow-600 p-1">
+      <h1 class="text-lg sm:text-xl font-bold text-yellow-700">LuxuryStay</h1>
+    </a>
+
+    <!-- Mobile Menu Button -->
+    <button id="menuBtn" class="md:hidden text-2xl text-gray-700 focus:outline-none">☰</button>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex space-x-9 font-medium text-sm sm:text-base">
+      <a href="../NavBasedCustomerMainPage/index.html" class="hover:text-yellow-600 transition">Home</a>
+      <a href="../NavBasedCustomerMainPage/index.html#rooms" class="hover:text-yellow-600 transition">Rooms</a>
+      <a href="../NavBasedCustomerMainPage/index.html#offers" class="hover:text-yellow-600 transition">Offers</a>
+      <a href="../NavBasedCustomerMainPage/index.html#destinations" class="hover:text-yellow-600 transition">Destinations</a>
+      <a href="../NavBasedCustomerMainPage/index.html#testimonials" class="hover:text-yellow-600 transition">Testimonials</a>
+      <a href="../NavBasedCustomerMainPage/index.html#contact" class="hover:text-yellow-600 transition">Contact</a>
+    </nav>
+
+    <!-- Desktop Buttons -->
+    <div class="hidden md:flex items-center space-x-3 text-sm sm:text-base">
+    <a href="#" 
+        class="open-booking text-center px-4 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-medium rounded-lg hover:opacity-90 transition glow-btn">
+        Book Now
+    </a>
+      <a href="../SignupPage/index.html"
+         class="px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition">
+        Account
+      </a>
+    </div>
+  </header>
+
+  <!-- ✅ Mobile Dropdown Menu -->
+  <nav id="mobileMenu" class="md:hidden flex flex-col bg-white shadow-md px-4 mb-1 space-y-4 text-base sm:text-lg">
+    <a href="../LandingPage/index.html" class="hover:text-yellow-600">Home</a>
+    <a href="../LandingPage/index.html#rooms" class="hover:text-yellow-600">Rooms</a>
+    <a href="../LandingPage/index.html#offers" class="hover:text-yellow-600">Offers</a>
+    <a href="../LandingPage/index.html#destinations" class="hover:text-yellow-600">Destinations</a>
+    <a href="../LandingPage/index.html#testimonials" class="hover:text-yellow-600">Testimonials</a>
+    <a href="../LandingPage/index.html#contact" class="hover:text-yellow-600">Contact</a>
+
+    <!-- Mobile Buttons -->
+    <div class="flex flex-col space-y-2 pt-2">
+      <a href="#" 
+         class="open-booking text-center px-4 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-medium rounded-lg hover:opacity-90 transition glow-btn">
+        Book Now
+      </a>
+      <a href="../LoginPage/index.html" 
+         class="text-center px-4 py-2 bg-yellow-500 text-white font-medium rounded-lg hover:bg-yellow-600 transition">
+        Login
+      </a>
+      <a href="../SignupPage/index.html"
+         class="text-center px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition">
+        Signup
+      </a>
+    </div>
+  </nav>
+
+<!-- ✅ Booking Modal -->
+<div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-[1000]">
+  <div class="bg-white rounded-2xl shadow-2xl w-[95%] max-w-2xl p-6 relative overflow-y-auto max-h-[90vh]">
+
+    <!-- Close Button -->
+    <button id="closeModal" class="absolute top-3 right-3 text-gray-600 hover:text-red-500 text-2xl">&times;</button>
+
+    <!-- Heading -->
+    <h2 class="text-2xl font-bold mb-6 text-center bg-gradient-to-r from-yellow-600 to-red-600 bg-clip-text text-transparent">
+      Book Your Stay
+    </h2>
+
+    <!-- Rooms Container -->
+    <div id="roomsContainer">
+      <div class="room-card border p-5 rounded-xl mb-6 bg-gray-50 shadow-sm">
+
+        <!-- Row 1: Room No + Room Type -->
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-semibold text-lg">Room 1</h3>
+          <select class="border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
+            <option>Deluxe Room</option>
+            <option>Executive Suite</option>
+            <option>Presidential Suite</option>
+          </select>
+        </div>
+
+        <!-- Row 2: Adults + Children -->
+        <div class="grid grid-cols-2 gap-6">
+          <!-- Adults -->
+          <div class="flex items-center justify-between">
+            <label class="text-sm font-medium">Adults</label>
+            <div class="flex items-center space-x-3">
+              <button class="decrease w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-lg">−</button>
+              <input type="number" value="1" min="1" class="w-12 text-center border rounded-md p-1">
+              <button class="increase w-8 h-8 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center text-lg">+</button>
+            </div>
+          </div>
+
+          <!-- Children -->
+          <div class="flex items-center justify-between">
+            <label class="text-sm font-medium">Children</label>
+            <div class="flex items-center space-x-3">
+              <button class="decrease w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-lg">−</button>
+              <input type="number" value="0" min="0" class="w-12 text-center border rounded-md p-1">
+              <button class="increase w-8 h-8 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center text-lg">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Remove Room -->
+        <button class="remove-room mt-4 text-sm text-red-500 hover:underline">Remove Room</button>
+      </div>
+    </div>
+
+    <!-- Add More Rooms -->
+    <button id="addRoomBtn" class="text-yellow-700 font-medium hover:underline mb-6">+ Add More Rooms</button>
+
+    <!-- Dates -->
+    <div class="grid grid-cols-2 gap-4 mb-2">
+      <div>
+        <label class="block text-sm font-medium mb-1">Check-in</label>
+        <input type="date" id="checkIn" class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1">Check-out</label>
+        <input type="date" id="checkOut" class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
+      </div>
+    </div>
+    <p id="dateError" class="text-red-500 text-sm mb-4"></p>
+
+    <!-- Confirm -->
+    <button class="w-full py-3 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg hover:opacity-90 transition">
+      Proceed Booking
+    </button>
+  </div>
+</div>
+</body>
+</html>

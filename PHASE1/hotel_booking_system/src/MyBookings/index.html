@@ -42,17 +42,17 @@
 <body class="bg-gray-100 h-screen flex flex-col">
 
   <!-- Header -->
-  <div id="header"></div>
+
+  <div id="sidebar"></div>
 
   <!-- Layout -->
   <div class="flex flex-1 overflow-hidden">
 
     <!-- Sidebar -->
-    <div id="sidebar"></div>
 
     <!-- ✅ Main Content -->
     <main class="flex-1 overflow-y-auto p-6 bg-gray-50 border-l-4">
-
+      
       <!-- Page Header -->
       <div class="mb-6 text-center">
         <h1 class="text-3xl font-bold text-gray-800 mb-3">My Bookings</h1>
@@ -322,7 +322,7 @@
 
   <script>
     // Sidebar + Header loading
-    fetch("../SidebarCustomer/index.html")
+    fetch("../NavbarCustomer/index.html")
       .then(response => response.text())
       .then(data => {
         document.getElementById("sidebar").innerHTML = data;
