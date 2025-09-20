@@ -427,7 +427,6 @@
     .then(res => res.text())
     .then(data => {
       document.getElementById("navbar").innerHTML = data;
-
       // mobile menu toggle
       const menuBtn = document.getElementById("menuBtn");
       const mobileMenu = document.getElementById("mobileMenu");
@@ -447,6 +446,7 @@
     .then(data => {
       document.getElementById("footer").innerHTML = data;
     });
+
 
   function attachModalListeners() {
     const modal = document.getElementById("bookingModal");
@@ -553,6 +553,6 @@
   }
 </script>
 
-
+<script src="../LoggedCustomerNavbar/script.js"></script>
 </body>
 </html>
