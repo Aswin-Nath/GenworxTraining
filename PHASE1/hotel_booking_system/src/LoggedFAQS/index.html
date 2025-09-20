@@ -112,13 +112,13 @@
 
   <div id="footer"></div>
 
-  <script src="../FooterCustomer/script.js"></script>
+  <script src="../LoggedFooterCustomer/script.js"></script>
 
 
   <!-- ✅ Script -->
   <script>
     // Navbar injection
-    fetch("../CustomerNavbarAfterLogin/index.html")
+    fetch("../LoggedCustomerNavbar/index.html")
       .then(res => res.text())
       .then(data => {
         document.getElementById("navbar").innerHTML = data;

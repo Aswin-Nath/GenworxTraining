@@ -62,7 +62,7 @@
   <!-- ✅ Scripts -->
   <script>
     // Navbar Loader
-    fetch("../CustomerNavbarAfterLogin/index.html")
+    fetch("../LoggedCustomerNavbar/index.html")
       .then(res => res.text())
       .then(data => {
         document.getElementById("navbar").innerHTML = data;
@@ -78,7 +78,7 @@
       });
 
     // Footer Loader
-    fetch("../FooterCustomer/index.html")
+    fetch("../LoggedFooterCustomer/index.html")
       .then(res => res.text())
       .then(data => {
         document.getElementById("footer").innerHTML = data;
