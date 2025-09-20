@@ -12,40 +12,75 @@
   <div id="navbar"></div>
 
   <!-- ✅ Header -->
-  <header class="bg-gradient-to-r from-yellow-600 to-red-600 py-20 text-center text-white shadow-md">
+  <header class="bg-gradient-to-r from-yellow-600 to-red-600 py-[100px] text-center text-white shadow-md mt-16 sm:mt-20">
     <h1 class="text-4xl font-extrabold">Cancellation Policy</h1>
     <p class="text-sm sm:text-base mt-2 opacity-90">Understand our cancellation and refund rules</p>
   </header>
 
   <!-- ✅ Content -->
-  <main class="max-w-5xl mx-auto px-6 py-12 space-y-10 bg-white shadow-lg rounded-2xl mt-10 mb-4 border border-gray-100">
+  <main class="max-w-5xl mx-auto px-6 py-12 space-y-10 bg-white shadow-lg rounded-2xl mt-10 mb-6 border-2 border-gray-200">
+    
     <section>
       <h2 class="text-xl font-bold text-gray-800 mb-3">1. Free Cancellation</h2>
-      <p class="text-gray-600">Cancellations made up to 48 hours before the check-in date will receive a full refund.</p>
+      <p class="text-gray-600">Cancellations made up to <span class="font-medium">48 hours before the check-in date</span> will receive a full refund to the original payment method.</p>
     </section>
+
     <section>
       <h2 class="text-xl font-bold text-gray-800 mb-3">2. Late Cancellation</h2>
-      <p class="text-gray-600">Cancellations within 48 hours of check-in will incur one night’s stay charge.</p>
+      <p class="text-gray-600">Cancellations made within 48 hours of the scheduled check-in will result in a charge equivalent to <span class="font-medium">one night’s stay</span>. Any remaining nights will be refunded.</p>
     </section>
+
     <section>
       <h2 class="text-xl font-bold text-gray-800 mb-3">3. No Show</h2>
-      <p class="text-gray-600">Guests who do not show up without prior notice will be charged for the entire reservation.</p>
+      <p class="text-gray-600">Guests who do not arrive on the check-in date without prior notice will be charged for the <span class="font-medium">entire reservation amount</span>, and no refund will be issued.</p>
     </section>
+
     <section>
       <h2 class="text-xl font-bold text-gray-800 mb-3">4. Date Modification</h2>
-      <p class="text-gray-600">Guests may postpone or change their booking dates subject to room availability and revised pricing.</p>
+      <p class="text-gray-600">Guests may modify their booking dates subject to room availability. Changes may result in <span class="font-medium">adjusted rates or additional charges</span> based on the new dates.</p>
     </section>
+
     <section>
       <h2 class="text-xl font-bold text-gray-800 mb-3">5. Refund Processing</h2>
-      <p class="text-gray-600">Refunds (if applicable) will be processed within 7–10 business days to the original payment method.</p>
+      <p class="text-gray-600">Refunds (if applicable) will be processed within <span class="font-medium">7–10 business days</span>. The timeline may vary depending on the payment provider or bank policies.</p>
     </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-gray-800 mb-3">6. Early Check-Out</h2>
+      <p class="text-gray-600">In case of early check-out, guests will be charged for the <span class="font-medium">next 24 hours</span> from the time of departure, and the remaining stay will be refunded as per cancellation rules.</p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-gray-800 mb-3">7. Group Bookings</h2>
+      <p class="text-gray-600">For group bookings (5 rooms or more), a <span class="font-medium">7-day cancellation policy</span> applies. Cancellations within 7 days of check-in may result in forfeiture of the advance payment.</p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-gray-800 mb-3">8. Non-Refundable Rates</h2>
+      <p class="text-gray-600">Special discounted bookings marked as <span class="font-medium">Non-Refundable</span> cannot be canceled or modified, and no refund will be provided under any circumstances.</p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-gray-800 mb-3">9. Force Majeure</h2>
+      <p class="text-gray-600">LuxuryStay will not be liable for cancellations or delays due to <span class="font-medium">events beyond our control</span>, including natural disasters, strikes, pandemics, or government restrictions.</p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-gray-800 mb-3">10. Contact Us</h2>
+      <p class="text-gray-600">For any queries regarding cancellations or refunds, please contact our support team at 
+        <span class="font-medium text-gray-800">support@luxurystay.com</span>.
+      </p>
+    </section>
+
   </main>
 
   <!-- ✅ Footer -->
   <div id="footer"></div>
+
   <!-- ✅ Scripts -->
   <script>
     const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
+
     // ✅ Navbar
     fetch(isCustomerLoggedIn ? "../LoggedCustomerNavbar/index.html" : "../NotCustomerNavbar/index.html")
       .then(res => res.text())
