@@ -110,19 +110,20 @@
     </div>
   </div>
 
+  <!-- ✅ Footer -->
   <div id="footer"></div>
-
-  <script src="../LoggedFooterCustomer/script.js"></script>
-
 
   <!-- ✅ Script -->
   <script>
-    // Navbar injection
-    fetch("../LoggedCustomerNavbar/index.html")
+    const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
+
+    // ✅ Navbar Loader
+    fetch(isCustomerLoggedIn ? "../LoggedCustomerNavbar/index.html" : "../NotCustomerNavbar/index.html")
       .then(res => res.text())
       .then(data => {
         document.getElementById("navbar").innerHTML = data;
 
+        // Mobile menu toggle
         const menuBtn = document.getElementById("menuBtn");
         const mobileMenu = document.getElementById("mobileMenu");
         if (menuBtn && mobileMenu) {
@@ -132,46 +133,59 @@
         }
       });
 
-    // Tabs switcher
+    // ✅ Footer Loader
+    fetch("../FooterCustomer/index.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("footer").innerHTML = data;
+      })
+      .catch(err => console.error("❌ Footer load failed:", err));
+
+    // ✅ Tabs switcher
     const roomsBtn = document.getElementById("roomsBtn");
     const amenitiesBtn = document.getElementById("amenitiesBtn");
     const roomsFaqs = document.getElementById("roomsFaqs");
     const amenitiesFaqs = document.getElementById("amenitiesFaqs");
 
-    roomsBtn.addEventListener("click", () => {
-      roomsFaqs.classList.remove("hidden");
-      amenitiesFaqs.classList.add("hidden");
-      roomsBtn.classList.replace("bg-gray-200", "bg-yellow-500");
-      roomsBtn.classList.replace("text-gray-700", "text-white");
-      amenitiesBtn.classList.replace("bg-yellow-500", "bg-gray-200");
-      amenitiesBtn.classList.replace("text-white", "text-gray-700");
-    });
+    if (roomsBtn && amenitiesBtn && roomsFaqs && amenitiesFaqs) {
+      roomsBtn.addEventListener("click", () => {
+        roomsFaqs.classList.remove("hidden");
+        amenitiesFaqs.classList.add("hidden");
+        roomsBtn.classList.replace("bg-gray-200", "bg-yellow-500");
+        roomsBtn.classList.replace("text-gray-700", "text-white");
+        amenitiesBtn.classList.replace("bg-yellow-500", "bg-gray-200");
+        amenitiesBtn.classList.replace("text-white", "text-gray-700");
+      });
 
-    amenitiesBtn.addEventListener("click", () => {
-      amenitiesFaqs.classList.remove("hidden");
-      roomsFaqs.classList.add("hidden");
-      amenitiesBtn.classList.replace("bg-gray-200", "bg-yellow-500");
-      amenitiesBtn.classList.replace("text-gray-700", "text-white");
-      roomsBtn.classList.replace("bg-yellow-500", "bg-gray-200");
-      roomsBtn.classList.replace("text-white", "text-gray-700");
-    });
+      amenitiesBtn.addEventListener("click", () => {
+        amenitiesFaqs.classList.remove("hidden");
+        roomsFaqs.classList.add("hidden");
+        amenitiesBtn.classList.replace("bg-gray-200", "bg-yellow-500");
+        amenitiesBtn.classList.replace("text-gray-700", "text-white");
+        roomsBtn.classList.replace("bg-yellow-500", "bg-gray-200");
+        roomsBtn.classList.replace("text-white", "text-gray-700");
+      });
+    }
 
-    // Accordion toggle
+    // ✅ Accordion toggle
     document.addEventListener("click", (e) => {
       if (e.target.closest(".faq-item")) {
         const item = e.target.closest(".faq-item");
         const answer = item.querySelector(".answer");
         const toggle = item.querySelector(".toggle");
 
-        if (answer.classList.contains("hidden")) {
-          answer.classList.remove("hidden");
-          toggle.textContent = "−";
-        } else {
-          answer.classList.add("hidden");
-          toggle.textContent = "+";
+        if (answer && toggle) {
+          if (answer.classList.contains("hidden")) {
+            answer.classList.remove("hidden");
+            toggle.textContent = "−";
+          } else {
+            answer.classList.add("hidden");
+            toggle.textContent = "+";
+          }
         }
       }
     });
   </script>
+
 </body>
 </html>

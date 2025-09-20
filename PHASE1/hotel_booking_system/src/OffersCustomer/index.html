@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - Offers Details</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+<!-- ✅ Navbar -->
+<div id="navbar"></div>
+
+<!-- ✅ Offers Details -->
+<section class="py-16 px-6 max-w-6xl mx-auto">
+  <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-yellow-600 to-red-600 bg-clip-text text-transparent">
+    Offer Details
+  </h2>
+
+  <!-- Weekend Getaway -->
+  <div class="bg-white shadow-md rounded-xl p-6 mb-10">
+    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80"
+         class="w-full h-64 object-cover rounded-lg mb-4">
+    <h3 class="text-2xl font-bold text-yellow-700">Weekend Getaway</h3>
+    <ul class="list-disc ml-6 mt-3 text-gray-600">
+      <li>2 Nights Stay in Deluxe Room</li>
+      <li>20% Off on Spa Treatments</li>
+      <li>Complimentary Breakfast</li>
+      <li>Price: ₹7,500 / couple</li>
+    </ul>
+  </div>
+
+  <!-- Family Package -->
+  <div class="bg-white shadow-md rounded-xl p-6 mb-10">
+    <img src="https://images.unsplash.com/photo-1505691723518-36a5ac3be353?auto=format&fit=crop&w=800&q=80"
+         class="w-full h-64 object-cover rounded-lg mb-4">
+    <h3 class="text-2xl font-bold text-yellow-700">Family Package</h3>
+    <ul class="list-disc ml-6 mt-3 text-gray-600">
+      <li>Kids Stay Free</li>
+      <li>Complimentary Breakfast for All</li>
+      <li>Free Wi-Fi & Family Activities</li>
+      <li>Price: ₹12,000 / family (2 Adults + 2 Kids)</li>
+    </ul>
+  </div>
+
+  <!-- Honeymoon Special -->
+  <div class="bg-white shadow-md rounded-xl p-6">
+    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
+         class="w-full h-64 object-cover rounded-lg mb-4">
+    <h3 class="text-2xl font-bold text-yellow-700">Honeymoon Special</h3>
+    <ul class="list-disc ml-6 mt-3 text-gray-600">
+      <li>Candlelight Dinner & Champagne on Arrival</li>
+      <li>Private Suite Stay</li>
+      <li>Late Checkout</li>
+      <li>Price: ₹14,000 / couple</li>
+    </ul>
+  </div>
+</section>
+
+  <!-- ✅ Footer -->
+  <div id="footer"></div>
+
+  <!-- ✅ Scripts -->
+  <script>
+    const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
+
+    // ✅ Navbar
+    fetch(isCustomerLoggedIn ? "../LoggedCustomerNavbar/index.html" : "../NotCustomerNavbar/index.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("navbar").innerHTML = data;
+
+        // mobile menu toggle
+        const menuBtn = document.getElementById("menuBtn");
+        const mobileMenu = document.getElementById("mobileMenu");
+        if (menuBtn && mobileMenu) {
+          menuBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("open");
+          });
+        }
+      });
+
+    // ✅ Footer
+    fetch("../FooterCustomer/index.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("footer").innerHTML = data;
+      })
+      .catch(err => console.error("❌ Footer load failed:", err));
+  </script>
+</body>
+</html>

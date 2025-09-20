@@ -14,7 +14,9 @@
   <!-- ✅ Header -->
   <header class="bg-gradient-to-r from-yellow-600 to-red-600 py-20 text-center text-white shadow-md">
     <h1 class="text-4xl font-extrabold">Privacy Policy</h1>
-    <p class="text-sm sm:text-base mt-2 opacity-90">We value your trust and are committed to safeguarding your information</p>
+    <p class="text-sm sm:text-base mt-2 opacity-90">
+      We value your trust and are committed to safeguarding your information
+    </p>
   </header>
 
   <!-- ✅ Content -->
@@ -61,8 +63,10 @@
 
   <!-- ✅ Scripts -->
   <script>
-    // Navbar Loader
-    fetch("../LoggedCustomerNavbar/index.html")
+    const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
+
+    // ✅ Navbar
+    fetch(isCustomerLoggedIn ? "../LoggedCustomerNavbar/index.html" : "../NotCustomerNavbar/index.html")
       .then(res => res.text())
       .then(data => {
         document.getElementById("navbar").innerHTML = data;
@@ -77,8 +81,8 @@
         }
       });
 
-    // Footer Loader
-    fetch("../LoggedFooterCustomer/index.html")
+    // ✅ Footer
+    fetch("../FooterCustomer/index.html")
       .then(res => res.text())
       .then(data => {
         document.getElementById("footer").innerHTML = data;

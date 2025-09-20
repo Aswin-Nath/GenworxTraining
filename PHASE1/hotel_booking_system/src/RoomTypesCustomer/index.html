@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - Room Details</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+<!-- ✅ Navbar -->
+<div id="navbar"></div>
+
+<!-- ✅ Rooms Details -->
+<section class="py-16 px-6 max-w-6xl mx-auto">
+  <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-yellow-600 to-red-600 bg-clip-text text-transparent">
+    Room Details
+  </h2>
+
+  <!-- Deluxe Room -->
+  <div class="bg-white shadow-md rounded-xl p-6 mb-10">
+    <img src="../../assets/room1.jpg" class="w-full h-64 object-cover rounded-lg mb-4">
+    <h3 class="text-2xl font-bold text-yellow-700">Deluxe Room</h3>
+    <p class="text-gray-700 mt-2">A cozy, elegant room ideal for couples or solo travelers.</p>
+    <ul class="list-disc ml-6 mt-3 text-gray-600">
+      <li>Max Occupancy: 2 Adults</li>
+      <li>Amenities: Wi-Fi, AC, TV, 24/7 Room Service, Mini Bar</li>
+      <li>Price: ₹4,500 / night</li>
+    </ul>
+  </div>
+
+  <!-- Executive Suite -->
+  <div class="bg-white shadow-md rounded-xl p-6 mb-10">
+    <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80"
+         class="w-full h-64 object-cover rounded-lg mb-4">
+    <h3 class="text-2xl font-bold text-yellow-700">Executive Suite</h3>
+    <p class="text-gray-700 mt-2">Spacious suite with a private sitting area and skyline views.</p>
+    <ul class="list-disc ml-6 mt-3 text-gray-600">
+      <li>Max Occupancy: 3 Adults + 1 Child</li>
+      <li>Amenities: King Bed, Wi-Fi, Breakfast, Concierge Service</li>
+      <li>Price: ₹8,000 / night</li>
+    </ul>
+  </div>
+
+  <!-- Presidential Suite -->
+  <div class="bg-white shadow-md rounded-xl p-6">
+    <img src="../../assets/room3.jpg" class="w-full h-64 object-cover rounded-lg mb-4">
+    <h3 class="text-2xl font-bold text-yellow-700">Presidential Suite</h3>
+    <p class="text-gray-700 mt-2">Luxury at its finest with royal experience & personal lounge.</p>
+    <ul class="list-disc ml-6 mt-3 text-gray-600">
+      <li>Max Occupancy: 4 Adults + 2 Children</li>
+      <li>Amenities: Private Lounge, Butler Service, Jacuzzi, Mini Bar</li>
+      <li>Price: ₹15,000 / night</li>
+    </ul>
+  </div>
+</section>
+
+  <!-- ✅ Footer -->
+  <div id="footer"></div>
+
+  <!-- ✅ Scripts -->
+  <script>
+    const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
+
+    // ✅ Navbar
+    fetch(isCustomerLoggedIn ? "../LoggedCustomerNavbar/index.html" : "../NotCustomerNavbar/index.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("navbar").innerHTML = data;
+
+        // mobile menu toggle
+        const menuBtn = document.getElementById("menuBtn");
+        const mobileMenu = document.getElementById("mobileMenu");
+        if (menuBtn && mobileMenu) {
+          menuBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("open");
+          });
+        }
+      });
+
+    // ✅ Footer
+    fetch("../FooterCustomer/index.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("footer").innerHTML = data;
+      })
+      .catch(err => console.error("❌ Footer load failed:", err));
+  </script>
+
+</body>
+</html>

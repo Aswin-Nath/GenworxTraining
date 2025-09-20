@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  fetch("../LoggedFooterCustomer/index.html") // adjust path based on where footer.html is saved
+  fetch("../FooterCustomer/index.html") // adjust path based on where footer.html is saved
     .then(res => res.text())
     .then(data => {
       document.getElementById("footer").innerHTML = data;
