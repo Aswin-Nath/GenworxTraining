@@ -3,402 +3,578 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LuxuryStay - My Refunds</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>LuxuryStay - My Issues</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  <script>
-    let currentPage = 1;
-    const rowsPerPage = 5;
-
-    function showPage(page) {
-      const table = document.querySelector("tbody");
-      const rows = table.querySelectorAll("tr");
-      const totalPages = Math.ceil(rows.length / rowsPerPage);
-
-      if (page < 1) page = 1;
-      if (page > totalPages) page = totalPages;
-
-      currentPage = page;
-
-      rows.forEach((row, index) => {
-        row.style.display = (index >= (page - 1) * rowsPerPage && index < page * rowsPerPage) 
-          ? "" : "none";
-      });
-    }
-
-    function prevPage() { showPage(currentPage - 1); }
-    function nextPage() { showPage(currentPage + 1); }
-    function goToPage(page) { showPage(page); }
-    function jumpToPage() {
-      const pageInput = document.getElementById("pageInput").value;
-      if (pageInput) goToPage(parseInt(pageInput));
-    }
-
-    document.addEventListener("DOMContentLoaded", () => showPage(1));
-  </script>
 </head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
 
-<body class="bg-gray-100 h-screen flex flex-col">
+  <!-- ✅ Main Navbar -->
+  <div id="navbar"></div>
 
-
-
-
-    <!-- Sidebar Placeholder -->
-    <div id="sidebar"></div>
   <!-- ✅ Layout -->
-  <div class="flex flex-1 overflow-hidden">
-    <!-- ✅ Main Content -->
-    <main class="flex-1 overflow-y-auto p-6 bg-gray-50 border-l-4">
+  <div class="flex flex-1 max-w-7xl mx-auto w-full py-8 px-4 lg:px-8 gap-8 mt-20">
 
-      <!-- Page Header -->
-      <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-800 mb-3">My Refund Requests</h1>
-        <input type="text" placeholder="🔍 Search by Category, Room, Status, Date"
-               class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm">
+    <!-- ✅ Sidebar -->
+    <aside class="w-64 bg-white shadow-lg rounded-2xl p-6 h-fit">
+      <nav class="space-y-4 text-gray-700 font-medium">
+        <a href="../MainPageCustomer/index.html" data-page="dashboard" class="block py-2 border-b hover:text-yellow-600">Overview</a>
+        <a href="../MyBookings/index.html" data-page="booking" class="block py-2 border-b hover:text-yellow-600">Bookings</a>
+        <a href="../SavedRoomsCustomer/index.html" data-page="saved" class="block py-2 border-b hover:text-yellow-600">Wishlist</a>
+        <a href="../MyIssues/index.html" data-page="issues" class="block py-2 border-b hover:text-yellow-600">My Issues</a>
+        <a href="../MyRefunds/index.html" data-page="refunds" class="block py-2 border-b hover:text-yellow-600">My Refunds</a>
+        <a href="../ProfileDisplayCustomer/index.html" data-page="profile" class="block py-2 border-b hover:text-yellow-600">Profile</a>
+      </nav>
+    </aside>
+
+    <!-- ✅ Main Content -->
+    <main class="flex-1 space-y-12">
+
+      <!-- ✅ Welcome Header -->
+      <div class="relative rounded-2xl p-[3px] bg-gradient-to-r from-yellow-600 to-red-700 shadow">
+        <div class="bg-[#fdfaf4] rounded-2xl py-8 text-center">
+          <h2 class="text-4xl text-gray-800 font-bold" style="font-family: 'Pacifico', cursive;">
+            My Issues
+          </h2>
+          <p class="mt-2 text-gray-600">Track your reported issues, monitor status, and download reports.</p>
+        </div>
       </div>
 
-      <!-- Refund Table -->
+      <!-- ✅ Issues Table -->
       <div class="overflow-x-auto bg-white shadow-lg border border-gray-200 rounded-xl">
-        <table class="w-full text-sm">
+        <table class="w-full text-sm" id="issuesTable">
           <thead>
             <tr class="bg-yellow-50 border-b border-gray-300">
-              <th class="p-3 text-left font-semibold text-gray-700">Issue ID</th>
+              <th class="p-3 text-left font-semibold text-gray-700">Issue</th>
               <th class="p-3 text-left font-semibold text-gray-700">Date</th>
-              <th class="p-3 text-left font-semibold text-gray-700">Issue Type</th>
-              <th class="p-3 text-left font-semibold text-gray-700">Room No</th>
+              <th class="p-3 text-left font-semibold text-gray-700">Room</th>
               <th class="p-3 text-left font-semibold text-gray-700">Status</th>
               <th class="p-3 text-center font-semibold text-gray-700">Actions</th>
             </tr>
           </thead>
+          <tbody id="issuesTableBody">
 
-          <tbody>
-            <!-- ✅ Row 1 -->
+            <!-- ✅ Example Row 1 -->
             <tr class="hover:bg-gray-50">
-              <td class="p-3 border-t">I-2001</td>
-              <td class="p-3 border-t">2025-09-17</td>
-              <td class="p-3 border-t">Room Service Delay</td>
+              <td class="p-3 border-t">
+                <span class="font-medium text-gray-800">Room Service Delay</span>
+                <p class="text-xs text-gray-500">Issue #I-2001</p>
+              </td>
+              <td class="p-3 border-t">17 Sep 2025</td>
               <td class="p-3 border-t">302</td>
               <td class="p-3 border-t">
-                <span class="px-2 py-1 rounded-full text-white bg-green-500 text-xs font-medium">Resolved</span>
+                <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium flex items-center w-fit">
+                  <span class="material-icons text-sm mr-1">check_circle</span> Resolved
+                </span>
               </td>
-              <td class="p-3 border-t flex space-x-2 justify-center">
-                <button onclick="openChildIssues()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
-                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              <td class="p-3 border-t text-center">
+                <div class="flex justify-center space-x-3">
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+                    <span class="material-icons text-sm">visibility</span>
+                    <span>View</span>
+                  </button>
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 shadow-sm">
+                    <span class="material-icons text-sm">download</span>
+                    <span>Report</span>
+                  </button>
+                </div>
               </td>
             </tr>
 
-            <!-- ✅ Row 2 -->
+            <!-- ✅ Example Row 2 -->
             <tr class="hover:bg-gray-50">
-              <td class="p-3 border-t">I-2002</td>
-              <td class="p-3 border-t">2025-09-16</td>
-              <td class="p-3 border-t">AC Not Working</td>
+              <td class="p-3 border-t">
+                <span class="font-medium text-gray-800">AC Not Working</span>
+                <p class="text-xs text-gray-500">Issue #I-2002</p>
+              </td>
+              <td class="p-3 border-t">16 Sep 2025</td>
               <td class="p-3 border-t">415</td>
               <td class="p-3 border-t">
-                <span class="px-2 py-1 rounded-full text-white bg-yellow-500 text-xs font-medium">Pending</span>
+                <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium flex items-center w-fit">
+                  <span class="material-icons text-sm mr-1">hourglass_empty</span> Pending
+                </span>
               </td>
-              <td class="p-3 border-t flex space-x-2 justify-center">
-                <button onclick="openChildIssues()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
-                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              <td class="p-3 border-t text-center">
+                <div class="flex justify-center space-x-3">
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+                    <span class="material-icons text-sm">visibility</span>
+                    <span>View</span>
+                  </button>
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 shadow-sm">
+                    <span class="material-icons text-sm">download</span>
+                    <span>Report</span>
+                  </button>
+                </div>
               </td>
             </tr>
 
-            <!-- ✅ Row 3 -->
+            <!-- ✅ Example Row 3 -->
             <tr class="hover:bg-gray-50">
-              <td class="p-3 border-t">I-2003</td>
-              <td class="p-3 border-t">2025-09-15</td>
-              <td class="p-3 border-t">Cleanliness Issue</td>
+              <td class="p-3 border-t">
+                <span class="font-medium text-gray-800">Cleanliness Issue</span>
+                <p class="text-xs text-gray-500">Issue #I-2003</p>
+              </td>
+              <td class="p-3 border-t">15 Sep 2025</td>
               <td class="p-3 border-t">210</td>
               <td class="p-3 border-t">
-                <span class="px-2 py-1 rounded-full text-white bg-red-500 text-xs font-medium">Rejected</span>
+                <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium flex items-center w-fit">
+                  <span class="material-icons text-sm mr-1">check_circle</span> Resolved
+                </span>
               </td>
-              <td class="p-3 border-t flex space-x-2 justify-center">
-                <button onclick="openChildIssues()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
-                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
-              </td>
-            </tr>
-
-            <!-- ✅ Row 4 -->
-            <tr class="hover:bg-gray-50">
-              <td class="p-3 border-t">I-2004</td>
-              <td class="p-3 border-t">2025-09-14</td>
-              <td class="p-3 border-t">Overcharged Bill</td>
-              <td class="p-3 border-t">128</td>
-              <td class="p-3 border-t">
-                <span class="px-2 py-1 rounded-full text-white bg-yellow-500 text-xs font-medium">Pending</span>
-              </td>
-              <td class="p-3 border-t flex space-x-2 justify-center">
-                <button onclick="openChildIssues()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
-                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              <td class="p-3 border-t text-center">
+                <div class="flex justify-center space-x-3">
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+                    <span class="material-icons text-sm">visibility</span>
+                    <span>View</span>
+                  </button>
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 shadow-sm">
+                    <span class="material-icons text-sm">download</span>
+                    <span>Report</span>
+                  </button>
+                </div>
               </td>
             </tr>
 
-            <!-- ✅ Row 5 -->
+                        <!-- ✅ Example Row 1 -->
             <tr class="hover:bg-gray-50">
-              <td class="p-3 border-t">I-2005</td>
-              <td class="p-3 border-t">2025-09-13</td>
-              <td class="p-3 border-t">WiFi Not Working</td>
-              <td class="p-3 border-t">509</td>
               <td class="p-3 border-t">
-                <span class="px-2 py-1 rounded-full text-white bg-green-500 text-xs font-medium">Resolved</span>
+                <span class="font-medium text-gray-800">Room Service Delay</span>
+                <p class="text-xs text-gray-500">Issue #I-2001</p>
               </td>
-              <td class="p-3 border-t flex space-x-2 justify-center">
-                <button onclick="openChildIssues()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
-                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
-              </td>
-            </tr>
-
-            <!-- ✅ Row 6 -->
-            <tr class="hover:bg-gray-50">
-              <td class="p-3 border-t">I-2006</td>
-              <td class="p-3 border-t">2025-09-12</td>
-              <td class="p-3 border-t">Late Refund Processing</td>
-              <td class="p-3 border-t">334</td>
-              <td class="p-3 border-t">
-                <span class="px-2 py-1 rounded-full text-white bg-red-500 text-xs font-medium">Rejected</span>
-              </td>
-              <td class="p-3 border-t flex space-x-2 justify-center">
-                <button onclick="openChildIssues()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
-                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
-              </td>
-            </tr>
-            <tr class="hover:bg-gray-50">
-              <td class="p-3 border-t">I-2001</td>
-              <td class="p-3 border-t">2025-09-17</td>
-              <td class="p-3 border-t">Room Service Delay</td>
+              <td class="p-3 border-t">17 Sep 2025</td>
               <td class="p-3 border-t">302</td>
               <td class="p-3 border-t">
-                <span class="px-2 py-1 rounded-full text-white bg-green-500 text-xs font-medium">Resolved</span>
+                <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium flex items-center w-fit">
+                  <span class="material-icons text-sm mr-1">check_circle</span> Resolved
+                </span>
               </td>
-              <td class="p-3 border-t flex space-x-2 justify-center">
-                <button onclick="openChildIssues()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
-                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              <td class="p-3 border-t text-center">
+                <div class="flex justify-center space-x-3">
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+                    <span class="material-icons text-sm">visibility</span>
+                    <span>View</span>
+                  </button>
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 shadow-sm">
+                    <span class="material-icons text-sm">download</span>
+                    <span>Report</span>
+                  </button>
+                </div>
               </td>
             </tr>
 
-            <!-- ✅ Row 2 -->
+            <!-- ✅ Example Row 2 -->
             <tr class="hover:bg-gray-50">
-              <td class="p-3 border-t">I-2002</td>
-              <td class="p-3 border-t">2025-09-16</td>
-              <td class="p-3 border-t">AC Not Working</td>
+              <td class="p-3 border-t">
+                <span class="font-medium text-gray-800">AC Not Working</span>
+                <p class="text-xs text-gray-500">Issue #I-2002</p>
+              </td>
+              <td class="p-3 border-t">16 Sep 2025</td>
               <td class="p-3 border-t">415</td>
               <td class="p-3 border-t">
-                <span class="px-2 py-1 rounded-full text-white bg-yellow-500 text-xs font-medium">Pending</span>
+                <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium flex items-center w-fit">
+                  <span class="material-icons text-sm mr-1">hourglass_empty</span> Pending
+                </span>
               </td>
-              <td class="p-3 border-t flex space-x-2 justify-center">
-                <button onclick="openChildIssues()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
-                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              <td class="p-3 border-t text-center">
+                <div class="flex justify-center space-x-3">
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+                    <span class="material-icons text-sm">visibility</span>
+                    <span>View</span>
+                  </button>
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 shadow-sm">
+                    <span class="material-icons text-sm">download</span>
+                    <span>Report</span>
+                  </button>
+                </div>
               </td>
             </tr>
 
-            <!-- ✅ Row 3 -->
+            <!-- ✅ Example Row 3 -->
             <tr class="hover:bg-gray-50">
-              <td class="p-3 border-t">I-2003</td>
-              <td class="p-3 border-t">2025-09-15</td>
-              <td class="p-3 border-t">Cleanliness Issue</td>
+              <td class="p-3 border-t">
+                <span class="font-medium text-gray-800">Cleanliness Issue</span>
+                <p class="text-xs text-gray-500">Issue #I-2003</p>
+              </td>
+              <td class="p-3 border-t">15 Sep 2025</td>
               <td class="p-3 border-t">210</td>
               <td class="p-3 border-t">
-                <span class="px-2 py-1 rounded-full text-white bg-red-500 text-xs font-medium">Rejected</span>
+                <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium flex items-center w-fit">
+                  <span class="material-icons text-sm mr-1">check_circle</span> Resolved
+                </span>
               </td>
-              <td class="p-3 border-t flex space-x-2 justify-center">
-                <button onclick="openChildIssues()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
-                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
-              </td>
-            </tr>
-
-            <!-- ✅ Row 4 -->
-            <tr class="hover:bg-gray-50">
-              <td class="p-3 border-t">I-2004</td>
-              <td class="p-3 border-t">2025-09-14</td>
-              <td class="p-3 border-t">Overcharged Bill</td>
-              <td class="p-3 border-t">128</td>
-              <td class="p-3 border-t">
-                <span class="px-2 py-1 rounded-full text-white bg-yellow-500 text-xs font-medium">Pending</span>
-              </td>
-              <td class="p-3 border-t flex space-x-2 justify-center">
-                <button onclick="openChildIssues()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
-                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              <td class="p-3 border-t text-center">
+                <div class="flex justify-center space-x-3">
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+                    <span class="material-icons text-sm">visibility</span>
+                    <span>View</span>
+                  </button>
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 shadow-sm">
+                    <span class="material-icons text-sm">download</span>
+                    <span>Report</span>
+                  </button>
+                </div>
               </td>
             </tr>
 
-            <!-- ✅ Row 5 -->
+                        <!-- ✅ Example Row 1 -->
             <tr class="hover:bg-gray-50">
-              <td class="p-3 border-t">I-2005</td>
-              <td class="p-3 border-t">2025-09-13</td>
-              <td class="p-3 border-t">WiFi Not Working</td>
-              <td class="p-3 border-t">509</td>
               <td class="p-3 border-t">
-                <span class="px-2 py-1 rounded-full text-white bg-green-500 text-xs font-medium">Resolved</span>
+                <span class="font-medium text-gray-800">Room Service Delay</span>
+                <p class="text-xs text-gray-500">Issue #I-2001</p>
               </td>
-              <td class="p-3 border-t flex space-x-2 justify-center">
-                <button onclick="openChildIssues()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
-                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
-              </td>
-            </tr>
-
-            <!-- ✅ Row 6 -->
-            <tr class="hover:bg-gray-50">
-              <td class="p-3 border-t">I-2006</td>
-              <td class="p-3 border-t">2025-09-12</td>
-              <td class="p-3 border-t">Late Refund Processing</td>
-              <td class="p-3 border-t">334</td>
-              <td class="p-3 border-t">
-                <span class="px-2 py-1 rounded-full text-white bg-red-500 text-xs font-medium">Rejected</span>
-              </td>
-              <td class="p-3 border-t flex space-x-2 justify-center">
-                <button onclick="openChildIssues()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
-                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
-              </td>
-            </tr>
-            <tr class="hover:bg-gray-50">
-              <td class="p-3 border-t">I-2001</td>
-              <td class="p-3 border-t">2025-09-17</td>
-              <td class="p-3 border-t">Room Service Delay</td>
+              <td class="p-3 border-t">17 Sep 2025</td>
               <td class="p-3 border-t">302</td>
               <td class="p-3 border-t">
-                <span class="px-2 py-1 rounded-full text-white bg-green-500 text-xs font-medium">Resolved</span>
+                <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium flex items-center w-fit">
+                  <span class="material-icons text-sm mr-1">check_circle</span> Resolved
+                </span>
               </td>
-              <td class="p-3 border-t flex space-x-2 justify-center">
-                <button onclick="openChildIssues()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
-                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              <td class="p-3 border-t text-center">
+                <div class="flex justify-center space-x-3">
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+                    <span class="material-icons text-sm">visibility</span>
+                    <span>View</span>
+                  </button>
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 shadow-sm">
+                    <span class="material-icons text-sm">download</span>
+                    <span>Report</span>
+                  </button>
+                </div>
               </td>
             </tr>
 
-            <!-- ✅ Row 2 -->
+            <!-- ✅ Example Row 2 -->
             <tr class="hover:bg-gray-50">
-              <td class="p-3 border-t">I-2002</td>
-              <td class="p-3 border-t">2025-09-16</td>
-              <td class="p-3 border-t">AC Not Working</td>
+              <td class="p-3 border-t">
+                <span class="font-medium text-gray-800">AC Not Working</span>
+                <p class="text-xs text-gray-500">Issue #I-2002</p>
+              </td>
+              <td class="p-3 border-t">16 Sep 2025</td>
               <td class="p-3 border-t">415</td>
               <td class="p-3 border-t">
-                <span class="px-2 py-1 rounded-full text-white bg-yellow-500 text-xs font-medium">Pending</span>
+                <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium flex items-center w-fit">
+                  <span class="material-icons text-sm mr-1">hourglass_empty</span> Pending
+                </span>
               </td>
-              <td class="p-3 border-t flex space-x-2 justify-center">
-                <button onclick="openChildIssues()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
-                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              <td class="p-3 border-t text-center">
+                <div class="flex justify-center space-x-3">
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+                    <span class="material-icons text-sm">visibility</span>
+                    <span>View</span>
+                  </button>
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 shadow-sm">
+                    <span class="material-icons text-sm">download</span>
+                    <span>Report</span>
+                  </button>
+                </div>
               </td>
             </tr>
 
-            <!-- ✅ Row 3 -->
+            <!-- ✅ Example Row 3 -->
             <tr class="hover:bg-gray-50">
-              <td class="p-3 border-t">I-2003</td>
-              <td class="p-3 border-t">2025-09-15</td>
-              <td class="p-3 border-t">Cleanliness Issue</td>
+              <td class="p-3 border-t">
+                <span class="font-medium text-gray-800">Cleanliness Issue</span>
+                <p class="text-xs text-gray-500">Issue #I-2003</p>
+              </td>
+              <td class="p-3 border-t">15 Sep 2025</td>
               <td class="p-3 border-t">210</td>
               <td class="p-3 border-t">
-                <span class="px-2 py-1 rounded-full text-white bg-red-500 text-xs font-medium">Rejected</span>
+                <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium flex items-center w-fit">
+                  <span class="material-icons text-sm mr-1">check_circle</span> Resolved
+                </span>
               </td>
-              <td class="p-3 border-t flex space-x-2 justify-center">
-                <button onclick="openChildIssues()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
-                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
-              </td>
-            </tr>
-
-            <!-- ✅ Row 4 -->
-            <tr class="hover:bg-gray-50">
-              <td class="p-3 border-t">I-2004</td>
-              <td class="p-3 border-t">2025-09-14</td>
-              <td class="p-3 border-t">Overcharged Bill</td>
-              <td class="p-3 border-t">128</td>
-              <td class="p-3 border-t">
-                <span class="px-2 py-1 rounded-full text-white bg-yellow-500 text-xs font-medium">Pending</span>
-              </td>
-              <td class="p-3 border-t flex space-x-2 justify-center">
-                <button onclick="openChildIssues()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
-                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              <td class="p-3 border-t text-center">
+                <div class="flex justify-center space-x-3">
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+                    <span class="material-icons text-sm">visibility</span>
+                    <span>View</span>
+                  </button>
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 shadow-sm">
+                    <span class="material-icons text-sm">download</span>
+                    <span>Report</span>
+                  </button>
+                </div>
               </td>
             </tr>
 
-            <!-- ✅ Row 5 -->
+                        <!-- ✅ Example Row 1 -->
             <tr class="hover:bg-gray-50">
-              <td class="p-3 border-t">I-2005</td>
-              <td class="p-3 border-t">2025-09-13</td>
-              <td class="p-3 border-t">WiFi Not Working</td>
-              <td class="p-3 border-t">509</td>
               <td class="p-3 border-t">
-                <span class="px-2 py-1 rounded-full text-white bg-green-500 text-xs font-medium">Resolved</span>
+                <span class="font-medium text-gray-800">Room Service Delay</span>
+                <p class="text-xs text-gray-500">Issue #I-2001</p>
               </td>
-              <td class="p-3 border-t flex space-x-2 justify-center">
-                <button onclick="openChildIssues()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
-                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              <td class="p-3 border-t">17 Sep 2025</td>
+              <td class="p-3 border-t">302</td>
+              <td class="p-3 border-t">
+                <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium flex items-center w-fit">
+                  <span class="material-icons text-sm mr-1">check_circle</span> Resolved
+                </span>
+              </td>
+              <td class="p-3 border-t text-center">
+                <div class="flex justify-center space-x-3">
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+                    <span class="material-icons text-sm">visibility</span>
+                    <span>View</span>
+                  </button>
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 shadow-sm">
+                    <span class="material-icons text-sm">download</span>
+                    <span>Report</span>
+                  </button>
+                </div>
               </td>
             </tr>
 
-            <!-- ✅ Row 6 -->
+            <!-- ✅ Example Row 2 -->
             <tr class="hover:bg-gray-50">
-              <td class="p-3 border-t">I-2006</td>
-              <td class="p-3 border-t">2025-09-12</td>
-              <td class="p-3 border-t">Late Refund Processing</td>
-              <td class="p-3 border-t">334</td>
               <td class="p-3 border-t">
-                <span class="px-2 py-1 rounded-full text-white bg-red-500 text-xs font-medium">Rejected</span>
+                <span class="font-medium text-gray-800">AC Not Working</span>
+                <p class="text-xs text-gray-500">Issue #I-2002</p>
               </td>
-              <td class="p-3 border-t flex space-x-2 justify-center">
-                <button onclick="openChildIssues()" class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm">View</button>
-                <button class="px-3 py-1 rounded-md bg-green-500 text-white hover:bg-green-600 shadow-sm">Download</button>
+              <td class="p-3 border-t">16 Sep 2025</td>
+              <td class="p-3 border-t">415</td>
+              <td class="p-3 border-t">
+                <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium flex items-center w-fit">
+                  <span class="material-icons text-sm mr-1">hourglass_empty</span> Pending
+                </span>
+              </td>
+              <td class="p-3 border-t text-center">
+                <div class="flex justify-center space-x-3">
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+                    <span class="material-icons text-sm">visibility</span>
+                    <span>View</span>
+                  </button>
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 shadow-sm">
+                    <span class="material-icons text-sm">download</span>
+                    <span>Report</span>
+                  </button>
+                </div>
               </td>
             </tr>
+
+            <!-- ✅ Example Row 3 -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border-t">
+                <span class="font-medium text-gray-800">Cleanliness Issue</span>
+                <p class="text-xs text-gray-500">Issue #I-2003</p>
+              </td>
+              <td class="p-3 border-t">15 Sep 2025</td>
+              <td class="p-3 border-t">210</td>
+              <td class="p-3 border-t">
+                <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium flex items-center w-fit">
+                  <span class="material-icons text-sm mr-1">check_circle</span> Resolved
+                </span>
+              </td>
+              <td class="p-3 border-t text-center">
+                <div class="flex justify-center space-x-3">
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
+                    <span class="material-icons text-sm">visibility</span>
+                    <span>View</span>
+                  </button>
+                  <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 shadow-sm">
+                    <span class="material-icons text-sm">download</span>
+                    <span>Report</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+
           </tbody>
-
         </table>
       </div>
 
-      <!-- Pagination -->
-      <nav class="flex justify-between items-center mt-6">
-        <!-- Prev/Next -->
-        <div class="flex space-x-2">
-          <button class="px-3 py-1 border rounded-md bg-gray-200 hover:bg-gray-300" onclick="prevPage()">Previous</button>
-          <button class="px-3 py-1 border rounded-md bg-gray-200 hover:bg-gray-300" onclick="nextPage()">Next</button>
-        </div>
+      <!-- ✅ Pagination -->
+      <nav class="flex flex-col md:flex-row justify-between items-center mt-6 space-y-4 md:space-y-0">
+        <!-- Prev -->
+        <button onclick="prevPage()" class="px-5 py-2 flex items-center space-x-2 border rounded-full bg-gray-200 hover:bg-gray-300">
+          <span class="material-icons text-sm">chevron_left</span>
+          <span>Prev</span>
+        </button>
 
         <!-- Page Numbers -->
         <ul class="flex space-x-2">
-          <li><button class="px-3 py-1 border rounded-md bg-gray-200 hover:bg-gray-300" onclick="goToPage(1)">1</button></li>
-          <li><button class="px-3 py-1 border rounded-md bg-gray-200 hover:bg-gray-300" onclick="goToPage(2)">2</button></li>
-          <li><button class="px-3 py-1 border rounded-md bg-gray-200 hover:bg-gray-300" onclick="goToPage(3)">3</button></li>
-          <li><span class="px-3 py-1">...</span></li>
-          <li><button class="px-3 py-1 border rounded-md bg-gray-200 hover:bg-gray-300" onclick="goToPage(10)">10</button></li>
+          <li><button onclick="goToPage(1)" class="px-4 py-2 rounded-full bg-yellow-500 text-white shadow">1</button></li>
+          <li><button onclick="goToPage(2)" class="px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">2</button></li>
+          <li><button onclick="goToPage(3)" class="px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">3</button></li>
+          <li><span class="px-4 py-2">...</span></li>
+          <li><button onclick="goToPage(10)" class="px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">10</button></li>
         </ul>
 
-        <!-- Jump to Page -->
+        <!-- Next -->
+        <button onclick="nextPage()" class="px-5 py-2 flex items-center space-x-2 border rounded-full bg-gray-200 hover:bg-gray-300">
+          <span>Next</span>
+          <span class="material-icons text-sm">chevron_right</span>
+        </button>
+
+        <!-- Jumper -->
         <div class="flex items-center space-x-2">
-          <input id="pageInput" type="number" min="1" placeholder="Page #" class="w-20 p-1 border rounded-md focus:ring-2 focus:ring-yellow-500">
-          <button class="px-3 py-1 border rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-sm" onclick="jumpToPage()">Go</button>
+          <label for="pageInput" class="text-sm text-gray-600 font-medium">Jump to:</label>
+          <input id="pageInput" type="number" min="1" placeholder="Page #"
+            class="w-20 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 shadow-sm">
+          <button onclick="jumpToPage()" class="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow flex items-center space-x-1">
+            <span class="material-icons text-sm">login</span>
+            <span>Go</span>
+          </button>
         </div>
       </nav>
 
     </main>
   </div>
 
+  <!-- ✅ Footer -->
+  <div id="footer"></div>
+
+  <!-- ✅ Script -->
   <script>
-    function openRefunds() { window.location.href = "../MyRefunds/index.html"; }
-    function openProfile() { window.location.href = "../ProfileDisplayCustomer/index.html"; }
-    function openIssues() { window.location.href = "../MyIssues/index.html"; }
-    function openChildIssues() { window.location.href = "../IssueDetailsCustomer/index.html"; }
-       fetch("../NavbarCustomer/index.html")
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById("sidebar").innerHTML = data;
+    // Navbar load
+    const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
+  fetch(isCustomerLoggedIn ? "../LoggedCustomerNavbar/index.html" : "../NotCustomerNavbar/index.html")
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById("navbar").innerHTML = data;
+      const menuBtn = document.getElementById("menuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener("click", () => mobileMenu.classList.toggle("open"));
+      }
+      // ✅ attach modal listeners AFTER navbar injected
+      attachModalListeners();
+    });
 
-        // Highlight active link based on data-page
-        const links = document.querySelectorAll("#sidebar a");
+  function attachModalListeners() {
+    const modal = document.getElementById("bookingModal");
+    const closeModal = document.getElementById("closeModal");
+    const addRoomBtn = document.getElementById("addRoomBtn");
+    const roomsContainer = document.getElementById("roomsContainer");
 
-        links.forEach(link => {
-          if (link.dataset.page === "issues") {
-            link.classList.add("bg-yellow-200", "text-yellow-700", "font-semibold");
+    if (!modal) return;
+
+    // Open modal
+    document.querySelectorAll(".bookingModal").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      });
+    });
+
+    // Close modal
+    closeModal?.addEventListener("click", () => {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    });
+
+    // Add counter listeners
+    function addCounterListeners(roomDiv) {
+      roomDiv.querySelectorAll(".increase").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const input = btn.parentElement.querySelector("input");
+          input.value = parseInt(input.value) + 1;
+        });
+      });
+      roomDiv.querySelectorAll(".decrease").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const input = btn.parentElement.querySelector("input");
+          if (parseInt(input.value) > parseInt(input.min)) {
+            input.value = parseInt(input.value) - 1;
           }
         });
-      })
-      .catch(error => console.error("Sidebar load failed:", error));
+      });
+    }
 
-    fetch("../HeaderCustomer/index.html") // adjust path as needed
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById("header").innerHTML = data;
-    })
-    .catch(error => console.error("Hidebar load failed:", error));
+    // ✅ Reindex rooms after add/remove
+    function reindexRooms() {
+      document.querySelectorAll(".room-card").forEach((room, index) => {
+        room.querySelector(".room-title").textContent = `Room ${index + 1}`;
+      });
+    }
 
+    // Add room
+    addRoomBtn?.addEventListener("click", () => {
+      const roomDiv = document.createElement("div");
+      roomDiv.className = "room-card border p-5 rounded-xl mb-6 bg-gray-50 shadow-sm";
+      roomDiv.innerHTML = `
+        <!-- Row 1: Room no + type -->
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="room-title font-semibold text-lg">Room</h3>
+          <select class="border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
+            <option>Deluxe Room</option>
+            <option>Executive Suite</option>
+            <option>Presidential Suite</option>
+          </select>
+        </div>
+
+        <!-- Row 2: Adults + Children -->
+        <div class="grid grid-cols-2 gap-6">
+          <div class="flex items-center justify-between">
+            <label class="text-sm font-medium">Adults</label>
+            <div class="flex items-center space-x-3">
+              <button class="decrease w-8 h-8 rounded-full bg-gray-200">−</button>
+              <input type="number" value="1" min="1" class="w-12 text-center border rounded-md p-1">
+              <button class="increase w-8 h-8 rounded-full bg-yellow-500 text-white">+</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
+            <label class="text-sm font-medium">Children</label>
+            <div class="flex items-center space-x-3">
+              <button class="decrease w-8 h-8 rounded-full bg-gray-200">−</button>
+              <input type="number" value="0" min="0" class="w-12 text-center border rounded-md p-1">
+              <button class="increase w-8 h-8 rounded-full bg-yellow-500 text-white">+</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="remove-room mt-4 text-sm text-red-500 hover:underline">Remove Room</button>
+      `;
+
+      roomsContainer.appendChild(roomDiv);
+
+      addCounterListeners(roomDiv);
+
+      // Remove room + reindex
+      roomDiv.querySelector(".remove-room").addEventListener("click", () => {
+        roomDiv.remove();
+        reindexRooms();
+      });
+
+      reindexRooms();
+    });
+
+    // Init counters for first room
+    addCounterListeners(document.querySelector(".room-card"));
+    reindexRooms();
+  }
+    fetch("../CustomerFooter/index.html")
+      .then(res => res.text())
+      .then(data => { document.getElementById("footer").innerHTML = data; });
+
+    // Highlight sidebar
+    document.querySelectorAll("aside nav a").forEach(link => {
+      if (link.dataset.page === "issues") {
+        link.classList.add("text-yellow-700", "font-semibold");
+      }
+    });
+
+    // Pagination
+    let currentPage = 1;
+    const rowsPerPage = 5;
+    function showPage(page) {
+      const rows = document.querySelectorAll("#issuesTableBody tr");
+      const totalPages = Math.ceil(rows.length / rowsPerPage);
+      if (page < 1) page = 1;
+      if (page > totalPages) page = totalPages;
+      currentPage = page;
+      rows.forEach((row, i) => {
+        row.style.display = (i >= (page - 1) * rowsPerPage && i < page * rowsPerPage) ? "" : "none";
+      });
+    }
+    function prevPage() { showPage(currentPage - 1); }
+    function nextPage() { showPage(currentPage + 1); }
+    function goToPage(p) { showPage(p); }
+    function jumpToPage() {
+      const p = parseInt(document.getElementById("pageInput").value);
+      if (p) showPage(p);
+    }
+    document.addEventListener("DOMContentLoaded", () => showPage(1));
   </script>
-
 </body>
 </html>
