@@ -136,6 +136,16 @@
       Book Your Stay
     </h2>
 
+    <!-- Mode Toggle -->
+    <div class="flex justify-center space-x-4 mb-6">
+      <button id="individualModeBtn" class="px-4 py-2 rounded-lg border bg-yellow-100 text-yellow-700 font-medium">
+        Individual Dates
+      </button>
+      <button id="sameDatesBtn" class="px-4 py-2 rounded-lg border hover:bg-yellow-100 text-gray-600 font-medium">
+        Same for All Rooms
+      </button>
+    </div>
+
     <!-- Rooms Container -->
     <div id="roomsContainer">
       <div class="room-card border p-5 rounded-xl mb-6 bg-gray-50 shadow-sm">
@@ -151,8 +161,7 @@
         </div>
 
         <!-- Row 2: Adults + Children -->
-        <div class="grid grid-cols-2 gap-6">
-          <!-- Adults -->
+        <div class="grid grid-cols-2 gap-6 mb-4">
           <div class="flex items-center justify-between">
             <label class="text-sm font-medium">Adults</label>
             <div class="flex items-center space-x-3">
@@ -162,7 +171,6 @@
             </div>
           </div>
 
-          <!-- Children -->
           <div class="flex items-center justify-between">
             <label class="text-sm font-medium">Children</label>
             <div class="flex items-center space-x-3">
@@ -173,29 +181,43 @@
           </div>
         </div>
 
-        <!-- Remove Room -->
-        <button class="remove-room mt-4 text-sm text-red-500 hover:underline">Remove Room</button>
+        <!-- ✅ Individual Dates -->
+        <div class="room-dates grid grid-cols-2 gap-4 mb-2">
+          <div>
+            <label class="block text-sm font-medium mb-1">Check-in</label>
+            <input type="date" class="check-in w-full border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Check-out</label>
+            <input type="date" class="check-out w-full border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
+          </div>
+        </div>
+        <p class="dateError text-red-500 text-sm mb-2"></p>
+
+        <button class="remove-room mt-2 text-sm text-red-500 hover:underline">Remove Room</button>
       </div>
+    </div>
+
+    <!-- ✅ Global Dates (hidden by default, shown when "Same for All Rooms" is selected) -->
+    <div id="globalDates" class="hidden mb-6">
+      <div class="grid grid-cols-2 gap-4 mb-2">
+        <div>
+          <label class="block text-sm font-medium mb-1">Check-in (All Rooms)</label>
+          <input type="date" id="globalCheckIn" class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Check-out (All Rooms)</label>
+          <input type="date" id="globalCheckOut" class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
+        </div>
+      </div>
+      <p id="globalDateError" class="text-red-500 text-sm mb-2"></p>
     </div>
 
     <!-- Add More Rooms -->
     <button id="addRoomBtn" class="text-yellow-700 font-medium hover:underline mb-6">+ Add More Rooms</button>
 
-    <!-- Dates -->
-    <div class="grid grid-cols-2 gap-4 mb-2">
-      <div>
-        <label class="block text-sm font-medium mb-1">Check-in</label>
-        <input type="date" id="checkIn" class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
-      </div>
-      <div>
-        <label class="block text-sm font-medium mb-1">Check-out</label>
-        <input type="date" id="checkOut" class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
-      </div>
-    </div>
-    <p id="dateError" class="text-red-500 text-sm mb-4"></p>
-
     <!-- Confirm -->
-    <button class="w-full py-3 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg hover:opacity-90 transition">
+    <button onclick="window.location.href='../BookingRooms/index.html'" class="w-full py-3 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg hover:opacity-90 transition">
       Proceed Booking
     </button>
   </div>

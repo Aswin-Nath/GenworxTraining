@@ -14,34 +14,6 @@
     #mobileMenu.open {
       max-height: 500px; /* enough for links */
     }
-
-    .glow-btn {
-      position: relative;
-      transition: all 0.3s ease;
-      animation: glow-pulse 2s infinite ease-in-out;
-      box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
-    }
-
-    @keyframes glow-pulse {
-      0% {
-        box-shadow: 0 0 12px rgba(255, 193, 7, 0.6),
-                    0 0 25px rgba(255, 87, 34, 0.3),
-                    0 6px 15px rgba(0, 0, 0, 0.2);
-        transform: scale(1);
-      }
-      50% {
-        box-shadow: 0 0 20px rgba(255, 193, 7, 0.9),
-                    0 0 40px rgba(255, 87, 34, 0.4),
-                    0 8px 20px rgba(0, 0, 0, 0.25);
-        transform: scale(1.05);
-      }
-      100% {
-        box-shadow: 0 0 12px rgba(255, 193, 7, 0.6),
-                    0 0 25px rgba(255, 87, 34, 0.3),
-                    0 6px 15px rgba(0, 0, 0, 0.2);
-        transform: scale(1);
-      }
-    }
   </style>
 </head>
 <body>
@@ -72,10 +44,6 @@
 
     <!-- Desktop Buttons -->
     <div class="hidden md:flex items-center space-x-3 text-sm sm:text-base">
-      <a href="#"
-        class="bookingModal text-center px-4 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-medium rounded-lg hover:opacity-90 transition glow-btn">
-        Book Now
-      </a>
 
     <button class="relative focus:outline-none">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 hover:text-yellow-600 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -104,12 +72,6 @@
     <a href="../FAQS/index.html" class="hover:text-yellow-600">FAQs</a>
 <!-- Mobile Buttons -->
 <div class="flex flex-col space-y-2 pt-2">
-  <!-- Book Now -->
-  <a href="#"
-     class="bookingModal text-center px-4 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-medium rounded-lg hover:opacity-90 transition glow-btn">
-    Book Now
-  </a>
-
   <!-- Notification Bell -->
   <button class="relative flex items-center justify-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
     <svg xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +106,6 @@
     <h2 class="text-2xl font-bold mb-6 text-center bg-gradient-to-r from-yellow-600 to-red-600 bg-clip-text text-transparent">
       Book Your Stay
     </h2>
-
     <!-- Mode Toggle -->
     <div class="flex justify-center space-x-4 mb-6">
       <button id="individualModeBtn" class="px-4 py-2 rounded-lg border bg-yellow-100 text-yellow-700 font-medium">
@@ -231,6 +192,5 @@
     </button>
   </div>
 </div>
-
 </body>
 </html>
