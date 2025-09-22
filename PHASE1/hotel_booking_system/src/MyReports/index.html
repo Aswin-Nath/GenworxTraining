@@ -9,8 +9,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
-<body class="bg-gray-50 flex flex-col min-h-screen">
+<body class="bg-gray-50 flex flex-col min-h-screen" style="font-family: 'Inter', sans-serif;">
 
   <!-- ✅ Navbar -->
   <div id="navbar"></div>
@@ -22,7 +24,7 @@
     <aside class="w-64 bg-white shadow-lg rounded-2xl p-6 h-fit">
       <nav class="space-y-4 text-gray-700 font-medium">
         <a href="../MainPageCustomer/index.html" data-page="dashboard" class="block py-2 border-b hover:text-yellow-600">Overview</a>
-        <a href="../MyBookings/index.html" data-page="booking" class="block py-2 border-b hover:text-yellow-600">Bookings</a>
+        <a href="../MyBookings/index.html" data-page="booking" class="block py-2 border-b hover:text-yellow-600">My Bookings</a>
         <a href="../SavedRoomsCustomer/index.html" data-page="saved" class="block py-2 border-b hover:text-yellow-600">Wishlist</a>
         <a href="../MyIssues/index.html" data-page="issues" class="block py-2 border-b hover:text-yellow-600">My Issues</a>
         <a href="../MyRefunds/index.html" data-page="refunds" class="block py-2 border-b hover:text-yellow-600">My Refunds</a>
@@ -44,49 +46,70 @@
         </div>
       </div>
 
-      <!-- ✅ Categories -->
-      <section>
-        <h2 class="text-xl font-semibold text-gray-800 mb-6">Report Categories</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- ✅ Categories in One Table -->
+<section>
+  <h2 class="text-xl font-semibold text-gray-800 mb-6">Report Categories</h2>
 
-          <!-- Bookings -->
-          <div>
-            <h3 class="font-semibold text-gray-900 mb-3">📑 Bookings</h3>
-            <ul class="space-y-2 text-blue-600 text-sm">
-              <li><button class="reportBtn hover:underline" data-type="activeBookings">Active Bookings</button></li>
-              <li><button class="reportBtn hover:underline" data-type="cancelledBookings">Cancelled Bookings</button></li>
-              <li><button class="reportBtn hover:underline" data-type="bookingHistory">Booking History</button></li>
-            </ul>
-          </div>
+  <div class="overflow-hidden border border-gray-200 rounded-xl shadow bg-white">
+    <table class="w-full text-sm border-collapse">
+      <thead class="bg-yellow-100">
+        <tr>
+          <th class="px-5 py-3 text-left font-semibold text-gray-900 text-base">Report Categories</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200 text-blue-600">
 
-          <!-- Payments -->
-          <div>
-            <h3 class="font-semibold text-gray-900 mb-3">💳 Payments</h3>
-            <ul class="space-y-2 text-blue-600 text-sm">
-              <li><button class="reportBtn hover:underline" data-type="paymentsMade">Payments Made</button></li>
-              <li><button class="reportBtn hover:underline" data-type="paymentHistory">Payment History</button></li>
-            </ul>
-          </div>
+        <!-- 📑 Bookings -->
+        <tr class="bg-gray-50">
+          <td class="px-5 py-3 font-semibold text-gray-900">📑 Bookings</td>
+        </tr>
+        <tr class="hover:bg-gray-50 transition">
+          <td class="px-5 py-3"><button class="reportBtn hover:underline" data-type="activeBookings">Active Bookings</button></td>
+        </tr>
+        <tr class="hover:bg-gray-50 transition">
+          <td class="px-5 py-3"><button class="reportBtn hover:underline" data-type="cancelledBookings">Cancelled Bookings</button></td>
+        </tr>
+        <tr class="hover:bg-gray-50 transition">
+          <td class="px-5 py-3"><button class="reportBtn hover:underline" data-type="bookingHistory">Booking History</button></td>
+        </tr>
 
-          <!-- Refunds -->
-          <div>
-            <h3 class="font-semibold text-gray-900 mb-3">💸 Refunds</h3>
-            <ul class="space-y-2 text-blue-600 text-sm">
-              <li><button class="reportBtn hover:underline" data-type="refundHistory">Refund History</button></li>
-            </ul>
-          </div>
+        <!-- 💳 Payments -->
+        <tr class="bg-gray-50">
+          <td class="px-5 py-3 font-semibold text-gray-900">💳 Payments</td>
+        </tr>
+        <tr class="hover:bg-gray-50 transition">
+          <td class="px-5 py-3"><button class="reportBtn hover:underline" data-type="paymentsMade">Payments Made</button></td>
+        </tr>
+        <tr class="hover:bg-gray-50 transition">
+          <td class="px-5 py-3"><button class="reportBtn hover:underline" data-type="paymentHistory">Payment History</button></td>
+        </tr>
 
-          <!-- Issues -->
-          <div>
-            <h3 class="font-semibold text-gray-900 mb-3">⚠️ Issues</h3>
-            <ul class="space-y-2 text-blue-600 text-sm">
-              <li><button class="reportBtn hover:underline" data-type="raisedIssues">Raised Issues</button></li>
-              <li><button class="reportBtn hover:underline" data-type="resolvedIssues">Resolved Issues</button></li>
-            </ul>
-          </div>
+        <!-- 💸 Refunds -->
+        <tr class="bg-gray-50">
+          <td class="px-5 py-3 font-semibold text-gray-900">💸 Refunds</td>
+        </tr>
+        <tr class="hover:bg-gray-50 transition">
+          <td class="px-5 py-3"><button class="reportBtn hover:underline" data-type="refundHistory">Refund History</button></td>
+        </tr>
 
-        </div>
-      </section>
+        <!-- ⚠️ Issues -->
+        <tr class="bg-gray-50">
+          <td class="px-5 py-3 font-semibold text-gray-900">⚠️ Issues</td>
+        </tr>
+        <tr class="hover:bg-gray-50 transition">
+          <td class="px-5 py-3"><button class="reportBtn hover:underline" data-type="raisedIssues">Raised Issues</button></td>
+        </tr>
+        <tr class="hover:bg-gray-50 transition">
+          <td class="px-5 py-3"><button class="reportBtn hover:underline" data-type="resolvedIssues">Resolved Issues</button></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+
 
       <!-- ✅ Filters -->
       <div id="filtersSection" class="bg-white p-4 rounded-xl shadow flex flex-wrap items-center gap-4">
@@ -139,10 +162,170 @@
 
   <!-- ✅ Scripts -->
   <script>
-    // Navbar + Footer load
-    const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
-    fetch(isCustomerLoggedIn ? "../LoggedCustomerNavbar/index.html" : "../NotCustomerNavbar/index.html")
-      .then(res => res.text()).then(data => { document.getElementById("navbar").innerHTML = data; });
+
+    
+    // Navbar load
+      const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
+
+// ✅ Navbar loader
+fetch(isCustomerLoggedIn ? "../LoggedCustomerNavbar/index.html" : "../NotCustomerNavbar/index.html")
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("navbar").innerHTML = data;
+
+    // mobile menu toggle
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("open");
+      });
+    }
+
+    // ✅ attach modal listeners AFTER navbar injected
+    attachModalListeners();
+  });
+
+function attachModalListeners() {
+  const modal = document.getElementById("bookingModal");
+  const closeModal = document.getElementById("closeModal");
+  const addRoomBtn = document.getElementById("addRoomBtn");
+  const roomsContainer = document.getElementById("roomsContainer");
+
+  const individualModeBtn = document.getElementById("individualModeBtn");
+  const sameDatesBtn = document.getElementById("sameDatesBtn");
+  const globalDates = document.getElementById("globalDates");
+
+  if (!modal) return;
+
+  // Open modal
+  document.querySelectorAll(".bookingModal").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    });
+  });
+
+  // Close modal
+  closeModal?.addEventListener("click", () => {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  });
+
+  // Add counter listeners
+  function addCounterListeners(roomDiv) {
+    roomDiv.querySelectorAll(".increase").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const input = btn.parentElement.querySelector("input");
+        input.value = parseInt(input.value) + 1;
+      });
+    });
+    roomDiv.querySelectorAll(".decrease").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const input = btn.parentElement.querySelector("input");
+        if (parseInt(input.value) > parseInt(input.min)) {
+          input.value = parseInt(input.value) - 1;
+        }
+      });
+    });
+  }
+
+  // ✅ Reindex rooms after add/remove
+  function reindexRooms() {
+    document.querySelectorAll(".room-card").forEach((room, index) => {
+      room.querySelector(".room-title").textContent = `Room ${index + 1}`;
+    });
+  }
+
+  // Add room
+  addRoomBtn?.addEventListener("click", () => {
+    const roomDiv = document.createElement("div");
+    roomDiv.className = "room-card border p-5 rounded-xl mb-6 bg-gray-50 shadow-sm";
+    roomDiv.innerHTML = `
+      <!-- Row 1: Room no + type -->
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="room-title font-semibold text-lg">Room</h3>
+        <select class="border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
+          <option>Deluxe Room</option>
+          <option>Executive Suite</option>
+          <option>Presidential Suite</option>
+        </select>
+      </div>
+
+      <!-- Row 2: Adults + Children -->
+      <div class="grid grid-cols-2 gap-6 mb-4">
+        <div class="flex items-center justify-between">
+          <label class="text-sm font-medium">Adults</label>
+          <div class="flex items-center space-x-3">
+            <button class="decrease w-8 h-8 rounded-full bg-gray-200">−</button>
+            <input type="number" value="1" min="1" class="w-12 text-center border rounded-md p-1">
+            <button class="increase w-8 h-8 rounded-full bg-yellow-500 text-white">+</button>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <label class="text-sm font-medium">Children</label>
+          <div class="flex items-center space-x-3">
+            <button class="decrease w-8 h-8 rounded-full bg-gray-200">−</button>
+            <input type="number" value="0" min="0" class="w-12 text-center border rounded-md p-1">
+            <button class="increase w-8 h-8 rounded-full bg-yellow-500 text-white">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✅ Individual Dates -->
+      <div class="room-dates grid grid-cols-2 gap-4 mb-2">
+        <div>
+          <label class="block text-sm font-medium mb-1">Check-in</label>
+          <input type="date" class="check-in w-full border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Check-out</label>
+          <input type="date" class="check-out w-full border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
+        </div>
+      </div>
+      <p class="dateError text-red-500 text-sm mb-2"></p>
+
+      <button class="remove-room mt-2 text-sm text-red-500 hover:underline">Remove Room</button>
+    `;
+
+    roomsContainer.appendChild(roomDiv);
+
+    addCounterListeners(roomDiv);
+
+    // Remove room + reindex
+    roomDiv.querySelector(".remove-room").addEventListener("click", () => {
+      roomDiv.remove();
+      reindexRooms();
+    });
+
+    reindexRooms();
+  });
+
+  // ✅ Toggle between individual and same dates
+  individualModeBtn?.addEventListener("click", () => {
+    document.querySelectorAll(".room-dates").forEach(d => d.classList.remove("hidden"));
+    globalDates.classList.add("hidden");
+
+    individualModeBtn.classList.add("bg-yellow-100", "text-yellow-700");
+    sameDatesBtn.classList.remove("bg-yellow-100", "text-yellow-700");
+    sameDatesBtn.classList.add("text-gray-600");
+  });
+
+  sameDatesBtn?.addEventListener("click", () => {
+    document.querySelectorAll(".room-dates").forEach(d => d.classList.add("hidden"));
+    globalDates.classList.remove("hidden");
+
+    sameDatesBtn.classList.add("bg-yellow-100", "text-yellow-700");
+    individualModeBtn.classList.remove("bg-yellow-100", "text-yellow-700");
+    individualModeBtn.classList.add("text-gray-600");
+  });
+
+  // Init counters for first room
+  addCounterListeners(document.querySelector(".room-card"));
+  reindexRooms();
+}
+
     fetch("../CustomerFooter/index.html").then(res => res.text()).then(data => { document.getElementById("footer").innerHTML = data; });
 
     // ✅ Sidebar highlight
@@ -155,30 +338,39 @@
     // ✅ Dummy Data
     const reportsData = {
       activeBookings: [
-        { id: "B001", date: "2025-09-20", room: "Deluxe", status: "Active", amount: "₹9,999" }
+        { id: "B001", date: "2025-09-20", room: "Deluxe", status: "Active", amount: "₹9,999" },
+        { id: "B004", date: "2025-09-22", room: "Suite", status: "Active", amount: "₹12,500" },
+        { id: "B005", date: "2025-09-25", room: "Executive", status: "Active", amount: "₹8,000" }
       ],
       cancelledBookings: [
-        { id: "B002", date: "2025-09-15", room: "Suite", status: "Cancelled", amount: "₹0" }
+        { id: "B002", date: "2025-09-15", room: "Suite", status: "Cancelled", amount: "₹0" },
+        { id: "B006", date: "2025-09-10", room: "Deluxe", status: "Cancelled", amount: "₹0" }
       ],
       bookingHistory: [
-        { id: "B003", date: "2025-08-10", room: "Executive", status: "Completed", amount: "₹7,500" }
+        { id: "B003", date: "2025-08-10", room: "Executive", status: "Completed", amount: "₹7,500" },
+        { id: "B007", date: "2025-07-05", room: "Presidential", status: "Completed", amount: "₹25,000" }
       ],
       paymentsMade: [
-        { id: "P001", date: "2025-09-20", method: "UPI - GPay", status: "Success", amount: "₹9,999" }
+        { id: "P001", date: "2025-09-20", method: "UPI - GPay", status: "Success", amount: "₹9,999" },
+        { id: "P003", date: "2025-09-18", method: "Card - SBI", status: "Success", amount: "₹5,500" }
       ],
       paymentHistory: [
         { id: "P002", date: "2025-08-15", method: "Card - HDFC", status: "Success", amount: "₹7,500" }
       ],
       refundHistory: [
-        { id: "R001", date: "2025-09-18", bookingId: "B002", status: "Processed", amount: "₹2,000" }
+        { id: "R001", date: "2025-09-18", bookingId: "B002", status: "Processed", amount: "₹2,000" },
+        { id: "R002", date: "2025-08-25", bookingId: "B006", status: "Declined", amount: "₹0" }
       ],
       raisedIssues: [
-        { id: "I001", date: "2025-09-12", issue: "Late Check-in", status: "Open" }
+        { id: "I001", date: "2025-09-12", issue: "Late Check-in", status: "Open" },
+        { id: "I003", date: "2025-09-14", issue: "AC Not Working", status: "Open" }
       ],
       resolvedIssues: [
-        { id: "I002", date: "2025-08-22", issue: "WiFi Issue", status: "Resolved" }
+        { id: "I002", date: "2025-08-22", issue: "WiFi Issue", status: "Resolved" },
+        { id: "I004", date: "2025-08-28", issue: "Cleanliness", status: "Resolved" }
       ]
     };
+
 
     // Report click
     document.querySelectorAll(".reportBtn").forEach(btn => {
@@ -191,32 +383,36 @@
       });
     });
 
-    // Render table
-    function renderTable(data) {
-      const headerRow = document.getElementById("reportHeader");
-      const body = document.getElementById("reportBody");
-      headerRow.innerHTML = "";
-      body.innerHTML = "";
+function renderTable(data) {
+  const headerRow = document.getElementById("reportHeader");
+  const body = document.getElementById("reportBody");
+  headerRow.innerHTML = "";
+  body.innerHTML = "";
 
-      const headers = Object.keys(data[0]);
-      headers.forEach(h => {
-        const th = document.createElement("th");
-        th.className = "px-4 py-2 text-left text-sm font-semibold text-gray-600";
-        th.textContent = h.toUpperCase();
-        headerRow.appendChild(th);
-      });
+  const headers = Object.keys(data[0]);
 
-      data.forEach(row => {
-        const tr = document.createElement("tr");
-        headers.forEach(h => {
-          const td = document.createElement("td");
-          td.className = "px-4 py-2 text-sm text-gray-700";
-          td.textContent = row[h];
-          tr.appendChild(td);
-        });
-        body.appendChild(tr);
-      });
-    }
+  headers.forEach(h => {
+    const th = document.createElement("th");
+    th.className =
+      "px-6 py-3 text-left text-sm font-bold text-gray-800 tracking-wide uppercase bg-yellow-50 border-b border-gray-200";
+    th.textContent = h.replace(/([A-Z])/g, " $1").trim(); // pretty headers
+    headerRow.appendChild(th);
+  });
+
+  data.forEach((row, i) => {
+    const tr = document.createElement("tr");
+    tr.className = i % 2 === 0 ? "bg-white" : "bg-gray-50"; // zebra effect
+
+    headers.forEach(h => {
+      const td = document.createElement("td");
+      td.className =
+        "px-6 py-3 text-sm text-gray-700 font-medium whitespace-nowrap";
+      td.textContent = row[h];
+      tr.appendChild(td);
+    });
+    body.appendChild(tr);
+  });
+}
 
     // ✅ Export Functions
     function downloadCSV() {

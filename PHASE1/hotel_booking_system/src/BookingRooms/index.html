@@ -18,12 +18,13 @@
     <!-- ✅ Sidebar -->
     <aside class="w-64 bg-white shadow-lg rounded-2xl p-6 h-fit">
       <nav class="space-y-4 text-gray-700 font-medium">
-        <a href="../MainPageCustomer/index.html" class="block py-2 border-b hover:text-yellow-600">Overview</a>
-        <a href="../MyBookings/index.html" class="block py-2 border-b hover:text-yellow-600">Bookings</a>
-        <a href="../SavedRoomsCustomer/index.html" class="block py-2 border-b hover:text-yellow-600">Wishlist</a>
-        <a href="../MyIssues/index.html" class="block py-2 border-b hover:text-yellow-600 text-yellow-700 font-semibold">My Issues</a>
-        <a href="../MyRefunds/index.html" class="block py-2 border-b hover:text-yellow-600">My Refunds</a>
-        <a href="../ProfileDisplayCustomer/index.html" class="block py-2 border-b hover:text-yellow-600">Profile</a>
+        <a href="../MainPageCustomer/index.html" data-page="dashboard" class="block py-2 border-b hover:text-yellow-600">Overview</a>
+        <a href="../MyBookings/index.html" data-page="booking" class="block py-2 border-b hover:text-yellow-600">My Bookings</a>
+        <a href="../SavedRoomsCustomer/index.html" data-page="saved" class="block py-2 border-b hover:text-yellow-600">Wishlist</a>
+        <a href="../MyIssues/index.html" data-page="issues" class="block py-2 border-b hover:text-yellow-600">My Issues</a>
+        <a href="../MyRefunds/index.html" data-page="refunds" class="block py-2 border-b hover:text-yellow-600">My Refunds</a>
+        <a href="../ProfileDisplayCustomer/index.html" data-page="profile" class="block py-2 border-b hover:text-yellow-600">Profile</a>
+        <a href="../MyReports/index.html" data-page="report" class="block py-2 border-b hover:text-yellow-600">Reports</a>
       </nav>
     </aside>
 
@@ -41,19 +42,19 @@
   <!-- Flow Bar -->
   <div class="flex justify-center items-center space-x-10" id="flowBar">
     <!-- Step 1 -->
-    <div class="step flex flex-col items-center cursor-pointer" data-step="1">
+    <div class="step flex flex-col items-center" data-step="1">
       <div class="circle w-10 h-10 flex items-center justify-center rounded-full border-2 border-yellow-600 text-yellow-700 font-bold">1</div>
       <p class="text-sm mt-2">Room 1</p>
     </div>
     <div class="w-16 h-0.5 bg-gray-400"></div>
     <!-- Step 2 -->
-    <div class="step flex flex-col items-center cursor-pointer" data-step="2">
+    <div class="step flex flex-col items-center" data-step="2">
       <div class="circle w-10 h-10 flex items-center justify-center rounded-full border-2 border-gray-400 text-gray-500 font-bold">2</div>
       <p class="text-sm mt-2">Room 2</p>
     </div>
     <div class="w-16 h-0.5 bg-gray-400"></div>
     <!-- Step 3 -->
-    <div class="step flex flex-col items-center cursor-pointer" data-step="3">
+    <div class="step flex flex-col items-center" data-step="3">
       <div class="circle w-10 h-10 flex items-center justify-center rounded-full border-2 border-gray-400 text-gray-500 font-bold">3</div>
       <p class="text-sm mt-2">Payment</p>
     </div>
@@ -67,8 +68,11 @@
     <button class="bookingModal px-6 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white rounded-lg shadow hover:opacity-90">
       Search Rooms
     </button>
-    <button onclick="window.location.href='../PaymentsPage/index.html'"  id="proceedToPayments" class="px-6 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg shadow hover:opacity-90">
-      Proceed to Payments
+    <button  class="px-6 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg shadow hover:opacity-90">
+      Go to Prev
+    </button>
+    <button  class="px-6 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg shadow hover:opacity-90">
+      Go to Next
     </button>
   </div>
 </section>
@@ -262,9 +266,6 @@
           <span>₹9,000</span>
         </div>
 
-        <button class="w-full py-3 bg-gradient-to-r from-yellow-500 to-red-500 text-white rounded-lg font-semibold hover:opacity-90">
-          Proceed to Payment
-        </button>
       </div>
     </aside>
 
@@ -468,7 +469,7 @@
     </div>
 
     <!-- Confirm -->
-    <button class="closeBookingModal w-full py-3 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg hover:opacity-90 transition">
+    <button onclick="window.location.href='../BookingRooms/index.html'" class="closeBookingModal w-full py-3 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg hover:opacity-90 transition">
       Proceed Booking
     </button>
   </div>
@@ -633,6 +634,12 @@
     individualModeBtn.classList.remove("bg-yellow-100", "text-yellow-700");
     individualModeBtn.classList.add("text-gray-600");
   });
+      // Highlight sidebar
+    document.querySelectorAll("aside nav a").forEach(link => {
+      if (link.dataset.page === "booking") {
+        link.classList.add("text-yellow-700", "font-semibold");
+      }
+    });
 
   // Navbar + Footer load
   const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
