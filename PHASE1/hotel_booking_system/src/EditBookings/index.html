@@ -59,8 +59,18 @@
   <!-- ✅ Scripts -->
   <script>
     // Navbar + Footer
-    const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
-    fetch(isCustomerLoggedIn ? "../LoggedCustomerNavbar/index.html" : "../NotCustomerNavbar/index.html")
+ const isAdminLoggedIn = localStorage.getItem("is_admin_logged_in") === "true";
+const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
+
+// ✅ Navbar loader
+let navbarPath = "../NotCustomerNavbar/index.html"; // default
+
+if (isAdminLoggedIn) {
+  navbarPath = "../AdminLandingNavbar/index.html";
+} else if (isCustomerLoggedIn) {
+  navbarPath = "../LoggedCustomerNavbar/index.html";
+}
+    fetch(navbarPath)
       .then(res => res.text()).then(data => { document.getElementById("navbar").innerHTML = data; });
     fetch("../CustomerFooter/index.html").then(res => res.text()).then(data => { document.getElementById("footer").innerHTML = data; });
 

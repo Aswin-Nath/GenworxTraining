@@ -777,10 +777,20 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
     // Navbar load
-      const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
+   const isAdminLoggedIn = localStorage.getItem("is_admin_logged_in") === "true";
+const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
 
 // ✅ Navbar loader
-fetch(isCustomerLoggedIn ? "../LoggedCustomerNavbar/index.html" : "../NotCustomerNavbar/index.html")
+let navbarPath = "../NotCustomerNavbar/index.html"; // default
+
+if (isAdminLoggedIn) {
+  navbarPath = "../AdminLandingNavbar/index.html";
+} else if (isCustomerLoggedIn) {
+  navbarPath = "../LoggedCustomerNavbar/index.html";
+}
+
+// ✅ Navbar loader
+fetch(navbarPath)
   .then(res => res.text())
   .then(data => {
     document.getElementById("navbar").innerHTML = data;

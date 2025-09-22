@@ -166,16 +166,12 @@
 
     const value = userInput.value.trim();
     const password = passwordInput.value.trim();
-
-    const storedEmail = localStorage.getItem("email");
-    const storedPhone = localStorage.getItem("phone");
-    const storedPassword = localStorage.getItem("password");
-
-    const storedAdminEmail = localStorage.getItem("admin_email");
-    const storedAdminPassword = localStorage.getItem("admin_password");
-
+    const storedEmail = "aswinnathte125@gmail.com";
+    const storedPassword = "Aswinnath@123";
+    const storedAdminEmail = "admin@gmail.com"
+    const storedAdminPassword = "Aswinnath@123";
     // ✅ Customer login
-    if ((value === storedEmail || value === storedPhone) && password === storedPassword) {
+    if (value === storedEmail&& password === storedPassword) {
       localStorage.setItem("is_customer_logged_in", "true");
       localStorage.setItem("is_admin_logged_in", "false"); // logout admin
       window.location.href = "../LandingPage/index.html";
