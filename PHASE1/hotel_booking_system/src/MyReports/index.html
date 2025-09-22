@@ -3,16 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LuxuryStay - My Reports</title>
+  <title>LuxuryStay - Reports</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 </head>
-<body class="bg-gray-50 flex flex-col min-h-screen" style="font-family: 'Inter', sans-serif;">
+<body class="bg-gray-50 flex flex-col min-h-screen">
 
   <!-- ✅ Navbar -->
   <div id="navbar"></div>
@@ -34,125 +29,58 @@
     </aside>
 
     <!-- ✅ Main Content -->
-    <main class="flex-1 space-y-10">
+    <main class="flex-1 space-y-12">
 
-      <!-- ✅ Header -->
+      <!-- ✅ Welcome Header -->
       <div class="relative rounded-2xl p-[3px] bg-gradient-to-r from-yellow-600 to-red-700 shadow">
         <div class="bg-[#fdfaf4] rounded-2xl py-8 text-center">
           <h2 class="text-4xl text-gray-800 font-bold" style="font-family: 'Pacifico', cursive;">
-            My Reports
+            Hotel Reports
           </h2>
-          <p class="mt-2 text-gray-600">Download and review your personal data reports</p>
+          <p class="mt-2 text-gray-600">View insights about your hotel bookings, sales, payments, and more.</p>
         </div>
       </div>
 
-<!-- ✅ Categories in One Table -->
-<section>
-  <h2 class="text-xl font-semibold text-gray-800 mb-6">Report Categories</h2>
+<!-- ✅ Customer Reports Categories -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 
-  <div class="overflow-hidden border border-gray-200 rounded-xl shadow bg-white">
-    <table class="w-full text-sm border-collapse">
-      <thead class="bg-yellow-100">
-        <tr>
-          <th class="px-5 py-3 text-left font-semibold text-gray-900 text-base">Report Categories</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-gray-200 text-blue-600">
-
-        <!-- 📑 Bookings -->
-        <tr class="bg-gray-50">
-          <td class="px-5 py-3 font-semibold text-gray-900">📑 Bookings</td>
-        </tr>
-        <tr class="hover:bg-gray-50 transition">
-          <td class="px-5 py-3"><button class="reportBtn hover:underline" data-type="activeBookings">Active Bookings</button></td>
-        </tr>
-        <tr class="hover:bg-gray-50 transition">
-          <td class="px-5 py-3"><button class="reportBtn hover:underline" data-type="cancelledBookings">Cancelled Bookings</button></td>
-        </tr>
-        <tr class="hover:bg-gray-50 transition">
-          <td class="px-5 py-3"><button class="reportBtn hover:underline" data-type="bookingHistory">Booking History</button></td>
-        </tr>
-
-        <!-- 💳 Payments -->
-        <tr class="bg-gray-50">
-          <td class="px-5 py-3 font-semibold text-gray-900">💳 Payments</td>
-        </tr>
-        <tr class="hover:bg-gray-50 transition">
-          <td class="px-5 py-3"><button class="reportBtn hover:underline" data-type="paymentsMade">Payments Made</button></td>
-        </tr>
-        <tr class="hover:bg-gray-50 transition">
-          <td class="px-5 py-3"><button class="reportBtn hover:underline" data-type="paymentHistory">Payment History</button></td>
-        </tr>
-
-        <!-- 💸 Refunds -->
-        <tr class="bg-gray-50">
-          <td class="px-5 py-3 font-semibold text-gray-900">💸 Refunds</td>
-        </tr>
-        <tr class="hover:bg-gray-50 transition">
-          <td class="px-5 py-3"><button class="reportBtn hover:underline" data-type="refundHistory">Refund History</button></td>
-        </tr>
-
-        <!-- ⚠️ Issues -->
-        <tr class="bg-gray-50">
-          <td class="px-5 py-3 font-semibold text-gray-900">⚠️ Issues</td>
-        </tr>
-        <tr class="hover:bg-gray-50 transition">
-          <td class="px-5 py-3"><button class="reportBtn hover:underline" data-type="raisedIssues">Raised Issues</button></td>
-        </tr>
-        <tr class="hover:bg-gray-50 transition">
-          <td class="px-5 py-3"><button class="reportBtn hover:underline" data-type="resolvedIssues">Resolved Issues</button></td>
-        </tr>
-
-      </tbody>
-    </table>
+  <!-- Booking Reports -->
+  <div>
+    <h2 class="font-semibold text-lg flex items-center mb-3">🏨 Bookings</h2>
+    <ul class="space-y-2 text-blue-600">
+      <li><a href="../MyReports/room-occupancy.html" class="hover:underline">My Stay History</a></li>
+      <li><a href="../MyReports/cancellation-history.html" class="hover:underline">Cancellation History</a></li>
+    </ul>
   </div>
+
+  <!-- Payments & Refunds -->
+  <div>
+    <h2 class="font-semibold text-lg flex items-center mb-3">💰 Payments & Refunds</h2>
+    <ul class="space-y-2 text-blue-600">
+      <li><a href="../MyReports/payments-received.html" class="hover:underline">Payments Made</a></li>
+      <li><a href="../MyReports/refund-history.html" class="hover:underline">Refund History</a></li>
+    </ul>
+  </div>
+
+  <!-- Issues & Support -->
+  <div>
+    <h2 class="font-semibold text-lg flex items-center mb-3">📑 Issues</h2>
+    <ul class="space-y-2 text-blue-600">
+      <li><a href="../MyReports/issues-summary.html" class="hover:underline">My Reported Issues</a></li>
+    </ul>
+  </div>
+
+  <!-- Profile Insights -->
+  <div>
+    <h2 class="font-semibold text-lg flex items-center mb-3">👤 Profile Insights</h2>
+    <ul class="space-y-2 text-blue-600">
+      <li><a href="../MyReports/saved-rooms.html" class="hover:underline">Wishlist</a></li>
+      <li><a href="../MyReports/review-history.html" class="hover:underline">My Reviews & Ratings</a></li>
+    </ul>
+  </div>
+
 </section>
 
-
-
-
-      <!-- ✅ Filters -->
-      <div id="filtersSection" class="bg-white p-4 rounded-xl shadow flex flex-wrap items-center gap-4">
-        <div class="flex items-center gap-2">
-          <label for="fromDate" class="text-sm font-medium text-gray-700">From</label>
-          <input type="date" id="fromDate" class="border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500 text-sm">
-        </div>
-        <div class="flex items-center gap-2">
-          <label for="toDate" class="text-sm font-medium text-gray-700">To</label>
-          <input type="date" id="toDate" class="border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500 text-sm">
-        </div>
-        <button id="applyFilter" class="px-5 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white rounded-lg text-sm font-medium shadow hover:opacity-90">
-          Apply Filter
-        </button>
-      </div>
-
-      <!-- ✅ Report Preview -->
-      <section id="reportSection" class="hidden">
-        <div class="bg-white p-6 rounded-xl shadow">
-          <div class="flex justify-between items-center mb-4">
-            <h2 id="reportTitle" class="text-lg font-semibold">Report Preview</h2>
-            <div class="flex space-x-3">
-              <button onclick="downloadCSV()" class="flex items-center gap-2 px-4 py-2 border border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50">
-                <span class="material-icons text-sm">file_download</span> CSV
-              </button>
-              <button onclick="downloadExcel()" class="flex items-center gap-2 px-4 py-2 border border-green-500 text-green-600 rounded-lg text-sm font-medium hover:bg-green-50">
-                <span class="material-icons text-sm">file_download</span> Excel
-              </button>
-              <button onclick="downloadPDF()" class="flex items-center gap-2 px-4 py-2 border border-red-500 text-red-600 rounded-lg text-sm font-medium hover:bg-red-50">
-                <span class="material-icons text-sm">picture_as_pdf</span> PDF
-              </button>
-            </div>
-          </div>
-          <div class="overflow-x-auto">
-            <table id="reportTable" class="min-w-full border border-gray-200 rounded-lg">
-              <thead class="bg-gray-100">
-                <tr id="reportHeader"></tr>
-              </thead>
-              <tbody id="reportBody" class="divide-y divide-gray-200"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
 
     </main>
   </div>
@@ -160,263 +88,42 @@
   <!-- ✅ Footer -->
   <div id="footer"></div>
 
-  <!-- ✅ Scripts -->
+  <!-- ✅ Script -->
   <script>
-
-    
     // Navbar load
-   const isAdminLoggedIn = localStorage.getItem("is_admin_logged_in") === "true";
-const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
+    const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
 
-// ✅ Navbar loader
-let navbarPath = "../NotCustomerNavbar/index.html"; // default
+    let navbarPath = "../NotCustomerNavbar/index.html";
 
-if (isAdminLoggedIn) {
-  navbarPath = "../AdminLandingNavbar/index.html";
-} else if (isCustomerLoggedIn) {
-  navbarPath = "../LoggedCustomerNavbar/index.html";
-}
-
-// ✅ Navbar loader
-fetch(navbarPath)
-  .then(res => res.text())
-  .then(data => {
-    document.getElementById("navbar").innerHTML = data;
-
-    // mobile menu toggle
-    const menuBtn = document.getElementById("menuBtn");
-    const mobileMenu = document.getElementById("mobileMenu");
-    if (menuBtn && mobileMenu) {
-      menuBtn.addEventListener("click", () => {
-        mobileMenu.classList.toggle("open");
-      });
+    if (isCustomerLoggedIn) {
+      navbarPath = "../LoggedCustomerNavbar/index.html";
     }
 
-    // ✅ attach modal listeners AFTER navbar injected
-    attachModalListeners();
-  });
+    fetch(navbarPath)
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("navbar").innerHTML = data;
 
-function attachModalListeners() {
-  const modal = document.getElementById("bookingModal");
-  const closeModal = document.getElementById("closeModal");
-  const addRoomBtn = document.getElementById("addRoomBtn");
-  const roomsContainer = document.getElementById("roomsContainer");
-
-  if (!modal) return;
-
-  // Open modal
-  document.querySelectorAll(".bookingModal").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
-    });
-  });
-
-  // Close modal
-  closeModal?.addEventListener("click", () => {
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
-  });
-
-  // Add counter listeners for Adults/Children
-  function addCounterListeners(roomDiv) {
-    roomDiv.querySelectorAll(".increase").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const input = btn.parentElement.querySelector("input");
-        input.value = parseInt(input.value) + 1;
-      });
-    });
-    roomDiv.querySelectorAll(".decrease").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const input = btn.parentElement.querySelector("input");
-        if (parseInt(input.value) > parseInt(input.min)) {
-          input.value = parseInt(input.value) - 1;
+        const menuBtn = document.getElementById("menuBtn");
+        const mobileMenu = document.getElementById("mobileMenu");
+        if (menuBtn && mobileMenu) {
+          menuBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("open");
+          });
         }
       });
-    });
-  }
 
-  // Reindex rooms after add/remove
-  function reindexRooms() {
-    document.querySelectorAll(".room-card").forEach((room, index) => {
-      room.querySelector(".room-title").textContent = `Room ${index + 1}`;
-    });
-  }
+    // Footer load
+    fetch("../CustomerFooter/index.html")
+      .then(res => res.text())
+      .then(data => { document.getElementById("footer").innerHTML = data; });
 
-  // Add new room
-  addRoomBtn?.addEventListener("click", () => {
-    const roomDiv = document.createElement("div");
-    roomDiv.className = "room-card border p-5 rounded-xl mb-6 bg-gray-50 shadow-sm";
-
-    roomDiv.innerHTML = `
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="room-title font-semibold text-lg">Room</h3>
-        <select class="border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
-          <option>Deluxe Room</option>
-          <option>Executive Suite</option>
-          <option>Presidential Suite</option>
-        </select>
-      </div>
-
-      <div class="grid grid-cols-2 gap-6 mb-4">
-        <div class="flex items-center justify-between">
-          <label class="text-sm font-medium">Adults</label>
-          <div class="flex items-center space-x-3">
-            <button class="decrease w-8 h-8 rounded-full bg-gray-200">−</button>
-            <input type="number" value="1" min="1" class="w-12 text-center border rounded-md p-1">
-            <button class="increase w-8 h-8 rounded-full bg-yellow-500 text-white">+</button>
-          </div>
-        </div>
-        <div class="flex items-center justify-between">
-          <label class="text-sm font-medium">Children</label>
-          <div class="flex items-center space-x-3">
-            <button class="decrease w-8 h-8 rounded-full bg-gray-200">−</button>
-            <input type="number" value="0" min="0" class="w-12 text-center border rounded-md p-1">
-            <button class="increase w-8 h-8 rounded-full bg-yellow-500 text-white">+</button>
-          </div>
-        </div>
-      </div>
-
-      <button class="remove-room mt-2 text-sm text-red-500 hover:underline">Remove Room</button>
-    `;
-
-    roomsContainer.appendChild(roomDiv);
-
-    addCounterListeners(roomDiv);
-
-    roomDiv.querySelector(".remove-room").addEventListener("click", () => {
-      roomDiv.remove();
-      reindexRooms();
-    });
-
-    reindexRooms();
-  });
-
-  // Init first room
-  addCounterListeners(document.querySelector(".room-card"));
-  reindexRooms();
-}
-
-
-
-
-    fetch("../CustomerFooter/index.html").then(res => res.text()).then(data => { document.getElementById("footer").innerHTML = data; });
-
-    // ✅ Sidebar highlight
+    // Sidebar highlight
     document.querySelectorAll("aside nav a").forEach(link => {
       if (link.dataset.page === "report") {
         link.classList.add("text-yellow-700", "font-semibold");
       }
     });
-
-    // ✅ Dummy Data
-    const reportsData = {
-      activeBookings: [
-        { id: "B001", date: "2025-09-20", room: "Deluxe", status: "Active", amount: "₹9,999" },
-        { id: "B004", date: "2025-09-22", room: "Suite", status: "Active", amount: "₹12,500" },
-        { id: "B005", date: "2025-09-25", room: "Executive", status: "Active", amount: "₹8,000" }
-      ],
-      cancelledBookings: [
-        { id: "B002", date: "2025-09-15", room: "Suite", status: "Cancelled", amount: "₹0" },
-        { id: "B006", date: "2025-09-10", room: "Deluxe", status: "Cancelled", amount: "₹0" }
-      ],
-      bookingHistory: [
-        { id: "B003", date: "2025-08-10", room: "Executive", status: "Completed", amount: "₹7,500" },
-        { id: "B007", date: "2025-07-05", room: "Presidential", status: "Completed", amount: "₹25,000" }
-      ],
-      paymentsMade: [
-        { id: "P001", date: "2025-09-20", method: "UPI - GPay", status: "Success", amount: "₹9,999" },
-        { id: "P003", date: "2025-09-18", method: "Card - SBI", status: "Success", amount: "₹5,500" }
-      ],
-      paymentHistory: [
-        { id: "P002", date: "2025-08-15", method: "Card - HDFC", status: "Success", amount: "₹7,500" }
-      ],
-      refundHistory: [
-        { id: "R001", date: "2025-09-18", bookingId: "B002", status: "Processed", amount: "₹2,000" },
-        { id: "R002", date: "2025-08-25", bookingId: "B006", status: "Declined", amount: "₹0" }
-      ],
-      raisedIssues: [
-        { id: "I001", date: "2025-09-12", issue: "Late Check-in", status: "Open" },
-        { id: "I003", date: "2025-09-14", issue: "AC Not Working", status: "Open" }
-      ],
-      resolvedIssues: [
-        { id: "I002", date: "2025-08-22", issue: "WiFi Issue", status: "Resolved" },
-        { id: "I004", date: "2025-08-28", issue: "Cleanliness", status: "Resolved" }
-      ]
-    };
-
-
-    // Report click
-    document.querySelectorAll(".reportBtn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const type = btn.dataset.type;
-        const data = reportsData[type];
-        document.getElementById("reportSection").classList.remove("hidden");
-        document.getElementById("reportTitle").textContent = btn.textContent;
-        renderTable(data);
-      });
-    });
-
-function renderTable(data) {
-  const headerRow = document.getElementById("reportHeader");
-  const body = document.getElementById("reportBody");
-  headerRow.innerHTML = "";
-  body.innerHTML = "";
-
-  const headers = Object.keys(data[0]);
-
-  headers.forEach(h => {
-    const th = document.createElement("th");
-    th.className =
-      "px-6 py-3 text-left text-sm font-bold text-gray-800 tracking-wide uppercase bg-yellow-50 border-b border-gray-200";
-    th.textContent = h.replace(/([A-Z])/g, " $1").trim(); // pretty headers
-    headerRow.appendChild(th);
-  });
-
-  data.forEach((row, i) => {
-    const tr = document.createElement("tr");
-    tr.className = i % 2 === 0 ? "bg-white" : "bg-gray-50"; // zebra effect
-
-    headers.forEach(h => {
-      const td = document.createElement("td");
-      td.className =
-        "px-6 py-3 text-sm text-gray-700 font-medium whitespace-nowrap";
-      td.textContent = row[h];
-      tr.appendChild(td);
-    });
-    body.appendChild(tr);
-  });
-}
-
-    // ✅ Export Functions
-    function downloadCSV() {
-      const table = document.getElementById("reportTable");
-      let csv = [];
-      for (let row of table.rows) {
-        let cols = [];
-        for (let cell of row.cells) cols.push(cell.innerText);
-        csv.push(cols.join(","));
-      }
-      const blob = new Blob([csv.join("\n")], { type: "text/csv" });
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = "report.csv";
-      link.click();
-    }
-
-    function downloadExcel() {
-      const wb = XLSX.utils.table_to_book(document.getElementById("reportTable"));
-      XLSX.writeFile(wb, "report.xlsx");
-    }
-
-    function downloadPDF() {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.text("My Report", 20, 20);
-      doc.autoTable({ html: "#reportTable" });
-      doc.save("report.pdf");
-    }
   </script>
 </body>
 </html>
