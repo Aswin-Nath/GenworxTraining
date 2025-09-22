@@ -170,8 +170,9 @@
     const storedPassword = "Aswinnath@123";
     const storedAdminEmail = "admin@gmail.com"
     const storedAdminPassword = "Aswinnath@123";
+    const phone='8610476491';
     // ✅ Customer login
-    if (value === storedEmail&& password === storedPassword) {
+    if ((value === phone || value === storedEmail)&& password === storedPassword) {
       localStorage.setItem("is_customer_logged_in", "true");
       localStorage.setItem("is_admin_logged_in", "false"); // logout admin
       window.location.href = "../LandingPage/index.html";
@@ -180,7 +181,7 @@
     else if (value === storedAdminEmail && password === storedAdminPassword) {
       localStorage.setItem("is_admin_logged_in", "true");
       localStorage.setItem("is_customer_logged_in", "false"); // logout customer
-      window.location.href = "../AdminDashboard/index.html";
+      window.location.href = "../AdminMainPage/index.html";
     }
     // ❌ Invalid credentials
     else {

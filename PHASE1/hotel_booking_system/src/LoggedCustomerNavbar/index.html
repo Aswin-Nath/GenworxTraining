@@ -19,25 +19,22 @@
       position: relative;
       transition: all 0.3s ease;
       animation: glow-pulse 2s infinite ease-in-out;
-      box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
+      /* box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3); */
     }
 
     @keyframes glow-pulse {
       0% {
-        box-shadow: 0 0 12px rgba(255, 193, 7, 0.6),
-                    0 0 25px rgba(255, 87, 34, 0.3),
+        box-shadow: 
                     0 6px 15px rgba(0, 0, 0, 0.2);
         transform: scale(1);
       }
       50% {
-        box-shadow: 0 0 20px rgba(255, 193, 7, 0.9),
-                    0 0 40px rgba(255, 87, 34, 0.4),
+        box-shadow: 
                     0 8px 20px rgba(0, 0, 0, 0.25);
         transform: scale(1.05);
       }
       100% {
-        box-shadow: 0 0 12px rgba(255, 193, 7, 0.6),
-                    0 0 25px rgba(255, 87, 34, 0.3),
+        box-shadow: 
                     0 6px 15px rgba(0, 0, 0, 0.2);
         transform: scale(1);
       }
@@ -87,7 +84,7 @@
     </button>
 
       <a href="../MainPageCustomer/index.html"
-        class="px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition">
+        class="px-4 py-2 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-700 transition">
         Account
       </a>
     </div>
@@ -128,7 +125,7 @@
 
   <!-- Account -->
   <a href="../MainPageCustomer/index.html"
-     class="px-4 py-2 bg-red-600 text-center text-white font-medium rounded-lg hover:bg-red-700 transition">
+     class="px-4 py-2 bg-gray-600 text-center text-white font-medium rounded-lg hover:bg-gray-700 transition">
     Account
   </a>
 </div>
@@ -147,23 +144,13 @@
       Book Your Stay
     </h2>
 
-    <!-- Mode Toggle -->
-    <div class="flex justify-center space-x-4 mb-6">
-      <button id="individualModeBtn" class="px-4 py-2 rounded-lg border bg-yellow-100 text-yellow-700 font-medium">
-        Individual Dates
-      </button>
-      <button id="sameDatesBtn" class="px-4 py-2 rounded-lg border hover:bg-yellow-100 text-gray-600 font-medium">
-        Same for All Rooms
-      </button>
-    </div>
-
     <!-- Rooms Container -->
     <div id="roomsContainer">
       <div class="room-card border p-5 rounded-xl mb-6 bg-gray-50 shadow-sm">
 
         <!-- Row 1: Room No + Room Type -->
         <div class="flex items-center justify-between mb-4">
-          <h3 class="font-semibold text-lg">Room 1</h3>
+          <h3 class="room-title font-semibold text-lg">Room 1</h3>
           <select class="border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
             <option>Deluxe Room</option>
             <option>Executive Suite</option>
@@ -192,25 +179,12 @@
           </div>
         </div>
 
-        <!-- ✅ Individual Dates -->
-        <div class="room-dates grid grid-cols-2 gap-4 mb-2">
-          <div>
-            <label class="block text-sm font-medium mb-1">Check-in</label>
-            <input type="date" class="check-in w-full border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Check-out</label>
-            <input type="date" class="check-out w-full border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
-          </div>
-        </div>
-        <p class="dateError text-red-500 text-sm mb-2"></p>
-
         <button class="remove-room mt-2 text-sm text-red-500 hover:underline">Remove Room</button>
       </div>
     </div>
 
     <!-- ✅ Global Dates (hidden by default, shown when "Same for All Rooms" is selected) -->
-    <div id="globalDates" class="hidden mb-6">
+    <div id="globalDates" class="mb-6">
       <div class="grid grid-cols-2 gap-4 mb-2">
         <div>
           <label class="block text-sm font-medium mb-1">Check-in (All Rooms)</label>
