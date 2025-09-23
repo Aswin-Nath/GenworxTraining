@@ -298,6 +298,12 @@ if (isAdminLoggedIn) {
         ${roomCardsTemplate({ ...room, type: "Presidential Suite", price: 9500 })}
       `;
     });
+        // Sidebar highlight
+    document.querySelectorAll("aside nav a").forEach(link => {
+      if (link.dataset.page === "booking") {
+        link.classList.add("text-yellow-700", "font-semibold");
+      }
+    });
 
     // ✅ Final Step Redirect
     document.addEventListener("click", (e) => {
