@@ -1,0 +1,53 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+.login-container {
+  @apply  w-full max-w-md rounded-md shadow-md overflow-hidden;
+}
+
+.login-holder{
+  @apply flex justify-center items-center min-h-screen
+}
+.logo-image{
+  @apply h-[30px] w-[30px] pb-[5px]
+}
+.topbar {
+  @apply bg-gray-500 h-10 w-full;
+}
+
+.logo {
+  @apply text-xl text-white px-6 py-2 mb-2 font-bold;
+}
+
+.title {
+  @apply text-xl font-semibold text-center;
+}
+
+.form {
+  @apply flex flex-col space-y-3 px-6 pb-6;
+}
+
+.label {
+  @apply text-sm font-medium;
+}
+
+.login_div{
+  @apply mt-[30px]
+}
+
+.input {
+  @apply w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500;
+}
+
+.btn {
+  @apply w-full bg-indigo-600 text-white py-2 rounded-md mt-2 hover:bg-indigo-700;
+}
+
+.forgot {
+  @apply text-sm text-indigo-600 hover:underline text-right;
+}
+
+.link {
+  @apply text-indigo-600 hover:underline;
+}

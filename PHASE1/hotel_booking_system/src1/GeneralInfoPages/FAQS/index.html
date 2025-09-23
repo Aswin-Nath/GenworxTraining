@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - FAQs</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-700">
+
+  <div id="navbar"></div>
+
+  <!-- ✅ Header -->
+  <header class="bg-gradient-to-r from-yellow-600 to-red-600 py-20 text-center text-white shadow-md mt-16 sm:mt-20">
+    <h1 class="text-3xl font-bold">Frequently Asked Questions</h1>
+    <p class="text-sm mt-2 opacity-90">Click on a question to see the answer</p>
+  </header>
+
+  <!-- ✅ Switcher -->
+  <div class="flex justify-center mt-6 space-x-4">
+    <button id="roomsBtn" class="px-4 py-2 bg-yellow-500 text-white rounded-lg font-medium hover:bg-yellow-600 transition">
+      Rooms
+    </button>
+    <button id="amenitiesBtn" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition">
+      Amenities
+    </button>
+  </div>
+
+  <!-- ✅ FAQs Container -->
+  <div class="max-w-3xl mx-auto mt-8 px-4 mb-6">
+
+    <!-- Rooms FAQs -->
+    <div id="roomsFaqs" class="space-y-4">
+      <div class="faq-item border rounded-lg p-4 bg-white shadow hover:shadow-md cursor-pointer">
+        <h3 class="font-semibold text-lg flex justify-between items-center">
+          What room types do you offer? <span class="toggle">+</span>
+        </h3>
+        <p class="answer hidden mt-2 text-gray-600">
+          We offer three categories: Deluxe Rooms for comfort, Executive Suites with added space and views, 
+          and Presidential Suites for a luxury experience with exclusive services.
+        </p>
+      </div>
+      <div class="faq-item border rounded-lg p-4 bg-white shadow hover:shadow-md cursor-pointer">
+        <h3 class="font-semibold text-lg flex justify-between items-center">
+          Is early check-in or late check-out possible? <span class="toggle">+</span>
+        </h3>
+        <p class="answer hidden mt-2 text-gray-600">
+          Yes, both early check-in and late check-out are available based on room availability. 
+          Additional charges may apply during peak seasons.
+        </p>
+      </div>
+      <div class="faq-item border rounded-lg p-4 bg-white shadow hover:shadow-md cursor-pointer">
+        <h3 class="font-semibold text-lg flex justify-between items-center">
+          Do rooms include complimentary breakfast? <span class="toggle">+</span>
+        </h3>
+        <p class="answer hidden mt-2 text-gray-600">
+          Yes, breakfast is complimentary for all room categories. Guests can enjoy a continental 
+          or buffet breakfast at our in-house restaurant.
+        </p>
+      </div>
+      <div class="faq-item border rounded-lg p-4 bg-white shadow hover:shadow-md cursor-pointer">
+        <h3 class="font-semibold text-lg flex justify-between items-center">
+          Are pets allowed in rooms? <span class="toggle">+</span>
+        </h3>
+        <p class="answer hidden mt-2 text-gray-600">
+          For hygiene and guest comfort, pets are not allowed in rooms. However, we can suggest 
+          nearby pet boarding facilities if needed.
+        </p>
+      </div>
+      <div class="faq-item border rounded-lg p-4 bg-white shadow hover:shadow-md cursor-pointer">
+        <h3 class="font-semibold text-lg flex justify-between items-center">
+          Do you provide extra beds or cribs? <span class="toggle">+</span>
+        </h3>
+        <p class="answer hidden mt-2 text-gray-600">
+          Yes, we provide extra beds and baby cribs on request, subject to availability. Extra charges may apply.
+        </p>
+      </div>
+    </div>
+
+    <!-- Amenities FAQs -->
+    <div id="amenitiesFaqs" class="space-y-4 hidden">
+      <div class="faq-item border rounded-lg p-4 bg-white shadow hover:shadow-md cursor-pointer">
+        <h3 class="font-semibold text-lg flex justify-between items-center">
+          Do you have a swimming pool? <span class="toggle">+</span>
+        </h3>
+        <p class="answer hidden mt-2 text-gray-600">
+          Yes, we have a rooftop infinity pool offering breathtaking city views, 
+          open daily from 6 AM to 10 PM.
+        </p>
+      </div>
+      <div class="faq-item border rounded-lg p-4 bg-white shadow hover:shadow-md cursor-pointer">
+        <h3 class="font-semibold text-lg flex justify-between items-center">
+          Is Wi-Fi free throughout the hotel? <span class="toggle">+</span>
+        </h3>
+        <p class="answer hidden mt-2 text-gray-600">
+          Absolutely. We provide complimentary high-speed Wi-Fi access across all rooms, 
+          suites, and public areas of the hotel.
+        </p>
+      </div>
+      <div class="faq-item border rounded-lg p-4 bg-white shadow hover:shadow-md cursor-pointer">
+        <h3 class="font-semibold text-lg flex justify-between items-center">
+          Do you provide airport transfers? <span class="toggle">+</span>
+        </h3>
+        <p class="answer hidden mt-2 text-gray-600">
+          Yes, airport pick-up and drop-off services are available upon request. 
+          Please inform us at least 24 hours prior to arrival or departure.
+        </p>
+      </div>
+      <div class="faq-item border rounded-lg p-4 bg-white shadow hover:shadow-md cursor-pointer">
+        <h3 class="font-semibold text-lg flex justify-between items-center">
+          Are there spa and fitness facilities? <span class="toggle">+</span>
+        </h3>
+        <p class="answer hidden mt-2 text-gray-600">
+          Yes, our hotel includes a luxury spa with wellness therapies and a 
+          state-of-the-art fitness center open 24/7 for guests.
+        </p>
+      </div>
+      <div class="faq-item border rounded-lg p-4 bg-white shadow hover:shadow-md cursor-pointer">
+        <h3 class="font-semibold text-lg flex justify-between items-center">
+          Do you have parking facilities? <span class="toggle">+</span>
+        </h3>
+        <p class="answer hidden mt-2 text-gray-600">
+          Yes, complimentary valet parking is available for all in-house guests. 
+          Long-term parking options are also provided upon request.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ Footer -->
+  <div id="footer"></div>
+
+  <!-- ✅ Script -->
+  <script>
+ // ✅ Navbar + Footer loading
+const isAdminLoggedIn = localStorage.getItem("is_admin_logged_in") === "true";
+const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
+
+// ✅ Navbar loader
+let navbarPath = "../NotCustomerNavbar/index.html"; // default
+
+if (isAdminLoggedIn) {
+  navbarPath = "../AdminLandingNavbar/index.html";
+} else if (isCustomerLoggedIn) {
+  navbarPath = "../LoggedCustomerNavbar/index.html";
+}
+
+// ✅ Navbar loader
+fetch(navbarPath)
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("navbar").innerHTML = data;
+
+    // mobile menu toggle
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("open");
+      });
+    }
+
+    // ✅ attach modal listeners AFTER navbar injected
+    attachModalListeners();
+  });
+function attachModalListeners() {
+  const modal = document.getElementById("bookingModal");
+  const closeModal = document.getElementById("closeModal");
+  const addRoomBtn = document.getElementById("addRoomBtn");
+  const roomsContainer = document.getElementById("roomsContainer");
+
+  if (!modal) return;
+
+  // Open modal
+  document.querySelectorAll(".bookingModal").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    });
+  });
+
+  // Close modal
+  closeModal?.addEventListener("click", () => {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  });
+
+  // Add counter listeners for Adults/Children
+  function addCounterListeners(roomDiv) {
+    roomDiv.querySelectorAll(".increase").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const input = btn.parentElement.querySelector("input");
+        input.value = parseInt(input.value) + 1;
+      });
+    });
+    roomDiv.querySelectorAll(".decrease").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const input = btn.parentElement.querySelector("input");
+        if (parseInt(input.value) > parseInt(input.min)) {
+          input.value = parseInt(input.value) - 1;
+        }
+      });
+    });
+  }
+
+  // Reindex rooms after add/remove
+  function reindexRooms() {
+    document.querySelectorAll(".room-card").forEach((room, index) => {
+      room.querySelector(".room-title").textContent = `Room ${index + 1}`;
+    });
+  }
+
+  // Add new room
+  addRoomBtn?.addEventListener("click", () => {
+    const roomDiv = document.createElement("div");
+    roomDiv.className = "room-card border p-5 rounded-xl mb-6 bg-gray-50 shadow-sm";
+
+    roomDiv.innerHTML = `
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="room-title font-semibold text-lg">Room</h3>
+        <select class="border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
+          <option>Deluxe Room</option>
+          <option>Executive Suite</option>
+          <option>Presidential Suite</option>
+        </select>
+      </div>
+
+      <div class="grid grid-cols-2 gap-6 mb-4">
+        <div class="flex items-center justify-between">
+          <label class="text-sm font-medium">Adults</label>
+          <div class="flex items-center space-x-3">
+            <button class="decrease w-8 h-8 rounded-full bg-gray-200">−</button>
+            <input type="number" value="1" min="1" class="w-12 text-center border rounded-md p-1">
+            <button class="increase w-8 h-8 rounded-full bg-yellow-500 text-white">+</button>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <label class="text-sm font-medium">Children</label>
+          <div class="flex items-center space-x-3">
+            <button class="decrease w-8 h-8 rounded-full bg-gray-200">−</button>
+            <input type="number" value="0" min="0" class="w-12 text-center border rounded-md p-1">
+            <button class="increase w-8 h-8 rounded-full bg-yellow-500 text-white">+</button>
+          </div>
+        </div>
+      </div>
+
+      <button class="remove-room mt-2 text-sm text-red-500 hover:underline">Remove Room</button>
+    `;
+
+    roomsContainer.appendChild(roomDiv);
+
+    addCounterListeners(roomDiv);
+
+    roomDiv.querySelector(".remove-room").addEventListener("click", () => {
+      roomDiv.remove();
+      reindexRooms();
+    });
+
+    reindexRooms();
+  });
+
+  // Init first room
+  addCounterListeners(document.querySelector(".room-card"));
+  reindexRooms();
+}
+
+    // ✅ Footer
+    fetch("../CustomerFooter/index.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("footer").innerHTML = data;
+      })
+      .catch(err => console.error("❌ Footer load failed:", err));
+
+    // ✅ Tabs switcher
+    const roomsBtn = document.getElementById("roomsBtn");
+    const amenitiesBtn = document.getElementById("amenitiesBtn");
+    const roomsFaqs = document.getElementById("roomsFaqs");
+    const amenitiesFaqs = document.getElementById("amenitiesFaqs");
+
+    if (roomsBtn && amenitiesBtn && roomsFaqs && amenitiesFaqs) {
+      roomsBtn.addEventListener("click", () => {
+        roomsFaqs.classList.remove("hidden");
+        amenitiesFaqs.classList.add("hidden");
+        roomsBtn.classList.replace("bg-gray-200", "bg-yellow-500");
+        roomsBtn.classList.replace("text-gray-700", "text-white");
+        amenitiesBtn.classList.replace("bg-yellow-500", "bg-gray-200");
+        amenitiesBtn.classList.replace("text-white", "text-gray-700");
+      });
+
+      amenitiesBtn.addEventListener("click", () => {
+        amenitiesFaqs.classList.remove("hidden");
+        roomsFaqs.classList.add("hidden");
+        amenitiesBtn.classList.replace("bg-gray-200", "bg-yellow-500");
+        amenitiesBtn.classList.replace("text-gray-700", "text-white");
+        roomsBtn.classList.replace("bg-yellow-500", "bg-gray-200");
+        roomsBtn.classList.replace("text-white", "text-gray-700");
+      });
+    }
+
+    // ✅ Accordion toggle
+    document.addEventListener("click", (e) => {
+      if (e.target.closest(".faq-item")) {
+        const item = e.target.closest(".faq-item");
+        const answer = item.querySelector(".answer");
+        const toggle = item.querySelector(".toggle");
+
+        if (answer && toggle) {
+          if (answer.classList.contains("hidden")) {
+            answer.classList.remove("hidden");
+            toggle.textContent = "−";
+          } else {
+            answer.classList.add("hidden");
+            toggle.textContent = "+";
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

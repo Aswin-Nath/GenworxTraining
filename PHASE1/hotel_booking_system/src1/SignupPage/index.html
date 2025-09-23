@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>LuxuryStay - Sign Up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body class="bg-gray-50 font-sans">
+
+<!-- ✅ Header -->
+<header class="flex justify-between items-center bg-white shadow-md px-6 py-4 sticky top-0 z-50">
+  <!-- Logo + Title -->
+        <a href="../LandingPage/index.html" class="flex items-center space-x-2">
+        <img src="../../assets/Hotel_logo.png" 
+            alt="Hotel Logo" 
+            class="h-8 sm:h-10 rounded-full border-2 border-yellow-600 p-1">
+        <h1 class="text-lg sm:text-xl font-bold text-yellow-700">LuxuryStay</h1>
+        </a>
+</header>
+
+
+<!-- ✅ Main Container -->
+<div class="flex min-h-[calc(100vh-64px)]">
+
+  <!-- Left Column (Rich Hotel Experience) -->
+  <div class="hidden md:flex w-1/2 bg-cover bg-center relative"
+       style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80');">
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+    <div class="relative z-10 flex flex-col justify-center items-center text-center px-10">
+      <h2 class="text-4xl font-extrabold text-white mb-4">Join the World of Luxury</h2>
+      <p class="text-lg text-gray-200 leading-relaxed mb-6">
+        Become a LuxuryStay member and unlock premium benefits:  
+        exclusive discounts, priority bookings, and personalized experiences designed for you.
+      </p>
+    </div>
+  </div>
+
+  <!-- Divider -->
+  <div class="hidden md:block w-px bg-gray-300"></div>
+
+<!-- Right Column (Sign Up Form) -->
+<div class="flex justify-center items-center w-full md:w-1/2 p-6">
+  <div class="relative w-full max-w-xl bg-white rounded-3xl overflow-hidden border-4 border-amber-400">
+
+    <!-- Back Arrow -->
+<a href="../LandingPage/index.html"
+   class="absolute top-3 left-3 text-gray-700 hover:text-gray-900 transition">
+  <!-- Heroicon: Arrow Left -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+       viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round"
+          d="M15 19l-7-7 7-7" />
+  </svg>
+</a>
+
+    <!-- Top Banner -->
+    <div class="bg-gradient-to-r from-amber-600 to-yellow-500 text-white text-center py-4 rounded-t-2xl">
+      <h2 class="text-lg sm:text-xl font-bold">Create Your Account</h2>
+      <p class="text-xs sm:text-sm opacity-90">Join LuxuryStay and start booking luxury stays</p>
+    </div>
+
+    <!-- Form Section -->
+    <form id="signupForm" class="px-6 py-4 space-y-3" novalidate>
+      <!-- Name -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Name<span class="text-red-500">*</span></label>
+        <input type="text" name="name" placeholder="Enter your name" class="input-field" />
+      </div>
+
+      <!-- Gender -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Gender<span class="text-red-500">*</span></label>
+        <select id="genderSelect" name="gender" class="input-field">
+          <option value="">Choose your gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        <input type="text" id="otherGenderInput" name="otherGender" placeholder="Please specify"
+               class="hidden input-field mt-2" />
+      </div>
+
+      <!-- DOB -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Date of Birth<span class="text-red-500">*</span></label>
+        <input type="date" name="dob" class="input-field" />
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Email<span class="text-red-500">*</span></label>
+        <input type="email" name="email" placeholder="Enter your email" class="input-field" disabled />
+      </div>
+
+      <!-- Phone -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Phone Number<span class="text-red-500">*</span></label>
+        <input type="tel" name="phone" placeholder="10-digit number" class="input-field" disabled />
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Password<span class="text-red-500">*</span></label>
+        <input type="password" name="password" placeholder="••••••••" class="input-field" disabled />
+      </div>
+
+      <!-- Button -->
+      <button type="submit"
+              class="w-full bg-gradient-to-r from-amber-600 to-yellow-500 text-white py-2 rounded-lg hover:from-amber-700 hover:to-yellow-600 shadow-md transition">
+        Create Account
+      </button>
+
+      <!-- Already have account -->
+      <p class="text-xs sm:text-sm text-center text-gray-600">
+        Already have an account?
+        <a href="../LoginPage/index.html" class="text-amber-600 font-medium hover:underline">Login</a>
+      </p>
+    </form>
+  </div>
+</div>
+
+</div>
+
+<!-- ✅ Script -->
+<script>
+  const form = document.getElementById("signupForm");
+  const nameInput = form.querySelector('input[name="name"]');
+  const genderSelect = form.querySelector('select[name="gender"]');
+  const otherGenderInput = document.getElementById("otherGenderInput");
+  const dobInput = form.querySelector('input[name="dob"]');
+  const emailInput = form.querySelector('input[name="email"]');
+  const phoneInput = form.querySelector('input[name="phone"]');
+  const passwordInput = form.querySelector('input[name="password"]');
+
+  // baseline classes
+  document.querySelectorAll(".input-field").forEach(el => {
+    el.classList.add("w-full","mt-1","border","border-gray-300","rounded-lg","px-3","py-2","focus:ring-2","focus:ring-amber-500","focus:border-amber-500");
+  });
+
+  // Initially disabled advanced fields
+  emailInput.disabled = true;
+  phoneInput.disabled = true;
+  passwordInput.disabled = true;
+
+  // Error helpers
+  function clearError(input) {
+    const next = input.nextElementSibling;
+    if (next && next.classList.contains("error-msg")) next.remove();
+    input.classList.remove("ring-2","ring-red-400","border-red-400");
+  }
+  function showError(input, message) {
+    clearError(input);
+    const error = document.createElement("p");
+    error.className = "error-msg text-red-500 text-xs mt-1";
+    error.innerText = message;
+    input.insertAdjacentElement("afterend", error);
+    input.classList.add("ring-2","ring-red-400","border-red-400");
+  }
+
+  // Validators
+  function validateEmail(value) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); }
+  function validatePhone(value) { return /^\d{10}$/.test(value); }
+  function validatePassword(value) {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value);
+  }
+  function validateDob(value) {
+    if (!value) return false;
+    const today = new Date();
+    return new Date(value) < today;
+  }
+
+  // Enable email/phone after basics valid
+  function checkBasicDetails() {
+    const isName = nameInput.value.trim() !== "";
+    const isGender = genderSelect.value !== "" && (genderSelect.value !== "Other" || otherGenderInput.value.trim() !== "");
+    const isDob = validateDob(dobInput.value.trim());
+    const canEnable = isName && isGender && isDob;
+
+    emailInput.disabled = !canEnable;
+    phoneInput.disabled = !canEnable;
+  }
+
+  // Enable password after email & phone valid
+  function updatePasswordEnable() {
+    const emailValid = validateEmail(emailInput.value.trim());
+    const phoneValid = validatePhone(phoneInput.value.trim());
+    passwordInput.disabled = !(emailValid && phoneValid);
+  }
+
+  // Realtime validation
+  nameInput.addEventListener("input", () => { 
+    if (!nameInput.value.trim()) showError(nameInput,"Name is required"); else clearError(nameInput); 
+    checkBasicDetails();
+  });
+  genderSelect.addEventListener("change", () => {
+    if (genderSelect.value === "Other") otherGenderInput.classList.remove("hidden");
+    else { otherGenderInput.classList.add("hidden"); otherGenderInput.value=""; clearError(otherGenderInput); }
+    checkBasicDetails();
+  });
+  otherGenderInput.addEventListener("input", checkBasicDetails);
+  dobInput.addEventListener("input", () => {
+    if (!validateDob(dobInput.value.trim())) showError(dobInput,"Enter a valid past date"); else clearError(dobInput);
+    checkBasicDetails();
+  });
+  emailInput.addEventListener("input", () => {
+    if (!validateEmail(emailInput.value.trim())) showError(emailInput,"Enter a valid email"); else clearError(emailInput);
+    updatePasswordEnable();
+  });
+  phoneInput.addEventListener("input", () => {
+    if (!validatePhone(phoneInput.value.trim())) showError(phoneInput,"Enter a valid 10-digit Indian number"); else clearError(phoneInput);
+    updatePasswordEnable();
+  });
+  passwordInput.addEventListener("input", () => {
+    if (!validatePassword(passwordInput.value.trim())) showError(passwordInput,"Password must be at least 8 chars, include uppercase, lowercase, number & special char");
+    else clearError(passwordInput);
+  });
+
+  // ✅ Submit
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!nameInput.value.trim() || !validateDob(dobInput.value.trim()) ||
+        !validateEmail(emailInput.value.trim()) || !validatePhone(phoneInput.value.trim()) ||
+        !validatePassword(passwordInput.value.trim())) {
+      alert("Please correct the errors before submitting."); return;
+    }
+    // Save to localStorage
+    localStorage.setItem("name", nameInput.value.trim());
+    localStorage.setItem("gender", genderSelect.value);
+    if (genderSelect.value==="Other") localStorage.setItem("otherGender",otherGenderInput.value.trim());
+    localStorage.setItem("dob", dobInput.value.trim());
+    localStorage.setItem("email", emailInput.value.trim());
+    localStorage.setItem("phone", phoneInput.value.trim());
+    localStorage.setItem("password", passwordInput.value.trim());
+    alert("Signup successful! You can now login.");
+    window.location.href="../LoginPage/index.html";
+  });
+</script>
+</body>
+</html>
