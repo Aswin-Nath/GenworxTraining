@@ -3,9 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LuxuryStay - Edit Room</title>
+  <title>LuxuryStay - Edit Room (LocalStorage)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    /* Utility styles */
+    .preview-btn {
+      position: absolute;
+      top: 0.25rem;
+      right: 0.25rem;
+      background-color: #ef4444;
+      color: white;
+      border-radius: 9999px;
+      padding: 0.25rem;
+      font-size: 0.75rem;
+    }
+  </style>
 </head>
 <body class="bg-gray-50">
 
@@ -31,17 +44,17 @@
     <section class="bg-white rounded-2xl border border-gray-200 p-6 shadow-md space-y-6">
       <form id="editRoomForm" class="space-y-6">
 
-        <!-- Room number -->
+        <!-- Room number (read-only, cannot change id) -->
         <div>
           <label class="block text-gray-700 font-medium mb-1">Room Number:</label>
-          <input type="text" value="101" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
+          <input id="roomNumber" type="text" class="w-full border p-3 rounded-lg bg-gray-100" readonly>
         </div>
 
         <!-- Room Type -->
         <div>
           <label class="block text-gray-700 font-medium mb-1">Room Type:</label>
-          <select class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
-            <option selected>Deluxe</option>
+          <select id="roomType" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
+            <option>Deluxe</option>
             <option>Suite</option>
             <option>Standard</option>
             <option>Executive</option>
@@ -56,38 +69,34 @@
         <!-- Price / Night -->
         <div>
           <label class="block text-gray-700 font-medium mb-1">Price / Night:</label>
-          <input type="number" value="4500" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
+          <input id="roomPrice" type="number" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
         </div>
 
         <!-- Capacity -->
-        <div>
-          <label class="block text-gray-700 font-medium mb-1">Capacity:</label>
-          <input type="number" value="3" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-gray-700 font-medium mb-1">Adults Capacity:</label>
+            <input id="roomAdults" type="number" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-1">Children Capacity:</label>
+            <input id="roomChildren" type="number" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
+          </div>
         </div>
 
         <!-- Room Description -->
         <div>
           <label class="block text-gray-700 font-medium mb-1">Room Description:</label>
-          <textarea id="roomDesc" maxlength="1000" rows="5" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">Spacious deluxe room with sea view, king-size bed, and complimentary breakfast.</textarea>
+          <textarea id="roomDesc" maxlength="1000" rows="5" 
+            class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500"></textarea>
           <p id="descCount" class="text-sm text-gray-500">0 / 1000</p>
         </div>
 
         <!-- Room Amenities -->
         <div>
           <label class="block text-gray-700 font-medium mb-2">Room Amenities:</label>
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
-            <label><input type="checkbox" checked> AC</label>
-            <label><input type="checkbox" checked> Wi-Fi</label>
-            <label><input type="checkbox" checked> TV</label>
-            <label><input type="checkbox"> Mini Bar</label>
-            <label><input type="checkbox"> Balcony</label>
-            <label><input type="checkbox"> Heater</label>
-            <label><input type="checkbox"> Coffee Maker</label>
-            <label><input type="checkbox"> Iron</label>
-            <label><input type="checkbox"> Bathtub</label>
-            <label><input type="checkbox"> Hair Dryer</label>
-            <label><input type="checkbox"> Safe Locker</label>
-            <label><input type="checkbox"> Work Desk</label>
+          <div id="amenitiesList" class="grid grid-cols-2 md:grid-cols-3 gap-2">
+            <!-- checkboxes injected -->
           </div>
         </div>
 
@@ -138,12 +147,13 @@
 
   <!-- ✅ Scripts -->
   <script>
-    // Navbar
+    /****************************************************
+     * Navbar + Sidebar loaders
+     ****************************************************/
     fetch("../AdminMainPageNavbar/index.html").then(res => res.text()).then(data => {
       document.getElementById("navbar").innerHTML = data;
     });
 
-    // Sidebar
     fetch("../AdminMainPageSidebar/index.html").then(res => res.text()).then(data => {
       document.getElementById("sidebar").innerHTML = data;
       const currentPage = "room";
@@ -154,44 +164,90 @@
       });
     });
 
-    // Back navigation
+    /****************************************************
+     * LocalStorage helpers
+     ****************************************************/
+    function getRooms() {
+      try {
+        return JSON.parse(localStorage.getItem('rooms')) || [];
+      } catch (e) {
+        return [];
+      }
+    }
+    function saveRooms(rooms) {
+      localStorage.setItem('rooms', JSON.stringify(rooms));
+    }
+
+    /****************************************************
+     * Back navigation
+     ****************************************************/
     function goBack() {
       window.history.back();
     }
 
-    // Save confirmation
+    /****************************************************
+     * Confirmation modal
+     ****************************************************/
     function confirmSave() {
       document.getElementById("saveConfirmModal").classList.remove("hidden");
     }
     function closeSaveModal() {
       document.getElementById("saveConfirmModal").classList.add("hidden");
     }
+
+    /****************************************************
+     * Save Room (update LocalStorage)
+     ****************************************************/
     function saveRoom() {
+      const rooms = getRooms();
+      const roomNumber = document.getElementById("roomNumber").value;
+      const idx = rooms.findIndex(r => r.roomNumber === roomNumber);
+      if (idx === -1) {
+        alert("Room not found in LocalStorage.");
+        return;
+      }
+
+      // Update values
+      rooms[idx].type = document.getElementById("roomType").value;
+      rooms[idx].price = parseInt(document.getElementById("roomPrice").value, 10) || 0;
+      rooms[idx].adultsCapacity = parseInt(document.getElementById("roomAdults").value, 10) || 0;
+      rooms[idx].childrenCapacity = parseInt(document.getElementById("roomChildren").value, 10) || 0;
+      rooms[idx].description = document.getElementById("roomDesc").value;
+
+      // amenities
+      const checked = Array.from(document.querySelectorAll(".amenity:checked")).map(x => x.value);
+      rooms[idx].amenities = checked;
+
+      saveRooms(rooms);
       closeSaveModal();
-      alert("Room details saved successfully!");
-      window.history.back();
+      alert("Room updated successfully!");
+      goBack();
     }
 
-    // Character count for description
+    /****************************************************
+     * Character count
+     ****************************************************/
     const roomDesc = document.getElementById("roomDesc");
     const descCount = document.getElementById("descCount");
     roomDesc.addEventListener("input", () => {
       descCount.textContent = `${roomDesc.value.length} / 1000`;
     });
 
-    // Preview and remove images
+    /****************************************************
+     * Preview + remove images
+     ****************************************************/
     function previewImages(event) {
       const files = event.target.files;
       const preview = document.getElementById("imagePreview");
       preview.innerHTML = "";
-      Array.from(files).forEach((file, i) => {
+      Array.from(files).forEach((file) => {
         const reader = new FileReader();
         reader.onload = (e) => {
           const div = document.createElement("div");
           div.classList = "relative";
           div.innerHTML = `
             <img src="${e.target.result}" class="w-full h-32 object-cover rounded-lg shadow">
-            <button onclick="this.parentElement.remove()" class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 material-icons text-sm">close</button>
+            <button onclick="this.parentElement.remove()" class="preview-btn material-icons">close</button>
           `;
           preview.appendChild(div);
         };
@@ -199,7 +255,9 @@
       });
     }
 
-    // Preview and remove videos
+    /****************************************************
+     * Preview + remove videos
+     ****************************************************/
     function previewVideos(event) {
       const files = event.target.files;
       const preview = document.getElementById("videoPreview");
@@ -213,13 +271,55 @@
             <video controls class="w-full h-48 rounded-lg shadow">
               <source src="${e.target.result}" type="video/mp4">
             </video>
-            <button onclick="this.parentElement.remove()" class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 material-icons text-sm">close</button>
+            <button onclick="this.parentElement.remove()" class="preview-btn material-icons">close</button>
           `;
           preview.appendChild(div);
         };
         reader.readAsDataURL(file);
       });
     }
+
+    /****************************************************
+     * Render form with existing data
+     ****************************************************/
+    function renderRoomData() {
+      const selected = localStorage.getItem("selectedRoomNumber");
+      if (!selected) {
+        alert("No room selected!");
+        return;
+      }
+      const rooms = getRooms();
+      const room = rooms.find(r => r.roomNumber === selected);
+      if (!room) {
+        alert("Room not found in LocalStorage!");
+        return;
+      }
+
+      // Fill values
+      document.getElementById("roomNumber").value = room.roomNumber;
+      document.getElementById("roomType").value = room.type || "Deluxe";
+      document.getElementById("roomPrice").value = room.price || 0;
+      document.getElementById("roomAdults").value = room.adultsCapacity || 0;
+      document.getElementById("roomChildren").value = room.childrenCapacity || 0;
+      document.getElementById("roomDesc").value = room.description || "";
+      descCount.textContent = `${room.description?.length || 0} / 1000`;
+
+      // Amenities list (all possible)
+      const allAmenities = ["AC","Wi-Fi","TV","Mini Bar","Balcony","Heater","Coffee Maker","Iron","Bathtub","Hair Dryer","Safe Locker","Work Desk"];
+      const container = document.getElementById("amenitiesList");
+      container.innerHTML = "";
+      allAmenities.forEach(am => {
+        const label = document.createElement("label");
+        label.classList = "flex items-center gap-2";
+        const checked = room.amenities?.includes(am) ? "checked" : "";
+        label.innerHTML = `<input type="checkbox" class="amenity" value="${am}" ${checked}> ${am}`;
+        container.appendChild(label);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderRoomData();
+    });
   </script>
 </body>
 </html>
