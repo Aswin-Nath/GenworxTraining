@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LuxuryStay - Refund Management</title>
+  <title>LuxuryStay - Room Management</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -24,9 +24,10 @@
         <h2 class="text-2xl font-bold text-gray-800">Room Management</h2>
         <p class="text-gray-600">Manage room availability, status, and bookings.</p>
       </div>
-      <button class="p-3 bg-yellow-600 text-white rounded-full hover:bg-yellow-700 shadow">
-        <span class="material-icons">add</span>
-      </button>
+    <button onclick="toggleAddRoomModal()" class="p-3 bg-yellow-600 text-white rounded-full hover:bg-yellow-700 shadow">
+      <span class="material-icons">add</span>
+    </button>
+
     </div>
 
     <!-- ✅ Search + Filter Box -->
@@ -43,7 +44,6 @@
 
       <!-- Filters -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <!-- Status -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Room Status</label>
           <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
@@ -53,8 +53,6 @@
             <option>Maintenance</option>
           </select>
         </div>
-
-        <!-- Room Type -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Room Type</label>
           <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
@@ -64,15 +62,12 @@
             <option>Standard</option>
           </select>
         </div>
-
-        <!-- Date -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Next Check-in Date</label>
           <input type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
         </div>
       </div>
 
-      <!-- Action -->
       <div class="flex justify-end">
         <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 shadow-md flex items-center space-x-2">
           <span class="material-icons text-sm">filter_alt</span>
@@ -81,107 +76,314 @@
       </div>
     </div>
 
-<!-- ✅ Table -->
-<div class="overflow-x-auto bg-white shadow-lg border border-gray-200 rounded-xl">
-  <table class="w-full text-sm">
-    <thead class="bg-yellow-50 border-b border-gray-300">
-      <tr>
-        <th class="p-3 text-left font-semibold text-gray-700">Room No</th>
-        <th class="p-3 text-left font-semibold text-gray-700">Room Type</th>
-        <th class="p-3 text-left font-semibold text-gray-700">Status</th>
-        <th class="p-3 text-left font-semibold text-gray-700">Guest Name</th>
-        <th class="p-3 text-left font-semibold text-gray-700">Next Check-out</th>
-        <th class="p-3 text-left font-semibold text-gray-700">Next Check-in</th>
-        <th class="p-3 text-center font-semibold text-gray-700">Action</th>
-      </tr>
-    </thead>
-    <tbody class="divide-y divide-gray-200">
+    <!-- ✅ Table -->
+    <div class="overflow-x-auto bg-white shadow-lg border border-gray-200 rounded-xl">
+      <table class="w-full text-sm">
+        <thead class="bg-yellow-50 border-b border-gray-300">
+          <tr>
+            <th class="p-3 text-left font-semibold text-gray-700">Room No</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Room Type</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Status</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Guest Name</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Next Check-out</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Next Check-in</th>
+            <th class="p-3 text-center font-semibold text-gray-700">Action</th>
+          </tr>
+        </thead>
+        <tbody id="roomTableBody" class="divide-y divide-gray-200">
+          <!-- Example Rows -->
+          <tr class="hover:bg-gray-50">
+            <td class="p-3">101</td>
+            <td class="p-3">Deluxe</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">Available</span></td>
+            <td class="p-3">-</td>
+            <td class="p-3">-</td>
+            <td class="p-3">25 Sep 2025</td>
+            <td class="p-3 text-center flex justify-center space-x-2">
+              <button onclick="viewRoom('101')" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button onclick="window.location.href='../AdminEditRoom/index.html'" class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Edit</button>
+              <button class="px-3 py-1 bg-purple-500 text-white rounded-lg hover:bg-purple-600 text-sm">Freeze</button>
+            </td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="p-3">202</td>
+            <td class="p-3">Suite</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium">Occupied</span></td>
+            <td class="p-3">John Doe</td>
+            <td class="p-3">26 Sep 2025</td>
+            <td class="p-3">-</td>
+            <td class="p-3 text-center flex justify-center space-x-2">
+              <button onclick="viewRoom('202')" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button onclick="window.location.href='../AdminEditRoom/index.html'" class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Edit</button>
+              <button class="px-3 py-1 bg-purple-500 text-white rounded-lg hover:bg-purple-600 text-sm">Freeze</button>
+            </td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="p-3">303</td>
+            <td class="p-3">Standard</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium">Maintenance</span></td>
+            <td class="p-3">-</td>
+            <td class="p-3">-</td>
+            <td class="p-3">-</td>
+            <td class="p-3 text-center flex justify-center space-x-2">
+              <button onclick="viewRoom('303')" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button onclick="window.location.href='../AdminEditRoom/index.html'" class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Edit</button>
+              <button class="px-3 py-1 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 text-sm">Unfreeze</button>
+            </td>
+          </tr>
+                    <tr class="hover:bg-gray-50">
+            <td class="p-3">101</td>
+            <td class="p-3">Deluxe</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">Available</span></td>
+            <td class="p-3">-</td>
+            <td class="p-3">-</td>
+            <td class="p-3">25 Sep 2025</td>
+            <td class="p-3 text-center flex justify-center space-x-2">
+              <button onclick="viewRoom('101')" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button onclick="window.location.href='../AdminEditRoom/index.html'" class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Edit</button>
+              <button class="px-3 py-1 bg-purple-500 text-white rounded-lg hover:bg-purple-600 text-sm">Freeze</button>
+            </td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="p-3">202</td>
+            <td class="p-3">Suite</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium">Occupied</span></td>
+            <td class="p-3">John Doe</td>
+            <td class="p-3">26 Sep 2025</td>
+            <td class="p-3">-</td>
+            <td class="p-3 text-center flex justify-center space-x-2">
+              <button onclick="viewRoom('202')" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button onclick="window.location.href='../AdminEditRoom/index.html'" class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Edit</button>
+              <button class="px-3 py-1 bg-purple-500 text-white rounded-lg hover:bg-purple-600 text-sm">Freeze</button>
+            </td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="p-3">303</td>
+            <td class="p-3">Standard</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium">Maintenance</span></td>
+            <td class="p-3">-</td>
+            <td class="p-3">-</td>
+            <td class="p-3">-</td>
+            <td class="p-3 text-center flex justify-center space-x-2">
+              <button onclick="viewRoom('303')" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button onclick="window.location.href='../AdminEditRoom/index.html'" class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Edit</button>
+              <button class="px-3 py-1 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 text-sm">Unfreeze</button>
+            </td>
+          </tr>
+                    <tr class="hover:bg-gray-50">
+            <td class="p-3">101</td>
+            <td class="p-3">Deluxe</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">Available</span></td>
+            <td class="p-3">-</td>
+            <td class="p-3">-</td>
+            <td class="p-3">25 Sep 2025</td>
+            <td class="p-3 text-center flex justify-center space-x-2">
+              <button onclick="viewRoom('101')" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button onclick="window.location.href='../AdminEditRoom/index.html'" class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Edit</button>
+              <button class="px-3 py-1 bg-purple-500 text-white rounded-lg hover:bg-purple-600 text-sm">Freeze</button>
+            </td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="p-3">202</td>
+            <td class="p-3">Suite</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium">Occupied</span></td>
+            <td class="p-3">John Doe</td>
+            <td class="p-3">26 Sep 2025</td>
+            <td class="p-3">-</td>
+            <td class="p-3 text-center flex justify-center space-x-2">
+              <button onclick="viewRoom('202')" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button onclick="window.location.href='../AdminEditRoom/index.html'" class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Edit</button>
+              <button class="px-3 py-1 bg-purple-500 text-white rounded-lg hover:bg-purple-600 text-sm">Freeze</button>
+            </td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="p-3">303</td>
+            <td class="p-3">Standard</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium">Maintenance</span></td>
+            <td class="p-3">-</td>
+            <td class="p-3">-</td>
+            <td class="p-3">-</td>
+            <td class="p-3 text-center flex justify-center space-x-2">
+              <button onclick="viewRoom('303')" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button onclick="window.location.href='../AdminEditRoom/index.html'" class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Edit</button>
+              <button class="px-3 py-1 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 text-sm">Unfreeze</button>
+            </td>
+          </tr>
+                    <tr class="hover:bg-gray-50">
+            <td class="p-3">101</td>
+            <td class="p-3">Deluxe</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">Available</span></td>
+            <td class="p-3">-</td>
+            <td class="p-3">-</td>
+            <td class="p-3">25 Sep 2025</td>
+            <td class="p-3 text-center flex justify-center space-x-2">
+              <button onclick="viewRoom('101')" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button onclick="window.location.href='../AdminEditRoom/index.html'" class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Edit</button>
+              <button class="px-3 py-1 bg-purple-500 text-white rounded-lg hover:bg-purple-600 text-sm">Freeze</button>
+            </td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="p-3">202</td>
+            <td class="p-3">Suite</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium">Occupied</span></td>
+            <td class="p-3">John Doe</td>
+            <td class="p-3">26 Sep 2025</td>
+            <td class="p-3">-</td>
+            <td class="p-3 text-center flex justify-center space-x-2">
+              <button onclick="viewRoom('202')" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button onclick="window.location.href='../AdminEditRoom/index.html'" class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Edit</button>
+              <button class="px-3 py-1 bg-purple-500 text-white rounded-lg hover:bg-purple-600 text-sm">Freeze</button>
+            </td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="p-3">303</td>
+            <td class="p-3">Standard</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium">Maintenance</span></td>
+            <td class="p-3">-</td>
+            <td class="p-3">-</td>
+            <td class="p-3">-</td>
+            <td class="p-3 text-center flex justify-center space-x-2">
+              <button onclick="viewRoom('303')" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button onclick="window.location.href='../AdminEditRoom/index.html'" class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Edit</button>
+              <button class="px-3 py-1 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 text-sm">Unfreeze</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-      <!-- Row 1 -->
-      <tr class="hover:bg-gray-50">
-        <td class="p-3">101</td>
-        <td class="p-3">Deluxe</td>
-        <td class="p-3">
-          <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">Available</span>
-        </td>
-        <td class="p-3">-</td>
-        <td class="p-3">-</td>
-        <td class="p-3">25 Sep 2025</td>
-        <td class="p-3 text-center flex justify-center space-x-2">
-          <button class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
-          <button class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Edit</button>
-          <button class="px-3 py-1 bg-purple-500 text-white rounded-lg hover:bg-purple-600 text-sm">Freeze</button>
-        </td>
-      </tr>
+    <!-- ✅ Pagination -->
+    <nav class="flex flex-col md:flex-row justify-between items-center mt-6 space-y-4 md:space-y-0">
+      <button onclick="prevPage()" class="px-5 py-2 flex items-center space-x-2 border rounded-full bg-gray-200 hover:bg-gray-300">
+        <span class="material-icons text-sm">chevron_left</span><span>Prev</span>
+      </button>
+      <ul id="paginationNumbers" class="flex space-x-2"></ul>
+      <button onclick="nextPage()" class="px-5 py-2 flex items-center space-x-2 border rounded-full bg-gray-200 hover:bg-gray-300">
+        <span>Next</span><span class="material-icons text-sm">chevron_right</span>
+      </button>
+      <div class="flex items-center space-x-2">
+        <label for="pageInput" class="text-sm text-gray-600 font-medium">Jump to:</label>
+        <input id="pageInput" type="number" min="1" placeholder="Page #"
+          class="w-20 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 shadow-sm">
+        <button onclick="jumpToPage()" class="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow flex items-center space-x-1">
+          <span class="material-icons text-sm">login</span><span>Go</span>
+        </button>
+      </div>
+    </nav>
+  </main>
 
-      <!-- Row 2 -->
-      <tr class="hover:bg-gray-50">
-        <td class="p-3">202</td>
-        <td class="p-3">Suite</td>
-        <td class="p-3">
-          <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium">Occupied</span>
-        </td>
-        <td class="p-3">John Doe</td>
-        <td class="p-3">26 Sep 2025</td>
-        <td class="p-3">-</td>
-        <td class="p-3 text-center flex justify-center space-x-2">
-          <button class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
-          <button class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Edit</button>
-          <button class="px-3 py-1 bg-purple-500 text-white rounded-lg hover:bg-purple-600 text-sm">Freeze</button>
-        </td>
-      </tr>
-      
-    <!-- Row 3 -->
-    <tr class="hover:bg-gray-50">
-    <td class="p-3">303</td>
-    <td class="p-3">Standard</td>
-    <td class="p-3">
-        <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium">Maintenance</span>
-    </td>
-    <td class="p-3">-</td>
-    <td class="p-3">-</td>
-    <td class="p-3">-</td>
-    <td class="p-3 text-center flex justify-center space-x-2">
-        <button class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
-        <button class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Edit</button>
-        <!-- ✅ Replaced Freeze with Unfreeze -->
-        <button class="px-3 py-1 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 text-sm">Unfreeze</button>
-    </td>
-    </tr>
+<!-- ✅ Add Room Modal -->
+<div id="addRoomModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+  <div class="bg-white w-full max-w-2xl max-h-[90vh] rounded-2xl shadow-lg p-6 relative overflow-y-auto">
 
+    <!-- Close Button -->
+    <button onclick="toggleAddRoomModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+      <span class="material-icons">close</span>
+    </button>
 
-    </tbody>
-  </table>
+    <!-- Modal Title -->
+    <div class="flex items-center gap-3 mb-6">
+      <h2 class="text-xl font-bold text-gray-800">Add Room</h2>
+    </div>
+
+    <!-- Form -->
+    <form class="space-y-6">
+      <!-- Room number -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Room number:</label>
+        <input type="text" placeholder="Enter the Room Number" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
+      </div>
+
+      <!-- Room Type -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Room Type:</label>
+        <input type="text" placeholder="Enter the Room Type" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
+      </div>
+
+      <!-- Price / Night -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Price / Night:</label>
+        <input type="number" placeholder="Enter the Price per Night" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
+      </div>
+
+      <!-- Capacity -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Capacity:</label>
+        <input type="number" placeholder="Enter the Maximum capacity" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
+      </div>
+
+      <!-- Room Description -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Room Description:</label>
+        <textarea rows="3" placeholder="Enter room description" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500"></textarea>
+      </div>
+
+      <!-- Room Amenities -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-2">Room Amenities:</label>
+        <div class="grid grid-cols-3 gap-2">
+          <label class="flex items-center gap-2"><input type="checkbox" class="accent-yellow-600"> AC</label>
+          <label class="flex items-center gap-2"><input type="checkbox" class="accent-yellow-600"> Wi-Fi</label>
+          <label class="flex items-center gap-2"><input type="checkbox" class="accent-yellow-600"> TV</label>
+          <label class="flex items-center gap-2"><input type="checkbox" class="accent-yellow-600"> Mini Bar</label>
+          <label class="flex items-center gap-2"><input type="checkbox" class="accent-yellow-600"> Balcony</label>
+          <label class="flex items-center gap-2"><input type="checkbox" class="accent-yellow-600"> Heater</label>
+        </div>
+      </div>
+
+      <!-- Room Images -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Room Images:</label>
+        <div class="border-dashed border-2 border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:bg-gray-50">
+          <span class="material-icons text-4xl text-orange-500">add_photo_alternate</span>
+          <p class="text-gray-500 text-sm">Click to upload images</p>
+          <input type="file" multiple class="hidden">
+        </div>
+      </div>
+
+      <!-- Room Videos -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Room Videos:</label>
+        <div class="border-dashed border-2 border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:bg-gray-50">
+          <span class="material-icons text-4xl text-orange-500">video_library</span>
+          <p class="text-gray-500 text-sm">Click to upload videos</p>
+          <input type="file" accept="video/*" multiple class="hidden">
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-end gap-4 pt-4">
+        <button type="reset" class="px-5 py-2 bg-yellow-400 hover:bg-yellow-500 text-black rounded-lg shadow">Reset Details</button>
+        <button type="submit" class="px-5 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow">Add Room</button>
+      </div>
+    </form>
+  </div>
 </div>
 
-  </main>
+
 
   <!-- ✅ Navbar + Sidebar Loader -->
   <script>
-    
-    // Navbar
-    fetch("../AdminMainPageNavbar/index.html").then(res => res.text()).then(data => {
-      document.getElementById("navbar").innerHTML = data;
-    });
-
-    // Sidebar
+      function toggleAddRoomModal() {
+    document.getElementById('addRoomModal').classList.toggle('hidden');
+  }
+    fetch("../AdminMainPageNavbar/index.html").then(res => res.text()).then(data => { document.getElementById("navbar").innerHTML = data; });
     fetch("../AdminMainPageSidebar/index.html").then(res => res.text()).then(data => {
       document.getElementById("sidebar").innerHTML = data;
       const currentPage = "room";
       document.querySelectorAll("#sidebar a").forEach(link => {
         if (link.dataset.page === currentPage) {
           link.classList.add("text-yellow-600", "font-bold");
-
-
         }
       });
     });
 
-    // Dummy Pagination Logic
+    // ✅ Pagination Logic
     let currentPage = 1;
     const rowsPerPage = 5;
+    const rows = document.querySelectorAll("#roomTableBody tr");
+
     function showPage(page) {
-      const rows = document.querySelectorAll("#refundTableBody tr");
       const totalPages = Math.ceil(rows.length / rowsPerPage);
       if (page < 1) page = 1;
       if (page > totalPages) page = totalPages;
@@ -189,14 +391,34 @@
       rows.forEach((row, i) => {
         row.style.display = (i >= (page - 1) * rowsPerPage && i < page * rowsPerPage) ? "" : "none";
       });
+      renderPaginationNumbers(totalPages);
     }
+
+    function renderPaginationNumbers(totalPages) {
+      const container = document.getElementById("paginationNumbers");
+      container.innerHTML = "";
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = i;
+        btn.className = `px-4 py-2 rounded-full ${i === currentPage ? "bg-yellow-500 text-white shadow" : "bg-gray-200 hover:bg-yellow-100"}`;
+        btn.onclick = () => showPage(i);
+        container.appendChild(btn);
+      }
+    }
+
     function prevPage() { showPage(currentPage - 1); }
     function nextPage() { showPage(currentPage + 1); }
     function jumpToPage() {
-      const pageInput = document.getElementById("pageInput").value;
-      if (pageInput) showPage(parseInt(pageInput));
+      const pageInput = parseInt(document.getElementById("pageInput").value);
+      if (pageInput) showPage(pageInput);
     }
+
     document.addEventListener("DOMContentLoaded", () => showPage(1));
+
+    // ✅ Redirect to room details
+    function viewRoom(roomNo) {
+      window.location.href = "../AdminRoomDetails/index.html"; // replace PATH with your target page
+    }
   </script>
 </body>
 </html>
