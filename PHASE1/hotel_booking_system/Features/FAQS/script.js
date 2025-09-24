@@ -1,76 +1,4 @@
-    const uploadMedia = document.getElementById("uploadMedia");
-    const mediaPreview = document.getElementById("mediaPreview");
-    const form = document.getElementById("editIssueForm");
-    const toastContainer = document.getElementById("toastContainer");
-
-    const backBtn = document.getElementById("backBtn");
-    const cancelBtn = document.getElementById("cancelBtn");
-    const confirmModal = document.getElementById("confirmModal");
-    const discardBtn = document.getElementById("discardBtn");
-    const saveAndLeaveBtn = document.getElementById("saveAndLeaveBtn");
-
-    // Show uploaded images instantly
-    uploadMedia.addEventListener("change", (e) => {
-      Array.from(e.target.files).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          const img = document.createElement("img");
-          img.src = ev.target.result;
-          img.className = "h-32 w-full object-cover rounded-lg shadow";
-          mediaPreview.appendChild(img);
-        };
-        reader.readAsDataURL(file);
-      });
-    });
-
-    // Show toast
-    function showToast(message) {
-      const toast = document.createElement("div");
-      toast.className = "bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg flex items-center justify-between";
-      toast.innerHTML = `<span>${message}</span><button class="ml-4 text-sm">✕</button>`;
-      toastContainer.appendChild(toast);
-
-      toast.querySelector("button").addEventListener("click", () => toast.remove());
-      setTimeout(() => toast.remove(), 3000);
-    }
-
-    // Open confirm modal
-    function openConfirmModal() {
-      confirmModal.classList.remove("hidden");
-      confirmModal.classList.add("flex");
-    }
-
-    // Close confirm modal
-    function closeConfirmModal() {
-      confirmModal.classList.add("hidden");
-      confirmModal.classList.remove("flex");
-    }
-
-    // Back/Cancel -> confirm modal
-    backBtn.addEventListener("click", openConfirmModal);
-    cancelBtn.addEventListener("click", openConfirmModal);
-
-    // Discard -> just leave
-    discardBtn.addEventListener("click", () => {
-      closeConfirmModal();
-      window.history.back();
-    });
-
-    // Save & Leave -> show toast then leave
-    saveAndLeaveBtn.addEventListener("click", () => {
-      closeConfirmModal();
-      showToast("Issue saved successfully!");
-      setTimeout(() => window.history.back(), 1200);
-    });
-
-    // Form submit (normal save)
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      showToast("Issue updated successfully!");
-      setTimeout(() => window.history.back(), 1500);
-    });
-    
-// ✅ Navbar + Footer loading
+ // ✅ Navbar + Footer loading
 const isAdminLoggedIn = localStorage.getItem("is_admin_logged_in") === "true";
 const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
 
@@ -101,7 +29,6 @@ fetch(navbarPath)
     // ✅ attach modal listeners AFTER navbar injected
     attachModalListeners();
   });
-
 function attachModalListeners() {
   const modal = document.getElementById("bookingModal");
   const closeModal = document.getElementById("closeModal");
@@ -204,8 +131,6 @@ function attachModalListeners() {
   reindexRooms();
 }
 
-
-
     // ✅ Footer
     fetch("/Features/Components/Footers/CustomerFooter/index.html")
       .then(res => res.text())
@@ -213,3 +138,48 @@ function attachModalListeners() {
         document.getElementById("footer").innerHTML = data;
       })
       .catch(err => console.error("❌ Footer load failed:", err));
+
+    // ✅ Tabs switcher
+    const roomsBtn = document.getElementById("roomsBtn");
+    const amenitiesBtn = document.getElementById("amenitiesBtn");
+    const roomsFaqs = document.getElementById("roomsFaqs");
+    const amenitiesFaqs = document.getElementById("amenitiesFaqs");
+
+    if (roomsBtn && amenitiesBtn && roomsFaqs && amenitiesFaqs) {
+      roomsBtn.addEventListener("click", () => {
+        roomsFaqs.classList.remove("hidden");
+        amenitiesFaqs.classList.add("hidden");
+        roomsBtn.classList.replace("bg-gray-200", "bg-yellow-500");
+        roomsBtn.classList.replace("text-gray-700", "text-white");
+        amenitiesBtn.classList.replace("bg-yellow-500", "bg-gray-200");
+        amenitiesBtn.classList.replace("text-white", "text-gray-700");
+      });
+
+      amenitiesBtn.addEventListener("click", () => {
+        amenitiesFaqs.classList.remove("hidden");
+        roomsFaqs.classList.add("hidden");
+        amenitiesBtn.classList.replace("bg-gray-200", "bg-yellow-500");
+        amenitiesBtn.classList.replace("text-gray-700", "text-white");
+        roomsBtn.classList.replace("bg-yellow-500", "bg-gray-200");
+        roomsBtn.classList.replace("text-white", "text-gray-700");
+      });
+    }
+
+    // ✅ Accordion toggle
+    document.addEventListener("click", (e) => {
+      if (e.target.closest(".faq-item")) {
+        const item = e.target.closest(".faq-item");
+        const answer = item.querySelector(".answer");
+        const toggle = item.querySelector(".toggle");
+
+        if (answer && toggle) {
+          if (answer.classList.contains("hidden")) {
+            answer.classList.remove("hidden");
+            toggle.textContent = "−";
+          } else {
+            answer.classList.add("hidden");
+            toggle.textContent = "+";
+          }
+        }
+      }
+    });
