@@ -12,37 +12,37 @@
 <div id="navbar"></div>
 
 <!-- ✅ Room Details -->
-<section class="py-12 max-w-7xl mx-auto px-6 mt-10">
+<section class="py-8 sm:py-12 max-w-7xl mx-auto px-4 sm:px-6 mt-6 sm:mt-10">
   
-<!-- ✅ Room Details Header -->
-<header class="relative rounded-3xl bg-gradient-to-r from-yellow-400 via-red-400 to-red-500 py-20 text-center text-white shadow-md mt-10 sm:mt-4 overflow-hidden">
-  <div class="relative z-10">
-    <h1 class="text-5xl font-extrabold drop-shadow-lg">Room Details</h1>
-    <p class="text-lg mt-3 opacity-95">Choose the perfect room tailored to your needs</p>
+  <!-- ✅ Room Details Header -->
+  <header class="relative rounded-3xl bg-gradient-to-r from-yellow-400 via-red-400 to-red-500 py-12 sm:py-20 text-center text-white shadow-md mt-6 sm:mt-4 overflow-hidden">
+    <div class="relative z-10">
+      <h1 class="text-3xl sm:text-5xl font-extrabold drop-shadow-lg">Room Details</h1>
+      <p class="text-base sm:text-lg mt-3 opacity-95">Choose the perfect room tailored to your needs</p>
 
-    <!-- ✅ Sub Banner Badges -->
-    <div class="mt-6 flex justify-center space-x-4">
-      <span class="bg-white text-yellow-600 px-4 py-2 rounded-full text-sm font-medium shadow">🛏️ Best Comfort</span>
-      <span class="bg-white text-red-600 px-4 py-2 rounded-full text-sm font-medium shadow">🌟 Top Choice</span>
+      <!-- ✅ Sub Banner Badges -->
+      <div class="mt-6 flex flex-wrap justify-center gap-3">
+        <span class="bg-white text-yellow-600 px-4 py-2 rounded-full text-xs sm:text-sm font-medium shadow">🛏️ Best Comfort</span>
+        <span class="bg-white text-red-600 px-4 py-2 rounded-full text-xs sm:text-sm font-medium shadow">🌟 Top Choice</span>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
-  <div class="space-y-16 mt-16">
+  <div class="space-y-12 sm:space-y-16 mt-12 sm:mt-16">
 
     <!-- ✅ Deluxe Room -->
-    <div class="bg-white rounded-3xl shadow-lg overflow-hidden grid md:grid-cols-2 gap-6 p-6 md:p-10">
+    <div class="bg-white rounded-3xl shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-6 p-4 sm:p-6 md:p-10">
       <div>
-        <img src="/assets/room1.jpg" alt="Deluxe Room" class="w-full h-80 object-cover rounded-xl">
-        <h2 class="mt-6 text-3xl font-bold text-gray-800">Deluxe Room</h2>
-        <div class="flex space-x-6 mt-4 text-gray-600">
+        <img src="/assets/room1.jpg" alt="Deluxe Room" class="w-full h-48 sm:h-80 object-cover rounded-xl">
+        <h2 class="mt-6 text-2xl sm:text-3xl font-bold text-gray-800">Deluxe Room</h2>
+        <div class="flex flex-wrap gap-4 mt-4 text-gray-600 text-sm sm:text-base">
           <p>👤 2 Adults</p>
           <p>🛏️ Queen Bed</p>
           <p>📐 28 Sq.mt</p>
         </div>
-        <div class="mt-4 flex space-x-4">
+        <div class="mt-4 flex flex-wrap gap-4">
           <button 
-            class="openModal text-red-600 font-medium hover:underline"
+            class="openModal text-red-600 font-medium hover:underline text-sm sm:text-base"
             data-title="Deluxe Room"
             data-desc="Our Deluxe Room, sized 28 Sq.mt., is perfect for couples or solo travelers. Featuring a queen-size bed, free Wi-Fi, LED TV, mini-bar, 24/7 room service, and air conditioning."
             data-occupancy="2 Adults"
@@ -51,185 +51,169 @@
             data-amenities="Free Wi-Fi,LED TV,Mini Bar,24/7 Room Service,Air Conditioner,Shower">
             Room details
           </button>
-          <button class="openReviews text-yellow-600 font-medium hover:underline">View Reviews</button>
+          <button class="openReviews text-yellow-600 font-medium hover:underline text-sm sm:text-base">View Reviews</button>
         </div>
       </div>
       <div class="space-y-6">
-        <div class="border rounded-xl p-6 hover:shadow-md transition">
-          <h3 class="font-bold text-lg text-gray-800">Room Only</h3>
-          <ul class="list-disc ml-6 mt-2 text-gray-600 space-y-1">
+        <div class="border rounded-xl p-4 sm:p-6 hover:shadow-md transition">
+          <h3 class="font-bold text-base sm:text-lg text-gray-800">Room Only</h3>
+          <ul class="list-disc ml-6 mt-2 text-gray-600 text-sm sm:text-base space-y-1">
             <li>Includes WiFi</li>
             <li>Flexible cancellation</li>
           </ul>
-          <div class="mt-4 flex justify-between items-center">
-            <p class="text-2xl font-bold">₹4,500 / night</p>
-            <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition">Select</button>
+          <div class="mt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <p class="text-xl sm:text-2xl font-bold">₹4,500 / night</p>
+            <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition w-full sm:w-auto">Select</button>
           </div>
         </div>
-        <div class="border rounded-xl p-6 hover:shadow-md transition">
-          <h3 class="font-bold text-lg text-gray-800">Breakfast Inclusive</h3>
-          <ul class="list-disc ml-6 mt-2 text-gray-600 space-y-1">
+        <div class="border rounded-xl p-4 sm:p-6 hover:shadow-md transition">
+          <h3 class="font-bold text-base sm:text-lg text-gray-800">Breakfast Inclusive</h3>
+          <ul class="list-disc ml-6 mt-2 text-gray-600 text-sm sm:text-base space-y-1">
             <li>Breakfast + WiFi</li>
             <li>Flexible cancellation</li>
           </ul>
-          <div class="mt-4 flex justify-between items-center">
-            <p class="text-2xl font-bold">₹5,200 / night</p>
-            <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition">Select</button>
+          <div class="mt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <p class="text-xl sm:text-2xl font-bold">₹5,200 / night</p>
+            <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition w-full sm:w-auto">Select</button>
           </div>
         </div>
       </div>
     </div>
 
-      <!-- ✅ Executive Suite -->
-  <div class="bg-white rounded-3xl shadow-lg overflow-hidden grid md:grid-cols-2 gap-6 p-6 md:p-10">
-    <div>
-      <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1600&q=80" 
-           alt="Executive Suite" class="w-full h-80 object-cover rounded-xl">
-      <h2 class="mt-6 text-3xl font-bold text-gray-800">Executive Suite</h2>
-      <div class="flex space-x-6 mt-4 text-gray-600">
-        <p>👤 3 Adults + 1 Child</p>
-        <p>🛏️ King Bed</p>
-        <p>📐 45 Sq.mt</p>
+    <!-- ✅ Executive Suite -->
+    <div class="bg-white rounded-3xl shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-6 p-4 sm:p-6 md:p-10">
+      <div>
+        <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1600&q=80" 
+             alt="Executive Suite" class="w-full h-48 sm:h-80 object-cover rounded-xl">
+        <h2 class="mt-6 text-2xl sm:text-3xl font-bold text-gray-800">Executive Suite</h2>
+        <div class="flex flex-wrap gap-4 mt-4 text-gray-600 text-sm sm:text-base">
+          <p>👤 3 Adults + 1 Child</p>
+          <p>🛏️ King Bed</p>
+          <p>📐 45 Sq.mt</p>
+        </div>
+        <div class="mt-4 flex flex-wrap gap-4">
+          <button 
+            class="openModal text-red-600 font-medium hover:underline text-sm sm:text-base"
+            data-title="Executive Suite"
+            data-desc="Our Executive Suite, sized 45 Sq.mt., offers extra space with a private sitting area and skyline views. Comes with Wi-Fi, concierge service, king bed, and modern amenities."
+            data-occupancy="3 Adults + 1 Child"
+            data-bed="King Bed"
+            data-size="45 Sq.mt"
+            data-amenities="Free Wi-Fi,Concierge Service,Sitting Area,LED TV,Electronic Safe,Air Conditioner,Shower">
+            Room details
+          </button>
+          <button class="openReviews text-yellow-600 font-medium hover:underline text-sm sm:text-base">View Reviews</button>
+        </div>
       </div>
-      <div class="mt-4 flex space-x-4">
-        <button 
-          class="openModal text-red-600 font-medium hover:underline"
-          data-title="Executive Suite"
-          data-desc="Our Executive Suite, sized 45 Sq.mt., offers extra space with a private sitting area and skyline views. Comes with Wi-Fi, concierge service, king bed, and modern amenities."
-          data-occupancy="3 Adults + 1 Child"
-          data-bed="King Bed"
-          data-size="45 Sq.mt"
-          data-amenities="Free Wi-Fi,Concierge Service,Sitting Area,LED TV,Electronic Safe,Air Conditioner,Shower">
-          Room details
-        </button>
-        <button class="openReviews text-yellow-600 font-medium hover:underline">View Reviews</button>
-      </div>
-    </div>
-<div class="space-y-6">
-  <!-- ✅ Room Only -->
-  <div class="border rounded-xl p-6 hover:shadow-md transition">
-    <h3 class="font-bold text-lg text-gray-800">Room Only</h3>
-    <ul class="list-disc ml-6 mt-2 text-gray-600 space-y-1">
-      <li>WiFi + Sitting Area</li>
-      <li>Flexible cancellation</li>
-    </ul>
-    <div class="mt-4 flex justify-between items-center">
-      <p class="text-2xl font-bold">₹8,000 / night</p>
-      <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition">Select</button>
-    </div>
-  </div>
-
-  <!-- ✅ Breakfast Inclusive -->
-  <div class="border rounded-xl p-6 hover:shadow-md transition">
-    <h3 class="font-bold text-lg text-gray-800">Breakfast Inclusive</h3>
-    <ul class="list-disc ml-6 mt-2 text-gray-600 space-y-1">
-      <li>Breakfast + WiFi</li>
-      <li>Concierge Service</li>
-    </ul>
-    <div class="mt-4 flex justify-between items-center">
-      <p class="text-2xl font-bold">₹8,800 / night</p>
-      <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition">Select</button>
-    </div>
-  </div>
-
-  <!-- ✅ Premium All Inclusive -->
-  <div class="border rounded-xl p-6 hover:shadow-md transition">
-    <h3 class="font-bold text-lg text-gray-800">Premium All Inclusive</h3>
-    <ul class="list-disc ml-6 mt-2 text-gray-600 space-y-1">
-      <li>Breakfast + Dinner</li>
-      <li>Spa Access</li>
-    </ul>
-    <div class="mt-4 flex justify-between items-center">
-      <p class="text-2xl font-bold">₹9,999 / night</p>
-      <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition">Select</button>
-    </div>
-  </div>
-</div>
-
-  </div>
-
-  <!-- ✅ Presidential Suite -->
-  <div class="bg-white rounded-3xl shadow-lg overflow-hidden grid md:grid-cols-2 gap-6 p-6 md:p-10">
-    <div>
-      <img src="/assets/room3.jpg" alt="Presidential Suite" class="w-full h-80 object-cover rounded-xl">
-      <h2 class="mt-6 text-3xl font-bold text-gray-800">Presidential Suite</h2>
-      <div class="flex space-x-6 mt-4 text-gray-600">
-        <p>👤 4 Adults + 2 Children</p>
-        <p>🛏️ King Bed</p>
-        <p>📐 65 Sq.mt</p>
-      </div>
-      <div class="mt-4 flex space-x-4">
-        <button 
-          class="openModal text-red-600 font-medium hover:underline"
-          data-title="Presidential Suite"
-          data-desc="The Presidential Suite, sized 65 Sq.mt., offers unmatched luxury with a private lounge, jacuzzi, butler service, and top-class amenities."
-          data-occupancy="4 Adults + 2 Children"
-          data-bed="King Bed"
-          data-size="65 Sq.mt"
-          data-amenities="Private Lounge,Jacuzzi,Butler Service,Free Wi-Fi,Mini Bar,Spa Access,Air Conditioner,Shower">
-          Room details
-        </button>
-        <button class="openReviews text-yellow-600 font-medium hover:underline">View Reviews</button>
+      <div class="space-y-6">
+        <div class="border rounded-xl p-4 sm:p-6 hover:shadow-md transition">
+          <h3 class="font-bold text-base sm:text-lg text-gray-800">Room Only</h3>
+          <ul class="list-disc ml-6 mt-2 text-gray-600 text-sm sm:text-base space-y-1">
+            <li>WiFi + Sitting Area</li>
+            <li>Flexible cancellation</li>
+          </ul>
+          <div class="mt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <p class="text-xl sm:text-2xl font-bold">₹8,000 / night</p>
+            <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition w-full sm:w-auto">Select</button>
+          </div>
+        </div>
+        <div class="border rounded-xl p-4 sm:p-6 hover:shadow-md transition">
+          <h3 class="font-bold text-base sm:text-lg text-gray-800">Breakfast Inclusive</h3>
+          <ul class="list-disc ml-6 mt-2 text-gray-600 text-sm sm:text-base space-y-1">
+            <li>Breakfast + WiFi</li>
+            <li>Concierge Service</li>
+          </ul>
+          <div class="mt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <p class="text-xl sm:text-2xl font-bold">₹8,800 / night</p>
+            <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition w-full sm:w-auto">Select</button>
+          </div>
+        </div>
+        <div class="border rounded-xl p-4 sm:p-6 hover:shadow-md transition">
+          <h3 class="font-bold text-base sm:text-lg text-gray-800">Premium All Inclusive</h3>
+          <ul class="list-disc ml-6 mt-2 text-gray-600 text-sm sm:text-base space-y-1">
+            <li>Breakfast + Dinner</li>
+            <li>Spa Access</li>
+          </ul>
+          <div class="mt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <p class="text-xl sm:text-2xl font-bold">₹9,999 / night</p>
+            <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition w-full sm:w-auto">Select</button>
+          </div>
+        </div>
       </div>
     </div>
-<div class="space-y-6">
-  <!-- ✅ Room Only -->
-  <div class="border rounded-xl p-6 hover:shadow-md transition">
-    <h3 class="font-bold text-lg text-gray-800">Room Only</h3>
-    <ul class="list-disc ml-6 mt-2 text-gray-600 space-y-1">
-      <li>WiFi + Butler Service</li>
-      <li>Flexible cancellation</li>
-    </ul>
-    <div class="mt-4 flex justify-between items-center">
-      <p class="text-2xl font-bold">₹15,000 / night</p>
-      <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition">Select</button>
+
+    <!-- ✅ Presidential Suite -->
+    <div class="bg-white rounded-3xl shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-6 p-4 sm:p-6 md:p-10">
+      <div>
+        <img src="/assets/room3.jpg" alt="Presidential Suite" class="w-full h-48 sm:h-80 object-cover rounded-xl">
+        <h2 class="mt-6 text-2xl sm:text-3xl font-bold text-gray-800">Presidential Suite</h2>
+        <div class="flex flex-wrap gap-4 mt-4 text-gray-600 text-sm sm:text-base">
+          <p>👤 4 Adults + 2 Children</p>
+          <p>🛏️ King Bed</p>
+          <p>📐 65 Sq.mt</p>
+        </div>
+        <div class="mt-4 flex flex-wrap gap-4">
+          <button 
+            class="openModal text-red-600 font-medium hover:underline text-sm sm:text-base"
+            data-title="Presidential Suite"
+            data-desc="The Presidential Suite, sized 65 Sq.mt., offers unmatched luxury with a private lounge, jacuzzi, butler service, and top-class amenities."
+            data-occupancy="4 Adults + 2 Children"
+            data-bed="King Bed"
+            data-size="65 Sq.mt"
+            data-amenities="Private Lounge,Jacuzzi,Butler Service,Free Wi-Fi,Mini Bar,Spa Access,Air Conditioner,Shower">
+            Room details
+          </button>
+          <button class="openReviews text-yellow-600 font-medium hover:underline text-sm sm:text-base">View Reviews</button>
+        </div>
+      </div>
+      <div class="space-y-6">
+        <div class="border rounded-xl p-4 sm:p-6 hover:shadow-md transition">
+          <h3 class="font-bold text-base sm:text-lg text-gray-800">Room Only</h3>
+          <ul class="list-disc ml-6 mt-2 text-gray-600 text-sm sm:text-base space-y-1">
+            <li>WiFi + Butler Service</li>
+            <li>Flexible cancellation</li>
+          </ul>
+          <div class="mt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <p class="text-xl sm:text-2xl font-bold">₹15,000 / night</p>
+            <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition w-full sm:w-auto">Select</button>
+          </div>
+        </div>
+        <div class="border rounded-xl p-4 sm:p-6 hover:shadow-md transition">
+          <h3 class="font-bold text-base sm:text-lg text-gray-800">Breakfast Inclusive</h3>
+          <ul class="list-disc ml-6 mt-2 text-gray-600 text-sm sm:text-base space-y-1">
+            <li>Breakfast + Butler Service</li>
+            <li>Jacuzzi Access</li>
+          </ul>
+          <div class="mt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <p class="text-xl sm:text-2xl font-bold">₹16,500 / night</p>
+            <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition w-full sm:w-auto">Select</button>
+          </div>
+        </div>
+        <div class="border rounded-xl p-4 sm:p-6 hover:shadow-md transition">
+          <h3 class="font-bold text-base sm:text-lg text-gray-800">Premium All Inclusive</h3>
+          <ul class="list-disc ml-6 mt-2 text-gray-600 text-sm sm:text-base space-y-1">
+            <li>All Meals + Butler Service</li>
+            <li>Spa + Private Lounge</li>
+          </ul>
+          <div class="mt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <p class="text-xl sm:text-2xl font-bold">₹18,999 / night</p>
+            <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition w-full sm:w-auto">Select</button>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <!-- ✅ Breakfast Inclusive -->
-  <div class="border rounded-xl p-6 hover:shadow-md transition">
-    <h3 class="font-bold text-lg text-gray-800">Breakfast Inclusive</h3>
-    <ul class="list-disc ml-6 mt-2 text-gray-600 space-y-1">
-      <li>Breakfast + Butler Service</li>
-      <li>Jacuzzi Access</li>
-    </ul>
-    <div class="mt-4 flex justify-between items-center">
-      <p class="text-2xl font-bold">₹16,500 / night</p>
-      <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition">Select</button>
-    </div>
-  </div>
-
-  <!-- ✅ Premium All Inclusive -->
-  <div class="border rounded-xl p-6 hover:shadow-md transition">
-    <h3 class="font-bold text-lg text-gray-800">Premium All Inclusive</h3>
-    <ul class="list-disc ml-6 mt-2 text-gray-600 space-y-1">
-      <li>All Meals + Butler Service</li>
-      <li>Spa + Private Lounge</li>
-    </ul>
-    <div class="mt-4 flex justify-between items-center">
-      <p class="text-2xl font-bold">₹18,999 / night</p>
-      <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition">Select</button>
-    </div>
-  </div>
-</div>
-
-  </div>
-
-
-    <!-- ✅ Executive Suite + Presidential Suite (repeat same structure with both buttons) -->
-
   </div>
 </section>
 
 <!-- ✅ Room Details Modal -->
 <div id="roomModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
-  <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-8 relative">
+  <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-4 sm:p-8 relative">
     <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-black text-2xl">&times;</button>
     
-    <h2 id="modalTitle" class="text-2xl font-bold text-yellow-600"></h2>
-    <p id="modalDesc" class="mt-2 text-gray-600"></p>
+    <h2 id="modalTitle" class="text-xl sm:text-2xl font-bold text-yellow-600"></h2>
+    <p id="modalDesc" class="mt-2 text-gray-600 text-sm sm:text-base"></p>
 
-    <div class="flex space-x-8 mt-6 text-gray-700">
+    <div class="flex flex-wrap gap-4 mt-6 text-gray-700 text-sm sm:text-base">
       <div>👤 <span id="modalOccupancy"></span></div>
       <div>🛏️ <span id="modalBed"></span></div>
       <div>📐 <span id="modalSize"></span></div>
@@ -237,33 +221,33 @@
 
     <hr class="my-6 border-yellow-500">
 
-    <h3 class="text-lg font-semibold mb-3">Services & Amenities</h3>
-    <ul id="modalAmenities" class="list-disc list-inside grid grid-cols-2 gap-x-6 text-gray-600"></ul>
+    <h3 class="text-base sm:text-lg font-semibold mb-3">Services & Amenities</h3>
+    <ul id="modalAmenities" class="list-disc list-inside grid grid-cols-1 sm:grid-cols-2 gap-x-6 text-gray-600 text-sm sm:text-base"></ul>
   </div>
 </div>
 
 <!-- ✅ Reviews Modal -->
 <div id="reviewsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
-  <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-8 relative">
+  <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-4 sm:p-8 relative">
     <button id="closeReviews" class="absolute top-4 right-4 text-gray-500 hover:text-black text-2xl">&times;</button>
 
-    <h3 class="text-lg font-semibold mb-4">Guest Reviews</h3>
+    <h3 class="text-base sm:text-lg font-semibold mb-4">Guest Reviews</h3>
 
     <!-- ⭐ Average Rating -->
-    <div class="flex items-center space-x-4">
-      <span class="text-4xl font-bold text-gray-800">4.3</span>
+    <div class="flex flex-wrap items-center gap-4">
+      <span class="text-2xl sm:text-4xl font-bold text-gray-800">4.3</span>
       <div class="flex">
-        <span class="text-yellow-500 text-xl">★</span>
-        <span class="text-yellow-500 text-xl">★</span>
-        <span class="text-yellow-500 text-xl">★</span>
-        <span class="text-yellow-500 text-xl">★</span>
-        <span class="text-gray-300 text-xl">★</span>
+        <span class="text-yellow-500 text-lg sm:text-xl">★</span>
+        <span class="text-yellow-500 text-lg sm:text-xl">★</span>
+        <span class="text-yellow-500 text-lg sm:text-xl">★</span>
+        <span class="text-yellow-500 text-lg sm:text-xl">★</span>
+        <span class="text-gray-300 text-lg sm:text-xl">★</span>
       </div>
-      <span class="text-gray-600">(120 reviews)</span>
+      <span class="text-gray-600 text-sm sm:text-base">(120 reviews)</span>
     </div>
 
     <!-- 📊 Rating Distribution -->
-    <div class="mt-4 space-y-2">
+    <div class="mt-4 space-y-2 text-sm sm:text-base">
       <div class="flex items-center space-x-2">
         <span>5★</span>
         <div class="w-full bg-gray-200 rounded h-3">
@@ -302,7 +286,7 @@
     </div>
 
     <!-- 💬 Individual Reviews -->
-    <div class="mt-6 space-y-4">
+    <div class="mt-6 space-y-4 text-sm sm:text-base">
       <div class="border rounded-lg p-4">
         <p class="font-semibold text-gray-800">John D.</p>
         <div class="text-yellow-500">★★★★☆</div>
@@ -329,10 +313,6 @@
 
 <!-- ✅ Footer -->
 <div id="footer"></div>
-
-
-
-
 
 <script src="./script.js"></script>
 </body>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LuxuryStay - My Refunds</title>
+  <title>LuxuryStay - My Issues</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -13,11 +13,11 @@
   <div id="navbar"></div>
 
   <!-- ✅ Layout -->
-  <div class="flex flex-1 max-w-7xl mx-auto w-full py-8 px-4 lg:px-8 gap-8 mt-20">
+  <div class="flex flex-col lg:flex-row max-w-7xl mx-auto w-full py-4 sm:py-6 lg:py-8 px-4 lg:px-8 gap-4 lg:gap-8 mt-16 sm:mt-20">
 
     <!-- ✅ Sidebar -->
-    <aside class="w-64 bg-white shadow-lg rounded-2xl p-6 h-fit">
-      <nav class="space-y-4 text-gray-700 font-medium">
+    <aside class="w-full lg:w-64 bg-white shadow-lg rounded-2xl p-4 sm:p-6 h-fit">
+      <nav class="space-y-3 sm:space-y-4 text-sm sm:text-base text-gray-700 font-medium">
         <a href="/Features/Dashboard/Customer/index.html" data-page="dashboard" class="block py-2 border-b hover:text-yellow-600">Overview</a>
         <a href="/Features/BookingManagement/MyBookings/index.html" data-page="booking" class="block py-2 border-b hover:text-yellow-600">My Bookings</a>
         <a href="/Features/UserManagement/Customer/SavedRoomsCustomer/index.html" data-page="saved" class="block py-2 border-b hover:text-yellow-600">Wishlist</a>
@@ -29,570 +29,196 @@
     </aside>
 
     <!-- ✅ Main Content -->
-    <main class="flex-1 space-y-12">
+    <main class="flex-1 space-y-6 sm:space-y-8 lg:space-y-10">
 
       <!-- ✅ Welcome Header -->
       <div class="relative rounded-2xl p-[3px] bg-gradient-to-r from-yellow-600 to-red-700 shadow">
-        <div class="bg-[#fdfaf4] rounded-2xl py-8 text-center">
-          <h2 class="text-4xl text-gray-800 font-bold" style="font-family: 'Pacifico', cursive;">
-            My Refunds
-          </h2>
-          <p class="mt-2 text-gray-600">Track your refunds, filter by category, and download receipts.</p>
+        <div class="bg-[#fdfaf4] rounded-2xl py-6 sm:py-8 text-center">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl text-gray-800 font-bold">My Issues</h2>
+          <p class="mt-2 text-sm sm:text-base text-gray-600">Track your reported issues, monitor status, and manage requests.</p>
         </div>
       </div>
 
-    
-    <!-- ✅ Search + Filter Box -->
-<div class="bg-white shadow-lg border border-gray-200 rounded-xl p-6 space-y-4">
+      <!-- ✅ Search -->
+      <div class="w-full sm:w-2/3 lg:w-1/2">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 material-icons">search</span>
+          <input type="text" placeholder="Issue ID, Stay ID"
+            class="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
+        </div>
+      </div>
 
-  <!-- Search -->
-  <div>
-    <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
-    <div class="relative">
-      <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 material-icons">search</span>
-      <input type="text" placeholder="Stay ID, Room Type"
-        class="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 shadow-sm">
-    </div>
-  </div>
+      <!-- ✅ Filters -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
 
-  <!-- Filters -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-    
-    <!-- Status -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Refund Status</label>
-      <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
-        <option>All</option>
-        <option>Approved</option>
-        <option>Pending</option>
-        <option>Rejected</option>
-      </select>
-    </div>
+        <!-- Status -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Issue Status</label>
+          <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
+            <option>All</option>
+            <option>Pending</option>
+            <option>Resolved</option>
+          </select>
+        </div>
 
-    <!-- Date Range -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">From</label>
-      <input type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
-    </div>
+        <!-- Date Range -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">From</label>
+          <input type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
+        </div>
 
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">To</label>
-      <input type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
-    </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">To</label>
+          <input type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
+        </div>
+      </div>
 
-  </div>
+      <!-- ✅ Action -->
+      <div class="flex justify-end">
+        <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 shadow-md flex items-center space-x-2">
+          <span class="material-icons text-sm">filter_alt</span>
+          <span>Apply Filters</span>
+        </button>
+      </div>
 
-  <!-- Action -->
-  <div class="flex justify-end">
-    <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 shadow-md flex items-center space-x-2">
-      <span class="material-icons text-sm">filter_alt</span>
-      <span>Apply Filters</span>
-    </button>
-  </div>
-</div>
+      <!-- ✅ Issues Table -->
+      <div class="overflow-x-auto bg-white shadow-lg border border-gray-200 rounded-xl">
+        <table class="w-full text-sm" id="issuesTable">
+          <thead>
+            <tr class="bg-yellow-50 border-b border-gray-300">
+              <th class="p-3 text-left font-semibold text-gray-700">Issue</th>
+              <th class="p-3 text-left font-semibold text-gray-700">Date</th>
+              <th class="p-3 text-left font-semibold text-gray-700">Room</th>
+              <th class="p-3 text-left font-semibold text-gray-700">Status</th>
+              <th class="p-3 text-center font-semibold text-gray-700">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
 
-    <!-- ✅ Refund Table -->
-    <div class="overflow-x-auto bg-white shadow-lg border border-gray-200 rounded-xl">
-      <table class="w-full text-sm" id="refundTable">
-        <thead>
-          <tr class="bg-yellow-50 border-b border-gray-300">
-            <th class="p-3 text-left font-semibold text-gray-700">Booking</th>
-            <th class="p-3 text-left font-semibold text-gray-700">Refund Date</th>
-            <th class="p-3 text-left font-semibold text-gray-700">Amount Refunded</th>
-            <th class="p-3 text-left font-semibold text-gray-700">Status</th>
-            <th class="p-3 text-center font-semibold text-gray-700">Actions</th>
-          </tr>
-        </thead>
-        <tbody id="refundTableBody">
-          <!-- ✅ Example Row 1 -->
-          <tr class="hover:bg-gray-50">
-            <td class="p-3 border-t">
-              <span class="font-medium text-gray-800">2 Deluxe Room</span>
-              <p class="text-xs text-gray-500">Booking #1234</p>
-            </td>
-            <td class="p-3 border-t">17 Sep 2025</td>
-            <td class="p-3 border-t font-medium text-green-600">$200</td>
-            <td class="p-3 border-t">
-              <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium flex items-center w-fit">
-                <span class="material-icons text-sm mr-1">check_circle</span> Approved
-              </span>
-            </td>
-            <!-- Actions neatly stacked -->
-            <td class="p-3 border-t text-center">
-              <div class="flex justify-center space-x-3">
-            <button onclick="window.location.href='/Features/RefundManagement/Customer/RefundDetailsCustomer/index.html'"
-              class="flex items-center  px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
-              <span class="material-icons text-sm">visibility</span>
-              <span>View</span>
-            </button>
+            <!-- ✅ Row 1 -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3">
+                <span class="font-medium text-gray-800">Room Service Delay</span>
+                <p class="text-xs text-gray-500 mt-0.5">Issue #I-2001</p>
+              </td>
+              <td class="p-3">17 Sep 2025</td>
+              <td class="p-3">302</td>
+              <td class="p-3">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                  <span class="material-icons text-sm mr-1">check_circle</span> Resolved
+                </span>
+              </td>
+              <td class="p-3 text-center">
+                <div class="flex justify-center items-center space-x-2">
+                  <button class="p-1.5 hover:bg-gray-100 rounded-lg" title="View Issue">
+                    <span class="material-icons text-blue-600">visibility</span>
+                  </button>
+                  <button disabled class="p-1.5 rounded-lg cursor-not-allowed" title="Edit Disabled">
+                    <span class="material-icons text-gray-400">edit</span>
+                  </button>
+                  <button disabled class="p-1.5 rounded-lg cursor-not-allowed" title="Cancel Disabled">
+                    <span class="material-icons text-gray-400">cancel</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
 
-            <button disabled
-              class="flex items-center space-x-1 px-3 py-1 rounded-lg bg-gray-400 text-white cursor-not-allowed">
-              <span class="material-icons text-sm">block</span>
-              <span>Cancel</span>
-            </button>
-              </div>
-            </td>
-          </tr>
+            <!-- ✅ Row 2 -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3">
+                <span class="font-medium text-gray-800">AC Not Working</span>
+                <p class="text-xs text-gray-500 mt-0.5">Issue #I-2002</p>
+              </td>
+              <td class="p-3">16 Sep 2025</td>
+              <td class="p-3">415</td>
+              <td class="p-3">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
+                  <span class="material-icons text-sm mr-1">hourglass_empty</span> Pending
+                </span>
+              </td>
+              <td class="p-3 text-center">
+                <div class="flex justify-center items-center space-x-2">
+                  <button class="p-1.5 hover:bg-gray-100 rounded-lg" title="View Issue">
+                    <span class="material-icons text-blue-600">visibility</span>
+                  </button>
+                  <button class="p-1.5 hover:bg-gray-100 rounded-lg" title="Edit Issue">
+                    <span class="material-icons text-green-600">edit</span>
+                  </button>
+                  <button data-cancel="issue" data-id="1002" data-label="Issue #1002"
+                    class="p-1.5 hover:bg-gray-100 rounded-lg" title="Cancel Issue">
+                    <span class="material-icons text-red-600">cancel</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
 
-          <!-- ✅ Example Row 2 -->
-          <tr class="hover:bg-gray-50">
-            <td class="p-3 border-t">
-              <span class="font-medium text-gray-800">Standard Room</span>
-              <p class="text-xs text-gray-500">Booking #1235</p>
-            </td>
-            <td class="p-3 border-t">16 Sep 2025</td>
-            <td class="p-3 border-t font-medium text-yellow-600">Pending</td>
-            <td class="p-3 border-t">
-              <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium flex items-center w-fit">
-                <span class="material-icons text-sm mr-1">hourglass_empty</span> Pending
-              </span>
-            </td>
-            <td class="p-3 border-t text-center">
-              <div class="flex justify-center space-x-3">
-            <button onclick="window.location.href='/Features/RefundManagement/Customer/RefundDetailsCustomer/index.html'"
-              class="flex items-center  px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
-              <span class="material-icons text-sm">visibility</span>
-              <span>View</span>
-            </button>
+            <!-- ✅ Row 3 -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-3">
+                <span class="font-medium text-gray-800">Cleanliness Issue</span>
+                <p class="text-xs text-gray-500 mt-0.5">Issue #I-2003</p>
+              </td>
+              <td class="p-3">15 Sep 2025</td>
+              <td class="p-3">210</td>
+              <td class="p-3">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                  <span class="material-icons text-sm mr-1">check_circle</span> Resolved
+                </span>
+              </td>
+              <td class="p-3 text-center">
+                <div class="flex justify-center items-center space-x-2">
+                  <button class="p-1.5 hover:bg-gray-100 rounded-lg" title="View Issue">
+                    <span class="material-icons text-blue-600">visibility</span>
+                  </button>
+                  <button disabled class="p-1.5 rounded-lg cursor-not-allowed" title="Edit Disabled">
+                    <span class="material-icons text-gray-400">edit</span>
+                  </button>
+                  <button disabled class="p-1.5 rounded-lg cursor-not-allowed" title="Cancel Disabled">
+                    <span class="material-icons text-gray-400">cancel</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
 
-<!-- On refund page -->
-<button data-cancel="refund" data-id="2001" data-label="Refund #2001"
-  class="flex items-center space-x-1 px-3 py-1 rounded-lg bg-red-500 text-white hover:bg-red-600 shadow-sm">
-  <span class="material-icons text-sm">cancel</span><span>Cancel</span>
-</button>
-              </div>
-            </td>
-          </tr>
+          </tbody>
+        </table>
+      </div>
 
-          <!-- ✅ Example Row 3 -->
-          <tr class="hover:bg-gray-50">
-            <td class="p-3 border-t">
-              <span class="font-medium text-gray-800">Executive Suite</span>
-              <p class="text-xs text-gray-500">Booking #1236</p>
-            </td>
-            <td class="p-3 border-t">15 Sep 2025</td>
-            <td class="p-3 border-t font-medium text-red-600">$0</td>
-            <td class="p-3 border-t">
-              <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium flex items-center w-fit">
-                <span class="material-icons text-sm mr-1">cancel</span> Rejected
-              </span>
-            </td>
-            <td class="p-3 border-t text-center">
-              <div class="flex justify-center space-x-3">
-            <button onclick="window.location.href='/Features/RefundManagement/Customer/RefundDetailsCustomer/index.html'"
-              class="flex items-center  px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
-              <span class="material-icons text-sm">visibility</span>
-              <span>View</span>
-            </button>
+      <!-- ✅ Pagination -->
+      <nav class="flex flex-col md:flex-row justify-between items-center mt-6 space-y-4 md:space-y-0">
+        <!-- Prev -->
+        <button class="px-5 py-2 flex items-center space-x-2 border rounded-full bg-gray-200 hover:bg-gray-300">
+          <span class="material-icons text-sm">chevron_left</span>
+          <span>Prev</span>
+        </button>
 
-            <button disabled
-              class="flex items-center space-x-1 px-3 py-1 rounded-lg bg-gray-400 text-white cursor-not-allowed">
-              <span class="material-icons text-sm">block</span>
-              <span>Cancel</span>
-            </button>
-              </div>
-            </td>
-          </tr>
-          
-                    <!-- ✅ Example Row 1 -->
-          <tr class="hover:bg-gray-50">
-            <td class="p-3 border-t">
-              <span class="font-medium text-gray-800">3 Deluxe Room</span>
-              <p class="text-xs text-gray-500">Booking #1234</p>
-            </td>
-            <td class="p-3 border-t">17 Sep 2025</td>
-            <td class="p-3 border-t font-medium text-green-600">$200</td>
-            <td class="p-3 border-t">
-              <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium flex items-center w-fit">
-                <span class="material-icons text-sm mr-1">check_circle</span> Approved
-              </span>
-            </td>
-            <!-- Actions neatly stacked -->
-            <td class="p-3 border-t text-center">
-              <div class="flex justify-center space-x-3">
-            <button onclick="window.location.href='/Features/RefundManagement/Customer/RefundDetailsCustomer/index.html'"
-              class="flex items-center  px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
-              <span class="material-icons text-sm">visibility</span>
-              <span>View</span>
-            </button>
-            <button disabled
-              class="flex items-center space-x-1 px-3 py-1 rounded-lg bg-gray-400 text-white cursor-not-allowed">
-              <span class="material-icons text-sm">block</span>
-              <span>Cancel</span>
-            </button>
-              </div>
-            </td>
-          </tr>
+        <!-- Page Numbers -->
+        <ul class="flex space-x-2">
+          <li><button class="px-4 py-2 rounded-full bg-yellow-500 text-white shadow">1</button></li>
+          <li><button class="px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">2</button></li>
+          <li><button class="px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">3</button></li>
+          <li><span class="px-4 py-2">...</span></li>
+          <li><button class="px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">10</button></li>
+        </ul>
 
-          <!-- ✅ Example Row 2 -->
-          <tr class="hover:bg-gray-50">
-            <td class="p-3 border-t">
-              <span class="font-medium text-gray-800">4 Standard Room</span>
-              <p class="text-xs text-gray-500">Booking #1235</p>
-            </td>
-            <td class="p-3 border-t">16 Sep 2025</td>
-            <td class="p-3 border-t font-medium text-yellow-600">Pending</td>
-            <td class="p-3 border-t">
-              <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium flex items-center w-fit">
-                <span class="material-icons text-sm mr-1">hourglass_empty</span> Pending
-              </span>
-            </td>
-            <td class="p-3 border-t text-center">
-              <div class="flex justify-center space-x-3">
-            <button onclick="window.location.href='/Features/RefundManagement/Customer/RefundDetailsCustomer/index.html'"
-              class="flex items-center  px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
-              <span class="material-icons text-sm">visibility</span>
-              <span>View</span>
-            </button>
+        <!-- Next -->
+        <button class="px-5 py-2 flex items-center space-x-2 border rounded-full bg-gray-200 hover:bg-gray-300">
+          <span>Next</span>
+          <span class="material-icons text-sm">chevron_right</span>
+        </button>
 
-<!-- On refund page -->
-<button data-cancel="refund" data-id="2001" data-label="Refund #2001"
-  class="flex items-center space-x-1 px-3 py-1 rounded-lg bg-red-500 text-white hover:bg-red-600 shadow-sm">
-  <span class="material-icons text-sm">cancel</span><span>Cancel</span>
-</button>
-              </div>
-            </td>
-          </tr>
-
-          <!-- ✅ Example Row 3 -->
-          <tr class="hover:bg-gray-50">
-            <td class="p-3 border-t">
-              <span class="font-medium text-gray-800">2 Executive Suite</span>
-              <p class="text-xs text-gray-500">Booking #1236</p>
-            </td>
-            <td class="p-3 border-t">15 Sep 2025</td>
-            <td class="p-3 border-t font-medium text-red-600">$0</td>
-            <td class="p-3 border-t">
-              <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium flex items-center w-fit">
-                <span class="material-icons text-sm mr-1">cancel</span> Rejected
-              </span>
-            </td>
-            <td class="p-3 border-t text-center">
-              <div class="flex justify-center space-x-3">
-            <button onclick="window.location.href='/Features/RefundManagement/Customer/RefundDetailsCustomer/index.html'"
-              class="flex items-center  px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
-              <span class="material-icons text-sm">visibility</span>
-              <span>View</span>
-            </button>
-
-            <button disabled
-              class="flex items-center space-x-1 px-3 py-1 rounded-lg bg-gray-400 text-white cursor-not-allowed">
-              <span class="material-icons text-sm">block</span>
-              <span>Cancel</span>
-            </button>
-              </div>
-            </td>
-          </tr>
-                    <!-- ✅ Example Row 1 -->
-          <tr class="hover:bg-gray-50">
-            <td class="p-3 border-t">
-              <span class="font-medium text-gray-800">Deluxe Room</span>
-              <p class="text-xs text-gray-500">Booking #1234</p>
-            </td>
-            <td class="p-3 border-t">17 Sep 2025</td>
-            <td class="p-3 border-t font-medium text-green-600">$200</td>
-            <td class="p-3 border-t">
-              <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium flex items-center w-fit">
-                <span class="material-icons text-sm mr-1">check_circle</span> Approved
-              </span>
-            </td>
-            <!-- Actions neatly stacked -->
-            <td class="p-3 border-t text-center">
-              <div class="flex justify-center space-x-3">
-            <button onclick="window.location.href='/Features/RefundManagement/Customer/RefundDetailsCustomer/index.html'"
-              class="flex items-center  px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
-              <span class="material-icons text-sm">visibility</span>
-              <span>View</span>
-            </button>
-            <button disabled
-              class="flex items-center space-x-1 px-3 py-1 rounded-lg bg-gray-400 text-white cursor-not-allowed">
-              <span class="material-icons text-sm">block</span>
-              <span>Cancel</span>
-            </button>
-              </div>
-            </td>
-          </tr>
-
-          <!-- ✅ Example Row 2 -->
-          <tr class="hover:bg-gray-50">
-            <td class="p-3 border-t">
-              <span class="font-medium text-gray-800">Standard Room</span>
-              <p class="text-xs text-gray-500">Booking #1235</p>
-            </td>
-            <td class="p-3 border-t">16 Sep 2025</td>
-            <td class="p-3 border-t font-medium text-yellow-600">Pending</td>
-            <td class="p-3 border-t">
-              <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium flex items-center w-fit">
-                <span class="material-icons text-sm mr-1">hourglass_empty</span> Pending
-              </span>
-            </td>
-            <td class="p-3 border-t text-center">
-              <div class="flex justify-center space-x-3">
-            <button onclick="window.location.href='/Features/RefundManagement/Customer/RefundDetailsCustomer/index.html'"
-              class="flex items-center  px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
-              <span class="material-icons text-sm">visibility</span>
-              <span>View</span>
-            </button>
-
-<!-- On refund page -->
-<button data-cancel="refund" data-id="2001" data-label="Refund #2001"
-  class="flex items-center space-x-1 px-3 py-1 rounded-lg bg-red-500 text-white hover:bg-red-600 shadow-sm">
-  <span class="material-icons text-sm">cancel</span><span>Cancel</span>
-</button>
-              </div>
-            </td>
-          </tr>
-
-          <!-- ✅ Example Row 3 -->
-          <tr class="hover:bg-gray-50">
-            <td class="p-3 border-t">
-              <span class="font-medium text-gray-800">Executive Suite</span>
-              <p class="text-xs text-gray-500">Booking #1236</p>
-            </td>
-            <td class="p-3 border-t">15 Sep 2025</td>
-            <td class="p-3 border-t font-medium text-red-600">$0</td>
-            <td class="p-3 border-t">
-              <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium flex items-center w-fit">
-                <span class="material-icons text-sm mr-1">cancel</span> Rejected
-              </span>
-            </td>
-            <td class="p-3 border-t text-center">
-              <div class="flex justify-center space-x-3">
-            <button onclick="window.location.href='/Features/RefundManagement/Customer/RefundDetailsCustomer/index.html'"
-              class="flex items-center  px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
-              <span class="material-icons text-sm">visibility</span>
-              <span>View</span>
-            </button>
-
-            <button disabled
-              class="flex items-center space-x-1 px-3 py-1 rounded-lg bg-gray-400 text-white cursor-not-allowed">
-              <span class="material-icons text-sm">block</span>
-              <span>Cancel</span>
-            </button>
-              </div>
-            </td>
-          </tr>
-                    <!-- ✅ Example Row 1 -->
-          <tr class="hover:bg-gray-50">
-            <td class="p-3 border-t">
-              <span class="font-medium text-gray-800">Deluxe Room</span>
-              <p class="text-xs text-gray-500">Booking #1234</p>
-            </td>
-            <td class="p-3 border-t">17 Sep 2025</td>
-            <td class="p-3 border-t font-medium text-green-600">$200</td>
-            <td class="p-3 border-t">
-              <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium flex items-center w-fit">
-                <span class="material-icons text-sm mr-1">check_circle</span> Approved
-              </span>
-            </td>
-            <!-- Actions neatly stacked -->
-            <td class="p-3 border-t text-center">
-              <div class="flex justify-center space-x-3">
-            <button onclick="window.location.href='/Features/RefundManagement/Customer/RefundDetailsCustomer/index.html'"
-              class="flex items-center  px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
-              <span class="material-icons text-sm">visibility</span>
-              <span>View</span>
-            </button>
-            <button disabled
-              class="flex items-center space-x-1 px-3 py-1 rounded-lg bg-gray-400 text-white cursor-not-allowed">
-              <span class="material-icons text-sm">block</span>
-              <span>Cancel</span>
-            </button>
-              </div>
-            </td>
-          </tr>
-
-          <!-- ✅ Example Row 2 -->
-          <tr class="hover:bg-gray-50">
-            <td class="p-3 border-t">
-              <span class="font-medium text-gray-800">Standard Room</span>
-              <p class="text-xs text-gray-500">Booking #1235</p>
-            </td>
-            <td class="p-3 border-t">16 Sep 2025</td>
-            <td class="p-3 border-t font-medium text-yellow-600">Pending</td>
-            <td class="p-3 border-t">
-              <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium flex items-center w-fit">
-                <span class="material-icons text-sm mr-1">hourglass_empty</span> Pending
-              </span>
-            </td>
-            <td class="p-3 border-t text-center">
-              <div class="flex justify-center space-x-3">
-            <button onclick="window.location.href='/Features/RefundManagement/Customer/RefundDetailsCustomer/index.html'"
-              class="flex items-center  px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
-              <span class="material-icons text-sm">visibility</span>
-              <span>View</span>
-            </button>
-
-<!-- On refund page -->
-<button data-cancel="refund" data-id="2001" data-label="Refund #2001"
-  class="flex items-center space-x-1 px-3 py-1 rounded-lg bg-red-500 text-white hover:bg-red-600 shadow-sm">
-  <span class="material-icons text-sm">cancel</span><span>Cancel</span>
-</button>
-              </div>
-            </td>
-          </tr>
-
-          <!-- ✅ Example Row 3 -->
-          <tr class="hover:bg-gray-50">
-            <td class="p-3 border-t">
-              <span class="font-medium text-gray-800">Executive Suite</span>
-              <p class="text-xs text-gray-500">Booking #1236</p>
-            </td>
-            <td class="p-3 border-t">15 Sep 2025</td>
-            <td class="p-3 border-t font-medium text-red-600">$0</td>
-            <td class="p-3 border-t">
-              <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium flex items-center w-fit">
-                <span class="material-icons text-sm mr-1">cancel</span> Rejected
-              </span>
-            </td>
-            <td class="p-3 border-t text-center">
-              <div class="flex justify-center space-x-3">
-            <button onclick="window.location.href='/Features/RefundManagement/Customer/RefundDetailsCustomer/index.html'"
-              class="flex items-center  px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
-              <span class="material-icons text-sm">visibility</span>
-              <span>View</span>
-            </button>
-
-            <button disabled
-              class="flex items-center space-x-1 px-3 py-1 rounded-lg bg-gray-400 text-white cursor-not-allowed">
-              <span class="material-icons text-sm">block</span>
-              <span>Cancel</span>
-            </button>
-              </div>
-            </td>
-          </tr>
-                    <!-- ✅ Example Row 1 -->
-          <tr class="hover:bg-gray-50">
-            <td class="p-3 border-t">
-              <span class="font-medium text-gray-800">Deluxe Room</span>
-              <p class="text-xs text-gray-500">Booking #1234</p>
-            </td>
-            <td class="p-3 border-t">17 Sep 2025</td>
-            <td class="p-3 border-t font-medium text-green-600">$200</td>
-            <td class="p-3 border-t">
-              <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium flex items-center w-fit">
-                <span class="material-icons text-sm mr-1">check_circle</span> Approved
-              </span>
-            </td>
-            <!-- Actions neatly stacked -->
-            <td class="p-3 border-t text-center">
-              <div class="flex justify-center space-x-3">
-            <button onclick="window.location.href='/Features/RefundManagement/Customer/RefundDetailsCustomer/index.html'"
-              class="flex items-center  px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
-              <span class="material-icons text-sm">visibility</span>
-              <span>View</span>
-            </button>
-            </button>
-            <button disabled
-              class="flex items-center space-x-1 px-3 py-1 rounded-lg bg-gray-400 text-white cursor-not-allowed">
-              <span class="material-icons text-sm">block</span>
-              <span>Cancel</span>
-            </button>
-              </div>
-            </td>
-          </tr>
-
-          <!-- ✅ Example Row 2 -->
-          <tr class="hover:bg-gray-50">
-            <td class="p-3 border-t">
-              <span class="font-medium text-gray-800">Standard Room</span>
-              <p class="text-xs text-gray-500">Booking #1235</p>
-            </td>
-            <td class="p-3 border-t">16 Sep 2025</td>
-            <td class="p-3 border-t font-medium text-yellow-600">Pending</td>
-            <td class="p-3 border-t">
-              <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium flex items-center w-fit">
-                <span class="material-icons text-sm mr-1">hourglass_empty</span> Pending
-              </span>
-            </td>
-            <td class="p-3 border-t text-center">
-              <div class="flex justify-center space-x-3">
-            <button onclick="window.location.href='/Features/RefundManagement/Customer/RefundDetailsCustomer/index.html'"
-              class="flex items-center  px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
-              <span class="material-icons text-sm">visibility</span>
-              <span>View</span>
-            </button>
-
-<!-- On refund page -->
-<button data-cancel="refund" data-id="2001" data-label="Refund #2001"
-  class="flex items-center space-x-1 px-3 py-1 rounded-lg bg-red-500 text-white hover:bg-red-600 shadow-sm">
-  <span class="material-icons text-sm">cancel</span><span>Cancel</span>
-</button>
-              </div>
-            </td>
-          </tr>
-
-          <!-- ✅ Example Row 3 -->
-          <tr class="hover:bg-gray-50">
-            <td class="p-3 border-t">
-              <span class="font-medium text-gray-800">Executive Suite</span>
-              <p class="text-xs text-gray-500">Booking #1236</p>
-            </td>
-            <td class="p-3 border-t">15 Sep 2025</td>
-            <td class="p-3 border-t font-medium text-red-600">$0</td>
-            <td class="p-3 border-t">
-              <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium flex items-center w-fit">
-                <span class="material-icons text-sm mr-1">cancel</span> Rejected
-              </span>
-            </td>
-            <td class="p-3 border-t text-center">
-              <div class="flex justify-center space-x-3">
-            <button onclick="window.location.href='/Features/RefundManagement/Customer/RefundDetailsCustomer/index.html'"
-              class="flex items-center  px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm">
-              <span class="material-icons text-sm">visibility</span>
-              <span>View</span>
-            </button>
-
-            <button disabled
-              class="flex items-center space-x-1 px-3 py-1 rounded-lg bg-gray-400 text-white cursor-not-allowed">
-              <span class="material-icons text-sm">block</span>
-              <span>Cancel</span>
-            </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-<!-- ✅ Pagination -->
-<nav class="flex flex-col md:flex-row justify-between items-center mt-6 space-y-4 md:space-y-0">
-  
-  <!-- Prev -->
-  <button onclick="prevPage()" class="px-5 py-2 flex items-center space-x-2 border rounded-full bg-gray-200 hover:bg-gray-300">
-    <span class="material-icons text-sm">chevron_left</span>
-    <span>Prev</span>
-  </button>
-
-  <!-- Page Numbers -->
-  <ul class="flex space-x-2">
-    <li><button onclick="showPage(1)" class="px-4 py-2 rounded-full bg-yellow-500 text-white shadow">1</button></li>
-    <li><button onclick="showPage(2)" class="px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">2</button></li>
-    <li><button onclick="showPage(3)" class="px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">3</button></li>
-    <li><span class="px-4 py-2">...</span></li>
-    <li><button onclick="showPage(10)" class="px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">10</button></li>
-  </ul>
-
-  <!-- Next -->
-  <button onclick="nextPage()" class="px-5 py-2 flex items-center space-x-2 border rounded-full bg-gray-200 hover:bg-gray-300">
-    <span>Next</span>
-    <span class="material-icons text-sm">chevron_right</span>
-  </button>
-
-  <!-- Jumper -->
-  <div class="flex items-center space-x-2">
-    <label for="pageInput" class="text-sm text-gray-600 font-medium">Jump to:</label>
-    <input id="pageInput" type="number" min="1" placeholder="Page #" 
-      class="w-20 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 shadow-sm">
-    <button onclick="jumpToPage()" class="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow flex items-center space-x-1">
-      <span class="material-icons text-sm">login</span>
-      <span>Go</span>
-    </button>
-  </div>
-
-</nav>
-
+        <!-- Jumper -->
+        <div class="flex items-center space-x-2">
+          <label for="pageInput" class="text-sm text-gray-600 font-medium">Jump to:</label>
+          <input id="pageInput" type="number" min="1" placeholder="Page #"
+            class="w-20 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 shadow-sm">
+          <button class="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow flex items-center space-x-1">
+            <span class="material-icons text-sm">login</span>
+            <span>Go</span>
+          </button>
+        </div>
+      </nav>
 
     </main>
   </div>
@@ -600,46 +226,38 @@
   <!-- ✅ Footer -->
   <div id="footer"></div>
 
-
-  <!-- Unified modal (one modal reused for all types) -->
-<div id="unifiedCancelModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/50 p-4">
-  <div class="bg-white rounded-2xl w-full max-w-lg p-6 shadow-lg">
-    <div class="flex items-start justify-between">
-      <div>
-        <h3 id="ucmTitle" class="text-xl font-semibold text-gray-800">Cancel</h3>
-        <p id="ucmSubtitle" class="text-sm text-gray-500 mt-1">Confirm your action</p>
+  <!-- Unified Cancel Modal -->
+  <div id="unifiedCancelModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/50 p-4">
+    <div class="bg-white rounded-2xl w-full max-w-lg p-6 shadow-lg">
+      <div class="flex items-start justify-between">
+        <div>
+          <h3 id="ucmTitle" class="text-xl font-semibold text-gray-800">Cancel</h3>
+          <p id="ucmSubtitle" class="text-sm text-gray-500 mt-1">Confirm your action</p>
+        </div>
+        <button id="ucmClose" class="text-gray-500 hover:text-gray-800" aria-label="Close">✕</button>
       </div>
-      <button id="ucmClose" class="text-gray-500 hover:text-gray-800" aria-label="Close">✕</button>
-    </div>
-
-    <!-- dynamic body -->
-    <div id="ucmBody" class="mt-4 text-gray-700">
-      <!-- booking uses textarea; others show confirmation text -->
-      <div id="ucmConfirmText" class="hidden">
-        <p id="ucmConfirmMsg"></p>
+      <div id="ucmBody" class="mt-4 text-gray-700">
+        <div id="ucmConfirmText" class="hidden">
+          <p id="ucmConfirmMsg"></p>
+        </div>
+        <div id="ucmBookingReason" class="hidden">
+          <label class="block">
+            <span class="text-sm text-gray-600">Cancellation reason (optional)</span>
+            <textarea id="ucmReasonInput" rows="4" class="w-full mt-2 border rounded p-3"
+                      placeholder="Tell us why you're cancelling (optional)"></textarea>
+          </label>
+        </div>
       </div>
-
-      <div id="ucmBookingReason" class="hidden">
-        <label class="block">
-          <span class="text-sm text-gray-600">Cancellation reason (optional)</span>
-          <textarea id="ucmReasonInput" rows="4" class="w-full mt-2 border rounded p-3"
-                    placeholder="Tell us why you're cancelling (optional)"></textarea>
-        </label>
+      <div class="mt-5 flex items-center justify-between gap-3">
+        <button id="ucmAbort" class="px-4 py-2 rounded-lg border text-gray-700">No, go back</button>
+        <button id="ucmConfirm" class="px-4 py-2 rounded-lg bg-red-600 text-white shadow-lg">Yes — Cancel</button>
       </div>
-    </div>
-
-    <div class="mt-5 flex items-center justify-between gap-3">
-      <button id="ucmAbort" class="px-4 py-2 rounded-lg border text-gray-700">No, go back</button>
-      <button id="ucmConfirm" class="px-4 py-2 rounded-lg bg-red-600 text-white shadow-lg">Yes — Cancel</button>
     </div>
   </div>
-</div>
 
-<!-- Toast container -->
-<div id="unifiedToast" class="fixed top-6 right-6 z-50 space-y-2"></div>
+  <!-- Toast container -->
+  <div id="unifiedToast" class="fixed top-6 right-6 z-50 space-y-2"></div>
 
-
-
-<script src="./script.js"></script>
+  <script src="./script.js"></script>
 </body>
 </html>

@@ -9,136 +9,132 @@
 
 </head>
 <body class="bg-gray-50">
-
-  <!-- ✅ Navbar -->
   <div id="navbar"></div>
 
-  <!-- ✅ Header -->
-  <header class="bg-gradient-to-r from-yellow-500 to-red-500 text-white py-16 shadow-lg mt-14">
-    <div class="max-w-4xl mx-auto px-6 flex justify-between items-center">
-      <!-- Title -->
+  <!-- Responsive Header -->
+  <header class="bg-gradient-to-r from-yellow-500 to-red-500 text-white py-8 sm:py-12 lg:py-16 shadow-lg mt-14">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 flex justify-between items-center">
       <div class="text-center flex-1">
-        <h1 class="text-3xl font-extrabold">Complete Your Payment</h1>
-        <p class="mt-1 text-lg text-yellow-100">One last step and your stay is confirmed 🎉</p>
+        <h1 class="text-2xl sm:text-3xl font-extrabold">Complete Your Payment</h1>
+        <p class="mt-1 text-base sm:text-lg text-yellow-100">One last step and your stay is confirmed 🎉</p>
       </div>
-
-      <!-- Spacer for balance -->
-      <div class="w-16"></div>
+      <div class="w-16 hidden sm:block"></div>
     </div>
   </header>
 
-<!-- ✅ Main Content -->
-<main class="max-w-4xl mx-auto px-6 mt-10 space-y-8">
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 mt-6 sm:mt-8 lg:mt-10 space-y-6 sm:space-y-8">
 
-  <!-- ✅ Back Button -->
-  <div class="flex justify-start">
-    <button onclick="window.history.back()" 
-      class="flex items-center gap-2 bg-gradient-to-r from-yellow-500 to-pink-500 text-white px-5 py-2 rounded-lg shadow hover:opacity-90">
-      <span class="material-icons text-sm">arrow_back</span> Back
+    <!-- ✅ Back Button -->
+    <div class="flex justify-start">
+      <button onclick="window.history.back()" 
+        class="flex items-center gap-2 bg-gradient-to-r from-yellow-500 to-pink-500 text-white px-5 py-2 rounded-lg shadow hover:opacity-90">
+        <span class="material-icons text-sm">arrow_back</span> Back
+      </button>
+    </div>
+
+    <!-- Booking Summary -->
+    <div class="bg-white p-6 rounded-2xl shadow">
+      <h2 class="text-xl font-semibold mb-4">Booking Summary</h2>
+      <div class="flex justify-between text-gray-700">
+        <span>Room Type</span>
+        <span>Deluxe Room</span>
+      </div>
+      <div class="flex justify-between text-gray-700 mt-2">
+        <span>Check-in</span>
+        <span>22 Sept 2025</span>
+      </div>
+      <div class="flex justify-between text-gray-700 mt-2">
+        <span>Check-out</span>
+        <span>24 Sept 2025</span>
+      </div>
+      <div class="flex justify-between font-semibold text-gray-900 mt-4 text-lg">
+        <span>Total Amount</span>
+        <span>₹12,499</span>
+      </div>
+    </div>
+
+    <!-- Payment Options -->
+    <div class="bg-white p-4 sm:p-6 rounded-2xl shadow">
+      <h2 class="text-lg sm:text-xl font-semibold mb-4">Select Payment Method</h2>
+      <div class="space-y-3 sm:space-y-4">
+        <label class="flex items-center space-x-3 p-4 border rounded-lg cursor-pointer hover:border-yellow-500">
+          <input type="radio" name="payment" value="card" checked>
+          <span>Credit/Debit Card</span>
+        </label>
+        <label class="flex items-center space-x-3 p-4 border rounded-lg cursor-pointer hover:border-yellow-500">
+          <input type="radio" name="payment" value="upi">
+          <span>UPI / Net Banking</span>
+        </label>
+        <label class="flex items-center space-x-3 p-4 border rounded-lg cursor-pointer hover:border-yellow-500">
+          <input type="radio" name="payment" value="wallet">
+          <span>Wallets (Paytm, PhonePe, etc.)</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Card Details -->
+    <div id="cardFields" class="bg-white p-4 sm:p-6 rounded-2xl shadow">
+      <h2 class="text-lg sm:text-xl font-semibold mb-4">Enter Card Details</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <input type="text" placeholder="Card Number" class="border rounded-lg p-3 focus:ring-2 focus:ring-yellow-500">
+        <input type="text" placeholder="Cardholder Name" class="border rounded-lg p-3 focus:ring-2 focus:ring-yellow-500">
+        <input type="text" placeholder="Expiry (MM/YY)" class="border rounded-lg p-3 focus:ring-2 focus:ring-yellow-500">
+        <input type="text" placeholder="CVV" class="border rounded-lg p-3 focus:ring-2 focus:ring-yellow-500">
+      </div>
+    </div>
+
+    <!-- UPI Options -->
+    <div id="upiFields" class="bg-white p-4 sm:p-6 rounded-2xl shadow hidden">
+      <h2 class="text-lg sm:text-xl font-semibold mb-4">Choose UPI App</h2>
+      <div class="space-y-3 sm:space-y-4">
+        <label class="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:border-yellow-500">
+          <input type="radio" name="upiApp" value="gpay">
+          <span>Google Pay</span>
+        </label>
+        <label class="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:border-yellow-500">
+          <input type="radio" name="upiApp" value="phonepe">
+          <span>PhonePe</span>
+        </label>
+        <label class="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:border-yellow-500">
+          <input type="radio" name="upiApp" value="paytm">
+          <span>Paytm</span>
+        </label>
+        <label class="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:border-yellow-500">
+          <input type="radio" name="upiApp" value="bhim">
+          <span>BHIM UPI</span>
+        </label>
+      </div>
+      <input type="text" placeholder="Enter UPI ID" class="mt-4 w-full border rounded-lg p-3 focus:ring-2 focus:ring-yellow-500">
+    </div>
+
+    <!-- Wallet Options -->
+    <div id="walletFields" class="bg-white p-4 sm:p-6 rounded-2xl shadow hidden">
+      <h2 class="text-lg sm:text-xl font-semibold mb-4">Choose Wallet</h2>
+      <div class="space-y-3 sm:space-y-4">
+        <label class="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:border-yellow-500">
+          <input type="radio" name="walletApp" value="paytm">
+          <span>Paytm Wallet</span>
+        </label>
+        <label class="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:border-yellow-500">
+          <input type="radio" name="walletApp" value="phonepe">
+          <span>PhonePe Wallet</span>
+        </label>
+        <label class="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:border-yellow-500">
+          <input type="radio" name="walletApp" value="amazon">
+          <span>Amazon Pay</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Pay Button -->
+    <button id="confirmPayment" class="w-full py-3 sm:py-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-base sm:text-lg font-bold rounded-lg hover:opacity-90 transition">
+      Confirm & Pay ₹12,499
     </button>
-  </div>
+  </main>
 
-  <!-- Booking Summary -->
-  <div class="bg-white p-6 rounded-2xl shadow">
-    <h2 class="text-xl font-semibold mb-4">Booking Summary</h2>
-    <div class="flex justify-between text-gray-700">
-      <span>Room Type</span>
-      <span>Deluxe Room</span>
-    </div>
-    <div class="flex justify-between text-gray-700 mt-2">
-      <span>Check-in</span>
-      <span>22 Sept 2025</span>
-    </div>
-    <div class="flex justify-between text-gray-700 mt-2">
-      <span>Check-out</span>
-      <span>24 Sept 2025</span>
-    </div>
-    <div class="flex justify-between font-semibold text-gray-900 mt-4 text-lg">
-      <span>Total Amount</span>
-      <span>₹12,499</span>
-    </div>
-  </div>
-
-  <!-- Payment Options -->
-  <div class="bg-white p-6 rounded-2xl shadow">
-    <h2 class="text-xl font-semibold mb-4">Select Payment Method</h2>
-    <div class="space-y-4">
-      <label class="flex items-center space-x-3 p-4 border rounded-lg cursor-pointer hover:border-yellow-500">
-        <input type="radio" name="payment" value="card" checked>
-        <span>Credit/Debit Card</span>
-      </label>
-      <label class="flex items-center space-x-3 p-4 border rounded-lg cursor-pointer hover:border-yellow-500">
-        <input type="radio" name="payment" value="upi">
-        <span>UPI / Net Banking</span>
-      </label>
-      <label class="flex items-center space-x-3 p-4 border rounded-lg cursor-pointer hover:border-yellow-500">
-        <input type="radio" name="payment" value="wallet">
-        <span>Wallets (Paytm, PhonePe, etc.)</span>
-      </label>
-    </div>
-  </div>
-
-  <!-- ✅ Card Details (default visible) -->
-  <div id="cardFields" class="bg-white p-6 rounded-2xl shadow">
-    <h2 class="text-xl font-semibold mb-4">Enter Card Details</h2>
-    <div class="grid grid-cols-2 gap-4">
-      <input type="text" placeholder="Card Number" class="border rounded-lg p-3 focus:ring-2 focus:ring-yellow-500">
-      <input type="text" placeholder="Cardholder Name" class="border rounded-lg p-3 focus:ring-2 focus:ring-yellow-500">
-      <input type="text" placeholder="Expiry (MM/YY)" class="border rounded-lg p-3 focus:ring-2 focus:ring-yellow-500">
-      <input type="text" placeholder="CVV" class="border rounded-lg p-3 focus:ring-2 focus:ring-yellow-500">
-    </div>
-  </div>
-
-  <!-- ✅ UPI Options -->
-  <div id="upiFields" class="bg-white p-6 rounded-2xl shadow hidden">
-    <h2 class="text-xl font-semibold mb-4">Choose UPI App</h2>
-    <div class="space-y-4">
-      <label class="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:border-yellow-500">
-        <input type="radio" name="upiApp" value="gpay">
-        <span>Google Pay</span>
-      </label>
-      <label class="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:border-yellow-500">
-        <input type="radio" name="upiApp" value="phonepe">
-        <span>PhonePe</span>
-      </label>
-      <label class="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:border-yellow-500">
-        <input type="radio" name="upiApp" value="paytm">
-        <span>Paytm</span>
-      </label>
-      <label class="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:border-yellow-500">
-        <input type="radio" name="upiApp" value="bhim">
-        <span>BHIM UPI</span>
-      </label>
-    </div>
-    <input type="text" placeholder="Enter UPI ID" class="mt-4 w-full border rounded-lg p-3 focus:ring-2 focus:ring-yellow-500">
-  </div>
-
-  <!-- ✅ Wallet Options -->
-  <div id="walletFields" class="bg-white p-6 rounded-2xl shadow hidden">
-    <h2 class="text-xl font-semibold mb-4">Choose Wallet</h2>
-    <div class="space-y-4">
-      <label class="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:border-yellow-500">
-        <input type="radio" name="walletApp" value="paytm">
-        <span>Paytm Wallet</span>
-      </label>
-      <label class="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:border-yellow-500">
-        <input type="radio" name="walletApp" value="phonepe">
-        <span>PhonePe Wallet</span>
-      </label>
-      <label class="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:border-yellow-500">
-        <input type="radio" name="walletApp" value="amazon">
-        <span>Amazon Pay</span>
-      </label>
-    </div>
-  </div>
-
-  <!-- Pay Button -->
-  <button id="confirmPayment" class="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-lg hover:opacity-90 transition">
-    Confirm & Pay ₹12,499
-  </button>
-</main>
   <!-- ✅ Footer -->
-  <div id="footer" class="mt-12"></div>
+  <div id="footer" class="mt-8 sm:mt-12"></div>
 
 
 <script src="./script.js"></script>

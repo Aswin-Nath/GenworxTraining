@@ -12,31 +12,33 @@
   <div id="navbar"></div>
 
   <!-- ✅ Offers Details -->
-  <section class="px-6 max-w-7xl mx-auto space-y-16 py-6">
+  <section class="px-4 sm:px-6 max-w-7xl mx-auto space-y-12 sm:space-y-16 py-6">
 
-      <header class="relative rounded-xl bg-gradient-to-r from-yellow-400 via-red-400 to-red-500 py-20 text-center text-white shadow-md  sm:mt-20 overflow-hidden">
-        <div class="relative z-10">
-          <h1 class="text-5xl font-extrabold drop-shadow-lg">Exclusive Offers</h1>
-          <p class="text-lg mt-3 opacity-95">Special packages curated just for you</p>
+    <!-- Header -->
+    <header class="relative rounded-xl bg-gradient-to-r from-yellow-400 via-red-400 to-red-500 py-12 sm:py-20 text-center text-white shadow-md sm:mt-20 overflow-hidden">
+      <div class="relative z-10">
+        <h1 class="text-3xl sm:text-5xl font-extrabold drop-shadow-lg">Exclusive Offers</h1>
+        <p class="text-base sm:text-lg mt-3 opacity-95">Special packages curated just for you</p>
 
-          <div class="mt-6 flex justify-center space-x-4">
-            <span class="bg-white text-yellow-600 px-4 py-2 rounded-full text-sm font-medium shadow">✨ Limited Time</span>
-            <span class="bg-white text-red-600 px-4 py-2 rounded-full text-sm font-medium shadow">🔥 Best Deals</span>
-          </div>
+        <div class="mt-6 flex flex-wrap justify-center gap-3 sm:space-x-4">
+          <span class="bg-white text-yellow-600 px-4 py-2 rounded-full text-xs sm:text-sm font-medium shadow">✨ Limited Time</span>
+          <span class="bg-white text-red-600 px-4 py-2 rounded-full text-xs sm:text-sm font-medium shadow">🔥 Best Deals</span>
         </div>
-      </header>
+      </div>
+    </header>
        
+    <!-- ✅ Offer Card Template -->
     <!-- Weekend Getaway -->
     <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
       <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80"
-           class="w-full h-80 object-cover">
-      <div class="p-10">
-        <h3 class="text-2xl font-bold text-yellow-700">Weekend Getaway</h3>
-        <div class="flex items-center mt-2 text-yellow-500">
-          ⭐⭐⭐⭐☆ <span class="ml-2 text-gray-600 text-sm">(4.2 / 5 from 320 reviews)</span>
+           class="w-full h-48 sm:h-80 object-cover">
+      <div class="p-6 sm:p-10">
+        <h3 class="text-xl sm:text-2xl font-bold text-yellow-700">Weekend Getaway</h3>
+        <div class="flex items-center mt-2 text-yellow-500 text-sm sm:text-base">
+          ⭐⭐⭐⭐☆ <span class="ml-2 text-gray-600">(4.2 / 5 from 320 reviews)</span>
         </div>
 
-        <div class="grid sm:grid-cols-2 gap-6 mt-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 text-sm sm:text-base">
           <div>
             <ul class="list-disc ml-6 text-gray-600 space-y-1">
               <li>2 Nights Stay in Deluxe Room</li>
@@ -56,13 +58,13 @@
           </div>
         </div>
 
-        <div class="mt-6 flex justify-between items-center text-sm text-gray-600">
+        <div class="mt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs sm:text-sm text-gray-600 gap-2">
           <span><span class="font-semibold">120+ bookings</span> this month</span>
           <span class="text-green-600 font-medium">Popular Choice</span>
         </div>
-        <p class="mt-2 text-sm text-gray-500">Valid until: <span class="font-medium">30th Sept 2025</span></p>
+        <p class="mt-2 text-xs sm:text-sm text-gray-500">Valid until: <span class="font-medium">30th Sept 2025</span></p>
 
-        <button class="mt-6 px-6 py-3 bg-gradient-to-r from-yellow-600 to-red-600 text-white rounded-lg font-medium hover:opacity-90 transition">
+        <button class="mt-6 px-5 py-3 bg-gradient-to-r from-yellow-600 to-red-600 text-white rounded-lg font-medium hover:opacity-90 transition text-sm sm:text-base w-full sm:w-auto">
           Book Now
         </button>
       </div>
@@ -71,14 +73,14 @@
     <!-- Family Package -->
     <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
       <img src="https://images.unsplash.com/photo-1505691723518-36a5ac3be353?auto=format&fit=crop&w=1600&q=80"
-           class="w-full h-80 object-cover">
-      <div class="p-10">
-        <h3 class="text-2xl font-bold text-yellow-700">Family Package</h3>
-        <div class="flex items-center mt-2 text-yellow-500">
-          ⭐⭐⭐⭐⭐ <span class="ml-2 text-gray-600 text-sm">(4.7 / 5 from 450 reviews)</span>
+           class="w-full h-48 sm:h-80 object-cover">
+      <div class="p-6 sm:p-10">
+        <h3 class="text-xl sm:text-2xl font-bold text-yellow-700">Family Package</h3>
+        <div class="flex items-center mt-2 text-yellow-500 text-sm sm:text-base">
+          ⭐⭐⭐⭐⭐ <span class="ml-2 text-gray-600">(4.7 / 5 from 450 reviews)</span>
         </div>
 
-        <div class="grid sm:grid-cols-2 gap-6 mt-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 text-sm sm:text-base">
           <div>
             <ul class="list-disc ml-6 text-gray-600 space-y-1">
               <li>Kids Stay Free</li>
@@ -98,13 +100,13 @@
           </div>
         </div>
 
-        <div class="mt-6 flex justify-between items-center text-sm text-gray-600">
+        <div class="mt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs sm:text-sm text-gray-600 gap-2">
           <span><span class="font-semibold">200+ bookings</span> this month</span>
           <span class="text-blue-600 font-medium">Best for Families</span>
         </div>
-        <p class="mt-2 text-sm text-gray-500">Valid until: <span class="font-medium">31st Dec 2025</span></p>
+        <p class="mt-2 text-xs sm:text-sm text-gray-500">Valid until: <span class="font-medium">31st Dec 2025</span></p>
 
-        <button class="mt-6 px-6 py-3 bg-gradient-to-r from-yellow-600 to-red-600 text-white rounded-lg font-medium hover:opacity-90 transition">
+        <button class="mt-6 px-5 py-3 bg-gradient-to-r from-yellow-600 to-red-600 text-white rounded-lg font-medium hover:opacity-90 transition text-sm sm:text-base w-full sm:w-auto">
           Book Now
         </button>
       </div>
@@ -113,14 +115,14 @@
     <!-- Honeymoon Special -->
     <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
       <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80"
-           class="w-full h-80 object-cover">
-      <div class="p-10">
-        <h3 class="text-2xl font-bold text-yellow-700">Honeymoon Special</h3>
-        <div class="flex items-center mt-2 text-yellow-500">
-          ⭐⭐⭐⭐☆ <span class="ml-2 text-gray-600 text-sm">(4.5 / 5 from 280 reviews)</span>
+           class="w-full h-48 sm:h-80 object-cover">
+      <div class="p-6 sm:p-10">
+        <h3 class="text-xl sm:text-2xl font-bold text-yellow-700">Honeymoon Special</h3>
+        <div class="flex items-center mt-2 text-yellow-500 text-sm sm:text-base">
+          ⭐⭐⭐⭐☆ <span class="ml-2 text-gray-600">(4.5 / 5 from 280 reviews)</span>
         </div>
 
-        <div class="grid sm:grid-cols-2 gap-6 mt-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 text-sm sm:text-base">
           <div>
             <ul class="list-disc ml-6 text-gray-600 space-y-1">
               <li>Candlelight Dinner & Champagne</li>
@@ -140,13 +142,13 @@
           </div>
         </div>
 
-        <div class="mt-6 flex justify-between items-center text-sm text-gray-600">
+        <div class="mt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs sm:text-sm text-gray-600 gap-2">
           <span><span class="font-semibold">95+ bookings</span> this month</span>
           <span class="text-pink-600 font-medium">Couples’ Favorite</span>
         </div>
-        <p class="mt-2 text-sm text-gray-500">Valid until: <span class="font-medium">15th Nov 2025</span></p>
+        <p class="mt-2 text-xs sm:text-sm text-gray-500">Valid until: <span class="font-medium">15th Nov 2025</span></p>
 
-        <button class="mt-6 px-6 py-3 bg-gradient-to-r from-yellow-600 to-red-600 text-white rounded-lg font-medium hover:opacity-90 transition">
+        <button class="mt-6 px-5 py-3 bg-gradient-to-r from-yellow-600 to-red-600 text-white rounded-lg font-medium hover:opacity-90 transition text-sm sm:text-base w-full sm:w-auto">
           Book Now
         </button>
       </div>
@@ -155,14 +157,14 @@
     <!-- Business Traveler Package -->
     <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
       <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1600&q=80"
-           class="w-full h-80 object-cover">
-      <div class="p-10">
-        <h3 class="text-2xl font-bold text-yellow-700">Business Traveler Package</h3>
-        <div class="flex items-center mt-2 text-yellow-500">
-          ⭐⭐⭐⭐☆ <span class="ml-2 text-gray-600 text-sm">(4.3 / 5 from 150 reviews)</span>
+           class="w-full h-48 sm:h-80 object-cover">
+      <div class="p-6 sm:p-10">
+        <h3 class="text-xl sm:text-2xl font-bold text-yellow-700">Business Traveler Package</h3>
+        <div class="flex items-center mt-2 text-yellow-500 text-sm sm:text-base">
+          ⭐⭐⭐⭐☆ <span class="ml-2 text-gray-600">(4.3 / 5 from 150 reviews)</span>
         </div>
 
-        <div class="grid sm:grid-cols-2 gap-6 mt-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 text-sm sm:text-base">
           <div>
             <ul class="list-disc ml-6 text-gray-600 space-y-1">
               <li>2 Nights in Executive Suite</li>
@@ -182,13 +184,13 @@
           </div>
         </div>
 
-        <div class="mt-6 flex justify-between items-center text-sm text-gray-600">
+        <div class="mt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs sm:text-sm text-gray-600 gap-2">
           <span><span class="font-semibold">60+ bookings</span> this month</span>
           <span class="text-purple-600 font-medium">Ideal for Business Trips</span>
         </div>
-        <p class="mt-2 text-sm text-gray-500">Valid until: <span class="font-medium">30th Oct 2025</span></p>
+        <p class="mt-2 text-xs sm:text-sm text-gray-500">Valid until: <span class="font-medium">30th Oct 2025</span></p>
 
-        <button class="mt-6 px-6 py-3 bg-gradient-to-r from-yellow-600 to-red-600 text-white rounded-lg font-medium hover:opacity-90 transition">
+        <button class="mt-6 px-5 py-3 bg-gradient-to-r from-yellow-600 to-red-600 text-white rounded-lg font-medium hover:opacity-90 transition text-sm sm:text-base w-full sm:w-auto">
           Book Now
         </button>
       </div>
@@ -199,7 +201,6 @@
   <!-- ✅ Footer -->
   <div id="footer"></div>
 
-
-<script src="./script.js"></script>
+  <script src="./script.js"></script>
 </body>
 </html>
