@@ -33,8 +33,7 @@
     <!-- ✅ Deluxe Room -->
     <div class="bg-white rounded-3xl shadow-lg overflow-hidden grid md:grid-cols-2 gap-6 p-6 md:p-10">
       <div>
-        <img src="/assets/
-room1.jpg" alt="Deluxe Room" class="w-full h-80 object-cover rounded-xl">
+        <img src="/assets/room1.jpg" alt="Deluxe Room" class="w-full h-80 object-cover rounded-xl">
         <h2 class="mt-6 text-3xl font-bold text-gray-800">Deluxe Room</h2>
         <div class="flex space-x-6 mt-4 text-gray-600">
           <p>👤 2 Adults</p>
@@ -152,8 +151,7 @@ room1.jpg" alt="Deluxe Room" class="w-full h-80 object-cover rounded-xl">
   <!-- ✅ Presidential Suite -->
   <div class="bg-white rounded-3xl shadow-lg overflow-hidden grid md:grid-cols-2 gap-6 p-6 md:p-10">
     <div>
-      <img src="/assets/
-room3.jpg" alt="Presidential Suite" class="w-full h-80 object-cover rounded-xl">
+      <img src="/assets/room3.jpg" alt="Presidential Suite" class="w-full h-80 object-cover rounded-xl">
       <h2 class="mt-6 text-3xl font-bold text-gray-800">Presidential Suite</h2>
       <div class="flex space-x-6 mt-4 text-gray-600">
         <p>👤 4 Adults + 2 Children</p>
@@ -392,12 +390,12 @@ const isAdminLoggedIn = localStorage.getItem("is_admin_logged_in") === "true";
 const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
 
 // ✅ Navbar loader
-let navbarPath = "../NotCustomerNavbar/index.html"; // default
+let navbarPath = "/Features/Components/Navbars/NotCustomerNavbar/index.html"; // default
 
 if (isAdminLoggedIn) {
-  navbarPath = "../AdminLandingNavbar/index.html";
+  navbarPath = "/Features/Components/Navbars/AdminLandingNavbar/index.html";
 } else if (isCustomerLoggedIn) {
-  navbarPath = "../LoggedCustomerNavbar/index.html";
+  navbarPath = "/Features/Components/Navbars/LoggedCustomerNavbar/index.html";
 }
 
 // ✅ Navbar loader
@@ -524,7 +522,7 @@ function attachModalListeners() {
 
 
     // ✅ Footer
-    fetch("../CustomerFooter/index.html")
+    fetch("/Features/Components/Footers/CustomerFooter/index.html")
       .then(res => res.text())
       .then(data => {
         document.getElementById("footer").innerHTML = data;

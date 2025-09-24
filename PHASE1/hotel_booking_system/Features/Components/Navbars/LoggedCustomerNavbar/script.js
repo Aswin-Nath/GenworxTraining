@@ -2,12 +2,12 @@
 const isAdminLoggedIn = localStorage.getItem("is_admin_logged_in") === "true";
 
 // ✅ Navbar loader
-let navbarPath = "../NotCustomerNavbar/index.html"; // default
+let navbarPath = "/Features/Components/Navbars/NotCustomerNavbar/index.html"; // default
 
 if (isAdminLoggedIn) {
-  navbarPath = "../AdminLandingNavbar/index.html";
+  navbarPath = "/Features/Components/Navbars/AdminLandingNavbar/index.html";
 } else if (isCustomerLoggedIn) {
-  navbarPath = "../LoggedCustomerNavbar/index.html";
+  navbarPath = "/Features/Components/Navbars/LoggedCustomerNavbar/index.html";
 }
 
   // ✅ Navbar loader
@@ -29,7 +29,7 @@ if (isAdminLoggedIn) {
     });
 
    // ✅ Footer loader
-  fetch("../CustomerFooter/index.html")
+  fetch("/Features/Components/Footers/CustomerFooter/index.html")
     .then(res => res.text())
     .then(data => {
       document.getElementById("footer").innerHTML = data;

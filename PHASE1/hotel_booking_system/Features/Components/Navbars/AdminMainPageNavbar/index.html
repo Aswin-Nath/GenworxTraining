@@ -9,9 +9,8 @@
   <!-- ✅ Navbar -->
   <header class="flex justify-between items-center bg-white shadow-md px-4 sm:px-6 py-2 fixed top-0 left-0 w-full z-50">
     <!-- Logo + Title -->
-    <a href="../AdminLandingPage/index.html" class="flex items-center space-x-2">
-      <img src="/assets/
-Hotel_logo.png" 
+    <a href="/Features/LandingPages/Admin/index.html" class="flex items-center space-x-2">
+      <img src="/assets/Hotel_logo.png" 
            alt="Hotel Logo" 
            class="h-8 sm:h-10 rounded-full border-2 border-yellow-600 p-1">
       <h1 class="text-lg sm:text-xl font-bold text-yellow-700">LuxuryStay</h1>
@@ -52,7 +51,7 @@ Hotel_logo.png"
     function handleLogout() {
       // Example: clear login state & redirect
       localStorage.removeItem("is_admin_logged_in");
-      window.location.href = "../LoginPage/index.html";
+      window.location.href = "/Features/Auth/LoginPage/index.html";
     }
   </script>
 </body>

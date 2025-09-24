@@ -45,9 +45,8 @@
   <!-- ✅ Navbar -->
   <header class="flex justify-between items-center bg-white shadow-md px-4 sm:px-6 py-2 fixed top-0 left-0 w-full z-50">
     <!-- Logo + Title -->
-    <a href="../LandingPage/index.html" class="flex items-center space-x-2">
-      <img src="/assets/
-Hotel_logo.png" 
+    <a href="/Features/LandingPages/Admin/index.html" class="flex items-center space-x-2">
+      <img src="/assets/Hotel_logo.png" 
            alt="Hotel Logo" 
            class="h-8 sm:h-10 rounded-full border-2 border-yellow-600 p-1">
       <h1 class="text-lg sm:text-xl font-bold text-yellow-700">LuxuryStay</h1>
@@ -58,14 +57,14 @@ Hotel_logo.png"
 
     <!-- Desktop Nav -->
     <nav class="hidden md:flex space-x-9 font-medium text-sm sm:text-base">
-    <a href="../LandingPage/index.html" class="hover:text-yellow-600">Home</a>
-    <a href="../RoomTypesCustomer/index.html" class="hover:text-yellow-600">Rooms</a>
-    <a href="../OffersCustomer/index.html" class="hover:text-yellow-600">Offers</a>
+    <a href="/Features/LandingPages/Customer/index.html" class="hover:text-yellow-600">Home</a>
+    <a href="/Features/RoomManagement/Customer/RoomTypesCustomer/index.html" class="hover:text-yellow-600">Rooms</a>
+    <a href="/Features/RoomManagement/Customer/OffersCustomer/index.html" class="hover:text-yellow-600">Offers</a>
     
     
-    <a href="../Facilities/index.html" class="hover:text-yellow-600">Facilities</a>
-    <a href="../FAQS/index.html" class="hover:text-yellow-600">FAQs</a>
-        <a href="../LandingPage/index.html#destinations" class="hover:text-yellow-600">Destinations</a>
+    <a href="/Features/ContentManagement/Customer/Facilities/index.html" class="hover:text-yellow-600">Facilities</a>
+    <a href="/Features/FAQS/index.html" class="hover:text-yellow-600">FAQs</a>
+        <a href="/Features/LandingPages/Customer/index.html#destinations" class="hover:text-yellow-600">Destinations</a>
 
     </nav>  
 
@@ -84,23 +83,24 @@ Hotel_logo.png"
       <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500"></span>
     </button>
 
-      <a href="../MainPageCustomer/index.html"
-        class="px-4 py-2 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-700 transition">
-        Account
-      </a>
+  <!-- Account -->
+  <a href="/Features/Dashboard/Customer/index.html"
+     class="px-4 py-2 bg-gray-600 text-center text-white font-medium rounded-lg hover:bg-gray-700 transition">
+    Account
+  </a>
     </div>
   </header>
 
   <!-- ✅ Mobile Dropdown Menu -->
   <nav id="mobileMenu" class="md:hidden flex flex-col bg-white shadow-md px-4 mb-1 space-y-4 text-base sm:text-lg">
-    <a href="../LandingPage/index.html" class="hover:text-yellow-600">Home</a>
-    <a href="../RoomTypesCustomer/index.html" class="hover:text-yellow-600">Rooms</a>
-    <a href="../OffersCustomer/index.html" class="hover:text-yellow-600">Offers</a>
+    <a href="/Features/LandingPages/Customer/index.html" class="hover:text-yellow-600">Home</a>
+    <a href="/Features/RoomManagement/Customer/RoomTypesCustomer/index.html" class="hover:text-yellow-600">Rooms</a>
+    <a href="/Features/RoomManagement/Customer/OffersCustomer/index.html" class="hover:text-yellow-600">Offers</a>
     
     
-    <a href="../Facilities/index.html" class="hover:text-yellow-600">Facilities</a>
-    <a href="../FAQS/index.html" class="hover:text-yellow-600">FAQs</a>
-        <a href="../LandingPage/index.html#destinations" class="hover:text-yellow-600">Destinations</a>
+    <a href="/Features/ContentManagement/Customer/Facilities/index.html" class="hover:text-yellow-600">Facilities</a>
+    <a href="/Features/FAQS/index.html" class="hover:text-yellow-600">FAQs</a>
+        <a href="/Features/LandingPages/Customer/index.html#destinations" class="hover:text-yellow-600">Destinations</a>
 
 <!-- Mobile Buttons -->
 <div class="flex flex-col space-y-2 pt-2">
@@ -125,7 +125,7 @@ Hotel_logo.png"
   </button>
 
   <!-- Account -->
-  <a href="../MainPageCustomer/index.html"
+  <a href="/Features/Dashboard/Customer/index.html"
      class="px-4 py-2 bg-gray-600 text-center text-white font-medium rounded-lg hover:bg-gray-700 transition">
     Account
   </a>
@@ -203,7 +203,7 @@ Hotel_logo.png"
     <button id="addRoomBtn" class="text-yellow-700 font-medium hover:underline mb-6">+ Add More Rooms</button>
 
     <!-- Confirm -->
-    <button onclick="window.location.href='../BookingRooms/index.html'" class="w-full py-3 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg hover:opacity-90 transition">
+    <button onclick="window.location.href='/Features/BookingManagement/BookingRooms/index.html'" class="w-full py-3 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg hover:opacity-90 transition">
       Proceed Booking
     </button>
   </div>

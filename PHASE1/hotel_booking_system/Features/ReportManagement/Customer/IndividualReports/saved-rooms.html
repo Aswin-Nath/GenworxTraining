@@ -17,13 +17,13 @@
     <!-- Main Sidebar (Global Navigation) -->
     <aside class="w-64 bg-white shadow-lg rounded-2xl p-6 h-fit">
       <nav class="space-y-4 text-gray-700 font-medium">
-        <a href="../MainPageCustomer/index.html" class="block py-2 border-b hover:text-yellow-600">Overview</a>
-        <a href="../MyBookings/index.html" class="block py-2 border-b hover:text-yellow-600">My Bookings</a>
-        <a href="../SavedRoomsCustomer/index.html" class="block py-2 border-b hover:text-yellow-600">Wishlist</a>
-        <a href="../MyIssues/index.html" class="block py-2 border-b hover:text-yellow-600">My Issues</a>
-        <a href="../MyRefunds/index.html" class="block py-2 border-b hover:text-yellow-600">My Refunds</a>
-        <a href="../ProfileDisplayCustomer/index.html" class="block py-2 border-b hover:text-yellow-600">Profile</a>
-        <a href="../MyReports/index.html" class="block py-2 border-b text-yellow-700 font-semibold">Reports</a>
+        <a href="/Features/LandingPages/Customer/index.html" class="block py-2 border-b hover:text-yellow-600">Overview</a>
+        <a href="/Features/BookingManagement/MyBookings/index.html" class="block py-2 border-b hover:text-yellow-600">My Bookings</a>
+        <a href="/Features/UserManagement/Customer/SavedRoomsCustomer/index.html" class="block py-2 border-b hover:text-yellow-600">Wishlist</a>
+        <a href="/Features/IssueManagement/Customer/MyIssues/index.html" class="block py-2 border-b hover:text-yellow-600">My Issues</a>
+        <a href="/Features/RefundManagement/Customer/MyRefunds/index.html" class="block py-2 border-b hover:text-yellow-600">My Refunds</a>
+        <a href="/Features/UserManagement/Customer/ProfileDisplayCustomer/index.html" class="block py-2 border-b hover:text-yellow-600">Profile</a>
+        <a href="/Features/ReportManagement/Customer/ReportSections/index.html" class="block py-2 border-b text-yellow-700 font-semibold">Reports</a>
       </nav>
     </aside>
 
@@ -370,12 +370,12 @@
       </div>
     </div>
   </div>
-    <!-- // fetch("../LoggedCustomerNavbar/index.html").then(r => r.text()).then(d => { document.getElementById("navbar").innerHTML = d; }).catch(()=>{}); -->
-    <!-- // fetch("../CustomerFooter/index.html").then(r => r.text()).then(d => { document.getElementById("footer").innerHTML = d; }).catch(()=>{}); -->
+    <!-- // fetch("/Features/Components/Navbars/LoggedCustomerNavbar/index.html").then(r => r.text()).then(d => { document.getElementById("navbar").innerHTML = d; }).catch(()=>{}); -->
+    <!-- // fetch("/Features/Components/Footers/CustomerFooter/index.html").then(r => r.text()).then(d => { document.getElementById("footer").innerHTML = d; }).catch(()=>{}); -->
 
     <script>
-            fetch("../LoggedCustomerNavbar/index.html").then(r => r.text()).then(d => { document.getElementById("navbar").innerHTML = d; }).catch(()=>{});
-    fetch("../CustomerFooter/index.html").then(r => r.text()).then(d => { document.getElementById("footer").innerHTML = d; }).catch(()=>{});
+            fetch("/Features/Components/Navbars/LoggedCustomerNavbar/index.html").then(r => r.text()).then(d => { document.getElementById("navbar").innerHTML = d; }).catch(()=>{});
+    fetch("/Features/Components/Footers/CustomerFooter/index.html").then(r => r.text()).then(d => { document.getElementById("footer").innerHTML = d; }).catch(()=>{});
     
      const menuToggle = document.getElementById("menuToggle");
   const sidebar = document.getElementById("sidebar");

@@ -171,8 +171,8 @@
   <!-- Navbar + Sidebar loaders -->
   <script>
     // load navbar + sidebar (placeholders in your repo)
-    fetch("../AdminMainPageNavbar/index.html").then(r => r.text()).then(t => { document.getElementById('navbar').innerHTML = t; }).catch(()=>{ /* ignore */ });
-    fetch("../AdminMainPageSidebar/index.html").then(r => r.text()).then(t => {
+    fetch("/Features/Components/Navbars/AdminMainPageNavbar/index.html").then(r => r.text()).then(t => { document.getElementById('navbar').innerHTML = t; }).catch(()=>{ /* ignore */ });
+    fetch("/Features/Components/Sidebars/AdminMainPageSidebar/index.html").then(r => r.text()).then(t => {
       document.getElementById('sidebar').innerHTML = t;
       const currentPage = "customer";
       document.querySelectorAll("#sidebar a").forEach(link => { if (link.dataset.page === currentPage) link.classList.add("text-yellow-600","font-bold"); });

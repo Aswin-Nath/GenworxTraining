@@ -378,13 +378,13 @@
       </div>
     </div>
   </div>
-    <!-- // fetch("../LoggedCustomerNavbar/index.html").then(r => r.text()).then(d => { document.getElementById("navbar").innerHTML = d; }).catch(()=>{}); -->
-    <!-- // fetch("../CustomerFooter/index.html").then(r => r.text()).then(d => { document.getElementById("footer").innerHTML = d; }).catch(()=>{}); -->
+    <!-- // fetch("/Features/Components/Navbars/LoggedCustomerNavbar/index.html").then(r => r.text()).then(d => { document.getElementById("navbar").innerHTML = d; }).catch(()=>{}); -->
+    <!-- // fetch("/Features/Components/Footers/CustomerFooter/index.html").then(r => r.text()).then(d => { document.getElementById("footer").innerHTML = d; }).catch(()=>{}); -->
 
     <script>
-            fetch("../AdminMainPageNavbar/index.html").then(r => r.text()).then(d => { document.getElementById("navbar").innerHTML = d; }).catch(()=>{});
+            fetch("/Features/Components/Navbars/AdminMainPageNavbar/index.html").then(r => r.text()).then(d => { document.getElementById("navbar").innerHTML = d; }).catch(()=>{});
     // Load Reports Sidebar
-    fetch("../AdminMainPageSidebar/index.html").then(res => res.text()).then(data => {
+    fetch("/Features/Components/Sidebars/AdminMainPageSidebar/index.html").then(res => res.text()).then(data => {
       document.getElementById("old_sidebar").innerHTML = data;
 
       // Highlight current page

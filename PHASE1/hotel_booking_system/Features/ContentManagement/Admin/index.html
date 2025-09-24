@@ -126,21 +126,16 @@
     const contents = {
       announcements: {
         used: [
-          { title: "Welcome to LuxuryStay", desc: "Experience unmatched comfort & hospitality.", media: "/assets/
-hotel_luxury.jpg" },
-          { title: "Safety First", desc: "Enhanced cleaning protocols in place.", media: "/assets/
-spa.png" }
+          { title: "Welcome to LuxuryStay", desc: "Experience unmatched comfort & hospitality.", media: "/assets/hotel_luxury.jpg" },
+          { title: "Safety First", desc: "Enhanced cleaning protocols in place.", media: "/assets/spa.png" }
         ],
         unused: [
-          { title: "New Branch Opening", desc: "We're opening in Goa soon!", media: "/assets/
-pool.jpg" }
+          { title: "New Branch Opening", desc: "We're opening in Goa soon!", media: "/assets/pool.jpg" }
         ]
       },
       banners: {
-        used: [{ title: "Beachfront View", desc: "Wake up to waves.", media: "/assets/
-room1.jpg" }],
-        unused: [{ title: "Pool Paradise", desc: "Infinity pool experience.", media: "/assets/
-pool.jpg" }]
+        used: [{ title: "Beachfront View", desc: "Wake up to waves.", media: "/assets/room1.jpg" }],
+        unused: [{ title: "Pool Paradise", desc: "Infinity pool experience.", media: "/assets/pool.jpg" }]
       }
     };
 
@@ -194,8 +189,7 @@ pool.jpg" }]
       document.getElementById("previewContent").innerHTML = `
         <h3 class="text-lg font-bold">${item.title}</h3>
         <p>${item.desc}</p>
-        <img src="/assets/
-room1.jpg" class="w-full h-48 object-cover rounded-lg shadow my-2">
+        <img src="/assets/room1.jpg" class="w-full h-48 object-cover rounded-lg shadow my-2">
       `;
     }
 
@@ -217,8 +211,7 @@ room1.jpg" class="w-full h-48 object-cover rounded-lg shadow my-2">
       const type=document.getElementById("addContentType").value;
       const title=document.getElementById("contentTitle").value;
       const desc=document.getElementById("contentDesc").value;
-      const media="/assets/
-hotel_logo.png";
+      const media="/assets/hotel_logo.png";
       contents[type].unused.push({title,desc,media});
       toggleAddContentModal();
       renderContent();
@@ -239,8 +232,7 @@ hotel_logo.png";
       const newType=document.getElementById("editContentType").value;
       const newTitle=document.getElementById("editTitle").value;
       const newDesc=document.getElementById("editDesc").value;
-      const item={title:newTitle,desc:newDesc,media:"/assets/
-hotel_logo.png"};
+      const item={title:newTitle,desc:newDesc,media:"/assets/hotel_logo.png"};
       contents[tab][type].splice(index,1);
       contents[newType].used.push(item);
       toggleEditContentModal();
@@ -255,8 +247,8 @@ hotel_logo.png"};
     }
 
     // Navbar + Sidebar injection
-    fetch("../AdminMainPageNavbar/index.html").then(res=>res.text()).then(d=>document.getElementById("navbar").innerHTML=d);
-    fetch("../AdminMainPageSidebar/index.html").then(res=>res.text()).then(d=>{
+    fetch("/Features/Components/Navbars/AdminMainPageNavbar/index.html").then(res=>res.text()).then(d=>document.getElementById("navbar").innerHTML=d);
+    fetch("/Features/Components/Sidebars/AdminMainPageSidebar/index.html").then(res=>res.text()).then(d=>{
       document.getElementById("sidebar").innerHTML=d;
       document.querySelectorAll("#sidebar a").forEach(link=>{
         if(link.dataset.page==="content"){ link.classList.add("text-yellow-600","font-bold"); }

@@ -15,8 +15,7 @@
 
   <div id="navbar"></div>
 
-<section class="relative h-[50vh] bg-cover bg-center" style="background-image: url('/assets/
-hotel_luxury.jpg');">
+<section class="relative h-[50vh] bg-cover bg-center" style="background-image: url('/assets/hotel_luxury.jpg');">
   
   <!-- Dark Overlay -->
   <div class="absolute inset-0 bg-gradient-to-r from-yellow-600/70 to-red-600/70"></div>
@@ -65,8 +64,7 @@ hotel_luxury.jpg');">
       <div class="grid md:grid-cols-3 gap-6">
         
         <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
-          <img src="/assets/
-rooms_icon.png" class="h-16 mx-auto mb-4" alt="Luxury Rooms">
+          <img src="/assets/rooms_icon.png" class="h-16 mx-auto mb-4" alt="Luxury Rooms">
           <h3 class="font-bold text-lg mb-2">Elegant Rooms</h3>
           <p class="text-gray-700">Spacious, beautifully designed, and fully equipped with modern amenities.</p>
         </div>
@@ -78,8 +76,7 @@ rooms_icon.png" class="h-16 mx-auto mb-4" alt="Luxury Rooms">
         </div>
 
         <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
-          <img src="/assets/
-services.png" class="h-16 mx-auto mb-4" alt="Premium Services">
+          <img src="/assets/services.png" class="h-16 mx-auto mb-4" alt="Premium Services">
           <h3 class="font-bold text-lg mb-2">Premium Services</h3>
           <p class="text-gray-700">Relax with personalized concierge, wellness, and spa retreats.</p>
         </div>
@@ -200,12 +197,12 @@ const isAdminLoggedIn = localStorage.getItem("is_admin_logged_in") === "true";
 const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
 
 // ✅ Navbar loader
-let navbarPath = "../NotCustomerNavbar/index.html"; // default
+let navbarPath = "/Features/Components/Navbars/NotCustomerNavbar/index.html"; // default
 
 if (isAdminLoggedIn) {
-  navbarPath = "../AdminLandingNavbar/index.html";
+  navbarPath = "/Features/Components/Navbars/AdminLandingNavbar/index.html";
 } else if (isCustomerLoggedIn) {
-  navbarPath = "../LoggedCustomerNavbar/index.html";
+  navbarPath = "/Features/Components/Navbars/LoggedCustomerNavbar/index.html";
 }
 
 // ✅ Navbar loader
@@ -331,7 +328,7 @@ function attachModalListeners() {
 
 
     // ✅ Footer
-    fetch("../CustomerFooter/index.html")
+    fetch("/Features/Components/Footers/CustomerFooter/index.html")
       .then(res => res.text())
       .then(data => {
         document.getElementById("footer").innerHTML = data;

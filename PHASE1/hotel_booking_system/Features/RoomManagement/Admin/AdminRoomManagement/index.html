@@ -436,13 +436,13 @@
       const roomNumber = decodeURIComponent(encodedRoomNumber);
       localStorage.setItem('selectedRoomNumber', roomNumber);
       // navigate to your Room Details page (keeps same structure you had)
-      window.location.href = '../AdminRoomDetails/index.html';
+      window.location.href = '/Features/RoomManagement/Admin/AdminRoomDetails/index.html';
     }
 
     function editRoom(encodedRoomNumber) {
       const roomNumber = decodeURIComponent(encodedRoomNumber);
       localStorage.setItem('selectedRoomNumber', roomNumber);
-      window.location.href = '../AdminEditRoom/index.html';
+      window.location.href = '/Features/RoomManagement/Admin/AdminEditRoom/index.html';
     }
 
     /******************************
@@ -547,7 +547,7 @@
     /******************************
      * Navbar & Sidebar loaders (keeps your structure)
      ******************************/
-    fetch('../AdminMainPageNavbar/index.html').then(res => res.text()).then(html => {
+    fetch('/Features/Components/Navbars/AdminMainPageNavbar/index.html').then(res => res.text()).then(html => {
       document.getElementById('navbar').innerHTML = html;
     }).catch(() => {
       // fallback minimal nav if file not available (demo)
@@ -560,7 +560,7 @@
         </div>`;
     });
 
-    fetch('../AdminMainPageSidebar/index.html').then(res => res.text()).then(html => {
+    fetch('/Features/Components/Sidebars/AdminMainPageSidebar/index.html').then(res => res.text()).then(html => {
       document.getElementById('sidebar').innerHTML = html;
       // highlight active
       const currentPage = 'room';

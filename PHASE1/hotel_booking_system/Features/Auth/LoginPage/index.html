@@ -12,9 +12,8 @@
 <!-- ✅ Header -->
 <header class="flex justify-between items-center bg-white shadow-md px-6 py-4 sticky top-0 z-50">
   <!-- Logo + Title -->
-        <a href="../LandingPage/index.html" class="flex items-center space-x-2">
-        <img src="/assets/
-Hotel_logo.png" 
+        <a href="/Features/LandingPages/Customer/index.html" class="flex items-center space-x-2">
+        <img src="/assets/Hotel_logo.png" 
             alt="Hotel Logo" 
             class="h-8 sm:h-10 rounded-full border-2 border-yellow-600 p-1">
         <h1 class="text-lg sm:text-xl font-bold text-yellow-700">LuxuryStay</h1>
@@ -45,7 +44,7 @@ Hotel_logo.png"
   <div class="relative w-full max-w-xl bg-white rounded-2xl overflow-hidden border-4 border-amber-400">
 
 <!-- Back Arrow -->
-<a href="../LandingPage/index.html"
+<a href="/Features/LandingPages/Customer/index.html"
    class="absolute top-3 left-3 text-gray-700 hover:text-gray-900 transition">
   <!-- Heroicon: Arrow Left -->
   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
@@ -100,7 +99,7 @@ Hotel_logo.png"
       <!-- Signup Link -->
       <p class="text-sm text-center text-gray-600">
         Don’t have an account?
-        <a href="../SignupPage/index.html" class="text-amber-600 font-medium hover:underline">Sign up</a>
+        <a href="/Features/Auth/SignupPage/index.html" class="text-amber-600 font-medium hover:underline">Sign up</a>
       </p>
     </form>
   </div>
@@ -176,13 +175,13 @@ Hotel_logo.png"
     if ((value === phone || value === storedEmail)&& password === storedPassword) {
       localStorage.setItem("is_customer_logged_in", "true");
       localStorage.setItem("is_admin_logged_in", "false"); // logout admin
-      window.location.href = "../LandingPage/index.html";
+      window.location.href = "/Features/LandingPages/Customer/index.html";
     }
     // ✅ Admin login
     else if (value === storedAdminEmail && password === storedAdminPassword) {
       localStorage.setItem("is_admin_logged_in", "true");
       localStorage.setItem("is_customer_logged_in", "false"); // logout customer
-      window.location.href = "../AdminMainPage/index.html";
+      window.location.href = "/Features/Dashboard/Admin/index.html";
     }
     // ❌ Invalid credentials
     else {

@@ -18,13 +18,13 @@
     <!-- ✅ Sidebar -->
     <aside class="w-64 bg-white shadow-lg rounded-2xl p-6 h-fit">
       <nav class="space-y-4 text-gray-700 font-medium">
-        <a href="../MainPageCustomer/index.html" data-page="dashboard" class="block py-2 border-b hover:text-yellow-600">Overview</a>
-        <a href="../MyBookings/index.html" data-page="booking" class="block py-2 border-b hover:text-yellow-600">My Bookings</a>
-        <a href="../SavedRoomsCustomer/index.html" data-page="saved" class="block py-2 border-b hover:text-yellow-600">Wishlist</a>
-        <a href="../MyIssues/index.html" data-page="issues" class="block py-2 border-b hover:text-yellow-600">My Issues</a>
-        <a href="../MyRefunds/index.html" data-page="refunds" class="block py-2 border-b hover:text-yellow-600">My Refunds</a>
-        <a href="../ProfileDisplayCustomer/index.html" data-page="profile" class="block py-2 border-b hover:text-yellow-600">Profile</a>
-        <a href="../MyReports/index.html" data-page="report" class="block py-2 border-b hover:text-yellow-600">Reports</a>
+        <a href="/Features/Dashboard/Customer/index.html" data-page="dashboard" class="block py-2 border-b hover:text-yellow-600">Overview</a>
+        <a href="/Features/BookingManagement/MyBookings/index.html" data-page="booking" class="block py-2 border-b hover:text-yellow-600">My Bookings</a>
+        <a href="/Features/UserManagement/Customer/SavedRoomsCustomer/index.html" data-page="saved" class="block py-2 border-b hover:text-yellow-600">Wishlist</a>
+        <a href="/Features/IssueManagement/Customer/MyIssues/index.html" data-page="issues" class="block py-2 border-b hover:text-yellow-600">My Issues</a>
+        <a href="/Features/RefundManagement/Customer/MyRefunds/index.html" data-page="refunds" class="block py-2 border-b hover:text-yellow-600">My Refunds</a>
+        <a href="/Features/UserManagement/Customer/ProfileDisplayCustomer/index.html" data-page="profile" class="block py-2 border-b hover:text-yellow-600">Profile</a>
+        <a href="/Features/ReportManagement/Customer/ReportSections/index.html" data-page="report" class="block py-2 border-b hover:text-yellow-600">Reports</a>
       </nav>
     </aside>
 
@@ -48,8 +48,8 @@
   <div>
     <h2 class="font-semibold text-lg flex items-center mb-3">🏨 Bookings</h2>
     <ul class="space-y-2 text-blue-600">
-      <li><a href="../MyReports/room-occupancy.html" class="hover:underline">My Stay History</a></li>
-      <li><a href="../MyReports/cancellation-history.html" class="hover:underline">Cancellation History</a></li>
+      <li><a href="/Features/ReportManagement/Customer/IndividualReports/room-occupancy.html" class="hover:underline">My Stay History</a></li>
+      <li><a href="/Features/ReportManagement/Customer/IndividualReports/cancellation-history.html" class="hover:underline">Cancellation History</a></li>
     </ul>
   </div>
 
@@ -57,8 +57,8 @@
   <div>
     <h2 class="font-semibold text-lg flex items-center mb-3">💰 Payments & Refunds</h2>
     <ul class="space-y-2 text-blue-600">
-      <li><a href="../MyReports/payments-received.html" class="hover:underline">Payments Made</a></li>
-      <li><a href="../MyReports/refund-history.html" class="hover:underline">Refund History</a></li>
+      <li><a href="/Features/ReportManagement/Customer/IndividualReports/payments-received.html" class="hover:underline">Payments Made</a></li>
+      <li><a href="/Features/ReportManagement/Customer/IndividualReports/refund-history.html" class="hover:underline">Refund History</a></li>
     </ul>
   </div>
 
@@ -66,7 +66,7 @@
   <div>
     <h2 class="font-semibold text-lg flex items-center mb-3">📑 Issues</h2>
     <ul class="space-y-2 text-blue-600">
-      <li><a href="../MyReports/issues-summary.html" class="hover:underline">My Reported Issues</a></li>
+      <li><a href="/Features/ReportManagement/Customer/IndividualReports/issues-summary.html" class="hover:underline">My Reported Issues</a></li>
     </ul>
   </div>
 
@@ -74,8 +74,8 @@
   <div>
     <h2 class="font-semibold text-lg flex items-center mb-3">👤 Profile Insights</h2>
     <ul class="space-y-2 text-blue-600">
-      <li><a href="../MyReports/saved-rooms.html" class="hover:underline">Wishlist</a></li>
-      <li><a href="../MyReports/review-history.html" class="hover:underline">My Reviews & Ratings</a></li>
+      <li><a href="/Features/ReportManagement/Customer/IndividualReports/saved-rooms.html" class="hover:underline">Wishlist</a></li>
+      <li><a href="/Features/ReportManagement/Customer/IndividualReports/review-history.html" class="hover:underline">My Reviews & Ratings</a></li>
     </ul>
   </div>
 
@@ -93,10 +93,10 @@
     // Navbar load
     const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
 
-    let navbarPath = "../NotCustomerNavbar/index.html";
+    let navbarPath = "/Features/Components/Navbars/NotCustomerNavbar/index.html";
 
     if (isCustomerLoggedIn) {
-      navbarPath = "../LoggedCustomerNavbar/index.html";
+      navbarPath = "/Features/Components/Navbars/LoggedCustomerNavbar/index.html";
     }
 
     fetch(navbarPath)
@@ -114,7 +114,7 @@
       });
 
     // Footer load
-    fetch("../CustomerFooter/index.html")
+    fetch("/Features/Components/Footers/CustomerFooter/index.html")
       .then(res => res.text())
       .then(data => { document.getElementById("footer").innerHTML = data; });
 
