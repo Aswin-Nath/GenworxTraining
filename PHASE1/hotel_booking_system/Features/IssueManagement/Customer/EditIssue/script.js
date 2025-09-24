@@ -204,6 +204,12 @@ function attachModalListeners() {
   reindexRooms();
 }
 
+    // Sidebar highlight for "My Issues"
+    document.querySelectorAll("aside nav a").forEach(link => {
+      if (link.textContent.trim() === "My Issues") {
+        link.classList.add("text-yellow-700", "font-semibold");
+      }
+    });
 
 
     // ✅ Footer
