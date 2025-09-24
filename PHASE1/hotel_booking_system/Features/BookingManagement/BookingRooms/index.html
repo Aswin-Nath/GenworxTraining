@@ -610,7 +610,7 @@ let navbarPath = "/Features/Components/Navbars/NotCustomerNavbar/index.html"; //
 if (isAdminLoggedIn) {
   navbarPath = "/Features/Components/Navbars/AdminLandingNavbar/index.html";
 } else if (isCustomerLoggedIn) {
-  navbarPath = "/Features/Components/Navbars/LoggedCustomerNavbar/index.html";
+  navbarPath = "/Features/Components/Navbars/LoggedWithoutBookNavbar/index.html";
 }
 fetch(navbarPath)
   .then(res => res.text())

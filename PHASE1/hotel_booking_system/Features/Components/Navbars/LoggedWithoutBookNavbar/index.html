@@ -38,7 +38,7 @@
     
     
     <a href="/Features/ContentManagement/Customer/Facilities/index.html" class="hover:text-yellow-600">Facilities</a>
-    <a href="/Features/FAQS/index.html" class="hover:text-yellow-600">FAQs</a>
+    <a href="/Features/Faqs/index.html" class="hover:text-yellow-600">FAQs</a>
         <a href="/Features/LandingPages/Customer/index.html#destinations" class="hover:text-yellow-600">Destinations</a>
 
     </nav>  
@@ -58,6 +58,10 @@
         class="px-4 py-2 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-700 transition">
         Account
       </a>
+      <button onclick="localStorage.setItem('is_customer_logged_in',false);window.location.href = '/Features/Auth/LoginPage/index.html';" 
+  class="px-4 py-2 bg-red-600 text-center text-white font-medium rounded-lg hover:bg-red-700 transition">
+  Logout
+</button>
     </div>
   </header>
 
@@ -69,7 +73,7 @@
     
     
     <a href="/Features/ContentManagement/Customer/Facilities/index.html" class="hover:text-yellow-600">Facilities</a>
-    <a href="/Features/FAQS/index.html" class="hover:text-yellow-600">FAQs</a>
+    <a href="/Features/Faqs/index.html" class="hover:text-yellow-600">FAQs</a>
         <a href="/Features/LandingPages/Customer/index.html#destinations" class="hover:text-yellow-600">Destinations</a>
 
 <!-- Mobile Buttons -->
@@ -93,6 +97,10 @@
      class="px-4 py-2 bg-gray-600 text-center text-white font-medium rounded-lg hover:bg-gray-700 transition">
     Account
   </a>
+  <button onclick="localStorage.setItem('is_customer_logged_in',false);window.location.href = '/Features/Auth/LoginPage/index.html';" 
+  class="px-4 py-2 bg-red-600 text-center text-white font-medium rounded-lg hover:bg-red-700 transition">
+  Logout
+</button>
 </div>
 
   </nav>
