@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - Terms & Conditions</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-700 leading-relaxed">
+
+  <!-- ✅ Navbar -->
+  <div id="navbar" class="mb-[20px]"></div>
+
+<!-- ✅ Header -->
+<header class="bg-gradient-to-r from-yellow-600 to-red-600 py-[100px] text-center text-white shadow-md mt-16 sm:mt-20">
+  <h1 class="text-4xl font-extrabold">Terms & Conditions</h1>
+  <p class="text-sm sm:text-base mt-2 opacity-90">Please review carefully before booking</p>
+</header>
+
+
+<!-- ✅ Content -->
+<main class="max-w-5xl mx-auto px-6 py-12 space-y-10 bg-white shadow-lg rounded-2xl mt-10 mb-4 border border-gray-100">
+  <section>
+    <h2 class="text-xl font-bold text-gray-800 mb-3">1. Acceptance of Terms</h2>
+    <p class="text-gray-600">By booking a stay at LuxuryStay, you agree to comply with and be bound by these Terms & Conditions. These terms apply to all guests, visitors, and service users of LuxuryStay properties.</p>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-bold text-gray-800 mb-3">2. Booking & Payment</h2>
+    <p class="text-gray-600">All reservations are confirmed only after full or partial payment. Prices are subject to applicable taxes, service charges, and surcharges. Any balance amount must be cleared before check-in. We accept major credit cards, debit cards, UPI, and net banking.</p>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-bold text-gray-800 mb-3">3. Guest Conduct</h2>
+    <p class="text-gray-600">Guests are expected to maintain respectful conduct towards staff, property, and fellow guests. Illegal activities, excessive noise, or disruptive behavior may result in immediate eviction without refund. Smoking is strictly prohibited in non-smoking rooms and common indoor areas.</p>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-bold text-gray-800 mb-3">4. Liability</h2>
+    <p class="text-gray-600">LuxuryStay will not be liable for loss of personal belongings, accidents, or unforeseen events beyond our control (natural disasters, strikes, or government restrictions). Guests are responsible for securing their valuables in the in-room safe provided.</p>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-bold text-gray-800 mb-3">5. Modifications & Cancellations</h2>
+    <p class="text-gray-600">LuxuryStay reserves the right to amend these Terms & Conditions at any time. Cancellation and refund policies may vary based on the room category, offer, or booking channel. Please review cancellation terms at the time of booking.</p>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-bold text-gray-800 mb-3">6. Check-In & Check-Out</h2>
+    <p class="text-gray-600">Standard check-in time is 2:00 PM, and check-out time is 11:00 AM. Early check-in and late check-out are subject to availability and may attract additional charges.</p>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-bold text-gray-800 mb-3">7. Pets Policy</h2>
+    <p class="text-gray-600">Pets are not permitted unless explicitly mentioned under special room packages. Service animals with proper documentation are allowed without extra charge.</p>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-bold text-gray-800 mb-3">8. Damage to Property</h2>
+    <p class="text-gray-600">Guests are liable for any damage caused to the property, furniture, fixtures, or amenities during their stay. Repair or replacement costs will be charged directly to the guest.</p>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-bold text-gray-800 mb-3">9. Privacy & Data Protection</h2>
+    <p class="text-gray-600">Guest information is collected and processed in accordance with our Privacy Policy. Personal data is used solely for booking management, guest experience, and legal compliance.</p>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-bold text-gray-800 mb-3">10. Governing Law</h2>
+    <p class="text-gray-600">These Terms & Conditions are governed by the laws of India. Any disputes arising shall be subject to the jurisdiction of courts in the city where the property is located.</p>
+  </section>
+</main>
+
+
+  <!-- ✅ Footer -->
+  <div id="footer"></div>
+
+  <!-- ✅ Scripts -->
+  <script>
+    // ✅ Navbar + Footer loading
+const isAdminLoggedIn = localStorage.getItem("is_admin_logged_in") === "true";
+const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
+
+// ✅ Navbar loader
+let navbarPath = "../NotCustomerNavbar/index.html"; // default
+
+if (isAdminLoggedIn) {
+  navbarPath = "../AdminLandingNavbar/index.html";
+} else if (isCustomerLoggedIn) {
+  navbarPath = "../LoggedCustomerNavbar/index.html";
+}
+
+// ✅ Navbar loader
+fetch(navbarPath)
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("navbar").innerHTML = data;
+
+    // mobile menu toggle
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("open");
+      });
+    }
+
+    // ✅ attach modal listeners AFTER navbar injected
+    attachModalListeners();
+  });
+
+function attachModalListeners() {
+  const modal = document.getElementById("bookingModal");
+  const closeModal = document.getElementById("closeModal");
+  const addRoomBtn = document.getElementById("addRoomBtn");
+  const roomsContainer = document.getElementById("roomsContainer");
+
+  if (!modal) return;
+
+  // Open modal
+  document.querySelectorAll(".bookingModal").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    });
+  });
+
+  // Close modal
+  closeModal?.addEventListener("click", () => {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  });
+
+  // Add counter listeners for Adults/Children
+  function addCounterListeners(roomDiv) {
+    roomDiv.querySelectorAll(".increase").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const input = btn.parentElement.querySelector("input");
+        input.value = parseInt(input.value) + 1;
+      });
+    });
+    roomDiv.querySelectorAll(".decrease").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const input = btn.parentElement.querySelector("input");
+        if (parseInt(input.value) > parseInt(input.min)) {
+          input.value = parseInt(input.value) - 1;
+        }
+      });
+    });
+  }
+
+  // Reindex rooms after add/remove
+  function reindexRooms() {
+    document.querySelectorAll(".room-card").forEach((room, index) => {
+      room.querySelector(".room-title").textContent = `Room ${index + 1}`;
+    });
+  }
+
+  // Add new room
+  addRoomBtn?.addEventListener("click", () => {
+    const roomDiv = document.createElement("div");
+    roomDiv.className = "room-card border p-5 rounded-xl mb-6 bg-gray-50 shadow-sm";
+
+    roomDiv.innerHTML = `
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="room-title font-semibold text-lg">Room</h3>
+        <select class="border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
+          <option>Deluxe Room</option>
+          <option>Executive Suite</option>
+          <option>Presidential Suite</option>
+        </select>
+      </div>
+
+      <div class="grid grid-cols-2 gap-6 mb-4">
+        <div class="flex items-center justify-between">
+          <label class="text-sm font-medium">Adults</label>
+          <div class="flex items-center space-x-3">
+            <button class="decrease w-8 h-8 rounded-full bg-gray-200">−</button>
+            <input type="number" value="1" min="1" class="w-12 text-center border rounded-md p-1">
+            <button class="increase w-8 h-8 rounded-full bg-yellow-500 text-white">+</button>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <label class="text-sm font-medium">Children</label>
+          <div class="flex items-center space-x-3">
+            <button class="decrease w-8 h-8 rounded-full bg-gray-200">−</button>
+            <input type="number" value="0" min="0" class="w-12 text-center border rounded-md p-1">
+            <button class="increase w-8 h-8 rounded-full bg-yellow-500 text-white">+</button>
+          </div>
+        </div>
+      </div>
+
+      <button class="remove-room mt-2 text-sm text-red-500 hover:underline">Remove Room</button>
+    `;
+
+    roomsContainer.appendChild(roomDiv);
+
+    addCounterListeners(roomDiv);
+
+    roomDiv.querySelector(".remove-room").addEventListener("click", () => {
+      roomDiv.remove();
+      reindexRooms();
+    });
+
+    reindexRooms();
+  });
+
+  // Init first room
+  addCounterListeners(document.querySelector(".room-card"));
+  reindexRooms();
+}
+
+
+
+
+    // ✅ Footer
+    fetch("../CustomerFooter/index.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("footer").innerHTML = data;
+      })
+      .catch(err => console.error("❌ Footer load failed:", err));
+  </script>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - Room Details (LocalStorage)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    /* --- Minor polish overrides --- */
+    .stat-pill { 
+      padding: 0.25rem 0.75rem; 
+      border-radius: 9999px; 
+      font-size: 0.75rem; 
+      font-weight: 500; 
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+  <!-- ✅ Navbar -->
+  <div id="navbar"></div>
+
+  <!-- ✅ Sidebar -->
+  <div id="sidebar" class="fixed top-16 left-0 w-64 h-screen shadow-lg bg-white"></div>
+
+  <!-- ✅ Main Content -->
+  <main class="ml-64 pt-16 p-8 h-screen overflow-y-auto space-y-8">
+
+    <!-- Page Title + Edit -->
+    <div class="flex justify-between items-center mb-6">
+      <div class="flex items-center gap-3">
+        <button onclick="window.history.back()" 
+          class="flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-2 rounded-lg shadow">
+          <span class="material-icons text-sm">arrow_back</span> Back
+        </button>
+        <h2 class="text-2xl font-bold text-gray-800">Room Details</h2>
+      </div>
+      <!-- ✅ Edit button top-right -->
+      <button id="editBtn" class="px-5 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg shadow flex items-center gap-2">
+        <span class="material-icons text-sm">edit</span> Edit
+      </button>
+    </div>
+
+    <!-- ✅ Room Basic Info -->
+    <section id="basicInfo" class="bg-white rounded-2xl border border-gray-200 p-6 shadow-md space-y-3">
+      <h3 class="text-lg font-semibold text-yellow-700 mb-4">Basic Information</h3>
+      <p><span class="font-medium">Room Number:</span> <span id="roomNo"></span></p>
+      <p><span class="font-medium">Room Type:</span> <span id="roomType"></span></p>
+      <p><span class="font-medium">Price / Night:</span> ₹ <span id="roomPrice"></span></p>
+      <p><span class="font-medium">Adults Capacity:</span> <span id="roomAdults"></span></p>
+      <p><span class="font-medium">Children Capacity:</span> <span id="roomChildren"></span></p>
+      <p><span class="font-medium">Status:</span> <span id="roomStatus"></span></p>
+      <p><span class="font-medium">Description:</span> <span id="roomDesc"></span></p>
+    </section>
+
+    <!-- ✅ Room Amenities -->
+    <section class="bg-white rounded-2xl border border-gray-200 p-6 shadow-md">
+      <h3 class="text-lg font-semibold text-yellow-700 mb-4">Room Amenities</h3>
+      <div id="roomAmenities" class="grid grid-cols-2 md:grid-cols-3 gap-3 text-gray-700">
+        <!-- dynamically injected -->
+      </div>
+    </section>
+
+    <!-- ✅ Room Images (STATIC) -->
+    <section class="bg-white rounded-2xl border border-gray-200 p-6 shadow-md">
+      <h3 class="text-lg font-semibold text-yellow-700 mb-4">Room Images</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div class="w-full h-64">
+          <img src="../../assets/room1.jpg" class="w-full h-full object-cover rounded-lg shadow-md" alt="Room Image 1">
+        </div>
+        <div class="w-full h-64">
+          <img src="../../assets/pool.jpg" class="w-full h-full object-cover rounded-lg shadow-md" alt="Pool View">
+        </div>
+        <div class="w-full h-64">
+          <img src="../../assets/room3.jpg" class="w-full h-full object-cover rounded-lg shadow-md" alt="Room Image 3">
+        </div>
+      </div>
+    </section>
+
+    <!-- ✅ Room Videos (STATIC) -->
+    <section class="bg-white rounded-2xl border border-gray-200 p-6 shadow-md">
+      <h3 class="text-lg font-semibold text-yellow-700 mb-4">Room Videos</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="w-full h-64">
+          <video controls class="w-full h-full object-cover rounded-lg shadow-md">
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            Your browser does not support video playback.
+          </video>
+        </div>
+        <div class="w-full h-64">
+          <video controls class="w-full h-full object-cover rounded-lg shadow-md">
+            <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+            Your browser does not support video playback.
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <!-- ✅ Freeze / Unfreeze Button -->
+    <div id="freezeBtn" class="flex justify-end gap-4 mt-6"></div>
+
+  </main>
+
+  <!-- ✅ Navbar + Sidebar Loader -->
+  <script>
+    /************************************************************
+     * Utility: Escape HTML for safe rendering
+     ************************************************************/
+    function escapeHtml(str) {
+      if (typeof str !== 'string') return str;
+      return str.replace(/[&<>"']/g, function(m) {
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];
+      });
+    }
+
+    /************************************************************
+     * LocalStorage Helpers
+     ************************************************************/
+    function getRooms() {
+      try {
+        return JSON.parse(localStorage.getItem('rooms')) || [];
+      } catch (e) {
+        console.error('corrupt rooms in localStorage, resetting', e);
+        localStorage.removeItem('rooms');
+        return [];
+      }
+    }
+    function saveRooms(rooms) {
+      localStorage.setItem('rooms', JSON.stringify(rooms));
+    }
+
+    /************************************************************
+     * Render Room Details from LocalStorage
+     ************************************************************/
+    function renderRoomDetails() {
+      const roomNumber = localStorage.getItem('selectedRoomNumber');
+      if (!roomNumber) {
+        alert("No room selected! Please go back.");
+        return;
+      }
+      const rooms = getRooms();
+      const room = rooms.find(r => r.roomNumber === roomNumber);
+      if (!room) {
+        alert("Room not found in LocalStorage!");
+        return;
+      }
+
+      // Populate basic info
+      document.getElementById('roomNo').textContent = room.roomNumber;
+      document.getElementById('roomType').textContent = room.type;
+      document.getElementById('roomPrice').textContent = room.price;
+      document.getElementById('roomAdults').textContent = room.adultsCapacity || "-";
+      document.getElementById('roomChildren').textContent = room.childrenCapacity || "-";
+      document.getElementById('roomDesc').textContent = room.description || "-";
+
+      // Status pill
+      let statusHtml = "";
+      if (room.frozen) {
+        statusHtml = `<span class="stat-pill bg-red-100 text-red-700">Frozen</span>`;
+      } else if (room.status === 'Available') {
+        statusHtml = `<span class="stat-pill bg-green-100 text-green-700">Available</span>`;
+      } else if (room.status === 'Occupied') {
+        statusHtml = `<span class="stat-pill bg-yellow-100 text-yellow-700">Occupied</span>`;
+      } else {
+        statusHtml = `<span class="stat-pill bg-red-100 text-red-700">${escapeHtml(room.status)}</span>`;
+      }
+      document.getElementById('roomStatus').innerHTML = statusHtml;
+
+      // Amenities
+      const amenitiesContainer = document.getElementById('roomAmenities');
+      amenitiesContainer.innerHTML = "";
+      (room.amenities || []).forEach(am => {
+        const p = document.createElement("p");
+        p.textContent = `✔ ${am}`;
+        amenitiesContainer.appendChild(p);
+      });
+
+      // Bind Freeze Btn
+      renderFreezeButton(room);
+    }
+
+    /************************************************************
+     * Freeze/Unfreeze logic
+     ************************************************************/
+    function renderFreezeButton(room) {
+      const freezeBtn = document.getElementById("freezeBtn");
+      freezeBtn.innerHTML = "";
+      if (room.frozen) {
+        freezeBtn.innerHTML = `
+          <button onclick="toggleFreeze('${room.roomNumber}')" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg shadow flex items-center gap-2">
+             Unfreeze Room
+          </button>`;
+      } else {
+        freezeBtn.innerHTML = `
+          <button onclick="toggleFreeze('${room.roomNumber}')" class="px-5 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg shadow flex items-center gap-2">
+           Freeze Room
+          </button>`;
+      }
+    }
+
+    function toggleFreeze(roomNo) {
+      const rooms = getRooms();
+      const idx = rooms.findIndex(r => r.roomNumber === roomNo);
+      if (idx === -1) return;
+      rooms[idx].frozen = !rooms[idx].frozen;
+      if (rooms[idx].frozen) {
+        rooms[idx].status = "Frozen";
+      } else {
+        if (rooms[idx].status === "Frozen") rooms[idx].status = "Available";
+      }
+      saveRooms(rooms);
+      renderRoomDetails(); // refresh
+    }
+
+    /************************************************************
+     * Navbar + Sidebar
+     ************************************************************/
+    fetch("../AdminMainPageNavbar/index.html").then(res => res.text()).then(data => {
+      document.getElementById("navbar").innerHTML = data;
+    }).catch(() => {
+      document.getElementById("navbar").innerHTML = `
+        <div class="fixed top-0 left-0 right-0 bg-white shadow z-30">
+          <div class="max-w-7xl mx-auto p-4 flex justify-between items-center">
+            <div class="font-bold text-yellow-600">LuxuryStay</div>
+            <div class="text-sm text-gray-600">Admin</div>
+          </div>
+        </div>`;
+    });
+
+    fetch("../AdminMainPageSidebar/index.html").then(res => res.text()).then(data => {
+      document.getElementById("sidebar").innerHTML = data;
+      const currentPage = "room";
+      document.querySelectorAll("#sidebar a").forEach(link => {
+        if (link.dataset.page === currentPage) {
+          link.classList.add("text-yellow-600", "font-bold");
+        }
+      });
+    }).catch(() => {
+      document.getElementById("sidebar").innerHTML = `
+        <div class="p-6">
+          <div class="mb-6 font-bold text-yellow-600">LuxuryStay</div>
+          <nav class="space-y-2 text-sm">
+            <a class="block py-2 text-gray-700" data-page="dashboard">Dashboard</a>
+            <a class="block py-2 text-gray-700" data-page="room">Rooms</a>
+            <a class="block py-2 text-gray-700" data-page="customers">Customers</a>
+          </nav>
+        </div>`;
+    });
+
+    /************************************************************
+     * Edit Button handler
+     ************************************************************/
+    document.addEventListener('DOMContentLoaded', () => {
+      const editBtn = document.getElementById("editBtn");
+      if (editBtn) {
+        editBtn.addEventListener("click", () => {
+          window.location.href = "../AdminEditRoom/index.html";
+        });
+      }
+      renderRoomDetails();
+    });
+  </script>
+</body>
+</html>
