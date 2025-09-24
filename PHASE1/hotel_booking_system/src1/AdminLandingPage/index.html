@@ -1,0 +1,458 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxuryStay Hotel - Official Site</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+
+    <style>
+    .cursive-heading {
+      font-family: 'Pacifico', cursive;
+    }
+  </style>
+  </head>
+  <body class="bg-gray-50 text-gray-700 leading-relaxed">
+
+    <!-- ✅ Navbar -->
+    <div id="navbar"></div>
+
+    <!-- ✅ Hero Section -->
+    <section class="relative bg-cover bg-center h-[60vh] sm:h-[70vh]" style="background-image:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80');">
+      <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
+        <div class="text-center text-white max-w-lg sm:max-w-2xl px-4">
+          <h2 class="text-3xl sm:text-5xl font-bold mb-4">Welcome to LuxuryStay</h2>
+          <p class="text-base sm:text-lg md:text-xl mb-6">Experience comfort, elegance, and premium hospitality</p>
+          <a href="#" class="px-6 sm:px-8 py-3 hover:scale-105 bg-gradient-to-r from-yellow-500 to-red-500 text-white rounded-xl text-base sm:text-lg font-semibold hover:opacity-90 shadow-lg cursor-not-allowed transform inline-block">
+            Book Now →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  <!-- ✅ Small About Section -->
+  <section class="scroll-mt-24 py-16 px-6 max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+    <div>
+      <h2 class="text-3xl sm:text-4xl font-bold mb-8
+                bg-gradient-to-r from-yellow-600 to-red-600 bg-clip-text text-transparent">
+        Sophistication & Luxury of LuxuryStay
+      </h2>
+      <p class="text-gray-700 text-base sm:text-lg mb-1">
+        One of the finest luxury hotels in the city, LuxuryStay is designed to reflect elegance and comfort. 
+        Our centrally located 5-star hotel offers the best in hospitality for both business and leisure travelers. 
+        With unmatched facilities, intuitive service, and refined interiors, we create memories that last forever.
+      </p>
+      <!-- Learn More Button -->
+      <a 
+        class="inline-block px-6 py-3 bg-gradient-to-r from-yellow-500 to-red-500 
+                text-white font-semibold rounded-lg shadow-md hover:opacity-90 hover:scale-105 transition cursor-not-allowed">
+        Know more about us →
+      </a>
+    </div>
+    <div>
+      <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=80" 
+          alt="Hotel Image" class="rounded-2xl shadow-lg">
+    </div>
+  </section>
+
+
+
+  <!-- ✅ Rooms -->
+  <section id="rooms" class="scroll-mt-24 py-16 px-6 bg-gray-50 text-center">
+    <h2 class="cursive-heading text-3xl sm:text-4xl font-bold mb-12 
+              bg-gradient-to-r from-yellow-600 to-red-600 bg-clip-text text-transparent">
+      Our Rooms
+    </h2>
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-6xl mx-auto text-left">
+      
+      <!-- Deluxe Room -->
+      <div class="flex flex-col">
+        <img src="../../assets/room1.jpg" alt="Deluxe Room" 
+            class="h-56 w-full object-cover rounded-lg shadow">
+        <h3 class="mt-4 font-serif text-lg sm:text-xl font-bold uppercase">Deluxe Room</h3>
+        <p class="text-gray-600 text-sm mt-2 flex-grow">
+          Experience modern comfort in our Deluxe Rooms, designed with soothing interiors, 
+          plush bedding, and elegant décor. Perfect for solo travelers or couples seeking 
+          a cozy yet stylish retreat. Includes complimentary Wi-Fi and 24/7 room service.
+        </p>
+        <div class="flex items-center justify-between mt-4">
+          <button onclick="window.location.href='../LoginPage/index.html'" 
+                  class="px-5 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition cursor-not-allowed">
+            BOOK NOW
+          </button>
+          <a href="../RoomTypesCustomer/index.html" class="text-yellow-700 font-medium hover:underline flex items-center space-x-1">
+            <span>MORE</span> <span>›</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Executive Suite -->
+      <div class="flex flex-col">
+        <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=600&q=80" 
+            alt="Executive Suite" class="h-56 w-full object-cover rounded-lg shadow">
+        <h3 class="mt-4 font-serif text-lg sm:text-xl font-bold uppercase">Executive Suite</h3>
+        <p class="text-gray-600 text-sm mt-2 flex-grow">
+          Our Executive Suites blend sophistication with spacious living. Featuring king-sized beds, 
+          a private sitting area, and panoramic city skyline views, they are perfect for business 
+          travelers and leisure guests alike. Includes complimentary breakfast and concierge service.
+        </p>
+        <div class="flex items-center justify-between mt-4">
+          <button onclick="window.location.href='../LoginPage/index.html'" 
+                  class="px-5 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition cursor-not-allowed">
+            BOOK NOW
+          </button>
+          <a href="../RoomTypesCustomer/index.html" class="text-yellow-700 font-medium hover:underline flex items-center space-x-1">
+            <span>MORE</span> <span>›</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Presidential Suite -->
+      <div class="flex flex-col">
+        <img src="../../assets/room3.jpg" alt="Presidential Suite" 
+            class="h-56 w-full object-cover rounded-lg shadow">
+        <h3 class="mt-4 font-serif text-lg sm:text-xl font-bold uppercase">Presidential Suite</h3>
+        <p class="text-gray-600 text-sm mt-2 flex-grow">
+          Redefine luxury with our opulent Presidential Suite. Offering a private lounge, 
+          personalized concierge, and breathtaking views, it is designed for those who desire 
+          nothing but the best. Perfect for VIPs and guests who expect a truly royal experience.
+        </p>
+        <div class="flex items-center justify-between mt-4">
+          <button onclick="window.location.href='../LoginPage/index.html'" 
+                  class="px-5 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition cursor-not-allowed">
+            BOOK NOW
+          </button>
+          <a href="../RoomTypesCustomer/index.html" class="text-yellow-700 font-medium hover:underline flex items-center space-x-1">
+            <span>MORE</span> <span>›</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- ✅ Offers -->
+  <section id="offers" class="scroll-mt-24 py-16 px-6 bg-white text-center">
+    <h2 class="cursive-heading text-3xl sm:text-4xl font-bold mb-12 bg-gradient-to-r from-yellow-600 to-red-600 bg-clip-text text-transparent">
+      Special Offers
+    </h2>
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-6xl mx-auto text-left">
+
+      <!-- Offer 1 -->
+      <div class="flex flex-col">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" 
+            alt="Weekend Getaway" class="h-56 w-full object-cover rounded-lg shadow">
+        <h3 class="mt-4 font-serif text-lg sm:text-xl font-bold uppercase">Weekend Getaway</h3>
+        <p class="text-gray-600 text-sm mt-2 flex-grow">
+          Escape the hustle of everyday life and unwind with our exclusive weekend package. 
+          Enjoy 2 nights of luxurious stay, 20% off on spa treatments, complimentary breakfast, 
+          and serene views to rejuvenate your soul.
+        </p>
+        <div class="flex items-center justify-between mt-4">
+          <button class="px-5 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition cursor-not-allowed">
+            Explore more
+          </button>
+          <a href="../OffersCustomer/index.html" class="text-yellow-700 font-medium hover:underline flex items-center space-x-1">
+            <span>MORE</span> <span>›</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Offer 2 -->
+      <div class="flex flex-col">
+        <img src="https://images.unsplash.com/photo-1505691723518-36a5ac3be353?auto=format&fit=crop&w=600&q=80" 
+            alt="Family Package" class="h-56 w-full object-cover rounded-lg shadow">
+        <h3 class="mt-4 font-serif text-lg sm:text-xl font-bold uppercase">Family Package</h3>
+        <p class="text-gray-600 text-sm mt-2 flex-grow">
+          Create unforgettable family memories with our exclusive family deal. 
+          Kids stay free, complimentary breakfast for all, free high-speed Wi-Fi, 
+          and exciting activities designed to keep everyone entertained.
+        </p>
+        <div class="flex items-center justify-between mt-4">
+          <button class="px-5 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition cursor-not-allowed">
+            Explore more
+          </button>
+          <a href="../OffersCustomer/index.html" class="text-yellow-700 font-medium hover:underline flex items-center space-x-1">
+            <span>MORE</span> <span>›</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Offer 3 -->
+      <div class="flex flex-col">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" 
+            alt="Honeymoon Special" class="h-56 w-full object-cover rounded-lg shadow">
+        <h3 class="mt-4 font-serif text-lg sm:text-xl font-bold uppercase">Honeymoon Special</h3>
+        <p class="text-gray-600 text-sm mt-2 flex-grow">
+          Celebrate love in style with our romantic honeymoon offer. 
+          Includes a candlelight dinner, champagne on arrival, 
+          late checkout, and a private suite to ensure magical moments together.
+        </p>
+        <div class="flex items-center justify-between mt-4">
+          <button class="px-5 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition cursor-not-allowed">
+            Explore more
+          </button>
+          <a href="../OffersCustomer/index.html" class="text-yellow-700 font-medium hover:underline flex items-center space-x-1">
+            <span>MORE</span> <span>›</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- ✅ Facilities -->
+  <section id="facilities" class="scroll-mt-24 py-16 px-6 bg-white text-center">
+
+    <h2 class="cursive-heading text-3xl sm:text-4xl font-extrabold mb-12 
+              bg-gradient-to-r from-yellow-600 to-red-600 bg-clip-text text-transparent">
+      Our Facilities
+    </h2>
+
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-6xl mx-auto text-left">
+
+      <!-- Wellness Spa -->
+      <div class="flex flex-col">
+        <img src="../../assets/spa.png" alt="Wellness Spa" 
+            class="h-44 w-full object-cover rounded-lg shadow">
+        <h3 class="mt-4 font-serif text-lg font-bold uppercase text-yellow-700">Wellness Spa</h3>
+        <p class="text-gray-600 text-sm mt-2 flex-grow">
+          Rejuvenating therapies to refresh your body and soul with expert care.
+        </p>
+        <div class="mt-4" onclick="window.location.href='../Facilities/index.html'">
+          <button  class="w-full px-4 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition cursor-not-allowed">
+            <a href='../GeneralInfoPages/Facilities/index.html'>KNOW MORE</a>
+          </button>
+        </div>
+      </div>
+
+      <!-- Infinity Pool -->
+      <div class="flex flex-col">
+        <img src="../../assets/pool.jpg" alt="Infinity Pool" 
+            class="h-44 w-full object-cover rounded-lg shadow">
+        <h3 class="mt-4 font-serif text-lg font-bold uppercase text-red-600">Infinity Pool</h3>
+        <p class="text-gray-600 text-sm mt-2 flex-grow">
+          Relax in style with a scenic infinity pool offering breathtaking views.
+        </p>
+        <div class="mt-4" onclick="window.location.href='../Facilities/index.html'">
+          <button  class="w-full px-4 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition">
+            <a href='../GeneralInfoPages/Facilities/index.html'>KNOW MORE</a>
+          </button>
+        </div>
+      </div>
+
+      <!-- Fine Dining -->
+      <div class="flex flex-col">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" 
+            alt="Fine Dining" class="h-44 w-full object-cover rounded-lg shadow">
+        <h3 class="mt-4 font-serif text-lg font-bold uppercase text-yellow-700">Fine Dining</h3>
+        <p class="text-gray-600 text-sm mt-2 flex-grow">
+          Indulge in cuisines crafted by master chefs in an elegant ambiance.
+        </p>
+        <div class="mt-4" onclick="window.location.href='../Facilities/index.html'">
+          <button class="w-full px-4 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition cursor-not-allowed">
+            <a href='../GeneralInfoPages/Facilities/index.html'>KNOW MORE</a>
+          </button>
+        </div>
+      </div>
+
+      <!-- Fitness Center -->
+      <div class="flex flex-col">
+        <img src="../../assets/gym.png" alt="Fitness Center" 
+            class="h-44 w-full object-cover rounded-lg shadow">
+        <h3 class="mt-4 font-serif text-lg font-bold uppercase text-red-600">Fitness Center</h3>
+        <p class="text-gray-600 text-sm mt-2 flex-grow">
+          Stay active with top-class gym equipment and personalized training.
+        </p>
+        <div class="mt-4" onclick="window.location.href='../Facilities/index.html'">
+          <button  class="w-full px-4 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition cursor-not-allowed">
+            <a href='../GeneralInfoPages/Facilities/index.html'>KNOW MORE</a>
+          </button>
+        </div>
+      </div>
+
+      <!-- Conference Hall -->
+      <div class="flex flex-col">
+        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80" 
+            alt="Conference Hall" class="h-44 w-full object-cover rounded-lg shadow">
+        <h3 class="mt-4 font-serif text-lg font-bold uppercase text-yellow-700">Conference Hall</h3>
+        <p class="text-gray-600 text-sm mt-2 flex-grow">
+          Spacious modern halls for meetings, events, and corporate gatherings.
+        </p>
+        <div class="mt-4" onclick="window.location.href='../Facilities/index.html'">
+          <button  class="w-full px-4 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition cursor-not-allowed">
+            <a href='../GeneralInfoPages/Facilities/index.html'>KNOW MORE</a>
+          </button>
+        </div>
+      </div>
+
+      <!-- Luxury Lounge -->
+      <div class="flex flex-col">
+        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80" 
+            alt="Luxury Lounge" class="h-44 w-full object-cover rounded-lg shadow">
+        <h3 class="mt-4 font-serif text-lg font-bold uppercase text-red-600">Luxury Lounge</h3>
+        <p class="text-gray-600 text-sm mt-2 flex-grow">
+          Unwind in our stylish lounge with premium cocktails and live entertainment.
+        </p>
+        <div class="mt-4" onclick="window.location.href='../Facilities/index.html'">
+          <button  class="w-full px-4 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition cursor-not-allowed">
+            <a href='../GeneralInfoPages/Facilities/index.html'>KNOW MORE</a>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ✅ Hotel Information -->
+  <section id="hotel-info" class="scroll-mt-24 py-16 px-6 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <!-- Heading -->
+    <h2 class="cursive-heading text-3xl sm:text-4xl font-extrabold mb-12 text-center 
+            bg-gradient-to-r from-yellow-600 to-red-600 bg-clip-text text-transparent">
+    Hotel Information
+  </h2>
+
+      <!-- Info Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-gray-700 text-sm sm:text-base">
+
+        <!-- Check In / Out -->
+        <div class="space-y-2 border-t pt-3">
+          <h4 class="text-xs font-semibold text-gray-500 uppercase">Check In – Check Out</h4>
+          <p class="font-medium">Check-in from 2:00 pm <br> Check-out until noon</p>
+        </div>
+
+        <!-- Rooms & Suites -->
+        <div class="space-y-2 border-t pt-3">
+          <h4 class="text-xs font-semibold text-gray-500 uppercase">Rooms & Suites</h4>
+          <p class="font-medium">212 rooms and suites</p>
+        </div>
+
+        <!-- Dining -->
+        <div class="space-y-2 border-t pt-3">
+          <h4 class="text-xs font-semibold text-gray-500 uppercase">Dining</h4>
+          <p class="font-medium">1 bar and 3 restaurants</p>
+        </div>
+
+        <!-- Wellness -->
+        <div class="space-y-2 border-t pt-3">
+          <h4 class="text-xs font-semibold text-gray-500 uppercase">Wellness</h4>
+          <p class="font-medium">Luxury Spa offering traditional therapies</p>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+
+    <!-- ✅ Testimonials -->
+    <section id="testimonials" class="scroll-mt-24 py-14 px-6 text-center bg-white">
+  <h2 class="cursive-heading text-3xl font-extrabold mb-10 text-center 
+            bg-gradient-to-r from-yellow-600 to-red-600 bg-clip-text text-transparent">
+    What Our Guests Say
+  </h2>
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div class="bg-gradient-to-br from-yellow-50 to-red-50 p-6 rounded-2xl shadow hover:shadow-xl border border-yellow-200">
+          <p class="italic text-gray-700 mb-3">“Amazing stay! The staff was so friendly and the rooms were spotless.”</p>
+          <h4 class="font-semibold">Sarah Johnson</h4>
+          <p class="text-yellow-600">★★★★★</p>
+        </div>
+        <div class="bg-gradient-to-br from-yellow-50 to-red-50 p-6 rounded-2xl shadow hover:shadow-xl border border-yellow-200">
+          <p class="italic text-gray-700 mb-3">“Perfect location near attractions. I’ll definitely come back.”</p>
+          <h4 class="font-semibold">David Lee</h4>
+          <p class="text-yellow-600">★★★★★</p>
+        </div>
+        <div class="bg-gradient-to-br from-yellow-50 to-red-50 p-6 rounded-2xl shadow hover:shadow-xl border border-yellow-200">
+          <p class="italic text-gray-700 mb-3">“The restaurant served the best breakfast. Truly 5-star experience.”</p>
+          <h4 class="font-semibold">Emily Davis</h4>
+          <p class="text-yellow-600">★★★★★</p>
+        </div>
+      </div>
+    </section>
+
+  <!-- ✅ Destinations -->
+  <section id="destinations" class="scroll-mt-24 py-16 px-6 bg-white">
+  <h2 class="cursive-heading text-3xl sm:text-4xl font-extrabold mb-12 text-center 
+            bg-gradient-to-r from-yellow-600 to-red-600 bg-clip-text text-transparent">
+    Popular Destinations
+  </h2>
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-12 max-w-6xl mx-auto text-left">
+
+      <!-- New York -->
+      <div>
+        <img src="../../assets/nyc.jpg" alt="New York" class="w-full h-56 object-cover rounded-md mb-4">
+        <h3 class="font-serif text-lg sm:text-xl font-bold uppercase">New York City</h3>
+        <p class="text-gray-600 text-sm mt-2">
+          The city that never sleeps – Broadway shows, skyline views, vibrant nightlife, and endless culture.
+        </p>
+      </div>
+
+      <!-- Maldives -->
+      <div>
+        <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=600&q=80" alt="Maldives" class="w-full h-56 object-cover rounded-md mb-4">
+        <h3 class="font-serif text-lg sm:text-xl font-bold uppercase">Maldives</h3>
+        <p class="text-gray-600 text-sm mt-2">
+          Crystal-clear waters, luxury beach villas, and serene retreats — the Maldives is paradise on Earth.
+        </p>
+      </div>
+
+      <!-- Paris -->
+      <div>
+        <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=80" alt="Paris" class="w-full h-56 object-cover rounded-md mb-4">
+        <h3 class="font-serif text-lg sm:text-xl font-bold uppercase">Paris</h3>
+        <p class="text-gray-600 text-sm mt-2">
+          Romance by the Eiffel Tower, gourmet dining, and rich cultural treasures in the City of Love.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <div id="footer"></div>
+
+
+  <!-- ✅ Script -->
+  <script>
+    const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
+    const isAdminLoggedIn = localStorage.getItem("is_admin_logged_in") === "true";
+
+  // ✅ Navbar loader
+    navbarPath = "../Navbars/AdminLandingNavbar/index.html";
+
+
+  // ✅ Navbar loader
+  fetch(navbarPath)
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById("navbar").innerHTML = data;
+
+      // mobile menu toggle
+      const menuBtn = document.getElementById("menuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener("click", () => {
+          mobileMenu.classList.toggle("open");
+        });
+      }
+    });
+
+    // ✅ Footer loader
+    fetch("../Footers/AdminLandingFooter/index.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("footer").innerHTML = data;
+      });
+
+
+  
+  </script>
+
+  </body>
+  </html>

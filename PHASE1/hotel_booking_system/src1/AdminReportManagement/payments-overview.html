@@ -29,11 +29,11 @@
       <div>
         <h3 class="font-semibold text-gray-800 mb-2">Bookings</h3>
         <ul class="space-y-1">
-          <li><a href="room-occupancy.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Room Occupancy</a></li>
-          <li><a href="room-usage-trends.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Room Usage Trends</a></li>
-          <li><a href="room-details.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Room Details</a></li>
-          <li><a href="booking-trends.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Booking Trends</a></li>
-          <li><a href="cancellation-history.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Cancellation History</a></li>
+          <li><a href="./AdminReportManagement/room-occupancy.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Room Occupancy</a></li>
+          <li><a href="./AdminReportManagement/room-usage-trends.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Room Usage Trends</a></li>
+          <li><a href="./AdminReportManagement/room-details.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Room Details</a></li>
+          <li><a href="./AdminReportManagement/booking-trends.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Booking Trends</a></li>
+          <li><a href="./AdminReportManagement/cancellation-history.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Cancellation History</a></li>
         </ul>
       </div>
 
@@ -41,8 +41,8 @@
       <div>
         <h3 class="font-semibold text-gray-800 mb-2">Customers</h3>
         <ul class="space-y-1">
-          <li><a href="customer-activity.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Customer Activity</a></li>
-          <li><a href="top-customer.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Top Customers</a></li>
+          <li><a href="./AdminReportManagement/customer-activity.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Customer Activity</a></li>
+          <li><a href="./AdminReportManagement/top-customer.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Top Customers</a></li>
         </ul>
       </div>
 
@@ -50,9 +50,9 @@
       <div>
         <h3 class="font-semibold text-gray-800 mb-2">Issues</h3>
         <ul class="space-y-1">
-          <li><a href="reported-issues.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Reported Issues</a></li>
-          <li><a href="resolved-issues.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Resolved Issues</a></li>
-          <li><a href="pending-issues.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Pending Issues</a></li>
+          <li><a href="./AdminReportManagement/reported-issues.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Reported Issues</a></li>
+          <li><a href="./AdminReportManagement/resolved-issues.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Resolved Issues</a></li>
+          <li><a href="./AdminReportManagement/pending-issues.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Pending Issues</a></li>
         </ul>
       </div>
 
@@ -60,9 +60,9 @@
       <div>
         <h3 class="font-semibold text-gray-800 mb-2">Refunds</h3>
         <ul class="space-y-1">
-          <li><a href="refund-history.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Refund History</a></li>
-          <li><a href="processed-refunds.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Processed Refunds</a></li>
-          <li><a href="pending-refunds.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Pending Refunds</a></li>
+          <li><a href="./AdminReportManagement/refund-history.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Refund History</a></li>
+          <li><a href="./AdminReportManagement/processed-refunds.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Processed Refunds</a></li>
+          <li><a href="./AdminReportManagement/pending-refunds.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Pending Refunds</a></li>
         </ul>
       </div>
 
@@ -70,8 +70,8 @@
       <div>
         <h3 class="font-semibold text-gray-800 mb-2">Payments</h3>
         <ul class="space-y-1">
-          <li><a href="payments-overview.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Payments Overview</a></li>
-          <li><a href="Revenue-overview.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Revenue Overview</a></li>
+          <li><a href="./AdminReportManagement/payments-overview.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Payments Overview</a></li>
+          <li><a href="./AdminReportManagement/Revenue-overview.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Revenue Overview</a></li>
         </ul>
       </div>
 
@@ -382,9 +382,9 @@
     <!-- // fetch("../CustomerFooter/index.html").then(r => r.text()).then(d => { document.getElementById("footer").innerHTML = d; }).catch(()=>{}); -->
 
     <script>
-            fetch("../AdminMainPageNavbar/index.html").then(r => r.text()).then(d => { document.getElementById("navbar").innerHTML = d; }).catch(()=>{});
+            fetch("../Navbars/AdminMainPageNavbar/index.html").then(r => r.text()).then(d => { document.getElementById("navbar").innerHTML = d; }).catch(()=>{});
     // Load Reports Sidebar
-    fetch("../AdminMainPageSidebar/index.html").then(res => res.text()).then(data => {
+    fetch("../Sidebars/AdminMainPageSidebar/index.html").then(res => res.text()).then(data => {
       document.getElementById("old_sidebar").innerHTML = data;
 
       // Highlight current page

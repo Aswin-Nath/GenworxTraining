@@ -247,8 +247,8 @@
     }
 
     // Navbar + Sidebar injection
-    fetch("../AdminMainPageNavbar/index.html").then(res=>res.text()).then(d=>document.getElementById("navbar").innerHTML=d);
-    fetch("../AdminMainPageSidebar/index.html").then(res=>res.text()).then(d=>{
+    fetch("../Navbars/AdminMainPageNavbar/index.html").then(res=>res.text()).then(d=>document.getElementById("navbar").innerHTML=d);
+    fetch("../Sidebars/AdminMainPageSidebar/index.html").then(res=>res.text()).then(d=>{
       document.getElementById("sidebar").innerHTML=d;
       document.querySelectorAll("#sidebar a").forEach(link=>{
         if(link.dataset.page==="content"){ link.classList.add("text-yellow-600","font-bold"); }

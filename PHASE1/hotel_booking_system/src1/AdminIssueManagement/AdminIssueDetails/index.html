@@ -18,20 +18,17 @@
   <!-- ✅ Main Content -->
   <main class="ml-64 pt-16 p-8 h-screen overflow-y-auto space-y-10">
 
-    <!-- ✅ Page Header (Admin Theme) -->
-    <div class="relative rounded-2xl border-2 border-yellow-500 bg-yellow-50 py-8 text-center shadow">
-      <h2 class="text-4xl text-gray-800 font-bold">Issue Details</h2>
-      <p class="text-gray-600 mt-2">Detailed view of a reported issue with media and chat</p>
-    </div>
-
-    <!-- ✅ Back Button -->
-    <div class="flex justify-start mt-4">
-      <button onclick="window.history.back()" 
-        class="flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-5 py-2 rounded-lg shadow">
+    <!-- Header -->
+    <div class="flex items-center gap-3 mb-6">
+      <button onclick="window.history.back()"
+        class="flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-2 rounded-lg shadow">
         <span class="material-icons text-sm">arrow_back</span> Back
       </button>
-    </div>
+      <div class="flex-1">
+        <h2 class="text-2xl font-bold text-gray-800">Issue Details</h2>
+      </div>
 
+    </div>
     <!-- ✅ Issue Details -->
     <section class="bg-white rounded-2xl border border-gray-200 p-6 shadow-md">
       <div class="md:flex md:items-start md:justify-between gap-6">
@@ -80,13 +77,13 @@
       <div id="issueMediaGrid" class="grid grid-cols-2 md:grid-cols-3 gap-4">
         <div class="overflow-hidden rounded-lg h-40">
           <img class="thumb w-full h-full object-cover rounded-lg cursor-pointer"
-              src="../../assets/gym.png"
+              src="../../../assets/gym.png"
               data-large="../../assets/gym.png"
               alt="Gym area - equipment" data-index="0">
         </div>
         <div class="overflow-hidden rounded-lg h-40">
           <img class="thumb w-full h-full object-cover rounded-lg cursor-pointer"
-              src="../../assets/pool.jpg"
+              src="../../../assets/pool.jpg"
               data-large="../../assets/pool.jpg"
               alt="Pool area" data-index="1">
         </div>
@@ -139,12 +136,12 @@
   <!-- ✅ Navbar + Sidebar Loader -->
   <script>
     // Navbar
-    fetch("../AdminMainPageNavbar/index.html").then(res => res.text()).then(data => {
+    fetch("../../Navbars/AdminMainPageNavbar/index.html").then(res => res.text()).then(data => {
       document.getElementById("navbar").innerHTML = data;
     });
 
     // Sidebar
-    fetch("../AdminMainPageSidebar/index.html").then(res => res.text()).then(data => {
+    fetch("../../Sidebars/AdminMainPageSidebar/index.html").then(res => res.text()).then(data => {
       document.getElementById("sidebar").innerHTML = data;
       const currentPage = "issue";
       document.querySelectorAll("#sidebar a").forEach(link => {
