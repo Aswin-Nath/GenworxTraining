@@ -39,16 +39,15 @@
         </div>
       </div>
 
-<!-- ✅ Refund Filters Box -->
-<div class="bg-white shadow-lg border border-gray-200 rounded-xl p-6 space-y-6">
+<!-- ✅ Compact Refund Filters -->
+<div class="bg-white shadow-md border border-gray-200 rounded-lg p-3 mb-4">
 
-  <!-- Filters Grid -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div class="flex flex-wrap items-end gap-3">
 
     <!-- Refund Status -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Refund Status</label>
-      <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm">
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Refund Status</label>
+      <select class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
         <option value="">All Statuses</option>
         <option value="pending">Pending</option>
         <option value="processing">Processing</option>
@@ -59,91 +58,54 @@
     </div>
 
     <!-- Amount Range -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Amount Range</label>
-      <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm">
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Amount Range (₹)</label>
+      <select class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
         <option value="">All Amounts</option>
-        <option value="0-100">$0 - $100</option>
-        <option value="101-500">$101 - $500</option>
-        <option value="501-1000">$501 - $1000</option>
-        <option value="1001+">$1000+</option>
-      </select>
-    </div>
-
-    <!-- Refund Type -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Refund Type</label>
-      <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm">
-        <option value="">All Types</option>
-        <option value="cancellation">Cancellation</option>
-        <option value="modification">Booking Modification</option>
-        <option value="complaint">Complaint Resolution</option>
-        <option value="overcharge">Overcharge</option>
-        <option value="other">Other</option>
-      </select>
-    </div>
-
-    <!-- Payment Method -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Payment Method</label>
-      <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm">
-        <option value="">All Methods</option>
-        <option value="credit">Credit Card</option>
-        <option value="debit">Debit Card</option>
-        <option value="bank">Bank Transfer</option>
-        <option value="paypal">PayPal</option>
-        <option value="other">Other</option>
-      </select>
-    </div>
-
-    <!-- Processing Time -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Processing Time</label>
-      <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm">
-        <option value="">All Times</option>
-        <option value="under24">Under 24 Hours</option>
-        <option value="24-48">24-48 Hours</option>
-        <option value="48-72">48-72 Hours</option>
-        <option value="over72">Over 72 Hours</option>
-      </select>
-    </div>
-
-    <!-- Sort By -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
-      <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm">
-        <option value="newest">Newest First</option>
-        <option value="oldest">Oldest First</option>
-        <option value="amount-high">Amount (High to Low)</option>
-        <option value="amount-low">Amount (Low to High)</option>
-        <option value="status">Status</option>
+        <option value="0-1000">₹0 - ₹1,000</option>
+        <option value="1000-5000">₹1,000 - ₹5,000</option>
+        <option value="5000-10000">₹5,000 - ₹10,000</option>
+        <option value="10000+">₹10,000+</option>
       </select>
     </div>
 
     <!-- Date Range -->
-    <div class="lg:col-span-2">
-      <label class="block text-sm font-medium text-gray-700 mb-1">Date Range</label>
-      <div class="flex items-center gap-3">
-        <input type="date" class="w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm">
-        <span class="text-gray-500">—</span>
-        <input type="date" class="w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm">
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Date Range</label>
+      <div class="flex items-center gap-2">
+        <input type="date" class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <span class="text-gray-400">—</span>
+        <input type="date" class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
       </div>
     </div>
 
-  </div>
+    <!-- Sort By -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Sort By</label>
+      <select class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+        <option value="amount-high">Amount (High → Low)</option>
+        <option value="amount-low">Amount (Low → High)</option>
+        <option value="status">Status</option>
+      </select>
+    </div>
 
-  <!-- Action Buttons -->
-  <div class="flex justify-end gap-3 pt-3 border-t border-gray-100">
-    <button class="px-5 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 shadow-sm flex items-center gap-2">
-      <span class="material-icons text-sm">refresh</span>
-      <span>Reset</span>
-    </button>
-    <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 shadow-sm flex items-center gap-2">
-      <span class="material-icons text-sm">filter_alt</span>
-      <span>Apply Filters</span>
-    </button>
+    <!-- Action Buttons -->
+    <div class="ml-auto flex gap-2">
+      <button class="px-3 py-2 bg-gray-100 text-gray-700 text-sm rounded-md hover:bg-gray-200 flex items-center gap-1">
+        <span class="material-icons text-xs">refresh</span>
+        Reset
+      </button>
+      <button class="px-4 py-2 bg-yellow-600 text-white text-sm rounded-md hover:bg-yellow-700 flex items-center gap-1">
+        <span class="material-icons text-xs">filter_alt</span>
+        Apply
+      </button>
+    </div>
+
   </div>
 </div>
+
 
       <!-- ✅ Action -->
 

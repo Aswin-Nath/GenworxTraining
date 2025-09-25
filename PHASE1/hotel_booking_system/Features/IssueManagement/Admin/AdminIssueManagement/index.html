@@ -24,16 +24,15 @@
       <p class="text-gray-600">Track, filter, and manage issues efficiently.</p>
     </div>
 
-<!-- ✅ Unified Search + Filter Box -->
-<div class="bg-white shadow-lg border border-gray-200 rounded-xl p-6 space-y-6 mb-8">
+<!-- ✅ Compact Issue Filter -->
+<div class="bg-white shadow-md border border-gray-200 rounded-lg p-3 mb-4">
 
-  <!-- Filters in One Grid -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+  <div class="flex flex-wrap items-end gap-3">
 
     <!-- Issue Status -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Issue Status</label>
-      <select id="filterStatus" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Issue Status</label>
+      <select id="filterStatus" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500">
         <option value="">All Status</option>
         <option value="open">Open</option>
         <option value="in-progress">In Progress</option>
@@ -42,87 +41,51 @@
       </select>
     </div>
 
-    <!-- Priority -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Priority Level</label>
-      <select id="filterPriority" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+    <!-- Priority Level -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Priority Level</label>
+      <select id="filterPriority" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500">
         <option value="">All Priorities</option>
-        <option value="high">High Priority</option>
-        <option value="medium">Medium Priority</option>
-        <option value="low">Low Priority</option>
-      </select>
-    </div>
-
-    <!-- Category -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Issue Category</label>
-      <select id="filterCategory" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
-        <option value="">All Categories</option>
-        <option value="technical">Technical</option>
-        <option value="billing">Billing</option>
-        <option value="service">Service Quality</option>
-        <option value="amenities">Amenities</option>
-        <option value="other">Other</option>
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
       </select>
     </div>
 
     <!-- Date Range -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Date Range</label>
-      <div class="flex items-center gap-3">
-        <input id="filterFromDate" type="date" class="w-1/2 p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
-        <span class="text-gray-500">—</span>
-        <input id="filterToDate" type="date" class="w-1/2 p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Date Range</label>
+      <div class="flex items-center gap-2">
+        <input id="filterFromDate" type="date" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <span class="text-gray-400">—</span>
+        <input id="filterToDate" type="date" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500">
       </div>
     </div>
 
     <!-- Sort By -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
-      <select id="filterSort" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Sort By</label>
+      <select id="filterSort" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500">
         <option value="recent">Most Recent</option>
-        <option value="priority">Priority (High to Low)</option>
+        <option value="priority">Priority (High → Low)</option>
         <option value="status">Status</option>
         <option value="customer">Customer Name</option>
       </select>
     </div>
 
-    <!-- Response Status -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Response Status</label>
-      <select id="filterResponse" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
-        <option value="">All Responses</option>
-        <option value="pending">Pending Response</option>
-        <option value="responded">Responded</option>
-        <option value="customer-reply">Customer Reply</option>
-      </select>
-    </div>
-
-    <!-- Resolution Time -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Resolution Time</label>
-      <select id="filterResolution" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
-        <option value="">All Times</option>
-        <option value="under-24h">Under 24 Hours</option>
-        <option value="24-48h">24-48 Hours</option>
-        <option value="over-48h">Over 48 Hours</option>
-      </select>
+    <!-- Action Buttons -->
+    <div class="ml-auto flex gap-2">
+      <button class="px-3 py-2 bg-gray-100 text-gray-700 text-sm rounded-md hover:bg-gray-200 flex items-center gap-1">
+        <span class="material-icons text-xs">refresh</span>
+        Reset
+      </button>
+      <button id="applyFiltersBtn" class="px-4 py-2 bg-yellow-600 text-white text-sm rounded-md hover:bg-yellow-700 flex items-center gap-1">
+        <span class="material-icons text-xs">filter_alt</span>
+        Apply
+      </button>
     </div>
 
   </div>
-
-  <!-- Action Buttons -->
-  <div class="flex justify-end gap-3 pt-4 border-t border-gray-100">
-    <button class="px-5 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 shadow-sm flex items-center space-x-2">
-      <span class="material-icons text-sm">refresh</span>
-      <span>Reset</span>
-    </button>
-    <button id="applyFiltersBtn" class="px-5 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg shadow flex items-center space-x-2">
-      <span class="material-icons text-sm">filter_alt</span>
-      <span>Apply Filters</span>
-    </button>
-  </div>
-
 </div>
 
 
