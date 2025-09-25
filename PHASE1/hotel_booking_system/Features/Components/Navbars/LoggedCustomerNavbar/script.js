@@ -43,7 +43,7 @@ if (isAdminLoggedIn) {
     const roomsContainer = document.getElementById("roomsContainer");
 
     if (!modal) return;
-
+    
     // Open modal
     document.querySelectorAll(".bookingModal").forEach(btn => {
       btn.addEventListener("click", (e) => {

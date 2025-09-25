@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - Notifications Management</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    .notification-item {
+      border-left-width: 6px;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .notification-item.booking {
+      border-left-color: #16a34a; /* green */
+      background-color: #f0fdf4;
+    }
+    .notification-item.issue {
+      border-left-color: #dc2626; /* red */
+      background-color: #fef2f2;
+    }
+    .notification-item.refund {
+      border-left-color: #facc15; /* yellow */
+      background-color: #fefce8;
+    }
+    .notification-item.unread {
+      font-weight: 500;
+    }
+    .notification-timestamp {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+  <!-- ✅ Navbar -->
+  <div id="navbar"></div>
+
+  <!-- ✅ Sidebar -->
+  <div id="sidebar" class="fixed top-16 left-0 w-64 h-screen bg-white border-r border-gray-200"></div>
+
+  <!-- ✅ Main Content -->
+  <main class="ml-64 pt-20 p-8 min-h-screen overflow-y-auto bg-gray-50">
+
+    <!-- Title -->
+    <div class="mb-6 flex justify-between items-center">
+      <div>
+        <h2 class="text-2xl font-bold text-gray-800">Notifications Dashboard</h2>
+        <p class="text-gray-600">Stay updated on bookings, issues, and refunds in real-time.</p>
+      </div>
+      <div class="flex gap-2">
+        <button id="markAllRead" class="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700 flex items-center gap-1">
+          <span class="material-icons text-sm">done_all</span>
+          Mark All as Read
+        </button>
+        <button id="refreshNotifications" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 flex items-center gap-1">
+          <span class="material-icons text-sm">refresh</span>
+          Refresh
+        </button>
+      </div>
+    </div>
+
+    <!-- ✅ Filter Buttons -->
+    <div class="flex flex-wrap gap-3 mb-6">
+      <button type="button" class="px-4 py-2 border border-gray-300 rounded-full bg-yellow-50 text-yellow-700 font-medium text-sm flex items-center gap-2 active" data-filter="all">
+        <span class="material-icons text-sm">notifications</span>
+        All
+        <span id="allCount" class="px-2 py-0.5 bg-yellow-600 text-white rounded-full text-xs">0</span>
+      </button>
+      <button type="button" class="px-4 py-2 border border-gray-300 rounded-full text-green-700 font-medium text-sm flex items-center gap-2" data-filter="booking">
+        <span class="material-icons text-sm">calendar_today</span>
+        Bookings
+        <span id="bookingCount" class="px-2 py-0.5 bg-green-600 text-white rounded-full text-xs">0</span>
+      </button>
+      <button type="button" class="px-4 py-2 border border-gray-300 rounded-full text-red-700 font-medium text-sm flex items-center gap-2" data-filter="issue">
+        <span class="material-icons text-sm">error_outline</span>
+        Issues
+        <span id="issueCount" class="px-2 py-0.5 bg-red-600 text-white rounded-full text-xs">0</span>
+      </button>
+      <button type="button" class="px-4 py-2 border border-gray-300 rounded-full text-yellow-700 font-medium text-sm flex items-center gap-2" data-filter="refund">
+        <span class="material-icons text-sm">attach_money</span>
+        Refunds
+        <span id="refundCount" class="px-2 py-0.5 bg-yellow-600 text-white rounded-full text-xs">0</span>
+      </button>
+    </div>
+
+    <!-- ✅ Notification Sections -->
+    <section class="notification-section mb-6" id="bookingNotifications">
+      <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-3">
+        <span class="material-icons text-green-600">calendar_today</span>
+        Booking Notifications
+      </h3>
+      <div id="bookingList"></div>
+    </section>
+
+    <section class="notification-section mb-6" id="issueNotifications">
+      <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-3">
+        <span class="material-icons text-red-600">error_outline</span>
+        Issue Notifications
+      </h3>
+      <div id="issueList"></div>
+    </section>
+
+    <section class="notification-section" id="refundNotifications">
+      <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-3">
+        <span class="material-icons text-yellow-600">attach_money</span>
+        Refund Notifications
+      </h3>
+      <div id="refundList"></div>
+    </section>
+
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>

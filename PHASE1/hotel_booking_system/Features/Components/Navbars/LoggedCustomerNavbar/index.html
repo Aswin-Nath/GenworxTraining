@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
   <style>
     /* Mobile dropdown slide effect */
     #mobileMenu {
@@ -19,35 +22,31 @@
       position: relative;
       transition: all 0.3s ease;
       animation: glow-pulse 2s infinite ease-in-out;
-      /* box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3); */
     }
 
     @keyframes glow-pulse {
       0% {
-        box-shadow: 
-                    0 6px 15px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         transform: scale(1);
       }
       50% {
-        box-shadow: 
-                    0 8px 20px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
         transform: scale(1.05);
       }
       100% {
-        box-shadow: 
-                    0 6px 15px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         transform: scale(1);
       }
     }
   </style>
 </head>
-<body>
+<body class="bg-gray-50">
+
   <!-- ✅ Navbar -->
   <header class="flex justify-between items-center bg-white shadow-md px-4 sm:px-6 py-2 fixed top-0 left-0 w-full z-50">
     <!-- Logo + Title -->
     <a href="/Features/LandingPages/Admin/index.html" class="flex items-center space-x-2">
-      <img src="/assets/Hotel_logo.png" 
-           alt="Hotel Logo" 
+      <img src="/assets/Hotel_logo.png" alt="Hotel Logo"
            class="h-8 sm:h-10 rounded-full border-2 border-yellow-600 p-1">
       <h1 class="text-lg sm:text-xl font-bold text-yellow-700">LuxuryStay</h1>
     </a>
@@ -57,42 +56,79 @@
 
     <!-- Desktop Nav -->
     <nav class="hidden md:flex space-x-9 font-medium text-sm sm:text-base">
-    <a href="/Features/LandingPages/Customer/index.html" class="hover:text-yellow-600">Home</a>
-    <a href="/Features/RoomManagement/Customer/RoomTypesCustomer/index.html" class="hover:text-yellow-600">Rooms</a>
-    <a href="/Features/RoomManagement/Customer/OffersCustomer/index.html" class="hover:text-yellow-600">Offers</a>
-    
-    
-    <a href="/Features/ContentManagement/Customer/Facilities/index.html" class="hover:text-yellow-600">Facilities</a>
-    <a href="/Features/Faqs/index.html" class="hover:text-yellow-600">FAQs</a>
-        <a href="/Features/LandingPages/Customer/index.html#destinations" class="hover:text-yellow-600">Destinations</a>
-
+      <a href="/Features/LandingPages/Customer/index.html" class="hover:text-yellow-600">Home</a>
+      <a href="/Features/RoomManagement/Customer/RoomTypesCustomer/index.html" class="hover:text-yellow-600">Rooms</a>
+      <a href="/Features/RoomManagement/Customer/OffersCustomer/index.html" class="hover:text-yellow-600">Offers</a>
+      <a href="/Features/ContentManagement/Customer/Facilities/index.html" class="hover:text-yellow-600">Facilities</a>
+      <a href="/Features/Faqs/index.html" class="hover:text-yellow-600">FAQs</a>
+      <a href="/Features/LandingPages/Customer/index.html#destinations" class="hover:text-yellow-600">Destinations</a>
     </nav>  
 
     <!-- Desktop Buttons -->
-    <div class="hidden md:flex items-center space-x-3 text-sm sm:text-base">
+    <div class="hidden md:flex items-center space-x-3 text-sm sm:text-base relative">
+      <!-- Book Now -->
       <a href="#"
         class="bookingModal text-center px-4 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-medium rounded-lg hover:opacity-90 transition glow-btn">
         Book Now
       </a>
 
-    <button class="relative focus:outline-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 hover:text-yellow-600 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-      </svg>
-      <!-- Notification Dot -->
-      <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500"></span>
-    </button>
+      <!-- 🔔 Notification Dropdown -->
+      <div class="relative">
+        <button id="notifBtn" class="relative focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" 
+               class="h-6 w-6 text-gray-600 hover:text-yellow-600 transition" 
+               fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 
+                     0118 14.158V11a6.002 6.002 0 
+                     00-4-5.659V5a2 2 0 
+                     10-4 0v.341C7.67 6.165 6 8.388 
+                     6 11v3.159c0 .538-.214 1.055-.595 
+                     1.436L4 17h5m6 0v1a3 3 0 
+                     11-6 0v-1m6 0H9" />
+          </svg>
+          <!-- Red Dot -->
+          <span id="notifDot" class="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-red-500"></span>
+        </button>
 
-  <!-- Account -->
-  <a href="/Features/Dashboard/Customer/index.html"
-     class="px-4 py-2 bg-gray-600 text-center text-white font-medium rounded-lg hover:bg-gray-700 transition">
-    Account
-  </a>
-    <!-- Logout -->
-<button onclick="localStorage.setItem('is_customer_logged_in',false);window.location.href = '/Features/LandingPages/Customer/index.html';" 
-     class="px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition">
-    Logout
-  </button>
+        <!-- ✅ Dropdown Panel -->
+        <div id="notifDropdown" 
+             class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+          
+          <!-- Header -->
+          <div class="px-4 py-2 border-b flex justify-between items-center">
+            <span class="font-semibold text-gray-700">Notifications</span>
+            <a href="/Features/Notifications/Admin/index.html" 
+               class="text-sm text-blue-600 hover:underline">
+               View All
+            </a>
+          </div>
+
+          <!-- List -->
+          <div id="notifList" class="divide-y max-h-72 overflow-y-auto"></div>
+
+          <!-- Footer -->
+          <div class="px-4 py-2 border-t text-center">
+            <a href="/Features/Notifications/Admin/index.html" 
+               class="text-sm text-gray-500 hover:underline">
+               Go to Notifications
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account -->
+      <a href="/Features/Dashboard/Customer/index.html"
+         class="px-4 py-2 bg-gray-600 text-center text-white font-medium rounded-lg hover:bg-gray-700 transition">
+        Account
+      </a>
+
+      <!-- Logout -->
+      <button onclick="localStorage.setItem('is_customer_logged_in',false);
+                       window.location.href='/Features/LandingPages/Customer/index.html';" 
+              class="px-4 py-2 bg-red-600 text-center text-white font-medium rounded-lg hover:bg-red-700 transition">
+        Logout
+      </button>
     </div>
   </header>
 
@@ -101,122 +137,212 @@
     <a href="/Features/LandingPages/Customer/index.html" class="hover:text-yellow-600">Home</a>
     <a href="/Features/RoomManagement/Customer/RoomTypesCustomer/index.html" class="hover:text-yellow-600">Rooms</a>
     <a href="/Features/RoomManagement/Customer/OffersCustomer/index.html" class="hover:text-yellow-600">Offers</a>
-    
-    
     <a href="/Features/ContentManagement/Customer/Facilities/index.html" class="hover:text-yellow-600">Facilities</a>
     <a href="/Features/Faqs/index.html" class="hover:text-yellow-600">FAQs</a>
-        <a href="/Features/LandingPages/Customer/index.html#destinations" class="hover:text-yellow-600">Destinations</a>
+    <a href="/Features/LandingPages/Customer/index.html#destinations" class="hover:text-yellow-600">Destinations</a>
 
-<!-- Mobile Buttons -->
-<div class="flex flex-col space-y-2 pt-2">
-  <!-- Book Now -->
-  <a href="#"
-     class="bookingModal text-center px-4 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-medium rounded-lg hover:opacity-90 transition glow-btn">
-    Book Now
-  </a>
+    <!-- Mobile Buttons -->
+    <div class="flex flex-col space-y-2 pt-2">
+      <!-- Book Now -->
+      <a href="#"
+         class="bookingModal text-center px-4 py-2 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-medium rounded-lg hover:opacity-90 transition glow-btn">
+        Book Now
+      </a>
 
-  <!-- Notification Bell -->
-  <button class="relative flex items-center justify-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
-    <svg xmlns="http://www.w3.org/2000/svg"
-         class="h-6 w-6"
-         fill="none"
-         viewBox="0 0 24 24"
-         stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-    </svg>
-    <!-- Notification Dot -->
-    <span class="absolute top-2 right-2 block h-2.5 w-2.5 rounded-full bg-red-500"></span>
-  </button>
+      <!-- 🔔 Notification Dropdown -->
+      <div class="relative">
+        <button id="notifBtnMobile" class="relative focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" 
+               class="h-6 w-6 text-gray-600 hover:text-yellow-600 transition" 
+               fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 
+                     0118 14.158V11a6.002 6.002 0 
+                     00-4-5.659V5a2 2 0 
+                     10-4 0v.341C7.67 6.165 6 8.388 
+                     6 11v3.159c0 .538-.214 1.055-.595 
+                     1.436L4 17h5m6 0v1a3 3 0 
+                     11-6 0v-1m6 0H9" />
+          </svg>
+          <!-- Red Dot -->
+          <span id="notifDotMobile" class="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-red-500"></span>
+        </button>
 
-  <!-- Account -->
-  <a href="/Features/Dashboard/Customer/index.html"
-     class="px-4 py-2 bg-gray-600 text-center text-white font-medium rounded-lg hover:bg-gray-700 transition">
-    Account
-  </a>
-  <!-- Logout -->
-<button onclick="localStorage.setItem('is_customer_logged_in',false);window.location.href = '/Features/LandingPages/Customer/index.html';" 
-  class="px-4 py-2 bg-red-600 text-center text-white font-medium rounded-lg hover:bg-red-700 transition">
-  Logout
-</button>
-</div>
+        <!-- ✅ Floater Panel -->
+        <div id="notifDropdownMobile" 
+             class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+          
+          <!-- Header -->
+          <div class="px-4 py-2 border-b flex justify-between items-center">
+            <span class="font-semibold text-gray-700">Notifications</span>
+            <a href="/Features/Notifications/Admin/index.html" 
+               class="text-sm text-blue-600 hover:underline">
+               View All
+            </a>
+          </div>
 
+          <!-- List -->
+          <div id="notifListMobile" class="divide-y max-h-72 overflow-y-auto"></div>
+
+          <!-- Footer -->
+          <div class="px-4 py-2 border-t text-center">
+            <a href="/Features/Notifications/Admin/index.html" 
+               class="text-sm text-gray-500 hover:underline">
+               Go to Notifications
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account -->
+      <a href="/Features/Dashboard/Customer/index.html"
+         class="px-4 py-2 bg-gray-600 text-center text-white font-medium rounded-lg hover:bg-gray-700 transition">
+        Account
+      </a>
+
+      <!-- Logout -->
+      <button onclick="localStorage.setItem('is_customer_logged_in',false);
+                       window.location.href='/Features/LandingPages/Customer/index.html';" 
+              class="px-4 py-2 bg-red-600 text-center text-white font-medium rounded-lg hover:bg-red-700 transition">
+        Logout
+      </button>
+    </div>
   </nav>
 
-<!-- ✅ Booking Modal -->
-<div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-[1000]">
-  <div class="bg-white rounded-2xl shadow-2xl w-[95%] max-w-2xl p-6 relative overflow-y-auto max-h-[90vh]">
+  <!-- ✅ Booking Modal -->
+  <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-[1000]">
+    <div class="bg-white rounded-2xl shadow-2xl w-[95%] max-w-2xl p-6 relative overflow-y-auto max-h-[90vh]">
 
-    <!-- Close Button -->
-    <button id="closeModal" class="absolute top-3 right-3 text-gray-600 hover:text-red-500 text-2xl">&times;</button>
+      <!-- Close Button -->
+      <button id="closeModal" class="absolute top-3 right-3 text-gray-600 hover:text-red-500 text-2xl">&times;</button>
 
-    <!-- Heading -->
-    <h2 class="text-2xl font-bold mb-6 text-center bg-gradient-to-r from-yellow-600 to-red-600 bg-clip-text text-transparent">
-      Book Your Stay
-    </h2>
+      <!-- Heading -->
+      <h2 class="text-2xl font-bold mb-6 text-center bg-gradient-to-r from-yellow-600 to-red-600 bg-clip-text text-transparent">
+        Book Your Stay
+      </h2>
 
-    <!-- Rooms Container -->
-    <div id="roomsContainer">
-      <div class="room-card border p-5 rounded-xl mb-6 bg-gray-50 shadow-sm">
+      <!-- Rooms Container -->
+      <div id="roomsContainer">
+        <div class="room-card border p-5 rounded-xl mb-6 bg-gray-50 shadow-sm">
 
-        <!-- Row 1: Room No + Room Type -->
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="room-title font-semibold text-lg">Room 1</h3>
-          <select class="border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
-            <option>Deluxe Room</option>
-            <option>Executive Suite</option>
-            <option>Presidential Suite</option>
-          </select>
-        </div>
+          <!-- Row 1: Room No + Room Type -->
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="room-title font-semibold text-lg">Room 1</h3>
+            <select class="border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
+              <option>Deluxe Room</option>
+              <option>Executive Suite</option>
+              <option>Presidential Suite</option>
+            </select>
+          </div>
 
-        <!-- Row 2: Adults + Children -->
-        <div class="grid grid-cols-2 gap-6 mb-4">
-          <div class="flex items-center justify-between">
-            <label class="text-sm font-medium">Adults</label>
-            <div class="flex items-center space-x-3">
-              <button class="decrease w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-lg">−</button>
-              <input type="number" value="1" min="1" class="w-12 text-center border rounded-md p-1">
-              <button class="increase w-8 h-8 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center text-lg">+</button>
+          <!-- Row 2: Adults + Children -->
+          <div class="grid grid-cols-2 gap-6 mb-4">
+            <div class="flex items-center justify-between">
+              <label class="text-sm font-medium">Adults</label>
+              <div class="flex items-center space-x-3">
+                <button class="decrease w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-lg">−</button>
+                <input type="number" value="1" min="1" class="w-12 text-center border rounded-md p-1">
+                <button class="increase w-8 h-8 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center text-lg">+</button>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <label class="text-sm font-medium">Children</label>
+              <div class="flex items-center space-x-3">
+                <button class="decrease w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-lg">−</button>
+                <input type="number" value="0" min="0" class="w-12 text-center border rounded-md p-1">
+                <button class="increase w-8 h-8 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center text-lg">+</button>
+              </div>
             </div>
           </div>
 
-          <div class="flex items-center justify-between">
-            <label class="text-sm font-medium">Children</label>
-            <div class="flex items-center space-x-3">
-              <button class="decrease w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-lg">−</button>
-              <input type="number" value="0" min="0" class="w-12 text-center border rounded-md p-1">
-              <button class="increase w-8 h-8 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center text-lg">+</button>
-            </div>
+          <button class="remove-room mt-2 text-sm text-red-500 hover:underline">Remove Room</button>
+        </div>
+      </div>
+
+      <!-- ✅ Global Dates -->
+      <div id="globalDates" class="mb-6">
+        <div class="grid grid-cols-2 gap-4 mb-2">
+          <div>
+            <label class="block text-sm font-medium mb-1">Check-in (All Rooms)</label>
+            <input type="date" id="globalCheckIn" class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Check-out (All Rooms)</label>
+            <input type="date" id="globalCheckOut" class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
           </div>
         </div>
-
-        <button class="remove-room mt-2 text-sm text-red-500 hover:underline">Remove Room</button>
+        <p id="globalDateError" class="text-red-500 text-sm mb-2"></p>
       </div>
+
+      <!-- Add More Rooms -->
+      <button id="addRoomBtn" class="text-yellow-700 font-medium hover:underline mb-6">+ Add More Rooms</button>
+
+      <!-- Confirm -->
+      <button onclick="window.location.href='/Features/BookingManagement/Customer/BookingRooms/index.html'" class="w-full py-3 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg hover:opacity-90 transition">
+        Proceed Booking
+      </button>
     </div>
-
-    <!-- ✅ Global Dates (hidden by default, shown when "Same for All Rooms" is selected) -->
-    <div id="globalDates" class="mb-6">
-      <div class="grid grid-cols-2 gap-4 mb-2">
-        <div>
-          <label class="block text-sm font-medium mb-1">Check-in (All Rooms)</label>
-          <input type="date" id="globalCheckIn" class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1">Check-out (All Rooms)</label>
-          <input type="date" id="globalCheckOut" class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
-        </div>
-      </div>
-      <p id="globalDateError" class="text-red-500 text-sm mb-2"></p>
-    </div>
-
-    <!-- Add More Rooms -->
-    <button id="addRoomBtn" class="text-yellow-700 font-medium hover:underline mb-6">+ Add More Rooms</button>
-
-    <!-- Confirm -->
-    <button onclick="window.location.href='/Features/BookingManagement/Customer/BookingRooms/index.html'" class="w-full py-3 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg hover:opacity-90 transition">
-      Proceed Booking
-    </button>
   </div>
-</div>
+
+  <!-- ✅ Scripts -->
+  <script>
+    // Sample notifications
+    const latestNotifs = [
+      { type: "booking", msg: "New booking: Room 201 confirmed", time: "2m ago" },
+      { type: "issue", msg: "Issue reported in Room 105", time: "30m ago" },
+      { type: "refund", msg: "Refund processed for BK#1234", time: "1h ago" }
+    ];
+
+    function notifIcon(type) {
+      switch(type) {
+        case "booking": return `<i class="fas fa-calendar-check text-green-600"></i>`;
+        case "issue": return `<i class="fas fa-exclamation-triangle text-red-600"></i>`;
+        case "refund": return `<i class="fas fa-money-bill-wave text-yellow-500"></i>`;
+        default: return `<i class="fas fa-bell text-gray-500"></i>`;
+      }
+    }
+
+    function renderNotifs(targetListId) {
+      const list = document.getElementById(targetListId);
+      if (!list) return;
+      list.innerHTML = latestNotifs.map(n => `
+        <div class="px-4 py-3 flex items-start space-x-3 hover:bg-gray-50">
+          <div>${notifIcon(n.type)}</div>
+          <div class="flex-1">
+            <p class="text-sm text-gray-700">${n.msg}</p>
+            <span class="text-xs text-gray-400">${n.time}</span>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Render notifications
+      renderNotifs("notifList");
+      renderNotifs("notifListMobile");
+
+      document.getElementById("notifDot").classList.remove("hidden");
+      document.getElementById("notifDotMobile").classList.remove("hidden");
+
+      const toggleDropdown = (btnId, dropId) => {
+        const btn = document.getElementById(btnId);
+        const drop = document.getElementById(dropId);
+        if (btn && drop) {
+          btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            drop.classList.toggle("hidden");
+          });
+          document.addEventListener("click", (e) => {
+            if (!btn.contains(e.target) && !drop.contains(e.target)) {
+              drop.classList.add("hidden");
+            }
+          });
+        }
+      };
+      toggleDropdown("notifBtn", "notifDropdown");
+      toggleDropdown("notifBtnMobile", "notifDropdownMobile");
+    });
+  </script>
 </body>
 </html>
