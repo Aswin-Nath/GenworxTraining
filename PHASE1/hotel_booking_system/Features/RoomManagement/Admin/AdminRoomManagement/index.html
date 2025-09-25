@@ -145,14 +145,18 @@
     <form id="addRoomForm" class="space-y-6">
       <!-- Room number -->
       <div>
-        <label class="block text-gray-700 font-medium mb-1">Room number:</label>
+        <label class="block text-gray-700 font-medium mb-1">
+          Room number:<span class="text-red-500">*</span>
+        </label>
         <input id="roomNumber" type="text" placeholder="Enter the Room Number" 
           class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500" required>
       </div>
 
       <!-- Room Type (Dropdown) -->
       <div>
-        <label class="block text-gray-700 font-medium mb-1">Room Type:</label>
+        <label class="block text-gray-700 font-medium mb-1">
+          Room Type:<span class="text-red-500">*</span>
+        </label>
         <select id="roomType" 
           class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500" required>
           <option value="">Select Type</option>
@@ -167,7 +171,9 @@
 
       <!-- Price / Night -->
       <div>
-        <label class="block text-gray-700 font-medium mb-1">Price / Night:</label>
+        <label class="block text-gray-700 font-medium mb-1">
+          Price / Night:<span class="text-red-500">*</span>
+        </label>
         <input id="roomPrice" type="number" placeholder="Enter the Price per Night" 
           class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500" required>
       </div>
@@ -175,12 +181,16 @@
       <!-- Capacity (Adults + Children) -->
       <div class="grid grid-cols-2 gap-4">
         <div>
-          <label class="block text-gray-700 font-medium mb-1">Adults Capacity:</label>
+          <label class="block text-gray-700 font-medium mb-1">
+            Adults Capacity:<span class="text-red-500">*</span>
+          </label>
           <input id="roomAdults" type="number" min="1" placeholder="Max Adults" 
             class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500" required>
         </div>
         <div>
-          <label class="block text-gray-700 font-medium mb-1">Children Capacity:</label>
+          <label class="block text-gray-700 font-medium mb-1">
+            Children Capacity:<span class="text-red-500">*</span>
+          </label>
           <input id="roomChildren" type="number" min="0" placeholder="Max Children" 
             class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500" required>
         </div>
@@ -188,14 +198,18 @@
 
       <!-- Room Description -->
       <div>
-        <label class="block text-gray-700 font-medium mb-1">Room Description:</label>
+        <label class="block text-gray-700 font-medium mb-1">
+          Room Description:
+        </label>
         <textarea id="roomDesc" rows="3" placeholder="Enter room description" 
           class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500"></textarea>
       </div>
 
       <!-- Room Amenities -->
       <div>
-        <label class="block text-gray-700 font-medium mb-2">Room Amenities:</label>
+        <label class="block text-gray-700 font-medium mb-2">
+          Room Amenities:
+        </label>
         <div class="grid grid-cols-3 gap-2">
           <label class="flex items-center gap-2"><input type="checkbox" value="AC" class="amenity accent-yellow-600"> AC</label>
           <label class="flex items-center gap-2"><input type="checkbox" value="Wi-Fi" class="amenity accent-yellow-600"> Wi-Fi</label>
@@ -208,7 +222,9 @@
 
       <!-- Room Images -->
       <div>
-        <label class="block text-gray-700 font-medium mb-1">Room Images:</label>
+        <label class="block text-gray-700 font-medium mb-1">
+          Room Images:
+        </label>
         <div class="border-dashed border-2 border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:bg-gray-50">
           <span class="material-icons text-4xl text-orange-500">add_photo_alternate</span>
           <p class="text-gray-500 text-sm">Click to upload images (UI-only for demo)</p>
@@ -218,7 +234,9 @@
 
       <!-- Room Videos -->
       <div>
-        <label class="block text-gray-700 font-medium mb-1">Room Videos:</label>
+        <label class="block text-gray-700 font-medium mb-1">
+          Room Videos:
+        </label>
         <div class="border-dashed border-2 border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:bg-gray-50">
           <span class="material-icons text-4xl text-orange-500">video_library</span>
           <p class="text-gray-500 text-sm">Click to upload videos (UI-only for demo)</p>
@@ -240,6 +258,7 @@
     </form>
   </div>
 </div>
+
 
 
   <!-- =========================

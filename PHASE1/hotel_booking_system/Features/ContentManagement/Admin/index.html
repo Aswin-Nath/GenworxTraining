@@ -50,8 +50,8 @@
 
       <form id="addContentForm" class="space-y-4">
         <div>
-          <label class="block text-gray-700 font-medium mb-1">Content Type</label>
-          <select id="addContentType" class="w-full border p-3 rounded-lg">
+          <label class="block text-gray-700 font-medium mb-1">Content Type <span class="text-red-500">*</span></label>
+          <select id="addContentType" class="w-full border p-3 rounded-lg" required>
             <option value="announcements">Announcements</option>
             <option value="banners">Banners</option>
             <option value="offers">Offers</option>
@@ -60,16 +60,16 @@
           </select>
         </div>
         <div>
-          <label class="block text-gray-700 font-medium mb-1">Title</label>
-          <input id="contentTitle" type="text" class="w-full border p-3 rounded-lg">
+          <label class="block text-gray-700 font-medium mb-1">Title <span class="text-red-500">*</span></label>
+          <input id="contentTitle" type="text" class="w-full border p-3 rounded-lg" required>
         </div>
         <div>
-          <label class="block text-gray-700 font-medium mb-1">Description</label>
-          <textarea id="contentDesc" rows="3" class="w-full border p-3 rounded-lg"></textarea>
+          <label class="block text-gray-700 font-medium mb-1">Description <span class="text-red-500">*</span></label>
+          <textarea id="contentDesc" rows="3" class="w-full border p-3 rounded-lg" required></textarea>
         </div>
         <div>
-          <label class="block text-gray-700 font-medium mb-1">Media (Image/Video)</label>
-          <input id="contentMedia" type="file" class="w-full border p-3 rounded-lg">
+          <label class="block text-gray-700 font-medium mb-1">Media (Image/Video) <span class="text-red-500">*</span></label>
+          <input id="contentMedia" type="file" class="w-full border p-3 rounded-lg" required>
         </div>
         <div class="flex justify-end gap-4">
           <button type="button" onclick="toggleAddContentModal()" class="px-5 py-2 bg-gray-400 text-white rounded-lg">Cancel</button>
@@ -89,8 +89,8 @@
 
       <form id="editContentForm" class="space-y-4">
         <div>
-          <label class="block text-gray-700 font-medium mb-1">Content Type</label>
-          <select id="editContentType" class="w-full border p-3 rounded-lg">
+          <label class="block text-gray-700 font-medium mb-1">Content Type <span class="text-red-500">*</span></label>
+          <select id="editContentType" class="w-full border p-3 rounded-lg" required>
             <option value="announcements">Announcements</option>
             <option value="banners">Banners</option>
             <option value="offers">Offers</option>
@@ -99,16 +99,16 @@
           </select>
         </div>
         <div>
-          <label class="block text-gray-700 font-medium mb-1">Title</label>
-          <input id="editTitle" type="text" class="w-full border p-3 rounded-lg">
+          <label class="block text-gray-700 font-medium mb-1">Title <span class="text-red-500">*</span></label>
+          <input id="editTitle" type="text" class="w-full border p-3 rounded-lg" required>
         </div>
         <div>
-          <label class="block text-gray-700 font-medium mb-1">Description</label>
-          <textarea id="editDesc" rows="3" class="w-full border p-3 rounded-lg"></textarea>
+          <label class="block text-gray-700 font-medium mb-1">Description <span class="text-red-500">*</span></label>
+          <textarea id="editDesc" rows="3" class="w-full border p-3 rounded-lg" required></textarea>
         </div>
         <div>
-          <label class="block text-gray-700 font-medium mb-1">Replace Media</label>
-          <input id="editMedia" type="file" class="w-full border p-3 rounded-lg">
+          <label class="block text-gray-700 font-medium mb-1">Replace Media <span class="text-red-500">*</span></label>
+          <input id="editMedia" type="file" class="w-full border p-3 rounded-lg" required>
         </div>
         <div class="flex justify-between">
           <button type="button" onclick="deleteContent()" class="px-5 py-2 bg-red-600 text-white rounded-lg">Delete</button>
@@ -120,6 +120,7 @@
       </form>
     </div>
   </div>
+
 
 
 

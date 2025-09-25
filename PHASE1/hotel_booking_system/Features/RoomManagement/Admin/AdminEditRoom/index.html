@@ -44,53 +44,54 @@
     <section class="bg-white rounded-2xl border border-gray-200 p-6 shadow-md space-y-6">
       <form id="editRoomForm" class="space-y-6">
 
-        <!-- Room number (read-only, cannot change id) -->
-        <div>
-          <label class="block text-gray-700 font-medium mb-1">Room Number:</label>
-          <input id="roomNumber" type="text" class="w-full border p-3 rounded-lg bg-gray-100" readonly>
-        </div>
+        <!-- Room number (read-only) -->
+<div>
+  <label class="block text-gray-700 font-medium mb-1">Room Number:</label>
+  <input id="roomNumber" type="text" class="w-full border p-3 rounded-lg bg-gray-100" readonly>
+</div>
 
-        <!-- Room Type -->
-        <div>
-          <label class="block text-gray-700 font-medium mb-1">Room Type:</label>
-          <select id="roomType" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
-            <option>Deluxe</option>
-            <option>Suite</option>
-            <option>Standard</option>
-            <option>Executive</option>
-            <option>Presidential</option>
-            <option>Family</option>
-            <option>Villa</option>
-            <option>Penthouse</option>
-            <option>Studio</option>
-          </select>
-        </div>
+<!-- Room Type -->
+<div>
+  <label class="block text-gray-700 font-medium mb-1">Room Type:<span class="text-red-500">*</span></label>
+  <select id="roomType" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
+    <option>Deluxe</option>
+    <option>Suite</option>
+    <option>Standard</option>
+    <option>Executive</option>
+    <option>Presidential</option>
+    <option>Family</option>
+    <option>Villa</option>
+    <option>Penthouse</option>
+    <option>Studio</option>
+  </select>
+</div>
 
-        <!-- Price / Night -->
-        <div>
-          <label class="block text-gray-700 font-medium mb-1">Price / Night:</label>
-          <input id="roomPrice" type="number" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
-        </div>
+<!-- Price / Night -->
+<div>
+  <label class="block text-gray-700 font-medium mb-1">Price / Night:<span class="text-red-500">*</span></label>
+  <input id="roomPrice" type="number" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
+</div>
 
-        <!-- Capacity -->
-        <div class="grid grid-cols-2 gap-4">
-          <div>
-            <label class="block text-gray-700 font-medium mb-1">Adults Capacity:</label>
-            <input id="roomAdults" type="number" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
-          </div>
-          <div>
-            <label class="block text-gray-700 font-medium mb-1">Children Capacity:</label>
-            <input id="roomChildren" type="number" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
-          </div>
-        </div>
+<!-- Capacity -->
+<div class="grid grid-cols-2 gap-4">
+  <div>
+    <label class="block text-gray-700 font-medium mb-1">Adults Capacity:<span class="text-red-500">*</span></label>
+    <input id="roomAdults" type="number" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
+  </div>
+  <div>
+    <label class="block text-gray-700 font-medium mb-1">Children Capacity:<span class="text-red-500">*</span></label>
+    <input id="roomChildren" type="number" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
+  </div>
+</div>
 
-        <!-- Room Description -->
-        <div>
-          <label class="block text-gray-700 font-medium mb-1">Room Description:</label>
-          <textarea id="roomDesc" maxlength="1000" rows="5" 
-            class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500"></textarea>
-          <p id="descCount" class="text-sm text-gray-500">0 / 1000</p>
-        </div>
+<!-- Room Description -->
+<div>
+  <label class="block text-gray-700 font-medium mb-1">Room Description:<span class="text-red-500">*</span></label>
+  <textarea id="roomDesc" maxlength="1000" rows="5" 
+    class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500"></textarea>
+  <p id="descCount" class="text-sm text-gray-500">0 / 1000</p>
+</div>
+
 
         <!-- Room Amenities -->
         <div>
