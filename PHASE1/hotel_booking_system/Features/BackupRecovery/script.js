@@ -269,14 +269,16 @@
           flashToast(`Downloading ${bk.fileName}...`);
         } else if (action === 'restore') {
           // pre-select and show recover tab modal
-          showRecoverTab();
-          setTimeout(()=> {
-            // set restore select to chosen
+          const bk = BACKUPS.find(x=>x.id===id);
+            if (!bk) return;
+
+            showRecoverTab();
             populateRestoreSelect();
             restoreSelect.value = id;
-            // scroll into view
+
+            // scroll into view & focus
             document.getElementById('panelRecover').scrollIntoView({behavior:'smooth'});
-          }, 80);
+            restoreSelect.focus();   // ✅ highlights dropdown
         } else if (action === 'delete') {
           const idx = BACKUPS.findIndex(x=>x.id===id);
           if (idx>=0) {

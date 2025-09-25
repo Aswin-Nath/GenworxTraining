@@ -52,6 +52,8 @@
             Room details
           </button>
           <button class="openReviews text-yellow-600 font-medium hover:underline text-sm sm:text-base">View Reviews</button>
+          <button class="remindMe text-blue-600 font-medium hover:underline text-sm sm:text-base" 
+                  data-room="Deluxe Room">Remind Me</button>
         </div>
       </div>
       <div class="space-y-6">
@@ -103,6 +105,8 @@
             Room details
           </button>
           <button class="openReviews text-yellow-600 font-medium hover:underline text-sm sm:text-base">View Reviews</button>
+          <button class="remindMe text-blue-600 font-medium hover:underline text-sm sm:text-base" 
+                  data-room="Executive Suite">Remind Me</button>
         </div>
       </div>
       <div class="space-y-6">
@@ -164,6 +168,8 @@
             Room details
           </button>
           <button class="openReviews text-yellow-600 font-medium hover:underline text-sm sm:text-base">View Reviews</button>
+          <button class="remindMe text-blue-600 font-medium hover:underline text-sm sm:text-base" 
+                  data-room="Presidential Suite">Remind Me</button>
         </div>
       </div>
       <div class="space-y-6">
@@ -309,6 +315,42 @@
       </div>
     </div>
   </div>
+</div>
+
+<!-- Reminder Modal -->
+<div id="reminderModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+    <div class="bg-white rounded-2xl w-full max-w-md p-6 relative">
+        <button id="closeReminder" class="absolute top-4 right-4 text-gray-500 hover:text-black text-2xl">&times;</button>
+        
+        <h3 class="text-xl font-bold text-yellow-600 mb-4">Set Reminder</h3>
+        <p class="text-gray-600 mb-4">Select dates to be reminded about <span id="reminderRoomType" class="font-semibold"></span></p>
+        
+        <form id="reminderForm" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">From Date</label>
+                <input type="date" id="reminderFromDate" required
+                       class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500">
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">To Date</label>
+                <input type="date" id="reminderToDate" required
+                       class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500">
+            </div>
+            
+            <button type="submit"
+                    class="w-full bg-gradient-to-r from-amber-600 to-yellow-500 text-white 
+                           py-2.5 rounded-lg hover:from-amber-700 hover:to-yellow-600 
+                           shadow-md transition">
+                Set Reminder
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div id="toast" class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-full opacity-0 transition-all duration-300">
+    You will be reminded during the selected dates!
 </div>
 
 <!-- ✅ Footer -->

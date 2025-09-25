@@ -1,5 +1,4 @@
-
-  const modal = document.getElementById("roomModal");
+const modal = document.getElementById("roomModal");
   const reviewsModal = document.getElementById("reviewsModal");
 
   const modalTitle = document.getElementById("modalTitle");
@@ -186,7 +185,79 @@ function attachModalListeners() {
   reindexRooms();
 }
 
+// Reminder Modal Functionality
+const reminderModal = document.getElementById('reminderModal');
+const closeReminder = document.getElementById('closeReminder');
+const reminderForm = document.getElementById('reminderForm');
+const reminderRoomType = document.getElementById('reminderRoomType');
+const toast = document.getElementById('toast');
 
+// Add event listeners to all "Remind Me" buttons
+document.querySelectorAll('.remindMe').forEach(button => {
+    button.addEventListener('click', () => {
+        reminderModal.classList.remove('hidden');
+        reminderRoomType.textContent = button.dataset.room;
+        
+        // Set minimum date as today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('reminderFromDate').min = today;
+        document.getElementById('reminderToDate').min = today;
+    });
+});
+
+// Close reminder modal
+closeReminder.addEventListener('click', () => {
+    reminderModal.classList.add('hidden');
+});
+
+// Handle reminder form submission
+reminderForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const fromDate = document.getElementById('reminderFromDate').value;
+    const toDate = document.getElementById('reminderToDate').value;
+    
+    // Validate dates
+    if (new Date(toDate) < new Date(fromDate)) {
+        alert('To date must be after from date');
+        return;
+    }
+    
+    // Store reminder in localStorage (you can modify this to use your preferred storage method)
+    const reminder = {
+        roomType: reminderRoomType.textContent,
+        fromDate,
+        toDate,
+        createdAt: new Date().toISOString()
+    };
+    
+    const reminders = JSON.parse(localStorage.getItem('roomReminders') || '[]');
+    reminders.push(reminder);
+    localStorage.setItem('roomReminders', JSON.stringify(reminders));
+    
+    // Close modal
+    reminderModal.classList.add('hidden');
+    
+    // Show toast
+    toast.style.transform = 'translateY(0)';
+    toast.style.opacity = '1';
+    
+    // Hide toast after 3 seconds
+    setTimeout(() => {
+        toast.style.transform = 'translateY(full)';
+        toast.style.opacity = '0';
+    }, 3000);
+    
+    // Reset form
+    reminderForm.reset();
+});
+
+// Close modals when clicking outside
+window.addEventListener('click', (e) => {
+    if (e.target === reminderModal) {
+        reminderModal.classList.add('hidden');
+    }
+});
 
     // ✅ Footer
     fetch("/Features/Components/Footers/CustomerFooter/index.html")

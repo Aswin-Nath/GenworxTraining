@@ -1,5 +1,4 @@
-
-    // Sidebar highlight
+// Sidebar highlight
     document.querySelectorAll("aside nav a").forEach(link => {
       if (link.dataset.page === "booking") {
         link.classList.add("text-yellow-700", "font-semibold");
@@ -148,3 +147,40 @@ function attachModalListeners() {
         document.getElementById("footer").innerHTML = data;
       })
       .catch(err => console.error("❌ Footer load failed:", err));
+
+
+// Review functionality
+const reviewForm = document.getElementById('reviewForm');
+const reviewText = document.getElementById('reviewText');
+const charCount = document.getElementById('charCount');
+const toast = document.getElementById('toast');
+
+// Update character count
+reviewText.addEventListener('input', () => {
+    const count = reviewText.value.length;
+    charCount.textContent = count;
+});
+
+// Handle review submission
+reviewForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    if (reviewText.value.trim().length === 0) {
+        alert('Please enter a review');
+        return;
+    }
+    
+    // Show toast
+    toast.style.transform = 'translateY(0)';
+    toast.style.opacity = '1';
+    
+    // Hide toast after 3 seconds
+    setTimeout(() => {
+        toast.style.transform = 'translateY(full)';
+        toast.style.opacity = '0';
+    }, 3000);
+    
+    // Reset form
+    reviewForm.reset();
+    charCount.textContent = '0';
+});

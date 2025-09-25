@@ -36,6 +36,6 @@ if (isAdminLoggedIn) {
 
   document.getElementById("confirmPayment").addEventListener("click", () => {
     alert("✅ Payment Successful! Your booking is confirmed.");
-    window.location.href = "/Features/BookingManagement/MyBookings/index.html"; // Update path
+    window.location.href = "/Features/BookingManagement/Customer/MyBookings/index.html"; // Update path
   });
     

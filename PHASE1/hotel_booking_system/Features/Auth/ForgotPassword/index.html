@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxuryStay - Forgot Password</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+<!-- Header -->
+<header class="flex justify-between items-center bg-white shadow-md px-6 py-4 sticky top-0 z-50">
+    <a href="/Features/LandingPages/Customer/index.html" class="flex items-center space-x-2">
+        <img src="/assets/Hotel_logo.png" alt="Hotel Logo" class="h-8 sm:h-10 rounded-full border-2 border-yellow-600 p-1">
+        <h1 class="text-lg sm:text-xl font-bold text-yellow-700">LuxuryStay</h1>
+    </a>
+</header>
+
+<!-- Main Container -->
+<div class="min-h-[calc(100vh-64px)] flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-white rounded-2xl overflow-hidden border-2 sm:border-4 border-amber-400">
+        <!-- Back Arrow -->
+        <a href="/Features/Auth/LoginPage/index.html"
+           class="absolute top-3 left-3 text-gray-700 hover:text-gray-900 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M15 19l-7-7 7-7" />
+            </svg>
+        </a>
+
+        <!-- Top Banner -->
+        <div class="bg-gradient-to-r from-amber-600 to-yellow-500 text-white text-center py-4 sm:py-6">
+            <h2 class="text-xl sm:text-2xl font-bold">Forgot Password?</h2>
+            <p class="text-xs sm:text-sm opacity-90">We'll help you reset it and get back on track</p>
+        </div>
+
+        <!-- Form -->
+        <form id="forgotPasswordForm" class="flex flex-col space-y-4 px-4 sm:px-8 py-6" novalidate>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">
+                    Email Address<span class="text-red-500">*</span>
+                </label>
+                <input type="email" id="email" required
+                       class="w-full mt-1 border border-gray-300 rounded-lg px-3 py-2 
+                              focus:outline-none focus:ring-2 focus:ring-amber-500 
+                              focus:border-amber-500 transition"
+                       placeholder="Enter your email address">
+            </div>
+
+            <button type="submit"
+                    class="w-full bg-gradient-to-r from-amber-600 to-yellow-500 text-white 
+                           py-2.5 rounded-lg hover:from-amber-700 hover:to-yellow-600 
+                           shadow-md transition">
+                Send Reset Link
+            </button>
+
+            <p class="text-sm text-center text-gray-600">
+                Remember your password?
+                <a href="/Features/Auth/LoginPage/index.html" class="text-amber-600 font-medium hover:underline">
+                    Sign in
+                </a>
+            </p>
+        </form>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div id="toast" class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-full opacity-0 transition-all duration-300">
+    Password reset link has been sent to your email!
+</div>
+
+<script src="./script.js"></script>
+</body>
+</html>
+<script src="./script.js"></script>
+</body>
+</html>

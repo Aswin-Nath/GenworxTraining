@@ -248,6 +248,6 @@ if (isAdminLoggedIn) {
     // ✅ Final Step Redirect
     document.addEventListener("click", (e) => {
       if (e.target.id === "proceedBtn") {
-        window.location.href = "/Features/BookingManagement/PaymentsPage/index.html"; // change "X.html" to your desired page
+        window.location.href = "/Features/BookingManagement/Customer/PaymentsPage/index.html"; // change "X.html" to your desired page
       }
     });
