@@ -39,6 +39,122 @@
         </div>
       </div>
 
+      <!-- ✅ Filter Section -->
+      <div class="bg-white rounded-2xl shadow-md p-6">
+        <!-- Quick Search -->
+        <div class="mb-6">
+          <div class="relative">
+            <input type="text" placeholder="Search your saved rooms..." 
+                   class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+            <span class="absolute left-4 top-1/2 -translate-y-1/2 material-icons text-gray-400">search</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Price Range Filter -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
+            <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500">
+              <option value="">All Prices</option>
+              <option value="0-5000">₹0 - ₹5,000</option>
+              <option value="5000-10000">₹5,000 - ₹10,000</option>
+              <option value="10000-15000">₹10,000 - ₹15,000</option>
+              <option value="15000+">₹15,000+</option>
+            </select>
+          </div>
+
+          <!-- Room Type Filter -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Room Type</label>
+            <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500">
+              <option value="">All Types</option>
+              <option value="deluxe">Deluxe Room</option>
+              <option value="executive">Executive Suite</option>
+              <option value="presidential">Presidential Suite</option>
+            </select>
+          </div>
+
+          <!-- Date Added Filter -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Date Added</label>
+            <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500">
+              <option value="">Any Time</option>
+              <option value="today">Today</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+              <option value="3months">Last 3 Months</option>
+            </select>
+          </div>
+
+          <!-- Sort By -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Sort By</label>
+            <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500">
+              <option value="date-new">Date Added: Newest</option>
+              <option value="date-old">Date Added: Oldest</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Additional Filters -->
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Occupancy Filter -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Occupancy</label>
+            <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500">
+              <option value="">Any Occupancy</option>
+              <option value="2">2 Adults</option>
+              <option value="3">3 Adults</option>
+              <option value="4">4 Adults</option>
+              <option value="family">Family Rooms</option>
+            </select>
+          </div>
+
+          <!-- Room Package -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Room Package</label>
+            <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500">
+              <option value="">All Packages</option>
+              <option value="room-only">Room Only</option>
+              <option value="breakfast">With Breakfast</option>
+              <option value="all-inclusive">All Inclusive</option>
+            </select>
+          </div>
+
+          <!-- Availability Status -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Availability</label>
+            <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500">
+              <option value="">All Status</option>
+              <option value="available">Available Now</option>
+              <option value="limited">Limited Availability</option>
+              <option value="booked">Fully Booked</option>
+            </select>
+          </div>
+
+          <!-- Special Features -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Special Features</label>
+            <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500">
+              <option value="">Any Features</option>
+              <option value="spa">Spa Access</option>
+              <option value="butler">Butler Service</option>
+              <option value="view">City View</option>
+              <option value="balcony">With Balcony</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Apply Filters Button -->
+        <div class="mt-6 flex justify-end">
+          <button class="px-6 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition">
+            Apply Filters
+          </button>
+        </div>
+      </div>
+
       <!-- ✅ Wishlist Rooms -->
       <section class="space-y-6 sm:space-y-8 lg:space-y-12">
         <div class="space-y-6 sm:space-y-8 lg:space-y-12">

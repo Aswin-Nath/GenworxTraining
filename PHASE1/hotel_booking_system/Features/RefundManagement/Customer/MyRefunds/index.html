@@ -47,33 +47,97 @@
         <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
         <div class="relative">
           <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 material-icons">search</span>
-          <input type="text" placeholder="Issue ID, Stay ID"
+          <input type="text" placeholder="Refund ID, Booking ID, Room Number"
             class="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
         </div>
       </div>
 
-      <!-- ✅ Filters -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-
-        <!-- Status -->
+      <!-- ✅ Advanced Filters -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Refund Status -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Issue Status</label>
-          <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
-            <option>All</option>
-            <option>Pending</option>
-            <option>Resolved</option>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Refund Status</label>
+          <select class="w-full p-2.5 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
+            <option value="">All Statuses</option>
+            <option value="pending">Pending</option>
+            <option value="processing">Processing</option>
+            <option value="approved">Approved</option>
+            <option value="completed">Completed</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+
+        <!-- Amount Range -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Amount Range</label>
+          <select class="w-full p-2.5 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
+            <option value="">All Amounts</option>
+            <option value="0-100">$0 - $100</option>
+            <option value="101-500">$101 - $500</option>
+            <option value="501-1000">$501 - $1000</option>
+            <option value="1001+">$1000+</option>
+          </select>
+        </div>
+
+        <!-- Refund Type -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Refund Type</label>
+          <select class="w-full p-2.5 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
+            <option value="">All Types</option>
+            <option value="cancellation">Cancellation</option>
+            <option value="modification">Booking Modification</option>
+            <option value="complaint">Complaint Resolution</option>
+            <option value="overcharge">Overcharge</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <!-- Payment Method -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Payment Method</label>
+          <select class="w-full p-2.5 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
+            <option value="">All Methods</option>
+            <option value="credit">Credit Card</option>
+            <option value="debit">Debit Card</option>
+            <option value="bank">Bank Transfer</option>
+            <option value="paypal">PayPal</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <!-- Processing Time -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Processing Time</label>
+          <select class="w-full p-2.5 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
+            <option value="">All Times</option>
+            <option value="under24">Under 24 Hours</option>
+            <option value="24-48">24-48 Hours</option>
+            <option value="48-72">48-72 Hours</option>
+            <option value="over72">Over 72 Hours</option>
+          </select>
+        </div>
+
+        <!-- Sort By -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
+          <select class="w-full p-2.5 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="amount-high">Amount (High to Low)</option>
+            <option value="amount-low">Amount (Low to High)</option>
+            <option value="status">Status</option>
           </select>
         </div>
 
         <!-- Date Range -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">From</label>
-          <input type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
+          <label class="block text-sm font-medium text-gray-700 mb-1">From Date</label>
+          <input type="date" class="w-full p-2.5 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">To</label>
-          <input type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
+          <label class="block text-sm font-medium text-gray-700 mb-1">To Date</label>
+          <input type="date" class="w-full p-2.5 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
         </div>
       </div>
             <div class="flex justify-end">
