@@ -41,115 +41,109 @@
         </div>
       </div>
 
-      <!-- ✅ Search + Filter Box -->
-      <div class="bg-white shadow-lg border border-gray-200 rounded-xl p-4 sm:p-6 space-y-4">
+<!-- ✅ Booking Search + Filter Box -->
+<div class="bg-white shadow-lg border border-gray-200 rounded-xl p-6 space-y-6">
 
-        <!-- Search -->
-        <div class="w-full sm:w-2/3 lg:w-1/2">
-          <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
-          <div class="relative">
-            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 material-icons">search</span>
-            <input type="text" placeholder="Stay ID, Room No" 
-              class="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
-          </div>
-        </div>
+  <!-- Filters Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-        <!-- Advanced Filters -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <!-- Booking Status -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Booking Status</label>
-            <select class="w-full p-2.5 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
-              <option value="">All Statuses</option>
-              <option value="upcoming">Upcoming</option>
-              <option value="check-in">Ready for Check-in</option>
-              <option value="in-stay">Currently Staying</option>
-              <option value="completed">Completed</option>
-              <option value="cancelled">Cancelled</option>
-              <option value="pending">Payment Pending</option>
-            </select>
-          </div>
+    <!-- Booking Status -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Booking Status</label>
+      <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm">
+        <option value="">All Statuses</option>
+        <option value="upcoming">Upcoming</option>
+        <option value="check-in">Ready for Check-in</option>
+        <option value="in-stay">Currently Staying</option>
+        <option value="completed">Completed</option>
+        <option value="cancelled">Cancelled</option>
+        <option value="pending">Payment Pending</option>
+      </select>
+    </div>
 
-          <!-- Room Type -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Room Type</label>
-            <select class="w-full p-2.5 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
-              <option value="">All Types</option>
-              <option value="standard">Standard Room</option>
-              <option value="deluxe">Deluxe Room</option>
-              <option value="suite">Suite</option>
-              <option value="family">Family Room</option>
-              <option value="presidential">Presidential Suite</option>
-            </select>
-          </div>
+    <!-- Room Type -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Room Type</label>
+      <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm">
+        <option value="">All Types</option>
+        <option value="standard">Standard Room</option>
+        <option value="deluxe">Deluxe Room</option>
+        <option value="suite">Suite</option>
+        <option value="family">Family Room</option>
+        <option value="presidential">Presidential Suite</option>
+      </select>
+    </div>
 
-          <!-- Price Range -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Price Range</label>
-            <select class="w-full p-2.5 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
-              <option value="">All Prices</option>
-              <option value="0-100">$0 - $100 per night</option>
-              <option value="101-200">$101 - $200 per night</option>
-              <option value="201-500">$201 - $500 per night</option>
-              <option value="501+">$500+ per night</option>
-            </select>
-          </div>
+    <!-- Price Range -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Price Range</label>
+      <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm">
+        <option value="">All Prices</option>
+        <option value="0-100">$0 - $100 per night</option>
+        <option value="101-200">$101 - $200 per night</option>
+        <option value="201-500">$201 - $500 per night</option>
+        <option value="501+">$500+ per night</option>
+      </select>
+    </div>
 
-          <!-- Stay Duration -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Stay Duration</label>
-            <select class="w-full p-2.5 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
-              <option value="">All Durations</option>
-              <option value="1-2">1-2 Nights</option>
-              <option value="3-5">3-5 Nights</option>
-              <option value="6-7">6-7 Nights</option>
-              <option value="8+">8+ Nights</option>
-            </select>
-          </div>
+    <!-- Stay Duration -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Stay Duration</label>
+      <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm">
+        <option value="">All Durations</option>
+        <option value="1-2">1-2 Nights</option>
+        <option value="3-5">3-5 Nights</option>
+        <option value="6-7">6-7 Nights</option>
+        <option value="8+">8+ Nights</option>
+      </select>
+    </div>
 
-          <!-- Check-in Date -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Check-in From</label>
-            <input type="date" class="w-full p-2.5 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
-          </div>
-
-          <!-- Check-out Date -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Check-out To</label>
-            <input type="date" class="w-full p-2.5 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
-          </div>
-
-          <!-- Sort By -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
-            <select class="w-full p-2.5 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
-              <option value="check-in-desc">Check-in Date (Newest)</option>
-              <option value="check-in-asc">Check-in Date (Oldest)</option>
-              <option value="price-high">Price (High to Low)</option>
-              <option value="price-low">Price (Low to High)</option>
-              <option value="duration">Stay Duration</option>
-            </select>
-          </div>
-
-          <!-- Special Requests -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Special Requests</label>
-            <select class="w-full p-2.5 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
-              <option value="">All Bookings</option>
-              <option value="yes">With Special Requests</option>
-              <option value="no">Without Special Requests</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Action Button -->
-        <div class="flex justify-end">
-          <button class="w-full sm:w-auto px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 shadow-md flex items-center justify-center sm:justify-start space-x-2">
-            <span class="material-icons text-sm">filter_alt</span>
-            <span>Apply Filters</span>
-          </button>
-        </div>
+    <!-- Stay Period -->
+    <div class="lg:col-span-2">
+      <label class="block text-sm font-medium text-gray-700 mb-1">Stay Period</label>
+      <div class="flex items-center gap-3">
+        <input type="date" class="w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm">
+        <span class="text-gray-500">—</span>
+        <input type="date" class="w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm">
       </div>
+    </div>
+
+    <!-- Special Requests -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Special Requests</label>
+      <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm">
+        <option value="">All Bookings</option>
+        <option value="yes">With Special Requests</option>
+        <option value="no">Without Special Requests</option>
+      </select>
+    </div>
+
+    <!-- Sort By -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
+      <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 text-sm">
+        <option value="check-in-desc">Check-in Date (Newest)</option>
+        <option value="check-in-asc">Check-in Date (Oldest)</option>
+        <option value="price-high">Price (High to Low)</option>
+        <option value="price-low">Price (Low to High)</option>
+        <option value="duration">Stay Duration</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="flex justify-end gap-3 pt-3 border-t border-gray-100">
+    <button class="px-5 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 shadow-sm flex items-center gap-2">
+      <span class="material-icons text-sm">refresh</span>
+      <span>Reset</span>
+    </button>
+    <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 shadow-sm flex items-center gap-2">
+      <span class="material-icons text-sm">filter_alt</span>
+      <span>Apply Filters</span>
+    </button>
+  </div>
+</div>
+
 
 
       <!-- ✅ Bookings Table -->
