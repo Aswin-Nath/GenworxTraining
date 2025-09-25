@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LuxuryStay - Room Management (LocalStorage)</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
     /* small polish */
@@ -28,12 +30,53 @@
     <div class="mb-6 flex justify-between items-center">
       <div>
         <h2 class="text-2xl font-bold text-gray-800">Room Management</h2>
-        <p class="text-gray-600">Manage room availability, status, and bookings. (LocalStorage-backed demo)</p>
       </div>
-      <button onclick="toggleAddRoomModal()" class="p-3 bg-yellow-600 text-white rounded-full hover:bg-yellow-700 shadow">
-        <span class="material-icons">add</span>
+      <div class="flex flex-row gap-x-4">
+      <button onclick="toggleBulkUploadModal()" class="flex flex-row gap-x-3 p-3 bg-yellow-600 text-white rounded-full hover:bg-yellow-700 shadow">
+        <span class="material-icons">cloud_upload</span>
+        Bulk Add
       </button>
+      <button onclick="toggleAddRoomModal()" class="flex flex-row gap-x-3 p-3 bg-yellow-600 text-white rounded-full hover:bg-yellow-700 shadow">
+        <span class="material-icons">add</span>
+        Add
+      </button>
+      </div>
     </div>
+
+    <!-- Bulk Upload Modal -->
+    <div id="bulkUploadModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+      <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="mt-3">
+          <h3 class="text-lg font-medium text-gray-900 mb-4">Bulk Add Rooms</h3>
+          <div class="space-y-4">
+            <div>
+              <p class="text-sm text-gray-600 mb-2">Download the template file first:</p>
+              <button onclick="downloadTemplate()" class="flex items-center px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                <span class="material-icons mr-2">download</span>
+                Download Template
+              </button>
+            </div>
+            <div>
+              <p class="text-sm text-gray-600 mb-2">Upload your filled template:</p>
+              <input type="file" id="csvFileInput" accept=".csv" class="block w-full text-sm text-gray-500
+                file:mr-4 file:py-2 file:px-4
+                file:rounded-full file:border-0
+                file:text-sm file:font-semibold
+                file:bg-yellow-50 file:text-yellow-700
+                hover:file:bg-yellow-100
+              "/>
+            </div>
+            <div class="flex justify-end space-x-3">
+              <button onclick="toggleBulkUploadModal()" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">Cancel</button>
+              <button onclick="handleBulkUpload()" class="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700">Upload</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="hidden fixed bottom-5 right-5 px-4 py-2 bg-green-500 text-white rounded shadow-lg z-50"></div>
 
 <!-- ✅ Compact Room Filter -->
 <div class="bg-white shadow-md border border-gray-200 rounded-lg p-3 mb-4">

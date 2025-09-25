@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LuxuryStay - Admin Main Page (Enhanced)</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     /* small visual tweaks beyond Tailwind for polish */
@@ -14,7 +16,9 @@
     .filter-pill { transition: all .15s; }
     .filter-pill.active { background: #f59e0b; color: white; }
     /* ensure canvas keep height in responsive */
-    .chart-wrap { height: 320px; }
+  /* ensure the chart has room to render */
+  .chart-wrap { height: 320px; position: relative; }
+  #dailyBookingsChart { width: 100%; height: 100% !important; }
   </style>
 </head>
 <body class="bg-gray-50 font-sans leading-relaxed text-gray-800">
@@ -31,7 +35,6 @@
     <header class="flex items-start justify-between mb-6">
       <div>
         <h1 class="text-3xl font-extrabold text-gray-800">Welcome, Admin <span class="text-yellow-500">👋</span></h1>
-        <p class="text-sm text-gray-500 mt-1">Overview of hotel operations — digital-first KPIs to take fast decisions.</p>
       </div>
       <!-- Quick top-right CTA (small) -->
       <div class="flex items-center gap-3">
@@ -122,10 +125,7 @@
         <h3 class="text-lg font-semibold text-gray-700 mb-4">Quick Actions</h3>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
           <button class="py-3 rounded-lg shadow bg-yellow-500 text-white">Add Room</button>
-          <button class="py-3 rounded-lg shadow bg-gray-500 text-white">Freeze Room</button>
-          <button class="py-3 rounded-lg shadow bg-blue-500 text-white">Edit Room</button>
-          <button id="viewIssuesBtn" class="py-3 rounded-lg shadow bg-red-500 text-white">View Issues</button>
-          <button id="generateReportBtn" class="py-3 rounded-lg shadow bg-green-500 text-white">Generate Report</button>
+          <button class="py-3 rounded-lg shadow bg-gray-500 text-white">Freeze/Edit Rooms</button>
           <button id="backupDataBtn" class="py-3 rounded-lg shadow bg-purple-500 text-white">Backup Data</button>
         </div>
 
@@ -156,8 +156,7 @@
       <!-- Daily Bookings / Forecast -->
       <div class="bg-white shadow rounded-xl p-6">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-lg font-semibold text-gray-700">Daily Bookings / Forecast</h3>
-          <span class="text-sm text-gray-500">Shows confirmed stays for selected range</span>
+          <h3 class="text-lg font-semibold text-gray-700">Daily Bookings</h3>
         </div>
         <div class="chart-wrap">
           <canvas id="dailyBookingsChart"></canvas>
@@ -168,7 +167,6 @@
       <div class="bg-white shadow rounded-xl p-6">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-lg font-semibold text-gray-700">Top Room Types by Revenue</h3>
-          <span class="text-sm text-gray-500">Helps pricing and upsell decisions</span>
         </div>
         <div class="chart-wrap">
           <canvas id="roomTypeChart"></canvas>
@@ -274,7 +272,128 @@
   </main>
 
 
-  
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const canvas = document.getElementById('dailyBookingsChart');
+  if (!canvas) {
+    console.error('dailyBookingsChart canvas not found');
+    return;
+  }
+
+  const ctx = canvas.getContext('2d');
+
+  // create gradient based on actual canvas visible height
+  const height = canvas.clientHeight || 320;
+  const gradient = ctx.createLinearGradient(0, 0, 0, height);
+  gradient.addColorStop(0, 'rgba(250,204,21,0.45)');
+  gradient.addColorStop(1, 'rgba(250,204,21,0.06)');
+
+  // plugin to add subtle drop shadow (valid Chart.js plugin)
+  const shadowPlugin = {
+    id: 'shadowPlugin',
+    beforeDatasetsDraw(chart) {
+      const { ctx } = chart;
+      ctx.save();
+      ctx.shadowColor = 'rgba(0,0,0,0.12)';
+      ctx.shadowBlur = 10;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 6;
+    },
+    afterDatasetsDraw(chart) {
+      chart.ctx.restore();
+    }
+  };
+
+const dailyChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: [], // filled dynamically
+    datasets: [
+      {
+        label: 'Confirmed Bookings',
+        data: [],
+        borderColor: '#f59e0b', // amber
+        borderWidth: 3,
+        backgroundColor: gradient,
+        tension: 0.38,
+        fill: true,
+        pointRadius: 5,
+        pointBackgroundColor: '#fff',
+        pointBorderColor: '#f59e0b',
+        pointHoverRadius: 7
+      },
+      {
+        label: 'Cancelled Bookings',
+        data: [],
+        borderColor: '#ef4444', // red
+        borderWidth: 2,
+        backgroundColor: 'rgba(239,68,68,0.1)',
+        tension: 0.38,
+        fill: true,
+        pointRadius: 4,
+        pointBackgroundColor: '#fff',
+        pointBorderColor: '#ef4444',
+        pointHoverRadius: 6,
+        borderDash: [6, 4] // dashed line
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: true },
+      tooltip: {
+        backgroundColor: '#111827',
+        titleColor: '#facc15',
+        bodyColor: '#fff',
+        padding: 10,
+        cornerRadius: 8,
+        callbacks: {
+          label: ctx => `${ctx.dataset.label}: ${ctx.formattedValue} bookings`
+        }
+      }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: '#6b7280' } },
+      y: {
+        beginAtZero: true,
+        grid: { color: 'rgba(0,0,0,0.05)' },
+        ticks: { color: '#6b7280' }
+      }
+    }
+  },
+  plugins: [shadowPlugin]
+});
+
+
+  // helper to populate chart (use your filtered labels/data here)
+  function populateDailyChart(labels, values) {
+    dailyChart.data.labels = labels;
+    dailyChart.data.datasets[0].data = values;
+    dailyChart.update();
+  }
+
+  // Demo: populate with last 14 days random data (remove this in production)
+  (function demoFill(){
+    const now = new Date();
+    const labels = [];
+    const values = [];
+    for (let i = 13; i >= 0; i--) {
+      const d = new Date(now);
+      d.setDate(now.getDate() - i);
+      labels.push(d.toISOString().slice(0,10));
+      values.push(Math.floor(Math.random() * 12) + 1);
+    }
+    populateDailyChart(labels, values);
+  })();
+
+  // expose helper if you want to update from your applyFiltersAndRender
+  window.populateDailyChart = populateDailyChart;
+});
+</script>
+
 
 <script src="./script.js"></script>
 </body>

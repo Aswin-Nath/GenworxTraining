@@ -3,13 +3,7 @@
     const isAdminLoggedIn = localStorage.getItem("is_admin_logged_in") === "true";
 
   // ✅ Navbar loader
-  let navbarPath = "/Features/Components/Navbars/NotCustomerNavbar/index.html"; // default
-
-  if (isAdminLoggedIn) {
-    navbarPath = "/Features/Components/Navbars/AdminLandingNavbar/index.html";
-  } else if (isCustomerLoggedIn) {
-    navbarPath = "/Features/Components/Navbars/LoggedCustomerNavbar/index.html";
-  }
+  let navbarPath = "/Features/Components/Navbars/AdminLandingNavbar/index.html"; // default
 
   // ✅ Navbar loader
   fetch(navbarPath)

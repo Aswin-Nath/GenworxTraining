@@ -346,5 +346,122 @@
     }
 
     /******************************
+     * Bulk Upload Modal & CSV handling
+     ******************************/
+function toggleBulkUploadModal() {
+  const modal = document.getElementById('bulkUploadModal');
+  if (!modal) return;
+
+  const isHidden = modal.classList.contains('hidden');
+
+  if (isHidden) {
+    // Open modal
+    modal.classList.remove('hidden');
+    modal.classList.add('flex', 'items-center', 'justify-center'); // proper centering
+    document.body.style.overflow = 'hidden'; // lock scroll
+  } else {
+    // Close modal
+    modal.classList.add('hidden');
+    modal.classList.remove('flex', 'items-center', 'justify-center');
+    document.body.style.overflow = ''; // restore scroll
+  }
+}
+
+function downloadTemplate() {
+  // Template CSV content
+  const template = [
+    "Room Number,Type,Price,Adults Capacity,Children Capacity,Description,Amenities",
+    '1110,Deluxe,4500,2,1,"Spacious deluxe room with sea view","AC,Wi-Fi,TV"',
+    '1001,Standard,3000,2,1,"Comfortable standard room","AC,Wi-Fi"'
+  ].join("\n");
+
+  // Create Blob for CSV
+  const blob = new Blob([template], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+
+  // Create hidden anchor and trigger download
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "room_template.csv";
+  document.body.appendChild(a);
+  a.click();
+
+  // Cleanup
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+    function showToast(message, isError = false) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.remove('hidden', 'bg-green-500', 'bg-red-500');
+      toast.classList.add(isError ? 'bg-red-500' : 'bg-green-500');
+      toast.style.display = 'block';
+      
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3000);
+    }
+
+function handleBulkUpload() {
+  const fileInput = document.getElementById('csvFileInput');
+  const file = fileInput.files[0];
+
+  if (!file) {
+    showToast('Please select a CSV file first', true);
+    return;
+  }
+
+  Papa.parse(file, {
+    header: true,
+    skipEmptyLines: true,
+    complete: function(results) {
+      try {
+        let rooms = getRooms();
+        let addedCount = 0, errorCount = 0;
+
+        results.data.forEach(row => {
+          const roomData = {
+            roomNumber: row["Room Number"]?.trim(),
+            type: row["Type"]?.trim(),
+            price: parseInt(row["Price"]) || 0,
+            adultsCapacity: parseInt(row["Adults Capacity"]) || 1,
+            childrenCapacity: parseInt(row["Children Capacity"]) || 0,
+            description: row["Description"]?.replace(/^"|"$/g, '').trim() || "",
+            amenities: row["Amenities"] 
+              ? row["Amenities"].replace(/^"|"$/g, '').split(',').map(a => a.trim()) 
+              : [],
+            status: "Available",
+            guestName: "-",
+            nextCheckIn: "-",
+            nextCheckOut: "-",
+            frozen: false
+          };
+
+          // ✅ Validation
+          if (!roomData.roomNumber || !roomData.type) { errorCount++; return; }
+          if (rooms.some(r => r.roomNumber === roomData.roomNumber)) { errorCount++; return; }
+
+          rooms.push(roomData);
+          addedCount++;
+        });
+
+        saveRooms(rooms);
+        renderRoomsTable();
+        toggleBulkUploadModal();
+        fileInput.value = "";
+
+        showToast(`✅ Added ${addedCount} rooms. ${errorCount} skipped.`, errorCount > 0);
+
+      } catch (err) {
+        console.error(err);
+        showToast('❌ Error processing CSV. Please check the format.', true);
+      }
+    }
+  });
+}
+
+
+    /******************************
      * End of script
      ******************************/

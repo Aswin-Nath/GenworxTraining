@@ -49,195 +49,300 @@
     <div id="pageContainer" class="space-y-6">
 
       <!-- TOP ROW: Backup panel (visible when tab active) -->
-      <section id="panelBackup" class="bg-white shadow-sm-2 rounded-xl p-6">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-          <!-- Left: Create & Schedule -->
-          <div class="space-y-6">
-            <!-- Create Backup Card -->
-            <div class="border rounded-lg p-5 bg-white shadow-sm">
-              <h3 class="font-semibold text-lg mb-3">Create New Backup</h3>
-              <p class="text-sm text-gray-500 mb-4">Pick scope & run a backup now. Backups are stored securely and listed in the history below.</p>
-
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label class="block text-xs text-gray-600 mb-1">Backup Type</label>
-                  <select id="backupType" class="w-full border rounded-md p-2 text-sm">
-                    <option value="full">Full System Backup</option>
-                    <option value="database">Database Only</option>
-                    <option value="bookings">Booking Data</option>
-                    <option value="customers">Customer Data</option>
-                    <option value="media">Media & Images</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label class="block text-xs text-gray-600 mb-1">Retention (days)</label>
-                  <input id="retentionDays" type="number" min="1" value="30" class="w-full border rounded-md p-2 text-sm" />
-                </div>
-              </div>
-
-              <div class="flex items-center gap-3 mt-4">
-                <button id="runBackupNow" class="px-4 py-2 rounded-md bg-yellow-500 text-white shadow">Run Backup Now</button>
-                <button id="dryRunBackup" class="px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-200 text-sm">Dry Run</button>
-                <span id="lastBackupInfo" class="text-sm text-gray-500 ml-auto">Last successful: <span id="lastBackupTime">—</span></span>
-              </div>
-            </div>
-
-            <!-- Schedule Automatic Backups -->
-            <div class="border rounded-lg p-5 bg-white shadow-sm">
-              <h3 class="font-semibold text-lg mb-3">Schedule Automatic Backups</h3>
-              <p class="text-sm text-gray-500 mb-4">Choose a cadence. Scheduled jobs will show in History.</p>
-
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div>
-                  <label class="text-xs text-gray-600 mb-1">Frequency</label>
-                  <select id="scheduleFreq" class="w-full border rounded-md p-2 text-sm">
-                    <option value="daily">Daily</option>
-                    <option value="weekly">Weekly</option>
-                    <option value="monthly">Monthly</option>
-                    <option value="weekday">Weekdays (Mon-Fri)</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="text-xs text-gray-600 mb-1">Time of Day</label>
-                  <input id="scheduleTime" type="time" class="w-full border rounded-md p-2 text-sm"/>
-                </div>
-                <div>
-                  <label class="text-xs text-gray-600 mb-1">Backup Type</label>
-                  <select id="scheduleType" class="w-full border rounded-md p-2 text-sm">
-                    <option value="full">Full</option>
-                    <option value="database">Database</option>
-                    <option value="bookings">Bookings</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="flex items-center gap-3 mt-4">
-                <button id="scheduleBtn" class="px-4 py-2 rounded-md bg-green-500 text-white shadow">Schedule</button>
-                <button id="listSchedules" class="px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-200 text-sm">View Scheduled Jobs</button>
-                <div class="ml-auto text-sm text-gray-500">Active schedules: <span id="activeSchedulesCount">0</span></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right: Quick Stats & Storage -->
-          <div class="space-y-6">
-
-            <!-- Quick Stats -->
-            <div class="border rounded-lg p-5 bg-white shadow-sm">
-              <h3 class="font-semibold text-lg mb-3">Quick Backup Stats</h3>
-              <div class="grid stat-grid grid-cols-3 gap-3">
-                <div class="p-3 bg-gray-50 rounded-md text-center">
-                  <p class="text-xs text-gray-500">Total Backups</p>
-                  <p id="totalBackups" class="font-bold text-lg mt-1">0</p>
-                </div>
-                <div class="p-3 bg-gray-50 rounded-md text-center">
-                  <p class="text-xs text-gray-500">Storage Used</p>
-                  <p id="storageUsed" class="font-bold text-lg mt-1">0 GB</p>
-                </div>
-                <div class="p-3 bg-gray-50 rounded-md text-center">
-                  <p class="text-xs text-gray-500">Last Backup</p>
-                  <p id="lastBackupCard" class="font-bold text-lg mt-1">—</p>
-                </div>
-              </div>
-              <div class="mt-4">
-                <label class="text-xs text-gray-500">Storage Utilization</label>
-                <div class="w-full bg-gray-100 rounded-full h-3 mt-1 overflow-hidden">
-                  <div id="storageBar" class="h-3 rounded-full bg-yellow-500" style="width: 25%;"></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Storage & Retention controls -->
-            <div class="border rounded-lg p-5 bg-white shadow-sm">
-              <h3 class="font-semibold text-lg mb-3">Retention & Storage</h3>
-              <p class="text-sm text-gray-500 mb-4">Manage retention policies and clean-up old backups.</p>
-
-              <div class="grid grid-cols-1 gap-3">
-                <div class="flex gap-2">
-                  <input id="retentionCleanupDays" type="number" min="1" value="90" class="w-32 border rounded-md p-2 text-sm" />
-                  <button id="purgeOldBackups" class="px-3 py-2 rounded-md bg-red-500 text-white">Purge older than days</button>
-                </div>
-                <div class="text-sm text-gray-500 mt-2">Auto-purge status: <span id="autoPurgeStatus">Off</span></div>
-              </div>
-              <div class="mt-4 flex gap-2">
-                <button id="runIntegrityCheck" class="px-3 py-2 rounded-md bg-indigo-600 text-white">Run Integrity Check</button>
-                <button id="downloadAllBackupsMeta" class="px-3 py-2 rounded-md bg-gray-100 hover:bg-gray-200">Download Metadata</button>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-        <!-- Backup History log -->
-        <div class="mt-6 border rounded-lg p-4 bg-white shadow-sm">
-          <div class="flex items-center justify-between mb-3">
-            <h4 class="font-semibold">Backup History Log</h4>
-            <div class="flex items-center gap-2">
-              <input id="backupFilter" type="text" placeholder="Filter by name or type" class="border rounded-md p-2 text-sm" />
-              <button id="exportBackupLogs" class="px-3 py-2 rounded-md bg-gray-100 hover:bg-gray-200">Export CSV</button>
-            </div>
-          </div>
-
-          <div class="overflow-x-auto">
-            <table class="w-full table-auto text-sm table-compact">
-              <thead class="text-left text-gray-600">
-                <tr>
-                  <th class="py-2 px-3">Backup ID</th>
-                  <th class="py-2 px-3">Date & Time</th>
-                  <th class="py-2 px-3">Type</th>
-                  <th class="py-2 px-3">Size (MB)</th>
-                  <th class="py-2 px-3">Status</th>
-                  <th class="py-2 px-3">Actions</th>
-                </tr>
-              </thead>
-              <tbody id="backupHistoryTbody" class="text-gray-700"></tbody>
-            </table>
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- RECOVERY panel -->
-<section id="panelRecover" class="bg-white shadow-sm-2 rounded-xl p-6 hidden">
-
+<section id="panelBackup" class="bg-white shadow-sm-2 rounded-xl p-6">
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
+    <!-- Left: Create & Schedule -->
+    <div class="space-y-6">
+      <!-- Create Backup Card -->
+      <div class="border rounded-lg p-5 bg-white shadow-sm">
+        <h3 class="font-semibold text-lg mb-3">Create New Backup</h3>
+        <p class="text-sm text-gray-500 mb-4">
+          Pick scope & run a backup now. Backups are stored securely and listed in the history below.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs text-gray-600 mb-1">Backup Type</label>
+            <select id="backupType" class="w-full border rounded-md p-2 text-sm">
+              <option value="full">Full System Backup</option>
+              <option value="database">Database Only</option>
+              <option value="bookings">Booking Data</option>
+              <option value="customers">Customer Data</option>
+              <option value="media">Media & Images</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs text-gray-600 mb-1">Retention (days)</label>
+            <input id="retentionDays" type="number" min="1" value="30" class="w-full border rounded-md p-2 text-sm" />
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 mt-4">
+          <button id="runBackupNow" class="px-4 py-2 rounded-md bg-yellow-500 text-white shadow">
+            Run Backup Now
+          </button>
+        </div>
+      </div>
+
+      <!-- Schedule Automatic Backups -->
+      <div class="border rounded-lg p-5 bg-white shadow-sm">
+        <h3 class="font-semibold text-lg mb-3">Schedule Automatic Backups</h3>
+        <p class="text-sm text-gray-500 mb-4">Choose a cadence. Scheduled jobs will show in the manager below.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="text-xs text-gray-600 mb-1">Frequency</label>
+            <select id="scheduleFreq" class="w-full border rounded-md p-2 text-sm">
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+              <option value="weekday">Weekdays (Mon-Fri)</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs text-gray-600 mb-1">Time of Day</label>
+            <input id="scheduleTime" type="time" class="w-full border rounded-md p-2 text-sm"/>
+          </div>
+          <div>
+            <label class="text-xs text-gray-600 mb-1">Backup Type</label>
+            <select id="scheduleType" class="w-full border rounded-md p-2 text-sm">
+              <option value="full">Full</option>
+              <option value="database">Database</option>
+              <option value="bookings">Bookings</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 mt-4">
+          <button id="scheduleBtn" class="px-4 py-2 rounded-md bg-green-500 text-white shadow">Schedule</button>
+          <div class="ml-auto text-sm text-gray-500">Active schedules: <span id="activeSchedulesCount">3</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Quick Stats & Storage -->
+    <div class="space-y-6">
+      <!-- Quick Stats -->
+      <div class="border rounded-lg p-5 bg-white shadow-sm">
+        <h3 class="font-semibold text-lg mb-3">Quick Backup Stats</h3>
+        <div class="grid stat-grid grid-cols-3 gap-3">
+          <div class="p-3 bg-gray-50 rounded-md text-center">
+            <p class="text-xs text-gray-500">Total Backups</p>
+            <p id="totalBackups" class="font-bold text-lg mt-1">5</p>
+          </div>
+          <div class="p-3 bg-gray-50 rounded-md text-center">
+            <p class="text-xs text-gray-500">Storage Used</p>
+            <p id="storageUsed" class="font-bold text-lg mt-1">4.1 GB</p>
+          </div>
+          <div class="p-3 bg-gray-50 rounded-md text-center">
+            <p class="text-xs text-gray-500">Last Backup</p>
+            <p id="lastBackupCard" class="font-bold text-lg mt-1">2025-09-20 07:30 PM</p>
+          </div>
+        </div>
+        <div class="mt-4">
+          <label class="text-xs text-gray-500">Storage Utilization</label>
+          <div class="w-full bg-gray-100 rounded-full h-3 mt-1 overflow-hidden">
+            <div id="storageBar" class="h-3 rounded-full bg-yellow-500" style="width: 4%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Storage & Retention controls -->
+      <div class="border rounded-lg p-5 bg-white shadow-sm">
+        <h3 class="font-semibold text-lg mb-3">Retention & Storage</h3>
+        <p class="text-sm text-gray-500 mb-4">Manage retention policies and clean-up old backups.</p>
+
+        <div class="grid grid-cols-1 gap-3">
+          <div class="flex gap-2">
+            <input id="retentionCleanupDays" type="number" min="1" value="90" class="w-32 border rounded-md p-2 text-sm" />
+            <button id="purgeOldBackups" class="px-3 py-2 rounded-md bg-red-500 text-white">Purge older than days</button>
+          </div>
+          <div class="text-sm text-gray-500 mt-2">Auto-purge status: <span id="autoPurgeStatus">Off</span></div>
+        </div>
+        <div class="mt-4 flex gap-2">
+          <button id="runIntegrityCheck" class="px-3 py-2 rounded-md bg-indigo-600 text-white">Run Integrity Check</button>
+          <button id="downloadAllBackupsMeta" class="px-3 py-2 rounded-md bg-gray-100 hover:bg-gray-200">Download Metadata</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Backup History log -->
+  <div class="mt-6 border rounded-lg p-4 bg-white shadow-sm">
+    <div class="flex items-center justify-between mb-3">
+      <h4 class="font-semibold">Backup History Log</h4>
+      <div class="flex items-center gap-2">
+        <input id="backupFilter" type="text" placeholder="Filter by name or type" class="border rounded-md p-2 text-sm" />
+        <button id="exportBackupLogs" class="px-3 py-2 rounded-md bg-gray-100 hover:bg-gray-200">Export CSV</button>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full table-auto text-sm table-compact">
+        <thead class="text-left text-gray-600">
+          <tr>
+            <th class="py-2 px-3">Backup ID</th>
+            <th class="py-2 px-3">Date & Time</th>
+            <th class="py-2 px-3">Type</th>
+            <th class="py-2 px-3">Size (MB)</th>
+            <th class="py-2 px-3">Status</th>
+            <th class="py-2 px-3">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="backupHistoryTbody" class="text-gray-700">
+          <!-- Static backups -->
+          <tr data-static="true">
+            <td class="py-2 px-3"><div class="text-sm font-medium">BK1001</div></td>
+            <td class="py-2 px-3">2025-09-01 10:30 AM</td>
+            <td class="py-2 px-3">full</td>
+            <td class="py-2 px-3">512</td>
+            <td class="py-2 px-3"><span class="text-green-600 font-semibold">SUCCESS</span></td>
+            <td class="py-2 px-3"><div class="flex gap-2"><button class="px-2 py-1 bg-gray-100 rounded text-xs">Download</button><button class="px-2 py-1 bg-yellow-500 text-white rounded text-xs">Restore</button><button class="px-2 py-1 bg-red-500 text-white rounded text-xs">Delete</button></div></td>
+          </tr>
+          <tr data-static="true">
+            <td class="py-2 px-3"><div class="text-sm font-medium">BK1002</div></td>
+            <td class="py-2 px-3">2025-09-05 04:45 PM</td>
+            <td class="py-2 px-3">database</td>
+            <td class="py-2 px-3">980</td>
+            <td class="py-2 px-3"><span class="text-green-600 font-semibold">SUCCESS</span></td>
+            <td class="py-2 px-3"><div class="flex gap-2"><button class="px-2 py-1 bg-gray-100 rounded text-xs">Download</button><button class="px-2 py-1 bg-yellow-500 text-white rounded text-xs">Restore</button><button class="px-2 py-1 bg-red-500 text-white rounded text-xs">Delete</button></div></td>
+          </tr>
+          <tr data-static="true">
+            <td class="py-2 px-3"><div class="text-sm font-medium">BK1003</div></td>
+            <td class="py-2 px-3">2025-09-10 09:15 AM</td>
+            <td class="py-2 px-3">bookings</td>
+            <td class="py-2 px-3">245</td>
+            <td class="py-2 px-3"><span class="text-green-600 font-semibold">SUCCESS</span></td>
+            <td class="py-2 px-3"><div class="flex gap-2"><button class="px-2 py-1 bg-gray-100 rounded text-xs">Download</button><button class="px-2 py-1 bg-yellow-500 text-white rounded text-xs">Restore</button><button class="px-2 py-1 bg-red-500 text-white rounded text-xs">Delete</button></div></td>
+          </tr>
+          <tr data-static="true">
+            <td class="py-2 px-3"><div class="text-sm font-medium">BK1004</div></td>
+            <td class="py-2 px-3">2025-09-15 01:00 PM</td>
+            <td class="py-2 px-3">customers</td>
+            <td class="py-2 px-3">340</td>
+            <td class="py-2 px-3"><span class="text-red-600 font-semibold">FAILED</span></td>
+            <td class="py-2 px-3"><div class="flex gap-2"><button class="px-2 py-1 bg-gray-100 rounded text-xs">Download</button><button class="px-2 py-1 bg-yellow-500 text-white rounded text-xs">Restore</button><button class="px-2 py-1 bg-red-500 text-white rounded text-xs">Delete</button></div></td>
+          </tr>
+          <tr data-static="true">
+            <td class="py-2 px-3"><div class="text-sm font-medium">BK1005</div></td>
+            <td class="py-2 px-3">2025-09-20 07:30 PM</td>
+            <td class="py-2 px-3">media</td>
+            <td class="py-2 px-3">2048</td>
+            <td class="py-2 px-3"><span class="text-green-600 font-semibold">SUCCESS</span></td>
+            <td class="py-2 px-3"><div class="flex gap-2"><button class="px-2 py-1 bg-gray-100 rounded text-xs">Download</button><button class="px-2 py-1 bg-yellow-500 text-white rounded text-xs">Restore</button><button class="px-2 py-1 bg-red-500 text-white rounded text-xs">Delete</button></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Scheduled Backups Manager -->
+  <div class="mt-6 border rounded-lg p-4 bg-white shadow-sm">
+    <div class="flex items-center justify-between mb-3">
+      <h4 class="font-semibold">Scheduled Backups Manager</h4>
+      <button id="exportSchedules" class="px-3 py-2 rounded-md bg-gray-100 hover:bg-gray-200">Export Schedules</button>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full table-auto text-sm table-compact">
+        <thead class="text-left text-gray-600">
+          <tr>
+            <th class="py-2 px-3">Schedule ID</th>
+            <th class="py-2 px-3">Frequency</th>
+            <th class="py-2 px-3">Time</th>
+            <th class="py-2 px-3">Backup Type</th>
+            <th class="py-2 px-3">Status</th>
+            <th class="py-2 px-3">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="scheduleHistoryTbody" class="text-gray-700">
+          <tr data-static="true">
+            <td class="py-2 px-3">SCH1</td>
+            <td class="py-2 px-3">Daily</td>
+            <td class="py-2 px-3">02:00 AM</td>
+            <td class="py-2 px-3">Full</td>
+            <td class="py-2 px-3"><span class="text-green-600 font-semibold">Active</span></td>
+            <td class="py-2 px-3"><div class="flex gap-2"><button class="px-2 py-1 bg-red-500 text-white rounded text-xs">Delete</button><button class="px-2 py-1 bg-gray-100 rounded text-xs">Turn Off</button></div></td>
+          </tr>
+          <tr data-static="true">
+            <td class="py-2 px-3">SCH2</td>
+            <td class="py-2 px-3">Weekly</td>
+            <td class="py-2 px-3">01:00 AM</td>
+            <td class="py-2 px-3">Database</td>
+            <td class="py-2 px-3"><span class="text-green-600 font-semibold">Active</span></td>
+            <td class="py-2 px-3"><div class="flex gap-2"><button class="px-2 py-1 bg-red-500 text-white rounded text-xs">Delete</button><button class="px-2 py-1 bg-gray-100 rounded text-xs">Turn Off</button></div></td>
+          </tr>
+          <tr data-static="true">
+            <td class="py-2 px-3">SCH3</td>
+            <td class="py-2 px-3">Monthly</td>
+            <td class="py-2 px-3">03:00 AM</td>
+            <td class="py-2 px-3">Bookings</td>
+            <td class="py-2 px-3"><span class="text-red-600 font-semibold">Disabled</span></td>
+            <td class="py-2 px-3"><div class="flex gap-2"><button class="px-2 py-1 bg-red-500 text-white rounded text-xs">Delete</button><button class="px-2 py-1 bg-green-500 text-white rounded text-xs">Turn On</button></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- RECOVERY panel -->
+<section id="panelRecover" class="bg-white shadow-sm-2 rounded-xl p-6 hidden">
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    
     <!-- Left: Restore UI -->
-    <div class="border rounded-lg p-5 bg-white shadow-sm">
+    <div class="border rounded-lg p-5 bg-white shadow-sm lg:col-span-2">
       <h3 class="font-semibold text-lg mb-3">Restore from Backup</h3>
       <p class="text-sm text-gray-500 mb-4">
         Select a backup to restore. 
-        <strong class="text-red-600">Warning:</strong> restoring will overwrite current data.
+        <strong class="text-red-600">Warning:</strong> Restoring will overwrite current data. 
+        <span class="text-gray-600">For testing, use partial restore options.</span>
       </p>
 
+      <!-- Available backups -->
       <div class="grid grid-cols-1 gap-3">
         <label class="text-xs text-gray-600">Available Backups</label>
-        <!-- ✅ Static dropdown -->
         <select id="restoreSelect" class="w-full border rounded-md p-2 text-sm">
           <option value="BK1001">BK1001 · full · 2025-09-01 12:30 PM</option>
           <option value="BK1002">BK1002 · database · 2025-09-05 09:15 AM</option>
           <option value="BK1003">BK1003 · bookings · 2025-09-12 04:45 PM</option>
           <option value="BK1004">BK1004 · customers · 2025-09-20 07:10 AM</option>
+          <option value="BK1005">BK1005 · media · 2025-09-21 07:50 AM</option>
         </select>
 
+        <!-- Restore Mode -->
         <label class="text-xs text-gray-600 mt-2">Restore Mode</label>
         <select id="restoreMode" class="w-full border rounded-md p-2 text-sm">
           <option value="full">Full Overwrite</option>
           <option value="partial">Partial (Bookings & Customers)</option>
           <option value="bookings">Bookings Only</option>
           <option value="customers">Customers Only</option>
+          <option value="media">Media Files Only</option>
         </select>
 
+        <!-- Notes -->
         <label class="text-xs text-gray-600 mt-2">Notes (optional)</label>
         <input id="restoreNotes" type="text" 
                placeholder="Why are you restoring? (audit log)" 
                class="w-full border rounded-md p-2 text-sm" />
 
+        <!-- Restore Options -->
+        <div class="mt-4 grid grid-cols-2 gap-3">
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="validateBeforeRestore" class="rounded" />
+            <label for="validateBeforeRestore" class="text-sm text-gray-600">Run validation before restore</label>
+          </div>
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="notifyAdminRestore" class="rounded" checked />
+            <label for="notifyAdminRestore" class="text-sm text-gray-600">Notify admins via email</label>
+          </div>
+        </div>
+
+        <!-- Action buttons -->
         <div class="flex items-center gap-3 mt-4">
           <button id="restoreBtn" 
                   class="px-4 py-2 rounded-md bg-red-600 text-white">
@@ -251,63 +356,110 @@
       </div>
     </div>
 
-    <!-- Right: Restore history log -->
+    <!-- Right: Restore stats -->
     <div class="border rounded-lg p-5 bg-white shadow-sm">
-      <h3 class="font-semibold text-lg mb-3">Restore History Log</h3>
-      <div class="flex items-center gap-2 mb-3">
-        <input id="restoreFilter" type="text" 
-               placeholder="Filter by restore id or notes" 
-               class="border rounded-md p-2 text-sm w-full" />
-        <button id="exportRestoreLogs" 
-                class="px-3 py-2 rounded-md bg-gray-100 hover:bg-gray-200">
-          Export CSV
-        </button>
+      <h3 class="font-semibold text-lg mb-3">Quick Restore Stats</h3>
+      <div class="grid grid-cols-2 gap-3 text-center">
+        <div class="p-3 bg-gray-50 rounded-md">
+          <p class="text-xs text-gray-500">Total Restores</p>
+          <p class="font-bold text-lg mt-1">5</p>
+        </div>
+        <div class="p-3 bg-gray-50 rounded-md">
+          <p class="text-xs text-gray-500">Success Rate</p>
+          <p class="font-bold text-lg mt-1 text-green-600">80%</p>
+        </div>
+        <div class="p-3 bg-gray-50 rounded-md">
+          <p class="text-xs text-gray-500">Last Restore</p>
+          <p class="font-bold text-sm mt-1">2025-09-21 · Media</p>
+        </div>
+        <div class="p-3 bg-gray-50 rounded-md">
+          <p class="text-xs text-gray-500">Avg Duration</p>
+          <p class="font-bold text-sm mt-1">3m 45s</p>
+        </div>
       </div>
-
-      <div class="overflow-x-auto">
-        <table class="w-full table-auto text-sm table-compact">
-          <thead class="text-left text-gray-600">
-            <tr>
-              <th class="py-2 px-3">Restore ID</th>
-              <th class="py-2 px-3">Date & Time</th>
-              <th class="py-2 px-3">Backup File</th>
-              <th class="py-2 px-3">Notes</th>
-              <th class="py-2 px-3">Status</th>
-              <th class="py-2 px-3">Action</th>
-            </tr>
-          </thead>
-          <tbody id="restoreHistoryTbody" class="text-gray-700">
-            <!-- ✅ Example static rows -->
-            <tr>
-              <td class="py-2 px-3">RS2001</td>
-              <td class="py-2 px-3">2025-09-10 11:20 AM</td>
-              <td class="py-2 px-3">BK1002</td>
-              <td class="py-2 px-3">Database rollback before patch</td>
-              <td class="py-2 px-3">
-                <span class="text-green-600 font-semibold">COMPLETED</span>
-              </td>
-              <td class="py-2 px-3">
-                <button class="px-2 py-1 bg-gray-100 rounded text-xs">View Log</button>
-              </td>
-            </tr>
-            <tr>
-              <td class="py-2 px-3">RS2002</td>
-              <td class="py-2 px-3">2025-09-18 05:40 PM</td>
-              <td class="py-2 px-3">BK1003</td>
-              <td class="py-2 px-3">Test restore for QA</td>
-              <td class="py-2 px-3">
-                <span class="text-green-600 font-semibold">COMPLETED</span>
-              </td>
-              <td class="py-2 px-3">
-                <button class="px-2 py-1 bg-gray-100 rounded text-xs">View Log</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="mt-4">
+        <label class="text-xs text-gray-500">Restore Reliability</label>
+        <div class="w-full bg-gray-100 rounded-full h-3 mt-1 overflow-hidden">
+          <div class="h-3 rounded-full bg-green-500" style="width: 80%;"></div>
+        </div>
       </div>
     </div>
+
   </div>
+
+  <!-- Restore History Table -->
+  <div class="mt-6 border rounded-lg p-5 bg-white shadow-sm">
+    <h3 class="font-semibold text-lg mb-3">Restore History Log</h3>
+    <div class="flex items-center gap-2 mb-3">
+      <input id="restoreFilter" type="text" 
+             placeholder="Filter by restore id, backup or notes" 
+             class="border rounded-md p-2 text-sm w-full" />
+      <button id="exportRestoreLogs" 
+              class="px-3 py-2 rounded-md bg-gray-100 hover:bg-gray-200">
+        Export CSV
+      </button>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full table-auto text-sm table-compact">
+        <thead class="text-left text-gray-600">
+          <tr>
+            <th class="py-2 px-3">Restore ID</th>
+            <th class="py-2 px-3">Date & Time</th>
+            <th class="py-2 px-3">Backup File</th>
+            <th class="py-2 px-3">Notes</th>
+            <th class="py-2 px-3">Status</th>
+            <th class="py-2 px-3">Action</th>
+          </tr>
+        </thead>
+        <tbody id="restoreHistoryTbody" class="text-gray-700">
+          <tr>
+            <td class="py-2 px-3">RS2001</td>
+            <td class="py-2 px-3">2025-09-03 02:10 PM</td>
+            <td class="py-2 px-3">BK1001</td>
+            <td class="py-2 px-3">Full system recovery after outage</td>
+            <td class="py-2 px-3"><span class="text-green-600 font-semibold">COMPLETED</span></td>
+            <td class="py-2 px-3"><button class="px-2 py-1 bg-gray-100 rounded text-xs">View Log</button></td>
+          </tr>
+          <tr>
+            <td class="py-2 px-3">RS2002</td>
+            <td class="py-2 px-3">2025-09-10 11:20 AM</td>
+            <td class="py-2 px-3">BK1002</td>
+            <td class="py-2 px-3">Database rollback before patch</td>
+            <td class="py-2 px-3"><span class="text-green-600 font-semibold">COMPLETED</span></td>
+            <td class="py-2 px-3"><button class="px-2 py-1 bg-gray-100 rounded text-xs">View Log</button></td>
+          </tr>
+          <tr>
+            <td class="py-2 px-3">RS2003</td>
+            <td class="py-2 px-3">2025-09-15 09:55 AM</td>
+            <td class="py-2 px-3">BK1003</td>
+            <td class="py-2 px-3">QA environment restore for booking tests</td>
+            <td class="py-2 px-3"><span class="text-green-600 font-semibold">COMPLETED</span></td>
+            <td class="py-2 px-3"><button class="px-2 py-1 bg-gray-100 rounded text-xs">View Log</button></td>
+          </tr>
+          <tr>
+            <td class="py-2 px-3">RS2004</td>
+            <td class="py-2 px-3">2025-09-18 05:40 PM</td>
+            <td class="py-2 px-3">BK1004</td>
+            <td class="py-2 px-3">Customer restore after accidental deletion</td>
+            <td class="py-2 px-3"><span class="text-red-600 font-semibold">FAILED</span></td>
+            <td class="py-2 px-3"><button class="px-2 py-1 bg-gray-100 rounded text-xs">View Log</button></td>
+          </tr>
+          <tr>
+            <td class="py-2 px-3">RS2005</td>
+            <td class="py-2 px-3">2025-09-21 07:50 AM</td>
+            <td class="py-2 px-3">BK1005</td>
+            <td class="py-2 px-3">Media restore to recover image library</td>
+            <td class="py-2 px-3"><span class="text-green-600 font-semibold">COMPLETED</span></td>
+            <td class="py-2 px-3"><button class="px-2 py-1 bg-gray-100 rounded text-xs">View Log</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </section>
+
 
 <!-- Modal: Confirm Restore -->
 <div id="confirmModal" class="fixed inset-0 hidden items-center justify-center z-50">
@@ -491,7 +643,7 @@
       const backupHistoryTbody = document.getElementById('backupHistoryTbody');
       const restoreHistoryTbody = document.getElementById('restoreHistoryTbody');
       const restoreSelect = document.getElementById('restoreSelect');
-      const lastBackupTime = document.getElementById('lastBackupTime');
+
       const lastBackupCard = document.getElementById('lastBackupCard');
       const totalBackupsEl = document.getElementById('totalBackups');
       const storageUsedEl = document.getElementById('storageUsed');
@@ -555,7 +707,7 @@
         const pct = Math.min(100, Math.round(totalSize/1024 / 100 * 100)); // assume 100GB capacity in demo
         storageBar.style.width = `${pct}%`;
         lastBackupCard.textContent = BACKUPS.length ? formatDate(BACKUPS[0].createdAt) : '—';
-        lastBackupTime.textContent = BACKUPS.length ? formatDate(BACKUPS[0].createdAt) : '—';
+
       }
 
       function renderRestoreHistory(filterText = '') {

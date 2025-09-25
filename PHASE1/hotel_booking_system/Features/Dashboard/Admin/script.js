@@ -394,16 +394,11 @@
       applyFiltersAndRender(currentRange, filterFrom, filterTo);
     });
 
-    // quick actions placeholders
-    document.getElementById("generateReportBtn").addEventListener("click", () => {
-      alert("Generating report... (demo placeholder)");
-    });
+
     document.getElementById("backupDataBtn").addEventListener("click", () => {
       alert("Backing up data... (demo placeholder)");
     });
-    document.getElementById("viewIssuesBtn").addEventListener("click", () => {
-      alert("Open issues panel... (demo placeholder)");
-    });
+
 
     // export CSV placeholder
     document.getElementById("exportCsv").addEventListener("click", () => {
