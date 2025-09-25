@@ -45,23 +45,37 @@
   <!-- ✅ Main Content -->
   <main class="ml-64 pt-20 p-8 min-h-screen overflow-y-auto bg-gray-50">
 
-    <!-- Title -->
-    <div class="mb-6 flex justify-between items-center">
-      <div>
-        <h2 class="text-2xl font-bold text-gray-800">Notifications Dashboard</h2>
-        <p class="text-gray-600">Stay updated on bookings, issues, and refunds in real-time.</p>
-      </div>
-      <div class="flex gap-2">
-        <button id="markAllRead" class="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700 flex items-center gap-1">
-          <span class="material-icons text-sm">done_all</span>
-          Mark All as Read
-        </button>
-        <button id="refreshNotifications" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 flex items-center gap-1">
-          <span class="material-icons text-sm">refresh</span>
-          Refresh
-        </button>
-      </div>
-    </div>
+<!-- Title -->
+<div class="mb-6 flex justify-between items-center flex-wrap gap-4">
+  <!-- Left side -->
+  <div>
+    <h2 class="text-2xl font-bold text-gray-800">Notifications Dashboard</h2>
+    <p class="text-gray-600">Stay updated on bookings, issues, and refunds in real-time.</p>
+  </div>
+
+  <!-- Right side (Back + Actions) -->
+  <div class="flex items-center gap-3">
+    <!-- Back Button -->
+    <button onclick="window.history.back()" 
+      class="flex items-center gap-2 bg-gradient-to-r from-yellow-500 to-pink-500 text-white px-5 py-2 rounded-lg shadow hover:opacity-90">
+      <span class="material-icons text-sm">arrow_back</span>
+      Back
+    </button>
+
+    <!-- Mark All Read -->
+    <button id="markAllRead" class="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700 flex items-center gap-1">
+      <span class="material-icons text-sm">done_all</span>
+      Mark All as Read
+    </button>
+
+    <!-- Refresh -->
+    <button id="refreshNotifications" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 flex items-center gap-1">
+      <span class="material-icons text-sm">refresh</span>
+      Refresh
+    </button>
+  </div>
+</div>
+
 
     <!-- ✅ Filter Buttons -->
     <div class="flex flex-wrap gap-3 mb-6">

@@ -123,15 +123,25 @@ function updateNotificationDisplay() {
 // Toasts
 function showToast(message) {
   const toast = document.createElement("div");
-  toast.className = "toast position-fixed top-0 end-0 m-3";
+  toast.className = "toast align-items-center text-bg-light border-0 shadow-sm mb-3";
   toast.setAttribute("role", "alert");
+  toast.setAttribute("aria-live", "assertive");
+  toast.setAttribute("aria-atomic", "true");
+
   toast.innerHTML = `
-    <div class="toast-header"><strong class="me-auto">New Notification</strong>
-      <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
-    </div>
-    <div class="toast-body">${message}</div>`;
-  document.body.appendChild(toast);
-  new bootstrap.Toast(toast).show();
+    <div class="d-flex">
+      <div class="toast-body">
+        <i class="fas fa-bell me-2 text-primary"></i>${message}
+      </div>
+      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>`;
+
+  // 👉 Append to our custom container instead of <body>
+  document.getElementById("toastContainer").appendChild(toast);
+
+  const bsToast = new bootstrap.Toast(toast, { delay: 4000 });
+  bsToast.show();
+
   toast.addEventListener("hidden.bs.toast", () => toast.remove());
 }
 
@@ -177,3 +187,4 @@ setInterval(() => {
   };
   addNotification(random, fake[random].message, fake[random].details);
 }, 45000);
+

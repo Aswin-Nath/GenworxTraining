@@ -3,143 +3,265 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Notifications - Hotel Management System</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <title>LuxuryStay - My Notifications</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
-    body {
-      background-color: #f8f9fa;
-      min-height: 100vh;
-    }
-
-    .main-content {
-      max-width: 1100px;   /* keeps content centered and readable */
-      margin: 0 auto;
-      padding: 5rem 2rem 2rem;
-    }
-
-    .back-button {
-      margin-bottom: 1rem;
-      padding: 0.5rem 1rem;
-      border: 1px solid #dee2e6;
-      border-radius: 0.5rem;
-      background: white;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.2s;
-    }
-    .back-button:hover { background: #f1f3f5; }
-
-    .notification-section {
-      margin-bottom: 2.5rem;
-    }
-
-    /* Notification Card */
     .notification-item {
-      border-left: 6px solid;
+      border-left-width: 6px;
       border-radius: 0.5rem;
-      padding: 1rem 1.25rem;
+      padding: 1rem;
       margin-bottom: 1rem;
-      background: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
     }
-
-    /* Colors */
-    .notification-item.booking { border-left-color: #28a745; }
-    .notification-item.offers { border-left-color: #0dcaf0; }
-    .notification-item.issue { border-left-color: #dc3545; }
-    .notification-item.refund { border-left-color: #ffc107; }
-
-    /* Timestamps */
-    .notification-timestamp {
-      font-size: 0.8rem;
-      color: #6c757d;
-    }
-
-    /* Unread emphasis */
-    .notification-item.unread {
-      background: #f8faff;
-      font-weight: 500;
-    }
-
-    /* Filter buttons */
-    .btn-group .btn.active {
-      background: #0d6efd;
-      color: white !important;
-      border-color: #0d6efd;
-    }
+    .notification-item.booking { border-left-color: #16a34a; background-color: #f0fdf4; }
+    .notification-item.issue { border-left-color: #dc2626; background-color: #fef2f2; }
+    .notification-item.refund { border-left-color: #facc15; background-color: #fefce8; }
+    .notification-item.offers { border-left-color: #0ea5e9; background-color: #f0f9ff; }
+    .notification-item.unread { font-weight: 500; }
+    .notification-timestamp { font-size: 0.75rem; color: #6b7280; }
   </style>
 </head>
-<body>
-  <!-- Navbar -->
+<body class="bg-gray-50">
+
+  <!-- ✅ Navbar -->
   <div id="navbar"></div>
 
-  <div class="main-content">
-    <!-- Back -->
-    <button onclick="history.back()" class="back-button">
-      <i class="fas fa-arrow-left"></i><span>Back</span>
-    </button>
+  <!-- ✅ Main Content -->
+  <main class="pt-20 p-8 max-w-4xl mx-auto min-h-screen overflow-y-auto bg-gray-50">
 
-    <!-- Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2 class="fw-bold">My Notifications</h2>
-      <div>
-        <button class="btn btn-outline-primary me-2" id="markAllRead">Mark All as Read</button>
-        <button class="btn btn-outline-secondary" id="refreshNotifications">
-          <i class="fas fa-sync-alt"></i> Refresh
-        </button>
-      </div>
+    
+  <!-- Title + Actions -->
+  <div class="mb-6 flex justify-between items-center flex-wrap gap-4">
+    <!-- Left side -->
+    <div>
+      <h2 class="text-2xl font-bold text-gray-800">My Notifications</h2>
+      <p class="text-gray-600">Stay updated on your bookings, offers, issues, and refunds.</p>
     </div>
 
-    <!-- Filters -->
-    <div class="btn-group mb-4 flex-wrap" role="group">
-      <button type="button" class="btn btn-outline-primary active" data-filter="all">
-        All <span class="badge bg-danger ms-1" id="allCount">0</span>
+    <!-- Right side (Back + Actions) -->
+    <div class="flex items-center gap-3">
+      <!-- Back Button -->
+      <button onclick="window.history.back()" 
+        class="flex items-center gap-2 bg-gradient-to-r from-yellow-500 to-pink-500 text-white px-5 py-2 rounded-lg shadow hover:opacity-90">
+        <span class="material-icons text-sm">arrow_back</span> Back
       </button>
-      <button type="button" class="btn btn-outline-success" data-filter="booking">
-        My Bookings <span class="badge bg-danger ms-1" id="bookingCount">0</span>
-      </button>
-      <button type="button" class="btn btn-outline-info" data-filter="offers">
-        Special Offers <span class="badge bg-danger ms-1" id="offersCount">0</span>
-      </button>
-      <button type="button" class="btn btn-outline-danger" data-filter="issue">
-        My Issues <span class="badge bg-danger ms-1" id="issueCount">0</span>
-      </button>
-      <button type="button" class="btn btn-outline-warning" data-filter="refund">
-        My Refunds <span class="badge bg-danger ms-1" id="refundCount">0</span>
-      </button>
-    </div>
 
-    <!-- Booking -->
-    <div class="notification-section" id="bookingNotifications">
-      <h5 class="mb-3"><i class="fas fa-calendar-check text-success me-2"></i> Booking Updates</h5>
-      <div id="bookingList"></div>
-    </div>
-
-    <!-- Offers -->
-    <div class="notification-section" id="offersNotifications">
-      <h5 class="mb-3"><i class="fas fa-gift text-info me-2"></i> Special Offers</h5>
-      <div id="offersList"></div>
-    </div>
-
-    <!-- Issues -->
-    <div class="notification-section" id="issueNotifications">
-      <h5 class="mb-3"><i class="fas fa-exclamation-triangle text-danger me-2"></i> Issue Updates</h5>
-      <div id="issueList"></div>
-    </div>
-
-    <!-- Refunds -->
-    <div class="notification-section" id="refundNotifications">
-      <h5 class="mb-3"><i class="fas fa-money-bill-wave text-warning me-2"></i> Refund Updates</h5>
-      <div id="refundList"></div>
+      <!-- Mark All + Refresh -->
+      <button id="markAllRead" class="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700 flex items-center gap-1">
+        <span class="material-icons text-sm">done_all</span> Mark All as Read
+      </button>
+      <button id="refreshNotifications" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 flex items-center gap-1">
+        <span class="material-icons text-sm">refresh</span> Refresh
+      </button>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="script.js"></script>
+    <!-- ✅ Filter Buttons -->
+    <div class="flex flex-wrap gap-3 mb-6">
+      <button type="button" class="px-4 py-2 border border-gray-300 rounded-full bg-yellow-50 text-yellow-700 font-medium text-sm flex items-center gap-2 active" data-filter="all">
+        <span class="material-icons text-sm">notifications</span> All
+        <span id="allCount" class="px-2 py-0.5 bg-yellow-600 text-white rounded-full text-xs">0</span>
+      </button>
+      <button type="button" class="px-4 py-2 border border-gray-300 rounded-full text-green-700 font-medium text-sm flex items-center gap-2" data-filter="booking">
+        <span class="material-icons text-sm">calendar_today</span> Bookings
+        <span id="bookingCount" class="px-2 py-0.5 bg-green-600 text-white rounded-full text-xs">0</span>
+      </button>
+      <button type="button" class="px-4 py-2 border border-gray-300 rounded-full text-sky-700 font-medium text-sm flex items-center gap-2" data-filter="offers">
+        <span class="material-icons text-sm">local_offer</span> Offers
+        <span id="offersCount" class="px-2 py-0.5 bg-sky-600 text-white rounded-full text-xs">0</span>
+      </button>
+      <button type="button" class="px-4 py-2 border border-gray-300 rounded-full text-red-700 font-medium text-sm flex items-center gap-2" data-filter="issue">
+        <span class="material-icons text-sm">error_outline</span> Issues
+        <span id="issueCount" class="px-2 py-0.5 bg-red-600 text-white rounded-full text-xs">0</span>
+      </button>
+      <button type="button" class="px-4 py-2 border border-gray-300 rounded-full text-yellow-700 font-medium text-sm flex items-center gap-2" data-filter="refund">
+        <span class="material-icons text-sm">attach_money</span> Refunds
+        <span id="refundCount" class="px-2 py-0.5 bg-yellow-600 text-white rounded-full text-xs">0</span>
+      </button>
+    </div>
+
+    <!-- ✅ Notification Sections -->
+    <section class="notification-section mb-6" id="bookingNotifications">
+      <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-3">
+        <span class="material-icons text-green-600">calendar_today</span> Booking Notifications
+      </h3>
+      <div id="bookingList"></div>
+    </section>
+
+    <section class="notification-section mb-6" id="offersNotifications">
+      <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-3">
+        <span class="material-icons text-sky-600">local_offer</span> Special Offers
+      </h3>
+      <div id="offersList"></div>
+    </section>
+
+    <section class="notification-section mb-6" id="issueNotifications">
+      <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-3">
+        <span class="material-icons text-red-600">error_outline</span> Issue Notifications
+      </h3>
+      <div id="issueList"></div>
+    </section>
+
+    <section class="notification-section" id="refundNotifications">
+      <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-3">
+        <span class="material-icons text-yellow-600">attach_money</span> Refund Notifications
+      </h3>
+      <div id="refundList"></div>
+    </section>
+  </main>
+
+  <script>
+    // Navbar
+    fetch("/Features/Components/Navbars/LoggedCustomerNavbar/index.html")
+      .then(res => res.text())
+      .then(data => { document.getElementById("navbar").innerHTML = data; });
+
+    // Mock data
+    let notifications = [];
+
+    class Notification {
+      constructor(id, type, message, timestamp, isRead = false, details = {}) {
+        this.id = id;
+        this.type = type;
+        this.message = message;
+        this.timestamp = timestamp;
+        this.isRead = isRead;
+        this.details = details;
+      }
+
+      static createNotificationElement(n) {
+        const div = document.createElement("div");
+        div.className = `notification-item ${n.type} ${!n.isRead ? "unread" : ""}`;
+        div.innerHTML = `
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="font-medium text-gray-800">${n.message}</p>
+              <p class="mt-1 text-sm text-gray-600">${getNotificationDetails(n)}</p>
+            </div>
+            <div class="text-right">
+              <span class="notification-timestamp block">${formatTimestamp(n.timestamp)}</span>
+              <button class="text-xs text-blue-600 hover:underline" onclick="markAsRead('${n.id}')">Mark as Read</button>
+            </div>
+          </div>`;
+        return div;
+      }
+    }
+
+    function formatTimestamp(ts) { return new Date(ts).toLocaleString(); }
+
+    function getNotificationDetails(n) {
+      switch (n.type) {
+        case "booking": return `Room ${n.details.roomNumber} - ${n.details.checkIn} → ${n.details.checkOut}`;
+        case "offers": return `${n.details.description} - Valid until ${n.details.validUntil}`;
+        case "issue": return `Issue ID: ${n.details.issueId} - Status: ${n.details.status}`;
+        case "refund": return `Booking ID: ${n.details.bookingId} - Amount: $${n.details.amount}`;
+        default: return "";
+      }
+    }
+
+    function addNotification(type, message, details = {}) {
+      const n = new Notification(Date.now().toString(), type, message, new Date(), false, details);
+      notifications.unshift(n);
+      updateNotificationDisplay();
+      updateCounters();
+      showToast(message, type);
+    }
+
+    function markAsRead(id) {
+      const n = notifications.find(x => x.id === id);
+      if (n) { n.isRead = true; updateNotificationDisplay(); updateCounters(); }
+    }
+
+    function markAllAsRead() {
+      notifications.forEach(n => n.isRead = true);
+      updateNotificationDisplay(); updateCounters();
+    }
+
+    function updateCounters() {
+      const counts = { all: 0, booking: 0, offers: 0, issue: 0, refund: 0 };
+      notifications.forEach(n => { if (!n.isRead) { counts.all++; counts[n.type]++; } });
+      document.getElementById("allCount").textContent = counts.all;
+      document.getElementById("bookingCount").textContent = counts.booking;
+      document.getElementById("offersCount").textContent = counts.offers;
+      document.getElementById("issueCount").textContent = counts.issue;
+      document.getElementById("refundCount").textContent = counts.refund;
+    }
+
+    function updateNotificationDisplay() {
+      bookingList.innerHTML = "";
+      offersList.innerHTML = "";
+      issueList.innerHTML = "";
+      refundList.innerHTML = "";
+      notifications.sort((a, b) => b.timestamp - a.timestamp);
+      notifications.forEach(n => {
+        const el = Notification.createNotificationElement(n);
+        if (n.type === "booking") bookingList.appendChild(el);
+        if (n.type === "offers") offersList.appendChild(el);
+        if (n.type === "issue") issueList.appendChild(el);
+        if (n.type === "refund") refundList.appendChild(el);
+      });
+    }
+
+    // Toast container
+    const toastContainer = document.createElement("div");
+    toastContainer.className = "fixed top-24 right-5 z-50 space-y-3";
+    document.body.appendChild(toastContainer);
+
+    function showToast(message, type) {
+      const colors = {
+        booking: "bg-green-100 text-green-700 border-green-400",
+        offers: "bg-sky-100 text-sky-700 border-sky-400",
+        issue: "bg-red-100 text-red-700 border-red-400",
+        refund: "bg-yellow-100 text-yellow-700 border-yellow-400"
+      };
+      const div = document.createElement("div");
+      div.className = `p-4 rounded-lg shadow border ${colors[type]} animate-fade-in`;
+      div.innerHTML = `<span class="material-icons align-middle mr-2">notifications</span>${message}`;
+      toastContainer.appendChild(div);
+      setTimeout(() => div.remove(), 4000);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      addNotification("booking", "Your booking has been confirmed!", {
+        roomNumber: "301", checkIn: "2023-09-25", checkOut: "2023-09-28"
+      });
+      addNotification("offers", "Special Weekend Offer!", {
+        description: "20% off on deluxe rooms", validUntil: "2023-09-30"
+      });
+      addNotification("issue", "Your reported issue has been resolved", {
+        issueId: "ISS001", status: "Resolved"
+      });
+      addNotification("refund", "Refund processed successfully", {
+        bookingId: "BK001", amount: "250.00"
+      });
+
+      markAllRead.addEventListener("click", markAllAsRead);
+      refreshNotifications.addEventListener("click", updateNotificationDisplay);
+
+      document.querySelectorAll("[data-filter]").forEach(btn => {
+        btn.addEventListener("click", e => {
+          document.querySelectorAll("[data-filter]").forEach(b => b.classList.remove("bg-yellow-50", "font-semibold"));
+          e.currentTarget.classList.add("bg-yellow-50", "font-semibold");
+          const filter = e.currentTarget.dataset.filter;
+          document.querySelectorAll(".notification-section").forEach(sec => {
+            sec.style.display = (filter === "all" || sec.id.includes(filter)) ? "block" : "none";
+          });
+        });
+      });
+    });
+
+    // Simulate WebSocket
+    setInterval(() => {
+      const types = ["booking", "offers", "issue", "refund"];
+      const random = types[Math.floor(Math.random() * types.length)];
+      const fake = {
+        booking: { message: "New booking confirmed", details: { roomNumber: "205", checkIn: "2023-10-01", checkOut: "2023-10-05" } },
+        offers: { message: "Exclusive Offer!", details: { description: "15% off spa services", validUntil: "2023-11-15" } },
+        issue: { message: "Update on your issue", details: { issueId: "ISS" + Math.floor(Math.random() * 1000), status: "In Progress" } },
+        refund: { message: "Refund status update", details: { bookingId: "BK" + Math.floor(Math.random() * 1000), amount: (Math.random() * 500).toFixed(2) } }
+      };
+      addNotification(random, fake[random].message, fake[random].details);
+    }, 45000);
+  </script>
 </body>
 </html>
