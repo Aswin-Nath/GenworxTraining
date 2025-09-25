@@ -2,9 +2,95 @@ const modal = document.getElementById('roomTransferModal');
 const form = document.getElementById('roomTransferForm');
 const toast = document.getElementById('toast');
         // Navbar
-    fetch("/Features/Components/Navbars/AdminMainPageNavbar/index.html").then(res => res.text()).then(data => {
-      document.getElementById("navbar").innerHTML = data;
-    });
+// ✅ Navbar loader (Admin Main Page Navbar)
+fetch("/Features/Components/Navbars/AdminMainPageNavbar/index.html")
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("navbar").innerHTML = data;
+
+    // ✅ Mobile menu toggle
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("open");
+      });
+    }
+
+    // ✅ Init Notifications
+    initNotifications();
+  })
+  .catch(err => {
+    console.error("❌ Navbar load failed:", err);
+    // Fallback minimal navbar
+    document.getElementById("navbar").innerHTML = `
+      <div class="fixed top-0 left-0 right-0 bg-white shadow z-30">
+        <div class="max-w-7xl mx-auto p-4 flex justify-between items-center">
+          <div class="font-bold text-yellow-600">LuxuryStay</div>
+        </div>
+      </div>`;
+  });
+
+
+// ✅ Function: Initialize Notifications Dropdowns
+function initNotifications() {
+  const latestNotifs = [
+    { type: "booking", msg: "New booking: Room 201 confirmed", time: "2m ago" },
+    { type: "issue", msg: "Issue reported in Room 105", time: "30m ago" },
+    { type: "refund", msg: "Refund processed for BK#1234", time: "1h ago" }
+  ];
+
+  function notifIcon(type) {
+    switch (type) {
+      case "booking": return `<i class="fas fa-calendar-check text-green-600"></i>`;
+      case "issue": return `<i class="fas fa-exclamation-triangle text-red-600"></i>`;
+      case "refund": return `<i class="fas fa-money-bill-wave text-yellow-500"></i>`;
+      default: return `<i class="fas fa-bell text-gray-500"></i>`;
+    }
+  }
+
+  function renderNotifs(listId) {
+    const list = document.getElementById(listId);
+    if (!list) return;
+    list.innerHTML = latestNotifs.map(n => `
+      <div class="px-4 py-3 flex items-start space-x-3 hover:bg-gray-50">
+        <div>${notifIcon(n.type)}</div>
+        <div class="flex-1">
+          <p class="text-sm text-gray-700">${n.msg}</p>
+          <span class="text-xs text-gray-400">${n.time}</span>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  // Render into both desktop + mobile dropdowns
+  renderNotifs("notifList");
+  renderNotifs("notifListMobile");
+
+  // Show red dot
+  document.getElementById("notifDot")?.classList.remove("hidden");
+  document.getElementById("notifDotMobile")?.classList.remove("hidden");
+
+  // Dropdown toggle logic
+  const toggleDropdown = (btnId, dropId) => {
+    const btn = document.getElementById(btnId);
+    const drop = document.getElementById(dropId);
+    if (btn && drop) {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        drop.classList.toggle("hidden");
+      });
+      document.addEventListener("click", (e) => {
+        if (!btn.contains(e.target) && !drop.contains(e.target)) {
+          drop.classList.add("hidden");
+        }
+      });
+    }
+  };
+
+  toggleDropdown("notifBtn", "notifDropdown");
+  toggleDropdown("notifBtnMobile", "notifDropdownMobile");
+}
 
     // Sidebar
     fetch("/Features/Components/Sidebars/AdminMainPageSidebar/index.html").then(res => res.text()).then(data => {

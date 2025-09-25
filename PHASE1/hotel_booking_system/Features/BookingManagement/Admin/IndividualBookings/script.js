@@ -1,9 +1,4 @@
 // Navbar
-fetch("/Features/Components/Navbars/AdminMainPageNavbar/index.html")
-    .then(res => res.text())
-    .then(data => {
-        document.getElementById("navbar").innerHTML = data;
-    });
 
 // Sidebar
 fetch("/Features/Components/Sidebars/AdminMainPageSidebar/index.html")

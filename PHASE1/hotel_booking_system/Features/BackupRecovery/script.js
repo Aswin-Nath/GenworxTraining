@@ -1,11 +1,5 @@
 
         // Simple nav/sidebar content loader (keeps original structure as requested)
-    fetch("/Features/Components/Navbars/AdminMainPageNavbar/index.html").then(res => res.text()).then(data => {
-      document.getElementById("navbar").innerHTML = data;
-    }).catch(() => {
-      // fallback minimal nav if fetch fails in demo
-      document.getElementById("navbar").innerHTML = `<div class="fixed top-0 left-0 right-0 bg-white shadow z-30"><div class="max-w-7xl mx-auto p-4 flex justify-between items-center"><div class="font-bold text-yellow-600">LuxuryStay</div></div></div>`;
-    });
 
     fetch("/Features/Components/Sidebars/AdminMainPageSidebar/index.html").then(res => res.text()).then(data => {
       document.getElementById("sidebar").innerHTML = data;
