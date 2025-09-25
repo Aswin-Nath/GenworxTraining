@@ -29,7 +29,7 @@
     </aside>
 
     <!-- ✅ Main Content -->
-    <main class="flex-1 space-y-6 sm:space-y-8 lg:space-y-10">
+    <main class="flex-1 space-y-8 md:space-y-12">
 
       <!-- ✅ Welcome Header -->
       <div class="relative rounded-2xl p-[3px] bg-gradient-to-r from-yellow-600 to-red-700 shadow">
@@ -38,6 +38,9 @@
           <p class="mt-2 text-sm sm:text-base text-gray-600">Track your reported issues, monitor status, and manage requests.</p>
         </div>
       </div>
+
+        <div class="bg-white shadow-lg border border-gray-200 rounded-xl p-4 md:p-6 space-y-4">
+
 
       <!-- ✅ Search -->
       <div class="w-full sm:w-2/3 lg:w-1/2">
@@ -73,14 +76,15 @@
           <input type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
         </div>
       </div>
-
-      <!-- ✅ Action -->
-      <div class="flex justify-end">
+            <div class="flex justify-end">
         <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 shadow-md flex items-center space-x-2">
           <span class="material-icons text-sm">filter_alt</span>
           <span>Apply Filters</span>
         </button>
       </div>
+        </div>
+      <!-- ✅ Action -->
+
 
       <!-- ✅ Issues Table -->
       <div class="overflow-x-auto bg-white shadow-lg border border-gray-200 rounded-xl">
