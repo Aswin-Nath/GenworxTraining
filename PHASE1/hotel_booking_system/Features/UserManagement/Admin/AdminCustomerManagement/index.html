@@ -16,7 +16,7 @@
   <div id="sidebar" class="fixed top-16 left-0 w-64 h-screen shadow-lg bg-white"></div>
 
   <!-- ✅ Main Content -->
-  <main class="ml-64 pt-16 p-8 h-screen overflow-y-auto">
+<main class="ml-64 pt-20 p-8 min-h-screen overflow-y-auto bg-gray-50">
 
     <!-- Title -->
     <div class="mb-6">
@@ -26,43 +26,79 @@
 
     <!-- ✅ Search + Filter Box -->
     <div class="bg-white shadow-lg border border-gray-200 rounded-xl p-6 space-y-4 mb-8">
-      <!-- Search -->
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
-        <div class="relative">
-          <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 material-icons">search</span>
-          <input type="text" placeholder="Customer ID, Name, Email"
-            class="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 shadow-sm">
-        </div>
-      </div>
+
 
       <!-- Filters -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <!-- Staying Filter -->
+        <!-- Row 1 -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Is Staying?</label>
-          <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
-            <option>All</option>
-            <option>Staying</option>
-            <option>Not Staying</option>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Account Status</label>
+          <select id="filterStatus" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
+            <option value="All">All</option>
+            <option value="Active">Active</option>
+            <option value="Blocked">Blocked</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Currently Staying</label>
+          <select id="filterStaying" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
+            <option value="All">All</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Loyalty Tier</label>
+          <select id="filterLoyalty" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
+            <option value="All">All</option>
+            <option value="Bronze">Bronze</option>
+            <option value="Silver">Silver</option>
+            <option value="Gold">Gold</option>
+            <option value="Platinum">Platinum</option>
           </select>
         </div>
 
-        <!-- Check-in From -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Check-in From</label>
-          <input type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
-        </div>
 
-        <!-- Check-out To -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Check-out To</label>
-          <input type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
+
+      <!-- ✅ Total Bookings Range -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Total Bookings</label>
+        <div class="flex items-center gap-3">
+          <input type="number" id="minBookings" placeholder="Min" class="w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
+          <span class="text-gray-600">—</span>
+          <input type="number" id="maxBookings" placeholder="Max" class="w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
         </div>
       </div>
 
+      <!-- ✅ Total Spend Range -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Total Spend (₹)</label>
+        <div class="flex items-center gap-3">
+          <input type="number" id="minSpend" placeholder="Min" class="w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
+          <span class="text-gray-600">—</span>
+          <input type="number" id="maxSpend" placeholder="Max" class="w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
+        </div>
+      </div>
+
+
+      <!-- ✅ Check-in & Check-out Combined -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Stay Duration</label>
+        <div class="flex items-center gap-3">
+          <input type="date" id="checkInDate" class="w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
+          <span class="text-gray-600">—</span>
+          <input type="date" id="checkOutDate" class="w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
+        </div>
+      </div>
+
+      </div>
+
       <!-- Action -->
-      <div class="flex justify-end">
+      <div class="flex justify-end gap-3 pt-4">
+                        <button class="px-5 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 shadow-md flex items-center space-x-2">
+          <span class="material-icons text-sm">refresh</span>
+          <span>Reset</span>
+        </button>
         <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 shadow-md flex items-center space-x-2">
           <span class="material-icons text-sm">filter_alt</span>
           <span>Apply Filters</span>

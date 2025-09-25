@@ -244,19 +244,11 @@
      ******************************/
     function applyCurrentFiltersAndSearch() {
       const rooms = getRooms();
-      const q = (document.getElementById('searchBox').value || '').trim().toLowerCase();
       const status = document.getElementById('filterStatus').value;
       const type = document.getElementById('filterType').value;
       const checkInDate = document.getElementById('filterCheckIn').value; // exact match on nextCheckIn for demo
 
       let filtered = rooms.slice();
-
-      if (q) {
-        filtered = filtered.filter(r =>
-          String(r.roomNumber).toLowerCase().includes(q) ||
-          (r.guestName && r.guestName.toLowerCase().includes(q))
-        );
-      }
 
       if (status && status !== 'All') {
         if (status === 'Frozen') {
@@ -282,10 +274,7 @@
       renderRoomsTable(filtered);
     });
 
-    document.getElementById('searchBox').addEventListener('input', function () {
-      const filtered = applyCurrentFiltersAndSearch();
-      renderRoomsTable(filtered);
-    });
+
 
     // Optionally allow filter change to auto-update
     ['filterStatus','filterType','filterCheckIn'].forEach(id => {
