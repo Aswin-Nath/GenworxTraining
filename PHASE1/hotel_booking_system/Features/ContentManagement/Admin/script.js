@@ -17,39 +17,45 @@
     let activeTab = "announcements";
     let currentEdit = null;
 
-    function renderContent() {
-      const tab = contents[activeTab];
-      document.getElementById("content-sections").innerHTML = `
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="bg-white p-4 border rounded-lg shadow space-y-2 col-span-1">
-            <h3 class="font-semibold">Currently Displaying Contents</h3>
-            <div>
-              ${tab.used.map((c,i)=>`
-                <div class="relative p-3 bg-yellow-50 border rounded-lg">
-                  <button onclick="openEditModal('${activeTab}','used',${i})" class="absolute top-2 right-2 text-xs bg-blue-600 text-white px-2 py-1 rounded">Edit</button>
-                  <div onclick="showPreview('${activeTab}','used',${i})" class="cursor-pointer">${c.title}</div>
-                </div>
-              `).join("")}
+function renderContent() {
+  const tab = contents[activeTab];
+  document.getElementById("content-sections").innerHTML = `
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white p-4 border rounded-lg shadow space-y-2 col-span-1">
+        <h3 class="font-semibold">Currently Displaying Contents</h3>
+        <div>
+          ${tab.used.map((c,i)=>`
+            <div class="relative p-3 bg-yellow-50 border rounded-lg">
+              <button onclick="openEditModal('${activeTab}','used',${i})" class="absolute top-2 right-2 text-xs bg-blue-600 text-white px-2 py-1 rounded">Edit</button>
+              <div class="cursor-pointer">${c.title}</div>
             </div>
-          </div>
-          <div class="bg-white p-4 border rounded-lg shadow col-span-2">
-            <h3 class="font-semibold">Preview</h3>
-            <div id="previewContent" class="p-4 text-center text-gray-600 italic">Click a content to preview</div>
-          </div>
+          `).join("")}
         </div>
-        <div class="bg-white p-4 border rounded-lg shadow">
-          <h3 class="font-semibold">Unused Contents</h3>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            ${tab.unused.map((c,i)=>`
-              <div class="relative p-3 bg-gray-50 border rounded-lg">
-                <button onclick="promoteContent('${activeTab}',${i})" class="absolute top-2 right-2 text-xs bg-green-600 text-white px-2 py-1 rounded">Promote</button>
-                <div onclick="showPreview('${activeTab}','unused',${i})" class="cursor-pointer">${c.title}</div>
-              </div>
-            `).join("")}
+      </div>
+      
+      <!-- ✅ Always show live preview -->
+      <div class="bg-white p-4 border rounded-lg shadow col-span-2">
+        <h3 class="font-semibold">Preview</h3>
+        <iframe 
+          src="/Features/LandingPages/Admin/index.html" 
+          class="w-full h-[500px] rounded-lg border shadow">
+        </iframe>
+      </div>
+    </div>
+
+    <div class="bg-white p-4 border rounded-lg shadow">
+      <h3 class="font-semibold">Unused Contents</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        ${tab.unused.map((c,i)=>`
+          <div class="relative p-3 bg-gray-50 border rounded-lg">
+            <button onclick="promoteContent('${activeTab}',${i})" class="absolute top-2 right-2 text-xs bg-green-600 text-white px-2 py-1 rounded">Promote</button>
+            <div class="cursor-pointer">${c.title}</div>
           </div>
-        </div>
-      `;
-    }
+        `).join("")}
+      </div>
+    </div>
+  `;
+}
 
     function switchTab(tab) {
       activeTab = tab;
