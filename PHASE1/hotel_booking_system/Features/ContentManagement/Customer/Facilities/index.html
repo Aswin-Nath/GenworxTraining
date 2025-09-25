@@ -1,27 +1,31 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - Facilities</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
 
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LuxuryStay - Facilities</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-gray-50 text-gray-700 leading-relaxed">
+  <!-- ✅ Navbar -->
+  <div id="navbar"></div>
 
-    <!-- ✅ Navbar -->
-    <div id="navbar"></div>
+  <!-- ✅ Facilities Section -->
+  <section class="px-4 sm:px-6 max-w-7xl mx-auto space-y-12 sm:space-y-16 py-6">
 
-    <!-- ✅ Header -->
-    <header class="bg-gradient-to-r from-yellow-600 to-red-600 py-20 text-center text-white shadow-md mt-16 sm:mt-20">
-      <h1 class="text-4xl font-extrabold">Our Facilities</h1>
-      <p class="text-sm sm:text-base mt-2 opacity-90">Every detail crafted for your comfort and convenience</p>
+    <!-- Header -->
+    <header class="relative rounded-xl bg-gradient-to-r from-yellow-400 via-red-400 to-red-500 py-12 sm:py-20 text-center text-white shadow-md sm:mt-20 overflow-hidden">
+      <div class="relative z-10">
+        <h1 class="text-3xl sm:text-5xl font-extrabold drop-shadow-lg">Our Facilities</h1>
+        <p class="text-base sm:text-lg mt-3 opacity-95">Every detail crafted for your comfort and convenience</p>
+      </div>
     </header>
 
     <!-- ✅ Filter Section -->
-    <div class="bg-white shadow-md rounded-xl mx-auto max-w-6xl mt-8 p-6">
+    <div class="bg-white rounded-2xl shadow-md p-6 mt-8">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <!-- Facility Type Filter -->
+        <!-- Facility Type -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-2">Facility Type</label>
           <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500">
@@ -33,7 +37,7 @@
           </select>
         </div>
 
-        <!-- Availability Filter -->
+        <!-- Availability -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-2">Availability</label>
           <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500">
@@ -45,7 +49,7 @@
           </select>
         </div>
 
-        <!-- Access Level Filter -->
+        <!-- Access Level -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-2">Access Level</label>
           <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500">
@@ -69,143 +73,128 @@
         </div>
       </div>
 
-      <!-- Apply Filters Button -->
-      <div class="mt-6 flex justify-end">
-        <button class="px-6 py-2 bg-gradient-to-r from-yellow-600 to-red-600 text-white rounded-lg hover:opacity-90 transition">
+      <!-- Actions -->
+      <div class="mt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <button class="order-2 sm:order-1 w-full sm:w-auto px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50">
+          Reset Filters
+        </button>
+        <button class="order-1 sm:order-2 w-full sm:w-auto px-6 py-2 bg-gradient-to-r from-yellow-600 to-red-600 text-white rounded-lg hover:opacity-90 transition flex items-center justify-center gap-2">
           Apply Filters
         </button>
       </div>
     </div>
 
-  <!-- ✅ Full Facilities Content -->
-  <section id="facilities" class="scroll-mt-24 py-16 px-6 bg-white">
-    <div class="max-w-6xl mx-auto grid sm:grid-cols-2 md:grid-cols-3 gap-10 text-left">
+    <!-- ✅ Facilities Grid -->
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-10">
 
       <!-- Wellness Spa -->
-      <div class="flex flex-col">
-        <img src="/assets/spa.png" alt="Wellness Spa" class="h-48 w-full object-cover rounded-lg shadow">
-        <h3 class="mt-4 font-serif text-xl font-bold uppercase text-yellow-700">Wellness Spa</h3>
-        <p class="text-gray-600 text-sm mt-2">
-          Discover peace with holistic therapies, massages, and wellness programs. 
-          Our spa offers rejuvenating treatments using natural oils and world-class techniques.
-        </p>
-        <ul class="list-disc list-inside text-gray-600 text-sm mt-2 space-y-1">
-          <li>Aromatherapy with essential oils</li>
-          <li>Ayurvedic treatments and massages</li>
-          <li>Hot stone therapy and steam rooms</li>
-          <li>Dedicated meditation and yoga area</li>
-        </ul>
-        <p class="text-gray-600 text-sm mt-2">
-          <span class="font-semibold">Timings:</span> 8:00 AM – 9:00 PM (daily)
-        </p>
+      <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
+        <img src="/assets/spa.png" alt="Wellness Spa" class="w-full h-48 sm:h-64 object-cover">
+        <div class="p-6 sm:p-8">
+          <h3 class="text-xl sm:text-2xl font-bold text-yellow-700">Wellness Spa</h3>
+          <p class="text-gray-600 text-sm sm:text-base mt-2">Rejuvenating treatments using natural oils and world-class techniques.</p>
+          <ul class="list-disc ml-6 text-gray-600 text-sm sm:text-base mt-3 space-y-1">
+            <li>Aromatherapy with essential oils</li>
+            <li>Ayurvedic massages</li>
+            <li>Hot stone therapy & steam rooms</li>
+            <li>Meditation & yoga spaces</li>
+          </ul>
+          <p class="mt-3 text-sm text-gray-500"><span class="font-semibold">Timings:</span> 8:00 AM – 9:00 PM</p>
+          <p class="mt-2 text-green-600 font-medium">Popular Choice</p>
+        </div>
       </div>
 
       <!-- Infinity Pool -->
-      <div class="flex flex-col">
-        <img src="/assets/pool.jpg" alt="Infinity Pool" class="h-48 w-full object-cover rounded-lg shadow">
-        <h3 class="mt-4 font-serif text-xl font-bold uppercase text-red-600">Infinity Pool</h3>
-        <p class="text-gray-600 text-sm mt-2">
-          Swim overlooking breathtaking city views. Our temperature-controlled infinity pool 
-          is perfect for relaxation and fitness, open daily from 6 AM – 10 PM.
-        </p>
-        <ul class="list-disc list-inside text-gray-600 text-sm mt-2 space-y-1">
-          <li>Separate kids’ pool with safety measures</li>
-          <li>Poolside loungers and cabanas</li>
-          <li>Refreshing poolside bar with cocktails & snacks</li>
-          <li>Professional lifeguards on duty</li>
-        </ul>
-        <p class="text-gray-600 text-sm mt-2">
-          <span class="font-semibold">Best time:</span> Sunset swims with skyline views.
-        </p>
+      <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
+        <img src="/assets/pool.jpg" alt="Infinity Pool" class="w-full h-48 sm:h-64 object-cover">
+        <div class="p-6 sm:p-8">
+          <h3 class="text-xl sm:text-2xl font-bold text-red-600">Infinity Pool</h3>
+          <p class="text-gray-600 text-sm sm:text-base mt-2">Swim overlooking breathtaking city views in a temperature-controlled pool.</p>
+          <ul class="list-disc ml-6 text-gray-600 text-sm sm:text-base mt-3 space-y-1">
+            <li>Kids’ pool with safety measures</li>
+            <li>Poolside loungers & cabanas</li>
+            <li>Poolside bar & snacks</li>
+            <li>Certified lifeguards</li>
+          </ul>
+          <p class="mt-3 text-sm text-gray-500"><span class="font-semibold">Best Time:</span> Sunset swims</p>
+          <p class="mt-2 text-blue-600 font-medium">Guest Favorite</p>
+        </div>
       </div>
 
       <!-- Fine Dining -->
-      <div class="flex flex-col">
-        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" 
-            alt="Fine Dining" class="h-48 w-full object-cover rounded-lg shadow">
-        <h3 class="mt-4 font-serif text-xl font-bold uppercase text-yellow-700">Fine Dining</h3>
-        <p class="text-gray-600 text-sm mt-2">
-          Indulge in gourmet meals prepared by master chefs. From global cuisines to local delicacies, 
-          our restaurants bring you an exquisite dining experience.
-        </p>
-        <ul class="list-disc list-inside text-gray-600 text-sm mt-2 space-y-1">
-          <li>Multi-cuisine dining with live kitchens</li>
-          <li>Exclusive wine cellar and premium cocktails</li>
-          <li>Private dining areas for families & corporates</li>
-          <li>24/7 in-room dining with curated menus</li>
-        </ul>
-        <p class="text-gray-600 text-sm mt-2">
-          <span class="font-semibold">Dress code:</span> Smart casuals for evenings.
-        </p>
+      <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" alt="Fine Dining" class="w-full h-48 sm:h-64 object-cover">
+        <div class="p-6 sm:p-8">
+          <h3 class="text-xl sm:text-2xl font-bold text-yellow-700">Fine Dining</h3>
+          <p class="text-gray-600 text-sm sm:text-base mt-2">Indulge in gourmet meals prepared by master chefs with global cuisines.</p>
+          <ul class="list-disc ml-6 text-gray-600 text-sm sm:text-base mt-3 space-y-1">
+            <li>Multi-cuisine live kitchens</li>
+            <li>Exclusive wine cellar</li>
+            <li>Private dining rooms</li>
+            <li>24/7 in-room dining</li>
+          </ul>
+          <p class="mt-3 text-sm text-gray-500"><span class="font-semibold">Dress Code:</span> Smart casuals</p>
+          <p class="mt-2 text-purple-600 font-medium">Premium Experience</p>
+        </div>
       </div>
 
       <!-- Fitness Center -->
-      <div class="flex flex-col">
-        <img src="/assets/gym.png" alt="Fitness Center" class="h-48 w-full object-cover rounded-lg shadow">
-        <h3 class="mt-4 font-serif text-xl font-bold uppercase text-red-600">Fitness Center</h3>
-        <p class="text-gray-600 text-sm mt-2">
-          Stay active during your stay. Our gym is equipped with modern machines, 
-          dedicated trainers, and offers yoga sessions for complete wellness.
-        </p>
-        <ul class="list-disc list-inside text-gray-600 text-sm mt-2 space-y-1">
-          <li>Cardio & strength training equipment</li>
-          <li>Certified personal trainers</li>
-          <li>Morning yoga and evening Zumba sessions</li>
-          <li>Hydration stations & healthy meal plans</li>
-        </ul>
-        <p class="text-gray-600 text-sm mt-2">
-          <span class="font-semibold">Open:</span> 24/7 for guests.
-        </p>
+      <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
+        <img src="/assets/gym.png" alt="Fitness Center" class="w-full h-48 sm:h-64 object-cover">
+        <div class="p-6 sm:p-8">
+          <h3 class="text-xl sm:text-2xl font-bold text-red-600">Fitness Center</h3>
+          <p class="text-gray-600 text-sm sm:text-base mt-2">Stay active with modern equipment, trainers, yoga & Zumba sessions.</p>
+          <ul class="list-disc ml-6 text-gray-600 text-sm sm:text-base mt-3 space-y-1">
+            <li>Cardio & strength training</li>
+            <li>Personal trainers</li>
+            <li>Yoga & Zumba sessions</li>
+            <li>Healthy meal plans</li>
+          </ul>
+          <p class="mt-3 text-sm text-gray-500"><span class="font-semibold">Open:</span> 24/7 for guests</p>
+          <p class="mt-2 text-green-600 font-medium">Always Accessible</p>
+        </div>
       </div>
 
       <!-- Conference Hall -->
-      <div class="flex flex-col">
-        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80" 
-            alt="Conference Hall" class="h-48 w-full object-cover rounded-lg shadow">
-        <h3 class="mt-4 font-serif text-xl font-bold uppercase text-yellow-700">Conference Hall</h3>
-        <p class="text-gray-600 text-sm mt-2">
-          Spacious and equipped with the latest technology, our conference halls are perfect for corporate 
-          meetings, events, and private functions.
-        </p>
-        <ul class="list-disc list-inside text-gray-600 text-sm mt-2 space-y-1">
-          <li>Capacity: 500+ guests with modular seating</li>
-          <li>Audio-visual equipment with 4K projectors</li>
-          <li>High-speed Wi-Fi and teleconferencing</li>
-          <li>Customizable décor for events</li>
-        </ul>
-        <p class="text-gray-600 text-sm mt-2">
-          <span class="font-semibold">Bookings:</span> Available on request with catering packages.
-        </p>
+      <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
+        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80" alt="Conference Hall" class="w-full h-48 sm:h-64 object-cover">
+        <div class="p-6 sm:p-8">
+          <h3 class="text-xl sm:text-2xl font-bold text-yellow-700">Conference Hall</h3>
+          <p class="text-gray-600 text-sm sm:text-base mt-2">Perfect for corporate meetings & private functions with modern AV setup.</p>
+          <ul class="list-disc ml-6 text-gray-600 text-sm sm:text-base mt-3 space-y-1">
+            <li>Capacity 500+ guests</li>
+            <li>4K projectors & AV equipment</li>
+            <li>High-speed Wi-Fi</li>
+            <li>Customizable décor</li>
+          </ul>
+          <p class="mt-3 text-sm text-gray-500"><span class="font-semibold">Bookings:</span> On request</p>
+          <p class="mt-2 text-blue-600 font-medium">Corporate Ready</p>
+        </div>
       </div>
 
       <!-- Luxury Lounge -->
-      <div class="flex flex-col">
-        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80" 
-            alt="Luxury Lounge" class="h-48 w-full object-cover rounded-lg shadow">
-        <h3 class="mt-4 font-serif text-xl font-bold uppercase text-red-600">Luxury Lounge</h3>
-        <p class="text-gray-600 text-sm mt-2">
-          Enjoy signature cocktails, live music, and an elegant atmosphere in our lounge — 
-          the ideal spot to unwind after a long day.
-        </p>
-        <ul class="list-disc list-inside text-gray-600 text-sm mt-2 space-y-1">
-          <li>Evening jazz and live band performances</li>
-          <li>Premium cigars & crafted cocktails</li>
-          <li>Quiet reading corners with a mini library</li>
-          <li>Exclusive access for members & VIP guests</li>
-        </ul>
-        <p class="text-gray-600 text-sm mt-2">
-          <span class="font-semibold">Open:</span> 5:00 PM – Midnight.
-        </p>
+      <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
+        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80" alt="Luxury Lounge" class="w-full h-48 sm:h-64 object-cover">
+        <div class="p-6 sm:p-8">
+          <h3 class="text-xl sm:text-2xl font-bold text-red-600">Luxury Lounge</h3>
+          <p class="text-gray-600 text-sm sm:text-base mt-2">Elegant lounge with cocktails, live music & private corners for relaxation.</p>
+          <ul class="list-disc ml-6 text-gray-600 text-sm sm:text-base mt-3 space-y-1">
+            <li>Live jazz & band performances</li>
+            <li>Premium cigars & cocktails</li>
+            <li>Reading corners & mini library</li>
+            <li>VIP & member-only access</li>
+          </ul>
+          <p class="mt-3 text-sm text-gray-500"><span class="font-semibold">Open:</span> 5:00 PM – Midnight</p>
+          <p class="mt-2 text-pink-600 font-medium">Exclusive Access</p>
+        </div>
       </div>
 
     </div>
   </section>
 
-
-    <!-- ✅ Footer -->
-    <div id="footer"></div>
-
+  <!-- ✅ Footer -->
+  <div id="footer"></div>
 
   <script src="./script.js"></script>
 </body>
-  </html>
+</html>
