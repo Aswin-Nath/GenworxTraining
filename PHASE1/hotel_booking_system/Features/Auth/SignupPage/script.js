@@ -7,6 +7,20 @@
   const phoneInput = form.querySelector('input[name="phone"]');
   const passwordInput = form.querySelector('input[name="password"]');
 
+  // Signup password toggle
+  const signupPasswordInput = document.getElementById("signupPassword");
+  const toggleSignupPassword = document.getElementById("toggleSignupPassword");
+  const signupEyeIcon = document.getElementById("signupEyeIcon");
+  const signupEyeSlashIcon = document.getElementById("signupEyeSlashIcon");
+
+  toggleSignupPassword.addEventListener("click", () => {
+    const isPassword = signupPasswordInput.type === "password";
+    signupPasswordInput.type = isPassword ? "text" : "password";
+    signupEyeIcon.classList.toggle("hidden", !isPassword);
+    signupEyeSlashIcon.classList.toggle("hidden", isPassword);
+  });
+
+
   // baseline classes
   document.querySelectorAll(".input-field").forEach(el => {
     el.classList.add("w-full","mt-1","border","border-gray-300","rounded-lg","px-3","py-2","focus:ring-2","focus:ring-amber-500","focus:border-amber-500");
