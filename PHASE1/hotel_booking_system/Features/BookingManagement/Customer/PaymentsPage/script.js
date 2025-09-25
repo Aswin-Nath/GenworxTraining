@@ -120,8 +120,57 @@ function initNotifications() {
     });
   });
 
-  document.getElementById("confirmPayment").addEventListener("click", () => {
-    alert("✅ Payment Successful! Your booking is confirmed.");
-    window.location.href = "/Features/BookingManagement/Customer/MyBookings/index.html"; // Update path
+document.addEventListener("DOMContentLoaded", () => {
+  const confirmBtn = document.getElementById("confirmPayment");
+  const modal = document.getElementById("confirmModal");
+  const cancelBtn = document.getElementById("cancelPay");
+  const confirmPay = document.getElementById("confirmPay");
+  const confirmPayText = document.getElementById("confirmPayText");
+  const paySpinner = document.getElementById("paySpinner");
+  const toast = document.getElementById("toast");
+
+  // init lottie loader
+  const spinnerAnim = lottie.loadAnimation({
+    container: paySpinner,
+    renderer: "svg",
+    loop: true,
+    autoplay: false,
+    path: "https://assets8.lottiefiles.com/packages/lf20_usmfx6bp.json" // ✅ nice premium loader
   });
-    
+
+  // open modal
+  confirmBtn.addEventListener("click", () => {
+    modal.classList.remove("hidden");
+  });
+
+  // cancel modal
+  cancelBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
+
+  // confirm payment with spinner
+  confirmPay.addEventListener("click", () => {
+    confirmPayText.textContent = "Processing...";
+    paySpinner.classList.remove("hidden");
+    spinnerAnim.play();
+    confirmPay.disabled = true;
+
+    // simulate payment delay
+    setTimeout(() => {
+      modal.classList.add("hidden");
+      paySpinner.classList.add("hidden");
+      spinnerAnim.stop();
+      confirmPay.disabled = false;
+      confirmPayText.textContent = "Yes, Pay";
+
+      // show toast
+      toast.classList.remove("hidden");
+
+      // hide toast + redirect
+      setTimeout(() => {
+        toast.classList.add("hidden");
+        window.location.href = "/Features/BookingManagement/Customer/MyBookings/index.html"; 
+      }, 2000);
+    }, 1500); // show spinner for ~1.5s
+  });
+});
