@@ -1,22 +1,27 @@
 
-    const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
-    const isAdminLoggedIn = localStorage.getItem("is_admin_logged_in") === "true";
+      const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
+      const isAdminLoggedIn = localStorage.getItem("is_admin_logged_in") === "true";
 
-// ✅ Navbar loader
-let navbarPath = "/Features/Components/Navbars/NotCustomerNavbar/index.html"; // default (logged-out)
+  // ✅ Navbar loader
+  let navbarPath = "/Features/Components/Navbars/NotCustomerNavbar/index.html"; // default (logged-out)
 
- if (isCustomerLoggedIn) {
-  navbarPath = "/Features/Components/Navbars/LoggedCustomerNavbar/index.html";
-}
+  if (isCustomerLoggedIn) {
+    navbarPath = "/Features/Components/Navbars/LoggedCustomerNavbar/index.html";
+  }
 
 fetch(navbarPath)
   .then(res => res.text())
   .then(html => {
     document.getElementById("navbar").innerHTML = html;
 
-    // ✅ mobile menu toggle
+    // ✅ Re-query after injection
+    const navbarEl = document.getElementById("mainNavbar");
     const menuBtn = document.getElementById("menuBtn");
     const mobileMenu = document.getElementById("mobileMenu");
+
+    console.log("Navbar injected:", !!navbarEl); // debug
+
+    // ✅ mobile menu toggle
     if (menuBtn && mobileMenu) {
       menuBtn.addEventListener("click", () => {
         mobileMenu.classList.toggle("open");
@@ -30,179 +35,202 @@ fetch(navbarPath)
     if (isAdminLoggedIn || isCustomerLoggedIn) {
       initNotifications();
     }
+
+    // ✅ Scroll hide/show
+    if (navbarEl) {
+      let lastScrollY = window.scrollY;
+
+      window.addEventListener("scroll", () => {
+        console.log("Scrolling… Y:", window.scrollY); // debug log
+        if (window.innerWidth < 768) {
+          if (window.scrollY > lastScrollY) {
+            navbarEl.style.transform = "translateY(-100%)"; // hide
+            mobileMenu?.classList.remove("open"); // auto-close menu
+          } else {
+            navbarEl.style.transform = "translateY(0)"; // show
+          }
+        } else {
+          navbarEl.style.transform = "translateY(0)"; // reset desktop
+        }
+        lastScrollY = window.scrollY;
+      });
+    } else {
+      console.warn("⚠️ mainNavbar not found after injection!");
+    }
   })
   .catch(err => console.error("❌ Navbar load failed:", err));
 
 
-// ✅ Notifications Initializer
-function initNotifications() {
-  const latestNotifs = [
-    { type: "booking", msg: "New booking: Room 201 confirmed", time: "2m ago" },
-    { type: "issue", msg: "Issue reported in Room 105", time: "30m ago" },
-    { type: "refund", msg: "Refund processed for BK#1234", time: "1h ago" }
-  ];
 
-  const notifIcon = (type) => {
-    switch (type) {
-      case "booking": return `<i class="fas fa-calendar-check text-green-600"></i>`;
-      case "issue": return `<i class="fas fa-exclamation-triangle text-red-600"></i>`;
-      case "refund": return `<i class="fas fa-money-bill-wave text-yellow-500"></i>`;
-      default: return `<i class="fas fa-bell text-gray-500"></i>`;
-    }
-  };
+  // ✅ Notifications Initializer
+  function initNotifications() {
+    const latestNotifs = [
+      { type: "booking", msg: "New booking: Room 201 confirmed", time: "2m ago" },
+      { type: "issue", msg: "Issue reported in Room 105", time: "30m ago" },
+      { type: "refund", msg: "Refund processed for BK#1234", time: "1h ago" }
+    ];
 
-  const renderNotifs = (listId) => {
-    const list = document.getElementById(listId);
-    if (!list) return;
-    list.innerHTML = latestNotifs.map(n => `
-      <div class="px-4 py-3 flex items-start space-x-3 hover:bg-gray-50">
-        <div>${notifIcon(n.type)}</div>
-        <div class="flex-1">
-          <p class="text-sm text-gray-700">${n.msg}</p>
-          <span class="text-xs text-gray-400">${n.time}</span>
+    const notifIcon = (type) => {
+      switch (type) {
+        case "booking": return `<i class="fas fa-calendar-check text-green-600"></i>`;
+        case "issue": return `<i class="fas fa-exclamation-triangle text-red-600"></i>`;
+        case "refund": return `<i class="fas fa-money-bill-wave text-yellow-500"></i>`;
+        default: return `<i class="fas fa-bell text-gray-500"></i>`;
+      }
+    };
+
+    const renderNotifs = (listId) => {
+      const list = document.getElementById(listId);
+      if (!list) return;
+      list.innerHTML = latestNotifs.map(n => `
+        <div class="px-4 py-3 flex items-start space-x-3 hover:bg-gray-50">
+          <div>${notifIcon(n.type)}</div>
+          <div class="flex-1">
+            <p class="text-sm text-gray-700">${n.msg}</p>
+            <span class="text-xs text-gray-400">${n.time}</span>
+          </div>
         </div>
-      </div>
-    `).join("");
-  };
+      `).join("");
+    };
 
-  renderNotifs("notifList");
-  renderNotifs("notifListMobile");
+    renderNotifs("notifList");
+    renderNotifs("notifListMobile");
 
-  document.getElementById("notifDot")?.classList.remove("hidden");
-  document.getElementById("notifDotMobile")?.classList.remove("hidden");
+    document.getElementById("notifDot")?.classList.remove("hidden");
+    document.getElementById("notifDotMobile")?.classList.remove("hidden");
 
-  const toggleDropdown = (btnId, dropId) => {
-    const btn = document.getElementById(btnId);
-    const drop = document.getElementById(dropId);
-    if (btn && drop) {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        drop.classList.toggle("hidden");
-      });
-      document.addEventListener("click", (e) => {
-        if (!btn.contains(e.target) && !drop.contains(e.target)) {
-          drop.classList.add("hidden");
-        }
-      });
-    }
-  };
-
-  toggleDropdown("notifBtn", "notifDropdown");
-  toggleDropdown("notifBtnMobile", "notifDropdownMobile");
-}
-
-    function attachModalListeners() {
-    const modal = document.getElementById("bookingModal");
-    const closeModal = document.getElementById("closeModal");
-    const addRoomBtn = document.getElementById("addRoomBtn");
-    const roomsContainer = document.getElementById("roomsContainer");
-
-    if (!modal) return;
-
-    // Open modal
-    document.querySelectorAll(".bookingModal").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        modal.classList.remove("hidden");
-        modal.classList.add("flex");
-      });
-    });
-
-    // Close modal
-    closeModal?.addEventListener("click", () => {
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
-    });
-
-    // Add counter listeners
-    function addCounterListeners(roomDiv) {
-      roomDiv.querySelectorAll(".increase").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const input = btn.parentElement.querySelector("input");
-          input.value = parseInt(input.value) + 1;
+    const toggleDropdown = (btnId, dropId) => {
+      const btn = document.getElementById(btnId);
+      const drop = document.getElementById(dropId);
+      if (btn && drop) {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          drop.classList.toggle("hidden");
         });
-      });
-      roomDiv.querySelectorAll(".decrease").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const input = btn.parentElement.querySelector("input");
-          if (parseInt(input.value) > parseInt(input.min)) {
-            input.value = parseInt(input.value) - 1;
+        document.addEventListener("click", (e) => {
+          if (!btn.contains(e.target) && !drop.contains(e.target)) {
+            drop.classList.add("hidden");
           }
         });
+      }
+    };
+
+    toggleDropdown("notifBtn", "notifDropdown");
+    toggleDropdown("notifBtnMobile", "notifDropdownMobile");
+  }
+
+      function attachModalListeners() {
+      const modal = document.getElementById("bookingModal");
+      const closeModal = document.getElementById("closeModal");
+      const addRoomBtn = document.getElementById("addRoomBtn");
+      const roomsContainer = document.getElementById("roomsContainer");
+
+      if (!modal) return;
+
+      // Open modal
+      document.querySelectorAll(".bookingModal").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          modal.classList.remove("hidden");
+          modal.classList.add("flex");
+        });
       });
-    }
 
-    // ✅ Reindex rooms after add/remove
-    function reindexRooms() {
-      document.querySelectorAll(".room-card").forEach((room, index) => {
-        room.querySelector(".room-title").textContent = `Room ${index + 1}`;
+      // Close modal
+      closeModal?.addEventListener("click", () => {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
       });
-    }
 
-// Add room
-addRoomBtn?.addEventListener("click", () => {
-  const roomDiv = document.createElement("div");
-  roomDiv.className = "room-card border p-4 sm:p-5 rounded-lg sm:rounded-xl mb-4 sm:mb-6 bg-gray-50 shadow-sm";
+      // Add counter listeners
+      function addCounterListeners(roomDiv) {
+        roomDiv.querySelectorAll(".increase").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const input = btn.parentElement.querySelector("input");
+            input.value = parseInt(input.value) + 1;
+          });
+        });
+        roomDiv.querySelectorAll(".decrease").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const input = btn.parentElement.querySelector("input");
+            if (parseInt(input.value) > parseInt(input.min)) {
+              input.value = parseInt(input.value) - 1;
+            }
+          });
+        });
+      }
 
-  roomDiv.innerHTML = `
-    <!-- Row 1: Room No + Room Type -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-4 gap-2 sm:gap-0">
-      <h3 class="room-title font-semibold text-base sm:text-lg">Room</h3>
-      <select class="border rounded-lg p-2 w-full sm:w-auto focus:ring-2 focus:ring-yellow-500">
-        <option>Deluxe Room</option>
-        <option>Executive Suite</option>
-        <option>Presidential Suite</option>
-      </select>
-    </div>
+      // ✅ Reindex rooms after add/remove
+      function reindexRooms() {
+        document.querySelectorAll(".room-card").forEach((room, index) => {
+          room.querySelector(".room-title").textContent = `Room ${index + 1}`;
+        });
+      }
 
-    <!-- Row 2: Adults + Children -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-4">
-      <div class="flex items-center justify-between">
-        <label class="text-sm sm:text-base font-medium">Adults</label>
-        <div class="flex items-center space-x-3">
-          <button class="decrease w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-lg">−</button>
-          <input type="number" value="1" min="1" class="w-12 text-center border rounded-md p-1">
-          <button class="increase w-8 h-8 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center text-lg">+</button>
+  // Add room
+  addRoomBtn?.addEventListener("click", () => {
+    const roomDiv = document.createElement("div");
+    roomDiv.className = "room-card border p-4 sm:p-5 rounded-lg sm:rounded-xl mb-4 sm:mb-6 bg-gray-50 shadow-sm";
+
+    roomDiv.innerHTML = `
+      <!-- Row 1: Room No + Room Type -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-4 gap-2 sm:gap-0">
+        <h3 class="room-title font-semibold text-base sm:text-lg">Room</h3>
+        <select class="border rounded-lg p-2 w-full sm:w-auto focus:ring-2 focus:ring-yellow-500">
+          <option>Deluxe Room</option>
+          <option>Executive Suite</option>
+          <option>Presidential Suite</option>
+        </select>
+      </div>
+
+      <!-- Row 2: Adults + Children -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-4">
+        <div class="flex items-center justify-between">
+          <label class="text-sm sm:text-base font-medium">Adults</label>
+          <div class="flex items-center space-x-3">
+            <button class="decrease w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-lg">−</button>
+            <input type="number" value="1" min="1" class="w-12 text-center border rounded-md p-1">
+            <button class="increase w-8 h-8 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center text-lg">+</button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <label class="text-sm sm:text-base font-medium">Children</label>
+          <div class="flex items-center space-x-3">
+            <button class="decrease w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-lg">−</button>
+            <input type="number" value="0" min="0" class="w-12 text-center border rounded-md p-1">
+            <button class="increase w-8 h-8 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center text-lg">+</button>
+          </div>
         </div>
       </div>
 
-      <div class="flex items-center justify-between">
-        <label class="text-sm sm:text-base font-medium">Children</label>
-        <div class="flex items-center space-x-3">
-          <button class="decrease w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-lg">−</button>
-          <input type="number" value="0" min="0" class="w-12 text-center border rounded-md p-1">
-          <button class="increase w-8 h-8 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center text-lg">+</button>
-        </div>
-      </div>
-    </div>
+      <button class="remove-room mt-2 text-xs sm:text-sm text-red-500 hover:underline">Remove Room</button>
+    `;
 
-    <button class="remove-room mt-2 text-xs sm:text-sm text-red-500 hover:underline">Remove Room</button>
-  `;
+    roomsContainer.appendChild(roomDiv);
+    addCounterListeners(roomDiv);
 
-  roomsContainer.appendChild(roomDiv);
-  addCounterListeners(roomDiv);
+    // Remove room + reindex
+    roomDiv.querySelector(".remove-room").addEventListener("click", () => {
+      roomDiv.remove();
+      reindexRooms();
+    });
 
-  // Remove room + reindex
-  roomDiv.querySelector(".remove-room").addEventListener("click", () => {
-    roomDiv.remove();
     reindexRooms();
   });
 
-  reindexRooms();
-});
+
+      // Init counters for first room
+      addCounterListeners(document.querySelector(".room-card"));
+      reindexRooms();
+    }
 
 
-    // Init counters for first room
-    addCounterListeners(document.querySelector(".room-card"));
-    reindexRooms();
-  }
-
-
-    // ✅ Footer loader
-    fetch("/Features/Components/Footers/CustomerFooter/index.html")
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById("footer").innerHTML = data;
-      });
+      // ✅ Footer loader
+      fetch("/Features/Components/Footers/CustomerFooter/index.html")
+        .then(res => res.text())
+        .then(data => {
+          document.getElementById("footer").innerHTML = data;
+        });
 
 

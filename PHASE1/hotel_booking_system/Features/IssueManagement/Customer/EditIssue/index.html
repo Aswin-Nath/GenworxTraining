@@ -16,18 +16,17 @@
   <div class="flex flex-col md:flex-row flex-1 max-w-7xl mx-auto w-full py-6 sm:py-8 px-4 lg:px-8 gap-6 sm:gap-8 mt-20">
 
     <!-- ✅ Sidebar -->
-    <aside class="w-full md:w-64 bg-white shadow-lg rounded-2xl p-6 h-fit">
-      <nav class="space-y-4 text-gray-700 font-medium">
-        <a href="/Features/Dashboard/Customer/index.html" class="block py-2 border-b hover:text-yellow-600">Overview</a>
-        <a href="/Features/BookingManagement/Customer/MyBookings/index.html" class="block py-2 border-b hover:text-yellow-600">My Bookings</a>
-        <a href="/Features/UserManagement/Customer/SavedRoomsCustomer/index.html" class="block py-2 border-b hover:text-yellow-600">Wishlist</a>
-        <a href="/Features/IssueManagement/Customer/MyIssues/index.html" class="block py-2 border-b hover:text-yellow-600">My Issues</a>
-        <a href="/Features/RefundManagement/Customer/MyRefunds/index.html" class="block py-2 border-b hover:text-yellow-600">My Refunds</a>
-        <a href="/Features/UserManagement/Customer/ProfileDisplayCustomer/index.html" class="block py-2 border-b hover:text-yellow-600">Profile</a>
-        <a href="/Features/ReportManagement/Customer/ReportSections/index.html" class="block py-2 border-b hover:text-yellow-600">Reports</a>
+    <aside class="w-full lg:w-64 bg-white shadow-lg rounded-2xl p-4 md:p-6 h-fit overflow-x-auto lg:overflow-visible">
+      <nav class="flex lg:block space-x-4 lg:space-x-0 lg:space-y-4 text-gray-700 font-medium text-sm md:text-base">
+        <a href="/Features/Dashboard/Customer/index.html" data-page="dashboard" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Overview</a>
+        <a href="/Features/BookingManagement/Customer/MyBookings/index.html" data-page="booking" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Bookings</a>
+        <a href="/Features/UserManagement/Customer/SavedRoomsCustomer/index.html" data-page="saved" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Wishlist</a>
+        <a href="/Features/IssueManagement/Customer/MyIssues/index.html" data-page="issues" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Issues</a>
+        <a href="/Features/RefundManagement/Customer/MyRefunds/index.html" data-page="refunds" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Refunds</a>
+        <a href="/Features/UserManagement/Customer/ProfileDisplayCustomer/index.html" data-page="profile" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Profile</a>
+        <a href="/Features/ReportManagement/Customer/ReportSections/index.html" data-page="report" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Reports</a>
       </nav>
     </aside>
-
     <!-- ✅ Main Content -->
     <main class="flex-1 space-y-8 sm:space-y-12">
 

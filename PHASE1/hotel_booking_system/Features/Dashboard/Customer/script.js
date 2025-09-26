@@ -209,3 +209,23 @@ function initNotifications() {
   toggleDropdown("notifBtn", "notifDropdown");
   toggleDropdown("notifBtnMobile", "notifDropdownMobile");
 }
+
+  let lastScrollY = window.scrollY;
+  const navbar = document.getElementById("mainNavbar");
+
+  window.addEventListener("scroll", () => {
+    // only apply for mobile (md:hidden still shows toggle menu)
+    if (window.innerWidth < 768) {
+      if (window.scrollY > lastScrollY) {
+        // scrolling down → hide navbar
+        navbar.style.transform = "translateY(-100%)";
+      } else {
+        // scrolling up → show navbar
+        navbar.style.transform = "translateY(0)";
+      }
+    } else {
+      // reset on desktop
+      navbar.style.transform = "translateY(0)";
+    }
+    lastScrollY = window.scrollY;
+  });

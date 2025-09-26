@@ -17,7 +17,6 @@
     #mobileMenu.open {
       max-height: 500px; /* enough for links */
     }
-
     .glow-btn {
       position: relative;
       transition: all 0.3s ease;
@@ -43,8 +42,7 @@
 <body class="bg-gray-50">
 
   <!-- ✅ Navbar -->
-  <header class="flex justify-between items-center bg-white shadow-md px-4 sm:px-6 py-2 fixed top-0 left-0 w-full z-50">
-    <!-- Logo + Title -->
+<header id="mainNavbar"class="flex justify-between items-center bg-white shadow-md px-4 sm:px-6 py-2 fixed top-0 left-0 w-full z-50 transition-transform duration-300">    <!-- Logo + Title -->
     <a href="/Features/LandingPages/Customer/index.html" class="flex items-center space-x-2">
       <img src="/assets/Hotel_logo.png" alt="Hotel Logo"
            class="h-8 sm:h-10 rounded-full border-2 border-yellow-600 p-1">
@@ -116,7 +114,6 @@
           </div>
         </div>
       </div>
-
       <!-- Account -->
       <a href="/Features/Dashboard/Customer/index.html"
          class="px-4 py-2 bg-gray-600 text-center text-white font-medium rounded-lg hover:bg-gray-700 transition">
