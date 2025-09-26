@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - Booking Management</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+
+  <div id="navbar"></div>
+  <div id="sidebar" class="fixed top-16 left-0 w-64 h-screen shadow-lg bg-white"></div>
+
+<main class="ml-64 pt-20 p-8 min-h-screen overflow-y-auto bg-gray-50">
+    <!-- Title -->
+    <div class="mb-6">
+      <h2 class="text-2xl font-bold text-gray-800">Booking Management</h2>
+    </div>
+
+<!-- ✅ Compact Booking Filter -->
+<div class="bg-white shadow-md border border-gray-200 rounded-lg p-3 mb-4">
+
+  <div class="flex flex-wrap items-end gap-3">
+
+    <!-- Booking Status -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Booking Status</label>
+      <select class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
+        <option>All Statuses</option>
+        <option>Currently Staying</option>
+        <option>Upcoming Stay</option>
+        <option>Checking In Today</option>
+        <option>Checking Out Today</option>
+        <option>Completed</option>
+        <option>Cancelled</option>
+        <option>No Show</option>
+      </select>
+    </div>
+
+    <!-- Room Type -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Room Type</label>
+      <select class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
+        <option>All Types</option>
+        <option>Deluxe</option>
+        <option>Executive</option>
+        <option>Suite</option>
+        <option>Presidential</option>
+        <option>Family</option>
+      </select>
+    </div>
+
+    <!-- Total Amount -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Total Amount (₹)</label>
+      <div class="flex items-center gap-2">
+        <input type="number" placeholder="Min ₹" class="w-24 p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
+        <span class="text-gray-400">—</span>
+        <input type="number" placeholder="Max ₹" class="w-24 p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
+      </div>
+    </div>
+
+    <!-- Stay Duration -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Stay Duration</label>
+      <div class="flex items-center gap-2">
+        <input type="date" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
+        <span class="text-gray-400">—</span>
+        <input type="date" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="ml-auto flex gap-2">
+      <button class="px-3 py-2 bg-gray-100 text-gray-700 text-sm rounded-md hover:bg-gray-200 flex items-center gap-1">
+        <span class="material-icons text-xs">refresh</span>
+        Reset
+      </button>
+      <button class="px-4 py-2 bg-yellow-600 text-white text-sm rounded-md hover:bg-yellow-700 flex items-center gap-1">
+        <span class="material-icons text-xs">filter_alt</span>
+        Apply
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+    <!-- Table -->
+    <div class="overflow-x-auto bg-white shadow-lg border border-gray-200 rounded-xl">
+      <table class="w-full text-sm">
+        <thead class="bg-yellow-50 border-b border-gray-300">
+          <tr>
+            <th class="p-3 text-left font-semibold text-gray-700">Booking ID</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Customer</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Room</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Check-in</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Check-out</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Status</th>
+            <th class="p-3 text-center font-semibold text-gray-700">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <tr class="hover:bg-gray-50">
+            <td class="p-3">#B1001</td>
+            <td class="p-3">Manoj</td>
+            <td class="p-3">101 (Deluxe)</td>
+            <td class="p-3">21 Sep 2023</td>
+            <td class="p-3">25 Sep 2023</td>
+            <td class="p-3">
+              <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">Active</span>
+            </td>
+            <td class="p-3 text-center flex justify-center space-x-2">
+              <button onclick="window.location.href='/Features/BookingManagement/Admin/IndividualBookings/index.html'" 
+                      class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button onclick="openRoomTransferModal()"
+                      class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Transfer Room</button>
+            </td>
+          </tr>
+                    <tr class="hover:bg-gray-50">
+            <td class="p-3">#B1001</td>
+            <td class="p-3">Aswin</td>
+            <td class="p-3">101 (Deluxe)</td>
+            <td class="p-3">21 Sep 2023</td>
+            <td class="p-3">25 Sep 2023</td>
+            <td class="p-3">
+              <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">Active</span>
+            </td>
+            <td class="p-3 text-center flex justify-center space-x-2">
+              <button onclick="window.location.href='/Features/BookingManagement/Admin/IndividualBookings/index.html'" 
+                      class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button onclick="openRoomTransferModal()"
+                      class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Transfer Room</button>
+            </td>
+          </tr>
+                    <tr class="hover:bg-gray-50">
+            <td class="p-3">#B1001</td>
+            <td class="p-3">Aswinnath</td>
+            <td class="p-3">101 (Deluxe)</td>
+            <td class="p-3">21 Sep 2023</td>
+            <td class="p-3">25 Sep 2023</td>
+            <td class="p-3">
+              <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">Active</span>
+            </td>
+            <td class="p-3 text-center flex justify-center space-x-2">
+              <button onclick="window.location.href='/Features/BookingManagement/Admin/IndividualBookings/index.html'" 
+                      class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button onclick="openRoomTransferModal()"
+                      class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Transfer Room</button>
+            </td>
+          </tr>
+                    <tr class="hover:bg-gray-50">
+            <td class="p-3">#B1001</td>
+            <td class="p-3">Ronaldo</td>
+            <td class="p-3">101 (Deluxe)</td>
+            <td class="p-3">21 Sep 2023</td>
+            <td class="p-3">25 Sep 2023</td>
+            <td class="p-3">
+              <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">Active</span>
+            </td>
+            <td class="p-3 text-center flex justify-center space-x-2">
+              <button onclick="window.location.href='/Features/BookingManagement/Admin/IndividualBookings/index.html'" 
+                      class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button onclick="openRoomTransferModal()"
+                      class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Transfer Room</button>
+            </td>
+          </tr>
+          
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Room Transfer Modal -->
+    <div id="roomTransferModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+      <div class="bg-white rounded-2xl max-w-md w-full p-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Transfer Room</h3>
+        <form id="roomTransferForm" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Current Room</label>
+            <input type="text" value="101 (Deluxe)" disabled
+                   class="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">New Room</label>
+            <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
+              <option>102 (Deluxe)</option>
+              <option>103 (Deluxe)</option>
+              <option>201 (Executive)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Reason for Transfer</label>
+            <textarea class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 resize-none"
+                      rows="3"></textarea>
+          </div>
+          <div class="flex justify-end space-x-3">
+            <button type="button" onclick="closeRoomTransferModal()"
+                    class="px-4 py-2 text-gray-700 border rounded-lg hover:bg-gray-50">Cancel</button>
+            <button type="submit"
+                    class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700">Confirm Transfer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" 
+         class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-full opacity-0 transition-all duration-300">
+      Room transferred successfully!
+    </div>
+
+    <!-- Pagination -->
+    <nav class="flex flex-col md:flex-row justify-between items-center mt-6 space-y-4 md:space-y-0">
+      <!-- Prev -->
+      <button onclick="prevPage()" class="px-5 py-2 flex items-center space-x-2 border rounded-full bg-gray-200 hover:bg-gray-300">
+        <span class="material-icons text-sm">chevron_left</span>
+        <span>Prev</span>
+      </button>
+
+      <!-- Page Numbers -->
+      <ul class="flex space-x-2">
+        <li><button onclick="showPage(1)" class="px-4 py-2 rounded-full bg-yellow-500 text-white shadow">1</button></li>
+        <li><button onclick="showPage(2)" class="px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">2</button></li>
+        <li><button onclick="showPage(3)" class="px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">3</button></li>
+        <li><span class="px-4 py-2">...</span></li>
+        <li><button onclick="showPage(10)" class="px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">10</button></li>
+      </ul>
+
+      <!-- Next -->
+      <button onclick="nextPage()" class="px-5 py-2 flex items-center space-x-2 border rounded-full bg-gray-200 hover:bg-gray-300">
+        <span>Next</span>
+        <span class="material-icons text-sm">chevron_right</span>
+      </button>
+
+      <!-- Jumper -->
+      <div class="flex items-center space-x-2">
+        <label for="pageInput" class="text-sm text-gray-600 font-medium">Jump to:</label>
+        <input id="pageInput" type="number" min="1" placeholder="Page #"
+               class="w-20 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 shadow-sm">
+        <button onclick="jumpToPage()" class="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow flex items-center space-x-1">
+          <span class="material-icons text-sm">login</span>
+          <span>Go</span>
+        </button>
+      </div>
+    </nav>
+  </main>
+
+<script src="./script.js"></script>
+</body>
+</html>

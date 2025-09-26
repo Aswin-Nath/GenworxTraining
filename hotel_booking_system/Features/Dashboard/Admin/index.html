@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LuxuryStay - Admin Main Page (Enhanced)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* small visual tweaks beyond Tailwind for polish */
+    .stat-card { min-height: 88px; }
+    .btn-primary { background: #d97706; color: white; }
+    .btn-primary:hover { background: #b45309; }
+    .filter-pill { transition: all .15s; }
+    .filter-pill.active { background: #f59e0b; color: white; }
+    /* ensure canvas keep height in responsive */
+  /* ensure the chart has room to render */
+  .chart-wrap { height: 320px; position: relative; }
+  #dailyBookingsChart { width: 100%; height: 100% !important; }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans leading-relaxed text-gray-800">
+
+  <!-- NAVBAR placeholder (kept as requested) -->
+  <div id="navbar"></div>
+
+  <!-- SIDEBAR placeholder (kept as requested) -->
+  <div id="sidebar" class="fixed top-16 left-0 w-64 h-screen shadow-lg bg-white"></div>
+
+  <!-- MAIN -->
+  <main class="ml-64 pt-16 p-8 h-screen overflow-y-auto">
+
+    <header class="flex items-start justify-between mb-6">
+      <div>
+        <h1 class="text-3xl font-extrabold text-gray-800">Welcome, Admin <span class="text-yellow-500">👋</span></h1>
+      </div>
+      <!-- Quick top-right CTA (small) -->
+      <div class="flex items-center gap-3">
+        <button id="exportCsv" class="px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-200 text-sm">Export CSV</button>
+      </div>
+    </header>
+
+    <!-- FILTER BAR (like first image) -->
+    <section class="bg-white shadow rounded-xl p-4 mb-8">
+      <div class="flex flex-wrap items-center gap-4">
+        <span class="text-gray-600 font-medium">Filter by:</span>
+
+        <!-- Preset pills -->
+        <div class="flex gap-2">
+          <button class="px-4 py-2 rounded-lg bg-gray-200 filter-pill" data-range="1D">1D</button>
+          <button class="px-4 py-2 rounded-lg bg-gray-200 filter-pill" data-range="1W">1W</button>
+          <button class="px-4 py-2 rounded-lg bg-gray-200 filter-pill" data-range="1M">1M</button>
+          <button class="px-4 py-2 rounded-lg bg-gray-200 filter-pill" data-range="1Y">1Y</button>
+          <button id="customRangeBtn" class="px-4 py-2 rounded-lg bg-gray-200 filter-pill" data-range="custom">Custom</button>
+        </div>
+
+        <!-- Inline date inputs (appear when custom selected) -->
+        <div id="customDates" class="flex items-center gap-2 ml-4 hidden">
+          <input id="fromDate" type="date" class="border p-2 rounded-lg" />
+          <span class="text-gray-500">to</span>
+          <input id="toDate" type="date" class="border p-2 rounded-lg" />
+          <button id="applyRange" class="px-4 py-2 rounded-lg btn-primary">Apply</button>
+        </div>
+
+        <!-- quick filter: status -->
+        <div class="ml-auto flex items-center gap-3">
+          <label class="text-sm text-gray-500">Status</label>
+          <select id="statusFilter" class="border rounded-md p-2 text-sm">
+            <option value="all">All</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="checkedin">Checked-in</option>
+            <option value="checkedout">Checked-out</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- KPIs & Quick Actions -->
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+
+      <!-- KPI Grid -->
+      <div class="bg-white shadow rounded-xl p-6">
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">Overview</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div class="bg-gray-100 p-4 rounded-lg text-center stat-card">
+            <p class="text-sm text-gray-500">Total Bookings</p>
+            <p id="totalBookings" class="text-xl font-bold text-yellow-600">0</p>
+            <p id="totalBookingsDelta" class="text-xs text-gray-500 mt-1">—</p>
+          </div>
+
+          <div class="bg-gray-100 p-4 rounded-lg text-center stat-card">
+            <p class="text-sm text-gray-500">Net Revenue</p>
+            <p id="netRevenue" class="text-xl font-bold text-green-600">₹0</p>
+            <p id="netRevenueDelta" class="text-xs text-gray-500 mt-1">—</p>
+          </div>
+
+          <div class="bg-gray-100 p-4 rounded-lg text-center stat-card">
+            <p class="text-sm text-gray-500">Refunds Sent</p>
+            <p id="refundsSent" class="text-xl font-bold text-red-600">0</p>
+            <p id="refundsSentDelta" class="text-xs text-gray-500 mt-1">—</p>
+          </div>
+
+          <div class="bg-gray-100 p-4 rounded-lg text-center stat-card">
+            <p class="text-sm text-gray-500">Rooms Available</p>
+            <p id="roomsAvailable" class="text-xl font-bold text-blue-600">0</p>
+          </div>
+
+          <div class="bg-gray-100 p-4 rounded-lg text-center stat-card">
+            <p class="text-sm text-gray-500">ADR (Avg Daily Rate)</p>
+            <p id="adr" class="text-xl font-bold text-indigo-600">₹0</p>
+          </div>
+
+          <div class="bg-gray-100 p-4 rounded-lg text-center stat-card">
+            <p class="text-sm text-gray-500">RevPAR</p>
+            <p id="revpar" class="text-xl font-bold text-purple-600">₹0</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="bg-white shadow rounded-xl p-6">
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">Quick Actions</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <button class="py-3 rounded-lg shadow bg-yellow-500 text-white">Add Room</button>
+          <button class="py-3 rounded-lg shadow bg-gray-500 text-white">Freeze/Edit Rooms</button>
+          <button id="backupDataBtn" class="py-3 rounded-lg shadow bg-purple-500 text-white">Backup Data</button>
+        </div>
+
+        <div class="mt-6">
+          <p class="text-sm text-gray-500">Quick stats</p>
+          <div class="flex items-center gap-4 mt-3">
+            <div class="p-3 bg-gray-50 rounded-md">
+              <p class="text-xs text-gray-500">Cancellation Rate</p>
+              <p id="cancelRate" class="font-bold text-red-600">0%</p>
+            </div>
+            <div class="p-3 bg-gray-50 rounded-md">
+              <p class="text-xs text-gray-500">No-Show Rate</p>
+              <p id="noShowRate" class="font-bold text-orange-600">0%</p>
+            </div>
+            <div class="p-3 bg-gray-50 rounded-md">
+              <p class="text-xs text-gray-500">Retention Rate</p>
+              <p id="retentionRate" class="font-bold text-green-600">0%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Charts and Tables -->
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+
+      <!-- Daily Bookings / Forecast -->
+      <div class="bg-white shadow rounded-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold text-gray-700">Daily Bookings</h3>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="dailyBookingsChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Top Room Types by Revenue -->
+      <div class="bg-white shadow rounded-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold text-gray-700">Top Room Types by Revenue</h3>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="roomTypeChart"></canvas>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Tables: Upcoming checkins/checkouts, Refunds, Top Guests -->
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+
+      <!-- Upcoming Checkouts -->
+      <div class="bg-white shadow rounded-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold text-gray-700">Upcoming 10 Checkouts</h3>
+          <span id="checkoutsCount" class="text-sm text-gray-500">0 items</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="text-left text-gray-600">
+              <tr>
+                <th class="py-2 px-3">Guest</th>
+                <th class="py-2 px-3">Room</th>
+                <th class="py-2 px-3">Check-in</th>
+                <th class="py-2 px-3">Check-out</th>
+              </tr>
+            </thead>
+            <tbody id="checkoutsTable" class="text-gray-700"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Upcoming Check-ins -->
+      <div class="bg-white shadow rounded-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold text-gray-700">Upcoming 10 Check-ins</h3>
+          <span id="checkinsCount" class="text-sm text-gray-500">0 items</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="text-left text-gray-600">
+              <tr>
+                <th class="py-2 px-3">Guest</th>
+                <th class="py-2 px-3">Room</th>
+                <th class="py-2 px-3">Check-in</th>
+                <th class="py-2 px-3">Check-out</th>
+              </tr>
+            </thead>
+            <tbody id="checkinsTable" class="text-gray-700"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+
+      <!-- Refunds Tracker -->
+      <div class="bg-white shadow rounded-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold text-gray-700">Refunds Tracker</h3>
+          <span class="text-sm text-gray-500">Shows refunds and % of revenue</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="text-left text-gray-600">
+              <tr>
+                <th class="py-2 px-3">Refund ID</th>
+                <th class="py-2 px-3">Booking ID</th>
+                <th class="py-2 px-3">Guest</th>
+                <th class="py-2 px-3">Amount</th>
+                <th class="py-2 px-3">Reason</th>
+                <th class="py-2 px-3">Date</th>
+              </tr>
+            </thead>
+            <tbody id="refundsTable" class="text-gray-700"></tbody>
+          </table>
+        </div>
+        <div class="mt-4">
+          <p class="text-sm text-gray-500">Refunds as % of revenue: <span id="refundPercent" class="font-bold text-red-600">0%</span></p>
+        </div>
+      </div>
+
+      <!-- Top Guests  -->
+      <div class="bg-white shadow rounded-xl p-6">
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">Top GuestS</h3>
+
+        <div class="grid grid-cols-1 gap-4">
+          <!-- Top Guests -->
+          <div>
+            <p class="text-sm text-gray-500 mb-2">Top Guests (Lifetime Value)</p>
+            <ul id="topGuestsList" class="space-y-2"></ul>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Footer area spacing -->
+    <div class="h-24"></div>
+
+  </main>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const canvas = document.getElementById('dailyBookingsChart');
+  if (!canvas) {
+    console.error('dailyBookingsChart canvas not found');
+    return;
+  }
+
+  const ctx = canvas.getContext('2d');
+
+  // create gradient based on actual canvas visible height
+  const height = canvas.clientHeight || 320;
+  const gradient = ctx.createLinearGradient(0, 0, 0, height);
+  gradient.addColorStop(0, 'rgba(250,204,21,0.45)');
+  gradient.addColorStop(1, 'rgba(250,204,21,0.06)');
+
+  // plugin to add subtle drop shadow (valid Chart.js plugin)
+  const shadowPlugin = {
+    id: 'shadowPlugin',
+    beforeDatasetsDraw(chart) {
+      const { ctx } = chart;
+      ctx.save();
+      ctx.shadowColor = 'rgba(0,0,0,0.12)';
+      ctx.shadowBlur = 10;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 6;
+    },
+    afterDatasetsDraw(chart) {
+      chart.ctx.restore();
+    }
+  };
+
+const dailyChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: [], // filled dynamically
+    datasets: [
+      {
+        label: 'Confirmed Bookings',
+        data: [],
+        borderColor: '#f59e0b', // amber
+        borderWidth: 3,
+        backgroundColor: gradient,
+        tension: 0.38,
+        fill: true,
+        pointRadius: 5,
+        pointBackgroundColor: '#fff',
+        pointBorderColor: '#f59e0b',
+        pointHoverRadius: 7
+      },
+      {
+        label: 'Cancelled Bookings',
+        data: [],
+        borderColor: '#ef4444', // red
+        borderWidth: 2,
+        backgroundColor: 'rgba(239,68,68,0.1)',
+        tension: 0.38,
+        fill: true,
+        pointRadius: 4,
+        pointBackgroundColor: '#fff',
+        pointBorderColor: '#ef4444',
+        pointHoverRadius: 6,
+        borderDash: [6, 4] // dashed line
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: true },
+      tooltip: {
+        backgroundColor: '#111827',
+        titleColor: '#facc15',
+        bodyColor: '#fff',
+        padding: 10,
+        cornerRadius: 8,
+        callbacks: {
+          label: ctx => `${ctx.dataset.label}: ${ctx.formattedValue} bookings`
+        }
+      }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: '#6b7280' } },
+      y: {
+        beginAtZero: true,
+        grid: { color: 'rgba(0,0,0,0.05)' },
+        ticks: { color: '#6b7280' }
+      }
+    }
+  },
+  plugins: [shadowPlugin]
+});
+
+
+  // helper to populate chart (use your filtered labels/data here)
+  function populateDailyChart(labels, values) {
+    dailyChart.data.labels = labels;
+    dailyChart.data.datasets[0].data = values;
+    dailyChart.update();
+  }
+
+  // Demo: populate with last 14 days random data (remove this in production)
+  (function demoFill(){
+    const now = new Date();
+    const labels = [];
+    const values = [];
+    for (let i = 13; i >= 0; i--) {
+      const d = new Date(now);
+      d.setDate(now.getDate() - i);
+      labels.push(d.toISOString().slice(0,10));
+      values.push(Math.floor(Math.random() * 12) + 1);
+    }
+    populateDailyChart(labels, values);
+  })();
+
+  // expose helper if you want to update from your applyFiltersAndRender
+  window.populateDailyChart = populateDailyChart;
+});
+</script>
+
+
+<script src="./script.js"></script>
+</body>
+</html>

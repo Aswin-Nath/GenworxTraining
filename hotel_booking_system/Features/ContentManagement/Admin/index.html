@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - Content Management</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+
+  <!-- ✅ Navbar -->
+  <div id="navbar"></div>
+
+  <!-- ✅ Sidebar -->
+  <div id="sidebar" class="fixed top-16 left-0 w-64 h-screen shadow-lg bg-white"></div>
+
+  <!-- ✅ Main Content -->
+<main class="ml-64 pt-20 p-8 min-h-screen overflow-y-auto bg-gray-50">
+
+    <!-- Page Header -->
+    <div class="flex justify-between items-center mb-6 flex-wrap gap-3">
+      <h2 class="text-2xl font-bold text-gray-800">Content Management</h2>
+      <button onclick="toggleAddContentModal()" 
+        class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow">
+        <span class="material-icons">add</span> Add Content
+      </button>
+    </div>
+
+    <!-- ✅ Tabs -->
+    <div class="flex flex-wrap gap-3 mb-6">
+      <button onclick="switchTab('announcements')" class="tab-btn px-4 py-2 rounded-lg bg-yellow-500 text-white shadow">Announcements</button>
+      <button onclick="switchTab('banners')" class="tab-btn px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300">Banners</button>
+      <button onclick="switchTab('offers')" class="tab-btn px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300">Offers</button>
+      <button onclick="switchTab('testimonials')" class="tab-btn px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300">Testimonials</button>
+      <button onclick="switchTab('promotions')" class="tab-btn px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300">Promotions</button>
+    </div>
+
+    <!-- ✅ Content Sections -->
+    <div id="content-sections" class="space-y-8"></div>
+  </main>
+
+  <!-- ✅ Add Content Modal -->
+  <div id="addContentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white w-full max-w-2xl rounded-2xl shadow-lg p-6 relative overflow-y-auto max-h-[90vh]">
+      <button onclick="toggleAddContentModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+        <span class="material-icons">close</span>
+      </button>
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Add New Content</h2>
+
+      <form id="addContentForm" class="space-y-4">
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Content Type <span class="text-red-500">*</span></label>
+          <select id="addContentType" class="w-full border p-3 rounded-lg" required>
+            <option value="announcements">Announcements</option>
+            <option value="banners">Banners</option>
+            <option value="offers">Offers</option>
+            <option value="testimonials">Testimonials</option>
+            <option value="promotions">Promotions</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Title <span class="text-red-500">*</span></label>
+          <input id="contentTitle" type="text" class="w-full border p-3 rounded-lg" required>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Description <span class="text-red-500">*</span></label>
+          <textarea id="contentDesc" rows="3" class="w-full border p-3 rounded-lg" required></textarea>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Media (Image/Video) <span class="text-red-500">*</span></label>
+          <input id="contentMedia" type="file" class="w-full border p-3 rounded-lg" required>
+        </div>
+        <div class="flex justify-end gap-4">
+          <button type="button" onclick="toggleAddContentModal()" class="px-5 py-2 bg-gray-400 text-white rounded-lg">Cancel</button>
+          <button type="submit" class="px-5 py-2 bg-green-600 text-white rounded-lg">Add Content</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ✅ Edit Content Modal -->
+  <div id="editContentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white w-full max-w-2xl rounded-2xl shadow-lg p-6 relative overflow-y-auto max-h-[90vh]">
+      <button onclick="toggleEditContentModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+        <span class="material-icons">close</span>
+      </button>
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Edit Content</h2>
+
+      <form id="editContentForm" class="space-y-4">
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Content Type <span class="text-red-500">*</span></label>
+          <select id="editContentType" class="w-full border p-3 rounded-lg" required>
+            <option value="announcements">Announcements</option>
+            <option value="banners">Banners</option>
+            <option value="offers">Offers</option>
+            <option value="testimonials">Testimonials</option>
+            <option value="promotions">Promotions</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Title <span class="text-red-500">*</span></label>
+          <input id="editTitle" type="text" class="w-full border p-3 rounded-lg" required>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Description <span class="text-red-500">*</span></label>
+          <textarea id="editDesc" rows="3" class="w-full border p-3 rounded-lg" required></textarea>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Replace Media <span class="text-red-500">*</span></label>
+          <input id="editMedia" type="file" class="w-full border p-3 rounded-lg" required>
+        </div>
+        <div class="flex justify-between">
+          <button type="button" onclick="deleteContent()" class="px-5 py-2 bg-red-600 text-white rounded-lg">Delete</button>
+          <div class="flex gap-4">
+            <button type="button" onclick="toggleEditContentModal()" class="px-5 py-2 bg-gray-400 text-white rounded-lg">Cancel</button>
+            <button type="submit" class="px-5 py-2 bg-yellow-600 text-white rounded-lg">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+  
+
+<script src="./script.js"></script>
+</body>
+</html>

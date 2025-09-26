@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - Refund Management</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+
+  <!-- ✅ Navbar -->
+  <div id="navbar"></div>
+
+  <!-- ✅ Sidebar -->
+  <div id="sidebar" class="fixed top-16 left-0 w-64 h-screen shadow-lg bg-white"></div>
+
+  <!-- ✅ Main Content -->
+<main class="ml-64 pt-20 p-8 min-h-screen overflow-y-auto bg-gray-50">
+
+    <!-- Title -->
+    <div class="mb-6">
+      <h2 class="text-2xl font-bold text-gray-800">Issue Management</h2>
+    </div>
+
+<!-- ✅ Compact Issue Filter -->
+<div class="bg-white shadow-md border border-gray-200 rounded-lg p-3 mb-4">
+
+  <div class="flex flex-wrap items-end gap-3">
+
+    <!-- Issue Status -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Issue Status</label>
+      <select id="filterStatus" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <option value="">All Status</option>
+        <option value="open">Open</option>
+        <option value="in-progress">In Progress</option>
+        <option value="resolved">Resolved</option>
+        <option value="closed">Closed</option>
+      </select>
+    </div>
+
+    <!-- Priority Level -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Priority Level</label>
+      <select id="filterPriority" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <option value="">All Priorities</option>
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+      </select>
+    </div>
+
+    <!-- Date Range -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Date Range</label>
+      <div class="flex items-center gap-2">
+        <input id="filterFromDate" type="date" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <span class="text-gray-400">—</span>
+        <input id="filterToDate" type="date" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500">
+      </div>
+    </div>
+
+    <!-- Sort By -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Sort By</label>
+      <select id="filterSort" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <option value="recent">Most Recent</option>
+        <option value="priority">Priority (High → Low)</option>
+        <option value="status">Status</option>
+        <option value="customer">Customer Name</option>
+      </select>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="ml-auto flex gap-2">
+      <button class="px-3 py-2 bg-gray-100 text-gray-700 text-sm rounded-md hover:bg-gray-200 flex items-center gap-1">
+        <span class="material-icons text-xs">refresh</span>
+        Reset
+      </button>
+      <button id="applyFiltersBtn" class="px-4 py-2 bg-yellow-600 text-white text-sm rounded-md hover:bg-yellow-700 flex items-center gap-1">
+        <span class="material-icons text-xs">filter_alt</span>
+        Apply
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+<!-- ✅ Table -->
+<div class="overflow-x-auto bg-white shadow-lg border border-gray-200 rounded-xl">
+  <table class="w-full text-sm">
+    <thead class="bg-yellow-50 border-b border-gray-300">
+      <tr>
+        <th class="p-3 text-left font-semibold text-gray-700">Issue ID</th>
+        <th class="p-3 text-left font-semibold text-gray-700">Customer ID</th>
+        <th class="p-3 text-left font-semibold text-gray-700">Reported On</th>
+        <th class="p-3 text-left font-semibold text-gray-700">Category</th>
+        <th class="p-3 text-left font-semibold text-gray-700">Status</th>
+        <th class="p-3 text-left font-semibold text-gray-700">Resolved On</th>
+        <th class="p-3 text-center font-semibold text-gray-700">Action</th>
+      </tr>
+    </thead>
+    <tbody id="issueTableBody" class="divide-y divide-gray-200">
+
+      <!-- Open Issue -->
+      <tr class="hover:bg-gray-50">
+        <td class="p-3">#I1001</td>
+        <td class="p-3">#C3001</td>
+        <td class="p-3">21 Sep 2025</td>
+        <td class="p-3">Payment</td>
+        <td class="p-3">
+          <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium">Open</span>
+        </td>
+        <td class="p-3">-</td>
+        <td class="p-3 text-center flex justify-center space-x-2">
+          <button onclick="window.location.href='/Features/IssueManagement/Admin/AdminIssueDetails/index.html'" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+          <button class="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600 text-sm">Mark Resolved</button>
+          <button class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm">Reject</button>
+        </td>
+      </tr>
+
+      <!-- Pending Issue -->
+      <tr class="hover:bg-gray-50">
+        <td class="p-3">#I1002</td>
+        <td class="p-3">#C3002</td>
+        <td class="p-3">20 Sep 2025</td>
+        <td class="p-3">Booking</td>
+        <td class="p-3">
+          <span class="px-3 py-1 rounded-full bg-yellow-200 text-yellow-800 text-xs font-medium">Pending</span>
+        </td>
+        <td class="p-3">-</td>
+        <td class="p-3 text-center flex justify-center space-x-2">
+          <button onclick="window.location.href='/Features/IssueManagement/Admin/AdminIssueDetails/index.html'" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+          <button class="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600 text-sm">Mark Resolved</button>
+          <button class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm">Reject</button>
+        </td>
+      </tr>
+
+      <!-- Resolved Issue -->
+      <tr class="hover:bg-gray-50">
+        <td class="p-3">#I1003</td>
+        <td class="p-3">#C3003</td>
+        <td class="p-3">19 Sep 2025</td>
+        <td class="p-3">Service</td>
+        <td class="p-3">
+          <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">Resolved</span>
+        </td>
+        <td class="p-3">20 Sep 2025</td>
+        <td class="p-3 text-center flex justify-center space-x-2">
+          <button onclick="window.location.href='/Features/IssueManagement/Admin/AdminIssueDetails/index.html'" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+          <button disabled class="px-3 py-1 bg-gray-300 text-white rounded-lg cursor-not-allowed text-sm">Mark Resolved</button>
+          <button disabled class="px-3 py-1 bg-gray-300 text-white rounded-lg cursor-not-allowed text-sm">Reject</button>
+        </td>
+      </tr>
+      <!-- Open Issue -->
+      <tr class="hover:bg-gray-50">
+        <td class="p-3">#I1001</td>
+        <td class="p-3">#C3001</td>
+        <td class="p-3">21 Sep 2025</td>
+        <td class="p-3">Payment</td>
+        <td class="p-3">
+          <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium">Open</span>
+        </td>
+        <td class="p-3">-</td>
+        <td class="p-3 text-center flex justify-center space-x-2">
+          <button onclick="window.location.href='/Features/IssueManagement/Admin/AdminIssueDetails/index.html'" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+          <button class="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600 text-sm">Mark Resolved</button>
+          <button class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm">Reject</button>
+        </td>
+      </tr>
+
+
+      <!-- Resolved Issue -->
+      <tr class="hover:bg-gray-50">
+        <td class="p-3">#I1003</td>
+        <td class="p-3">#C3003</td>
+        <td class="p-3">19 Sep 2025</td>
+        <td class="p-3">Service</td>
+        <td class="p-3">
+          <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">Resolved</span>
+        </td>
+        <td class="p-3">20 Sep 2025</td>
+        <td class="p-3 text-center flex justify-center space-x-2">
+          <button onclick="window.location.href='/Features/IssueManagement/Admin/AdminIssueDetails/index.html'" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+          <button disabled class="px-3 py-1 bg-gray-300 text-white rounded-lg cursor-not-allowed text-sm">Mark Resolved</button>
+          <button disabled class="px-3 py-1 bg-gray-300 text-white rounded-lg cursor-not-allowed text-sm">Reject</button>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+    <!-- ✅ Pagination -->
+    <nav class="flex flex-col md:flex-row justify-between items-center mt-6 space-y-4 md:space-y-0">
+      <!-- Prev -->
+      <button onclick="prevPage()" class="px-5 py-2 flex items-center space-x-2 border rounded-full bg-gray-200 hover:bg-gray-300">
+        <span class="material-icons text-sm">chevron_left</span>
+        <span>Prev</span>
+      </button>
+
+      <!-- Page Numbers -->
+      <ul class="flex space-x-2">
+        <li><button onclick="showPage(1)" class="px-4 py-2 rounded-full bg-yellow-500 text-white shadow">1</button></li>
+        <li><button onclick="showPage(2)" class="px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">2</button></li>
+        <li><button onclick="showPage(3)" class="px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">3</button></li>
+        <li><span class="px-4 py-2">...</span></li>
+        <li><button onclick="showPage(10)" class="px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">10</button></li>
+      </ul>
+
+      <!-- Next -->
+      <button onclick="nextPage()" class="px-5 py-2 flex items-center space-x-2 border rounded-full bg-gray-200 hover:bg-gray-300">
+        <span>Next</span>
+        <span class="material-icons text-sm">chevron_right</span>
+      </button>
+
+      <!-- Jumper -->
+      <div class="flex items-center space-x-2">
+        <label for="pageInput" class="text-sm text-gray-600 font-medium">Jump to:</label>
+        <input id="pageInput" type="number" min="1" placeholder="Page #"
+          class="w-20 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 shadow-sm">
+        <button onclick="jumpToPage()" class="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow flex items-center space-x-1">
+          <span class="material-icons text-sm">login</span>
+          <span>Go</span>
+        </button>
+      </div>
+    </nav>
+
+  </main>
+
+
+<script src="./script.js"></script>
+</body>
+</html>

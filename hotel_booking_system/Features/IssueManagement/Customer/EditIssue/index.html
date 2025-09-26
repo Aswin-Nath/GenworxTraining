@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - Edit Issue</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+
+  <!-- ✅ Navbar -->
+  <div id="navbar"></div>
+
+  <!-- ✅ Layout -->
+  <div class="flex flex-col md:flex-row flex-1 max-w-7xl mx-auto w-full py-6 sm:py-8 px-4 lg:px-8 gap-6 sm:gap-8 mt-20">
+
+    <!-- ✅ Sidebar -->
+    <aside class="w-full lg:w-64 bg-white shadow-lg rounded-2xl p-4 md:p-6 h-fit overflow-x-auto lg:overflow-visible">
+      <nav class="flex lg:block space-x-4 lg:space-x-0 lg:space-y-4 text-gray-700 font-medium text-sm md:text-base">
+        <a href="/Features/Dashboard/Customer/index.html" data-page="dashboard" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Overview</a>
+        <a href="/Features/BookingManagement/Customer/MyBookings/index.html" data-page="booking" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Bookings</a>
+        <a href="/Features/UserManagement/Customer/SavedRoomsCustomer/index.html" data-page="saved" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Wishlist</a>
+        <a href="/Features/IssueManagement/Customer/MyIssues/index.html" data-page="issues" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Issues</a>
+        <a href="/Features/RefundManagement/Customer/MyRefunds/index.html" data-page="refunds" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Refunds</a>
+        <a href="/Features/UserManagement/Customer/ProfileDisplayCustomer/index.html" data-page="profile" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Profile</a>
+        <a href="/Features/ReportManagement/Customer/ReportSections/index.html" data-page="report" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Reports</a>
+      </nav>
+    </aside>
+    <!-- ✅ Main Content -->
+    <main class="flex-1 space-y-8 sm:space-y-12">
+
+      <!-- ✅ Page Header -->
+      <div class="relative rounded-2xl border-2 border-yellow-500 bg-[#fdfaf4] py-6 sm:py-8 text-center shadow">
+        <h2 class="text-2xl sm:text-4xl text-gray-800 font-bold">Edit Issue</h2>
+        <p class="text-gray-500 mt-2 text-sm sm:text-base">Update your reported issue details</p>
+      </div>
+
+      <!-- ✅ Back Button -->
+      <div class="flex justify-start">
+        <button id="backBtn"
+          class="flex items-center gap-2 bg-gradient-to-r from-yellow-500 to-pink-500 text-white px-4 sm:px-5 py-2 rounded-lg shadow hover:opacity-90 text-sm sm:text-base">
+          <span class="material-icons text-sm">arrow_back</span> Back
+        </button>
+      </div>
+
+      <!-- ✅ Edit Issue Form -->
+      <form id="editIssueForm" class="space-y-8 sm:space-y-10">
+
+        <!-- Issue Details -->
+        <section class="bg-white rounded-2xl border border-gray-200 p-4 sm:p-6 shadow-md">
+          <h3 class="text-base sm:text-lg font-semibold text-yellow-700 mb-4">Issue Information</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-600">Issue Title</label>
+              <input type="text" value="Room Service Delay"
+                class="w-full mt-1 p-2 sm:p-3 border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-sm sm:text-base">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-600">Room Number</label>
+              <input type="text" value="302"
+                class="w-full mt-1 p-2 sm:p-3 border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-sm sm:text-base">
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <label class="block text-sm font-medium text-gray-600">Issue Description</label>
+            <textarea rows="4" class="w-full mt-1 p-2 sm:p-3 border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-sm sm:text-base">Food order was delayed by 2 hours.</textarea>
+          </div>
+        </section>
+
+        <!-- Issue Media -->
+        <section class="bg-white rounded-2xl border border-gray-200 p-4 sm:p-6 shadow-md">
+          <h3 class="text-base sm:text-lg font-semibold text-yellow-700 mb-4">Issue Media</h3>
+          <div id="mediaPreview" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <img src="/assets/gym.png" class="h-24 sm:h-32 w-full object-cover rounded-lg shadow">
+            <img src="/assets/pool.jpg" class="h-24 sm:h-32 w-full object-cover rounded-lg shadow">
+            <img src="/assets/room1.jpg" class="h-24 sm:h-32 w-full object-cover rounded-lg shadow">
+          </div>
+          <div class="mt-4">
+            <label class="block text-sm font-medium text-gray-600 mb-2">Upload More Media</label>
+            <input id="uploadMedia" type="file" multiple accept="image/*"
+              class="w-full border rounded-lg p-2 text-gray-600 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-sm sm:text-base">
+          </div>
+        </section>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4">
+          <button type="button" id="cancelBtn"
+            class="flex items-center justify-center space-x-2 px-5 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 shadow text-sm sm:text-base w-full sm:w-auto">
+            <span class="material-icons text-sm">close</span>
+            <span>Cancel</span>
+          </button>
+          <button type="submit"
+            class="flex items-center justify-center space-x-2 px-5 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 shadow text-sm sm:text-base w-full sm:w-auto">
+            <span class="material-icons text-sm">save</span>
+            <span>Save Changes</span>
+          </button>
+        </div>
+
+      </form>
+
+    </main>
+  </div>
+
+  <!-- ✅ Confirmation Modal -->
+  <div id="confirmModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 p-4">
+    <div class="bg-white rounded-xl shadow-lg w-full max-w-md mx-auto p-4 sm:p-6">
+      <h3 class="text-base sm:text-lg font-semibold text-gray-800">Unsaved Changes</h3>
+      <p class="text-gray-600 mt-2 text-sm sm:text-base">You have unsaved changes. Do you want to save before leaving?</p>
+      <div class="mt-6 flex flex-col sm:flex-row justify-end gap-3">
+        <button id="discardBtn" class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-sm sm:text-base w-full sm:w-auto">Discard</button>
+        <button id="saveAndLeaveBtn" class="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 text-sm sm:text-base w-full sm:w-auto">Save & Leave</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ Toast -->
+  <div id="toastContainer" class="fixed top-6 right-6 z-50 space-y-2"></div>
+
+  <!-- ✅ Footer -->
+  <div id="footer"></div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - My Issues</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+
+  <!-- ✅ Main Navbar -->
+  <div id="navbar"></div>
+
+  <!-- ✅ Layout -->
+  <div class="flex flex-1 max-w-7xl mx-auto w-full py-6 px-3 md:py-8 md:px-8 gap-6 mt-20 flex-col lg:flex-row">
+
+    <!-- ✅ Sidebar -->
+    <aside class="w-full lg:w-64 bg-white shadow-lg rounded-2xl p-4 md:p-6 h-fit overflow-x-auto lg:overflow-visible">
+      <nav class="flex lg:block space-x-4 lg:space-x-0 lg:space-y-4 text-gray-700 font-medium text-sm md:text-base">
+        <a href="/Features/Dashboard/Customer/index.html" data-page="dashboard" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Overview</a>
+        <a href="/Features/BookingManagement/Customer/MyBookings/index.html" data-page="booking" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Bookings</a>
+        <a href="/Features/UserManagement/Customer/SavedRoomsCustomer/index.html" data-page="saved" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Wishlist</a>
+        <a href="/Features/IssueManagement/Customer/MyIssues/index.html" data-page="issues" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Issues</a>
+        <a href="/Features/RefundManagement/Customer/MyRefunds/index.html" data-page="refunds" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Refunds</a>
+        <a href="/Features/UserManagement/Customer/ProfileDisplayCustomer/index.html" data-page="profile" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Profile</a>
+        <a href="/Features/ReportManagement/Customer/ReportSections/index.html" data-page="report" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Reports</a>
+      </nav>
+    </aside>
+
+    <!-- ✅ Main Content -->
+    <main class="flex-1 space-y-8 md:space-y-12">
+
+      <!-- ✅ Welcome Header -->
+      <div class="relative rounded-2xl p-[3px] bg-gradient-to-r from-yellow-600 to-red-700 shadow">
+        <div class="bg-[#fdfaf4] rounded-2xl py-6 md:py-8 text-center">
+          <h2 class="text-2xl md:text-4xl text-gray-800 font-bold" style="font-family: 'Pacifico', cursive;">
+            My Issues
+          </h2>
+          <p class="mt-2 text-gray-600 text-sm md:text-base">Track your reported issues, monitor status, and download reports.</p>
+        </div>
+      </div>
+
+<!-- ✅ Compact Issue Filter -->
+<div class="bg-white shadow-md border border-gray-200 rounded-lg p-3 mb-4">
+
+  <div class="flex flex-wrap items-end gap-3">
+
+    <!-- Issue Status -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Issue Status</label>
+      <select class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <option value="">All Statuses</option>
+        <option value="pending">Pending</option>
+        <option value="in-progress">In Progress</option>
+        <option value="resolved">Resolved</option>
+        <option value="closed">Closed</option>
+      </select>
+    </div>
+
+
+
+    <!-- Date Range -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Date Range</label>
+      <div class="flex items-center gap-2">
+        <input type="date" class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <span class="text-gray-400">—</span>
+        <input type="date" class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+      </div>
+    </div>
+
+    <!-- Sort By -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Sort By</label>
+      <select class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+        <option value="priority-high">Priority (High → Low)</option>
+        <option value="priority-low">Priority (Low → High)</option>
+        <option value="status">Status</option>
+      </select>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="ml-auto flex gap-2">
+      <button class="px-3 py-2 bg-gray-100 text-gray-700 text-sm rounded-md hover:bg-gray-200 flex items-center gap-1">
+        <span class="material-icons text-xs">refresh</span>
+        Reset
+      </button>
+      <button class="px-4 py-2 bg-yellow-600 text-white text-sm rounded-md hover:bg-yellow-700 flex items-center gap-1">
+        <span class="material-icons text-xs">filter_alt</span>
+        Apply
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+
+      <!-- ✅ Issues Table -->
+      <div class="overflow-x-auto bg-white shadow-lg border border-gray-200 rounded-xl">
+        <table class="w-full text-xs md:text-sm" id="issuesTable">
+          <thead>
+            <tr class="bg-yellow-50 border-b border-gray-300">
+              <th class="p-2 md:p-3 text-left font-semibold text-gray-700">Issue</th>
+              <th class="p-2 md:p-3 text-left font-semibold text-gray-700">Date</th>
+              <th class="p-2 md:p-3 text-left font-semibold text-gray-700">Room</th>
+              <th class="p-2 md:p-3 text-left font-semibold text-gray-700">Status</th>
+              <th class="p-2 md:p-3 text-center font-semibold text-gray-700">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="issuesTableBody" class="divide-y divide-gray-200">
+
+            <!-- ✅ Row 1 - Resolved -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-2 md:p-3">
+                <span class="font-medium text-gray-800">Room Service Delay</span>
+                <p class="text-xs text-gray-500 mt-0.5">Issue #I-2001</p>
+              </td>
+              <td class="p-2 md:p-3">17 Sep 2025</td>
+              <td class="p-2 md:p-3">302</td>
+              <td class="p-2 md:p-3">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                  <span class="material-icons text-sm mr-1">check_circle</span> Resolved
+                </span>
+              </td>
+              <td class="p-2 md:p-3 text-center">
+                <div class="flex justify-center items-center space-x-1 md:space-x-2">
+                  <button onclick="window.location.href='/Features/IssueManagement/Customer/IssueDetailsCustomer/index.html'" 
+                    class="p-1 hover:bg-gray-100 rounded-lg" title="View Issue">
+                    <span class="material-icons text-blue-600">visibility</span>
+                  </button>
+                  <button disabled class="p-1 rounded-lg cursor-not-allowed" title="Edit Disabled">
+                    <span class="material-icons text-gray-400">edit</span>
+                  </button>
+                  <button disabled class="p-1 rounded-lg cursor-not-allowed" title="Cancel Disabled">
+                    <span class="material-icons text-gray-400">cancel</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- ✅ Row 2 - Pending -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-2 md:p-3">
+                <span class="font-medium text-gray-800">AC Not Working</span>
+                <p class="text-xs text-gray-500 mt-0.5">Issue #I-2002</p>
+              </td>
+              <td class="p-2 md:p-3">16 Sep 2025</td>
+              <td class="p-2 md:p-3">415</td>
+              <td class="p-2 md:p-3">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
+                  <span class="material-icons text-sm mr-1">hourglass_empty</span> Pending
+                </span>
+              </td>
+              <td class="p-2 md:p-3 text-center">
+                <div class="flex justify-center items-center space-x-1 md:space-x-2">
+                  <button onclick="window.location.href='/Features/IssueManagement/Customer/IssueDetailsCustomer/index.html'" 
+                    class="p-1 hover:bg-gray-100 rounded-lg" title="View Issue">
+                    <span class="material-icons text-blue-600">visibility</span>
+                  </button>
+                  <button onclick="window.location.href='/Features/IssueManagement/Customer/EditIssue/index.html'" 
+                    class="p-1 hover:bg-gray-100 rounded-lg" title="Edit Issue">
+                    <span class="material-icons text-green-600">edit</span>
+                  </button>
+                  <button data-cancel="issue" data-id="1002" data-label="Issue #1002"
+                    class="p-1 hover:bg-gray-100 rounded-lg" title="Cancel Issue">
+                    <span class="material-icons text-red-600">cancel</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- ✅ Row 3 - Resolved -->
+            <tr class="hover:bg-gray-50">
+              <td class="p-2 md:p-3">
+                <span class="font-medium text-gray-800">Cleanliness Issue</span>
+                <p class="text-xs text-gray-500 mt-0.5">Issue #I-2003</p>
+              </td>
+              <td class="p-2 md:p-3">15 Sep 2025</td>
+              <td class="p-2 md:p-3">210</td>
+              <td class="p-2 md:p-3">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                  <span class="material-icons text-sm mr-1">check_circle</span> Resolved
+                </span>
+              </td>
+              <td class="p-2 md:p-3 text-center">
+                <div class="flex justify-center items-center space-x-1 md:space-x-2">
+                  <button onclick="window.location.href='/Features/IssueManagement/Customer/IssueDetailsCustomer/index.html'" 
+                    class="p-1 hover:bg-gray-100 rounded-lg" title="View Issue">
+                    <span class="material-icons text-blue-600">visibility</span>
+                  </button>
+                  <button disabled class="p-1 rounded-lg cursor-not-allowed" title="Edit Disabled">
+                    <span class="material-icons text-gray-400">edit</span>
+                  </button>
+                  <button disabled class="p-1 rounded-lg cursor-not-allowed" title="Cancel Disabled">
+                    <span class="material-icons text-gray-400">cancel</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ✅ Pagination -->
+      <nav class="flex flex-col md:flex-row justify-between items-center mt-6 space-y-4 md:space-y-0 text-sm md:text-base">
+        <!-- Prev -->
+        <button onclick="prevPage()" class="px-4 md:px-5 py-2 flex items-center space-x-1 md:space-x-2 border rounded-full bg-gray-200 hover:bg-gray-300">
+          <span class="material-icons text-sm">chevron_left</span>
+          <span>Prev</span>
+        </button>
+
+        <!-- Page Numbers -->
+        <ul class="flex flex-wrap justify-center gap-2">
+          <li><button onclick="goToPage(1)" class="px-3 md:px-4 py-2 rounded-full bg-yellow-500 text-white shadow">1</button></li>
+          <li><button onclick="goToPage(2)" class="px-3 md:px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">2</button></li>
+          <li><button onclick="goToPage(3)" class="px-3 md:px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">3</button></li>
+          <li><span class="px-3 md:px-4 py-2">...</span></li>
+          <li><button onclick="goToPage(10)" class="px-3 md:px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">10</button></li>
+        </ul>
+
+        <!-- Next -->
+        <button onclick="nextPage()" class="px-4 md:px-5 py-2 flex items-center space-x-1 md:space-x-2 border rounded-full bg-gray-200 hover:bg-gray-300">
+          <span>Next</span>
+          <span class="material-icons text-sm">chevron_right</span>
+        </button>
+
+        <!-- Jumper -->
+        <div class="flex items-center space-x-2">
+          <label for="pageInput" class="text-sm text-gray-600 font-medium">Jump to:</label>
+          <input id="pageInput" type="number" min="1" placeholder="Page #"
+            class="w-16 md:w-20 px-2 md:px-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 shadow-sm text-sm md:text-base">
+          <button onclick="jumpToPage()" class="px-3 md:px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow flex items-center space-x-1">
+            <span class="material-icons text-sm">login</span>
+            <span>Go</span>
+          </button>
+        </div>
+      </nav>
+
+    </main>
+  </div>
+
+  <!-- ✅ Footer -->
+  <div id="footer"></div>
+
+  <!-- Unified Cancel Modal -->
+  <div id="unifiedCancelModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/50 p-4">
+    <div class="bg-white rounded-2xl w-full max-w-lg p-6 shadow-lg">
+      <div class="flex items-start justify-between">
+        <div>
+          <h3 id="ucmTitle" class="text-lg md:text-xl font-semibold text-gray-800">Cancel</h3>
+          <p id="ucmSubtitle" class="text-sm text-gray-500 mt-1">Confirm your action</p>
+        </div>
+        <button id="ucmClose" class="text-gray-500 hover:text-gray-800" aria-label="Close">✕</button>
+      </div>
+
+      <div id="ucmBody" class="mt-4 text-gray-700">
+        <div id="ucmConfirmText" class="hidden">
+          <p id="ucmConfirmMsg"></p>
+        </div>
+        <div id="ucmBookingReason" class="hidden">
+          <label class="block">
+            <span class="text-sm text-gray-600">Cancellation reason (optional)</span>
+            <textarea id="ucmReasonInput" rows="4" class="w-full mt-2 border rounded p-3"
+                      placeholder="Tell us why you're cancelling (optional)"></textarea>
+          </label>
+        </div>
+      </div>
+
+      <div class="mt-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <button id="ucmAbort" class="px-4 py-2 rounded-lg border text-gray-700 w-full sm:w-auto">No, go back</button>
+        <button id="ucmConfirm" class="px-4 py-2 rounded-lg bg-red-600 text-white shadow-lg w-full sm:w-auto">Yes — Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast container -->
+  <div id="unifiedToast" class="fixed top-6 right-6 z-50 space-y-2"></div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

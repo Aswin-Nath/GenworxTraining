@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Mobile dropdown slide effect */
+    #mobileMenu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    } 
+    #mobileMenu.open {
+      max-height: 500px; /* enough for links */
+    }
+
+
+  </style>
+</head>
+<body>
+  <!-- ✅ Navbar -->
+<header class="flex justify-between items-center bg-white shadow-md px-4 sm:px-6 py-2 fixed top-0 left-0 w-full z-50">
+    
+    <!-- Logo + Title -->
+        <a href="/Features/ContentManagement/Customer/NotCustomerLandingPage/index.html" class="flex items-center space-x-2">
+        <img src="/assets/Hotel_logo.png" 
+            alt="Hotel Logo" 
+            class="h-8 sm:h-10 rounded-full border-2 border-yellow-600 p-1">
+        <h1 class="text-lg sm:text-xl font-bold text-yellow-700">LuxuryStay</h1>
+        </a>
+
+
+    <!-- Mobile Menu Button (hidden on md+) -->
+    <button id="menuBtn" class="md:hidden text-2xl text-gray-700 focus:outline-none">
+      ☰
+    </button>
+
+    <!-- Desktop Nav (hidden below md) -->
+    <nav class="hidden md:flex space-x-9 font-medium text-sm sm:text-base">
+    <a href="/Features/LandingPages/Customer/index.html" class="hover:text-yellow-600">Home</a>
+    <a href="/Features/RoomManagement/Customer/RoomTypesCustomer/index.html" class="hover:text-yellow-600">Rooms</a>
+    <a href="/Features/RoomManagement/Customer/OffersCustomer/index.html" class="hover:text-yellow-600">Offers</a>
+    
+    
+    <a href="/Features/ContentManagement/Customer/Facilities/index.html" class="hover:text-yellow-600">Facilities</a>
+    <a href="/Features/Faqs/index.html" class="hover:text-yellow-600">FAQs</a>
+        <a href="/Features/LandingPages/Customer/index.html#destinations" class="hover:text-yellow-600">Destinations</a>
+
+    </nav>
+    
+    <!-- Desktop Buttons -->
+    <div class="hidden md:flex items-center space-x-3 text-sm sm:text-base">
+    <a href="/Features/Auth/LoginPage/index.html" 
+        class="px-4 py-2 bg-yellow-500 text-white font-medium rounded-lg hover:bg-yellow-600 transition">
+        Login
+    </a>
+    <a href="/Features/Auth/SignupPage/index.html"
+        class="px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition">
+        Signup
+    </a>
+
+
+    </div>
+
+  </header>
+
+  <!-- ✅ Mobile Dropdown Menu -->
+  <nav id="mobileMenu" class="md:hidden flex flex-col bg-white shadow-md px-4 mb-1 space-y-4 text-base sm:text-lg">
+    <a href="/Features/LandingPages/Customer/index.html" class="hover:text-yellow-600">Home</a>
+    <a href="/Features/RoomManagement/Customer/RoomTypesCustomer/index.html" class="hover:text-yellow-600">Rooms</a>
+    <a href="/Features/RoomManagement/Customer/OffersCustomer/index.html" class="hover:text-yellow-600">Offers</a>
+     
+    
+    <a href="/Features/ContentManagement/Customer/Facilities/index.html" class="hover:text-yellow-600">Facilities</a>
+    <a href="/Features/Faqs/index.html" class="hover:text-yellow-600">FAQs</a>
+        <a href="/Features/LandingPages/Customer/index.html#destinations" class="hover:text-yellow-600">Destinations</a>
+
+
+    <!-- Mobile Buttons -->
+    <div class="flex flex-col space-y-2 pt-2">
+    <a href="/Features/Auth/LoginPage/index.html" 
+        class="text-center px-4 py-2 bg-yellow-500 text-white font-medium rounded-lg hover:bg-yellow-600 transition">
+        Login
+    </a>
+    <a href="/Features/Auth/SignupPage/index.html"
+        class="text-center px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition">
+        Signup
+    </a>
+
+    </div>
+  </nav>
+
+</body>
+</html>

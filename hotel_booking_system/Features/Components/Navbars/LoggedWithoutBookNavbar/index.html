@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* Mobile dropdown slide effect */
+    #mobileMenu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    #mobileMenu.open {
+      max-height: 500px;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+  <!-- ✅ Navbar -->
+  <header class="flex justify-between items-center bg-white shadow-md px-4 sm:px-6 py-2 fixed top-0 left-0 w-full z-50">
+    <!-- Logo + Title -->
+    <a href="/Features/LandingPages/Customer/index.html" class="flex items-center space-x-2">
+      <img src="/assets/Hotel_logo.png" 
+           alt="Hotel Logo" 
+           class="h-8 sm:h-10 rounded-full border-2 border-yellow-600 p-1">
+      <h1 class="text-lg sm:text-xl font-bold text-yellow-700">LuxuryStay</h1>
+    </a>
+
+    <!-- Mobile Menu Button -->
+    <button id="menuBtn" class="md:hidden text-2xl text-gray-700 focus:outline-none">☰</button>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex space-x-9 font-medium text-sm sm:text-base">
+      <a href="/Features/LandingPages/Customer/index.html" class="hover:text-yellow-600">Home</a>
+      <a href="/Features/RoomManagement/Customer/RoomTypesCustomer/index.html" class="hover:text-yellow-600">Rooms</a>
+      <a href="/Features/RoomManagement/Customer/OffersCustomer/index.html" class="hover:text-yellow-600">Offers</a>
+      <a href="/Features/ContentManagement/Customer/Facilities/index.html" class="hover:text-yellow-600">Facilities</a>
+      <a href="/Features/Faqs/index.html" class="hover:text-yellow-600">FAQs</a>
+      <a href="/Features/LandingPages/Customer/index.html#destinations" class="hover:text-yellow-600">Destinations</a>
+    </nav>  
+
+    <!-- Desktop Buttons -->
+    <div class="hidden md:flex items-center space-x-3 text-sm sm:text-base">
+      <!-- 🔔 Notifications -->
+      <div class="relative">
+        <button id="notifBtn" class="relative focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" 
+               class="h-6 w-6 text-gray-600 hover:text-yellow-600 transition" 
+               fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15 17h5l-1.405-1.405A2.032 2.032 
+                 0 0118 14.158V11a6.002 6.002 
+                 0 00-4-5.659V5a2 2 0 
+                 10-4 0v.341C7.67 6.165 
+                 6 8.388 6 11v3.159c0 .538-.214 
+                 1.055-.595 1.436L4 17h5m6 0v1a3 
+                 3 0 11-6 0v-1m6 0H9" />
+          </svg>
+          <span id="notifDot" class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500"></span>
+        </button>
+
+        <!-- Dropdown -->
+        <div id="notifDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+          <div class="px-4 py-2 border-b flex justify-between items-center">
+            <span class="font-semibold text-gray-700">Notifications</span>
+            <a href="/Features/Notifications/Customer/index.html" class="text-sm text-blue-600 hover:underline">View All</a>
+          </div>
+          <div id="notifList" class="divide-y max-h-72 overflow-y-auto"></div>
+          <div class="px-4 py-2 border-t text-center">
+            <a href="/Features/Notifications/Customer/index.html" class="text-sm text-gray-500 hover:underline">Go to Notifications</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account -->
+      <a href="/Features/Dashboard/Customer/index.html"
+        class="px-4 py-2 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-700 transition">
+        Account
+      </a>
+
+      <!-- Logout -->
+      <button onclick="localStorage.setItem('is_customer_logged_in',false);window.location.href='/Features/LandingPages/Customer/index.html';" 
+        class="px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition">
+        Logout
+      </button>
+    </div>
+  </header>
+
+  <!-- ✅ Mobile Menu -->
+  <nav id="mobileMenu" class="md:hidden flex flex-col bg-white shadow-md px-4 mb-1 space-y-4 text-base sm:text-lg">
+    <a href="/Features/LandingPages/Customer/index.html" class="hover:text-yellow-600">Home</a>
+    <a href="/Features/RoomManagement/Customer/RoomTypesCustomer/index.html" class="hover:text-yellow-600">Rooms</a>
+    <a href="/Features/RoomManagement/Customer/OffersCustomer/index.html" class="hover:text-yellow-600">Offers</a>
+    <a href="/Features/ContentManagement/Customer/Facilities/index.html" class="hover:text-yellow-600">Facilities</a>
+    <a href="/Features/Faqs/index.html" class="hover:text-yellow-600">FAQs</a>
+    <a href="/Features/LandingPages/Customer/index.html#destinations" class="hover:text-yellow-600">Destinations</a>
+
+    <div class="flex flex-col space-y-2 pt-2">
+      <!-- 🔔 Notifications -->
+      <div class="relative">
+        <button id="notifBtnMobile" class="relative flex items-center justify-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
+               fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15 17h5l-1.405-1.405A2.032 2.032 
+                 0 0118 14.158V11a6.002 6.002 
+                 0 00-4-5.659V5a2 2 0 
+                 10-4 0v.341C7.67 6.165 
+                 6 8.388 6 11v3.159c0 .538-.214 
+                 1.055-.595 1.436L4 17h5m6 0v1a3 
+                 3 0 11-6 0v-1m6 0H9" />
+          </svg>
+          <span id="notifDotMobile" class="absolute top-2 right-2 block h-2.5 w-2.5 rounded-full bg-red-500"></span>
+        </button>
+
+        <!-- Dropdown -->
+        <div id="notifDropdownMobile" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+          <div class="px-4 py-2 border-b flex justify-between items-center">
+            <span class="font-semibold text-gray-700">Notifications</span>
+            <a href="/Features/Notifications/Customer/index.html" class="text-sm text-blue-600 hover:underline">View All</a>
+          </div>
+          <div id="notifListMobile" class="divide-y max-h-72 overflow-y-auto"></div>
+          <div class="px-4 py-2 border-t text-center">
+            <a href="/Features/Notifications/Customer/index.html" class="text-sm text-gray-500 hover:underline">Go to Notifications</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account -->
+      <a href="/Features/Dashboard/Customer/index.html"
+        class="px-4 py-2 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-700 transition">
+        Account
+      </a>
+
+      <!-- Logout -->
+      <button onclick="localStorage.setItem('is_customer_logged_in',false);window.location.href='/Features/LandingPages/Customer/index.html';" 
+        class="px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition">
+        Logout
+      </button>
+    </div>
+  </nav>
+
+<!-- ✅ Booking Modal -->
+<div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-[1000] p-2 sm:p-4 overflow-y-auto">
+
+  <!-- Modal Body -->
+  <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-4 sm:p-6 relative max-h-[90vh] flex flex-col overflow-hidden">
+
+    <!-- Close Button -->
+    <button id="closeModal" 
+      class="absolute top-2 right-2 sm:top-3 sm:right-3 text-gray-600 hover:text-red-500 text-2xl">&times;
+    </button>
+
+    <!-- Heading -->
+    <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center bg-gradient-to-r from-yellow-600 to-red-600 bg-clip-text text-transparent">
+      Book Your Stay
+    </h2>
+
+    <!-- ✅ Scrollable Rooms Container -->
+    <div id="roomsContainer" class="flex-1 overflow-y-auto pr-1 space-y-4 sm:space-y-6">
+      <div class="room-card border p-4 sm:p-5 rounded-lg sm:rounded-xl bg-gray-50 shadow-sm">
+
+        <!-- Row 1: Room No + Room Type -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-4 gap-2 sm:gap-0">
+          <h3 class="room-title font-semibold text-base sm:text-lg">Room 1</h3>
+          <select class="border rounded-lg p-2 w-full sm:w-auto focus:ring-2 focus:ring-yellow-500">
+            <option>Deluxe Room</option>
+            <option>Executive Suite</option>
+            <option>Presidential Suite</option>
+          </select>
+        </div>
+
+        <!-- Row 2: Adults + Children -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-4">
+          <div class="flex items-center justify-between">
+            <label class="text-sm sm:text-base font-medium">Adults</label>
+            <div class="flex items-center space-x-3">
+              <button class="decrease w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-lg">−</button>
+              <input type="number" value="1" min="1" class="w-12 text-center border rounded-md p-1">
+              <button class="increase w-8 h-8 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center text-lg">+</button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <label class="text-sm sm:text-base font-medium">Children</label>
+            <div class="flex items-center space-x-3">
+              <button class="decrease w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-lg">−</button>
+              <input type="number" value="0" min="0" class="w-12 text-center border rounded-md p-1">
+              <button class="increase w-8 h-8 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center text-lg">+</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="remove-room mt-2 text-xs sm:text-sm text-red-500 hover:underline">Remove Room</button>
+      </div>
+    </div>
+
+    <!-- ✅ Global Dates (static, not scrolling with rooms) -->
+    <div id="globalDates" class="mt-4 sm:mt-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-2">
+        <div>
+          <label class="block text-sm sm:text-base font-medium mb-1">Check-in (All Rooms)</label>
+          <input type="date" id="globalCheckIn" class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
+        </div>
+        <div>
+          <label class="block text-sm sm:text-base font-medium mb-1">Check-out (All Rooms)</label>
+          <input type="date" id="globalCheckOut" class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
+        </div>
+      </div>
+      <p id="globalDateError" class="text-red-500 text-xs sm:text-sm mb-2"></p>
+    </div>
+
+    <!-- Add More Rooms -->
+    <button id="addRoomBtn" 
+      class="text-yellow-700 text-sm sm:text-base font-medium hover:underline mb-4 sm:mb-6">
+      + Add More Rooms
+    </button>
+
+    <!-- Confirm -->
+    <button onclick="window.location.href='/Features/BookingManagement/Customer/BookingRooms/index.html'" 
+      class="w-full py-2 sm:py-3 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg hover:opacity-90 transition text-sm sm:text-base">
+      Proceed Booking
+    </button>
+  </div>
+</div>
+
+
+  <!-- ✅ Scripts -->
+  <script>
+    const latestNotifs = [
+      { type: "booking", msg: "Your booking is confirmed!", time: "2m ago" },
+      { type: "offer", msg: "New seasonal discount available!", time: "15m ago" },
+      { type: "update", msg: "Check-in policy updated", time: "1h ago" }
+    ];
+
+    function notifIcon(type) {
+      switch(type) {
+        case "booking": return `<i class="fas fa-calendar-check text-green-600"></i>`;
+        case "offer": return `<i class="fas fa-tag text-blue-600"></i>`;
+        case "update": return `<i class="fas fa-info-circle text-yellow-500"></i>`;
+        default: return `<i class="fas fa-bell text-gray-500"></i>`;
+      }
+    }
+
+    function renderNotifs(listId) {
+      const list = document.getElementById(listId);
+      if (!list) return;
+      list.innerHTML = latestNotifs.map(n => `
+        <div class="px-4 py-3 flex items-start space-x-3 hover:bg-gray-50">
+          <div>${notifIcon(n.type)}</div>
+          <div class="flex-1">
+            <p class="text-sm text-gray-700">${n.msg}</p>
+            <span class="text-xs text-gray-400">${n.time}</span>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderNotifs("notifList");
+      renderNotifs("notifListMobile");
+
+      document.getElementById("notifDot").classList.remove("hidden");
+      document.getElementById("notifDotMobile").classList.remove("hidden");
+
+      const toggleDropdown = (btnId, dropId) => {
+        const btn = document.getElementById(btnId);
+        const drop = document.getElementById(dropId);
+        if (btn && drop) {
+          btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            drop.classList.toggle("hidden");
+          });
+          document.addEventListener("click", (e) => {
+            if (!btn.contains(e.target) && !drop.contains(e.target)) {
+              drop.classList.add("hidden");
+            }
+          });
+        }
+      };
+
+      toggleDropdown("notifBtn", "notifDropdown");
+      toggleDropdown("notifBtnMobile", "notifDropdownMobile");
+    });
+  </script>
+</body>
+</html>

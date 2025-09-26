@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Sidebar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="flex min-h-screen">
+    <!-- ✅ Sidebar -->
+    <aside class="w-64 bg-white shadow-lg p-6 h-screen">
+        <nav class="space-y-4 text-gray-800 font-medium">
+            <a href="/Features/Dashboard/Admin/index.html" data-page="dashboard"
+               class="flex items-center gap-3 py-2 border-b hover:text-yellow-600 transition-colors">
+               <i class="fas fa-gauge-high w-5"></i>Dashboard</a>
+            
+            <a href="/Features/BookingManagement/Admin/Bookings/index.html" data-page="booking"
+               class="flex items-center gap-3 py-2 border-b hover:text-yellow-600 transition-colors">
+               <i class="fas fa-calendar-check w-5"></i>Bookings</a>
+            
+            <a href="/Features/RoomManagement/Admin/AdminRoomManagement/index.html" data-page="room"
+               class="flex items-center gap-3 py-2 border-b hover:text-yellow-600 transition-colors">
+               <i class="fas fa-bed w-5"></i>Rooms</a>
+            
+            <a href="/Features/UserManagement/Admin/AdminCustomerManagement/index.html" data-page="customer"
+               class="flex items-center gap-3 py-2 border-b hover:text-yellow-600 transition-colors">
+               <i class="fas fa-users w-5"></i>Customers</a>
+            
+            <a href="/Features/IssueManagement/Admin/AdminIssueManagement/index.html" data-page="issue"
+               class="flex items-center gap-3 py-2 border-b hover:text-yellow-600 transition-colors">
+               <i class="fas fa-triangle-exclamation w-5"></i>Issues</a>
+            
+            <a href="/Features/RefundManagement/Admin/AdminRefundManagement/index.html" data-page="refund"
+               class="flex items-center gap-3 py-2 border-b hover:text-yellow-600 transition-colors">
+               <i class="fas fa-money-bill-transfer w-5"></i>Refunds</a>
+            
+            <a href="/Features/ContentManagement/Admin/index.html" data-page="content"
+               class="flex items-center gap-3 py-2 border-b hover:text-yellow-600 transition-colors">
+               <i class="fas fa-pen-to-square w-5"></i>Content</a>
+            
+            <a href="/Features/BackupRecovery/index.html" data-page="backup"
+               class="flex items-center gap-3 py-2 border-b hover:text-yellow-600 transition-colors">
+               <i class="fas fa-database w-5"></i>Backup</a>
+            
+            <a href="/Features/ReportManagement/Admin/ReportSections/index.html" data-page="report"
+               class="flex items-center gap-3 py-2 border-b hover:text-yellow-600 transition-colors">
+               <i class="fas fa-chart-line w-5"></i>Reports</a>
+        </nav>
+    </aside>
+</body>
+</html>

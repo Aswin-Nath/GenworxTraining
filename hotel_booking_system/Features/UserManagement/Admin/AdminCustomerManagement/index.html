@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - Customer Management</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+
+  <!-- ✅ Navbar -->
+  <div id="navbar"></div>
+
+  <!-- ✅ Sidebar -->
+  <div id="sidebar" class="fixed top-16 left-0 w-64 h-screen shadow-lg bg-white"></div>
+
+  <!-- ✅ Main Content -->
+<main class="ml-64 pt-20 p-8 min-h-screen overflow-y-auto bg-gray-50">
+
+    <!-- Title -->
+    <div class="mb-6">
+      <h2 class="text-2xl font-bold text-gray-800">Customer Management</h2>
+    </div>
+
+<!-- ✅ Compact Account Filter -->
+<div class="bg-white shadow-md border border-gray-200 rounded-lg p-3 mb-4">
+
+  <div class="flex flex-wrap items-end gap-3">
+
+    <!-- Account Status -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Account Status</label>
+      <select id="filterStatus" class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <option value="All">All</option>
+        <option value="Active">Active</option>
+        <option value="Blocked">Blocked</option>
+      </select>
+    </div>
+
+    <!-- Loyalty Tier -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Loyalty Tier</label>
+      <select id="filterLoyalty" class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <option value="All">All</option>
+        <option value="Bronze">Bronze</option>
+        <option value="Silver">Silver</option>
+        <option value="Gold">Gold</option>
+        <option value="Platinum">Platinum</option>
+      </select>
+    </div>
+
+    <!-- Total Spend -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Total Spend (₹)</label>
+      <div class="flex items-center gap-2">
+        <input type="number" id="minSpend" placeholder="Min ₹" class="w-24 p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <span class="text-gray-400">—</span>
+        <input type="number" id="maxSpend" placeholder="Max ₹" class="w-24 p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+      </div>
+    </div>
+
+    <!-- Stay Duration -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Stay Duration</label>
+      <div class="flex items-center gap-2">
+        <input type="date" id="checkInDate" class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <span class="text-gray-400">—</span>
+        <input type="date" id="checkOutDate" class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="ml-auto flex gap-2">
+      <button class="px-3 py-2 bg-gray-100 text-gray-700 text-sm rounded-md hover:bg-gray-200 flex items-center gap-1">
+        <span class="material-icons text-xs">refresh</span>
+        Reset
+      </button>
+      <button class="px-4 py-2 bg-yellow-600 text-white text-sm rounded-md hover:bg-yellow-700 flex items-center gap-1">
+        <span class="material-icons text-xs">filter_alt</span>
+        Apply
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+    <!-- ✅ Table -->
+    <div class="overflow-x-auto bg-white shadow-lg border border-gray-200 rounded-xl">
+      <table class="w-full text-sm">
+        <thead class="bg-yellow-50 border-b border-gray-300">
+          <tr>
+            <th class="p-3 text-left font-semibold text-gray-700">Customer ID</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Name</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Phone Number</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Email</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Last Check-out</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Is Currently Staying</th>
+            <th class="p-3 text-center font-semibold text-gray-700">Action</th>
+          </tr>
+        </thead>
+        <tbody id="customerTableBody" class="divide-y divide-gray-200">
+
+          <!-- Row 1 -->
+          <tr class="hover:bg-gray-50">
+            <td class="p-3">#C1001</td>
+            <td class="p-3">Aswin</td>
+            <td class="p-3">+91 9876543210</td>
+            <td class="p-3">alice@example.com</td>
+            <td class="p-3">20 Sep 2025</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">Yes</span></td>
+            <td class="p-3 text-center flex justify-center gap-2">
+<button onclick="window.location.href='/Features/UserManagement/Admin/AdminCustomerDetails/index.html'" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm">Block</button>
+            </td>
+          </tr>
+
+          <!-- Row 2 -->
+          <tr class="hover:bg-gray-50">
+            <td class="p-3">#C1002</td>
+            <td class="p-3">Aswinnath</td>
+            <td class="p-3">+91 9876543211</td>
+            <td class="p-3">bob@example.com</td>
+            <td class="p-3">12 Sep 2025</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium">No</span></td>
+            <td class="p-3 text-center flex justify-center gap-2">
+<button onclick="window.location.href='/Features/UserManagement/Admin/AdminCustomerDetails/index.html'" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button class="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600 text-sm">UnBlock</button>
+            </td>
+          </tr>
+
+          <!-- Row 3 -->
+          <tr class="hover:bg-gray-50">
+            <td class="p-3">#C1003</td>
+            <td class="p-3">Ronaldo</td>
+            <td class="p-3">+91 9876543212</td>
+            <td class="p-3">charlie@example.com</td>
+            <td class="p-3">06 Sep 2025</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium">No</span></td>
+            <td class="p-3 text-center flex justify-center gap-2">
+<button onclick="window.location.href='/Features/UserManagement/Admin/AdminCustomerDetails/index.html'" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm">Block</button>
+            </td>
+          </tr>
+                    <!-- Row 1 -->
+          <tr class="hover:bg-gray-50">
+            <td class="p-3">#C1001</td>
+            <td class="p-3">Messi</td>
+            <td class="p-3">+91 9876543210</td>
+            <td class="p-3">alice@example.com</td>
+            <td class="p-3">20 Sep 2025</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">Yes</span></td>
+            <td class="p-3 text-center flex justify-center gap-2">
+<button onclick="window.location.href='/Features/UserManagement/Admin/AdminCustomerDetails/index.html'" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm">Block</button>
+            </td>
+          </tr>
+
+          <!-- Row 2 -->
+          <tr class="hover:bg-gray-50">
+            <td class="p-3">#C1002</td>
+            <td class="p-3">Dhoni</td>
+            <td class="p-3">+91 9876543211</td>
+            <td class="p-3">bob@example.com</td>
+            <td class="p-3">12 Sep 2025</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium">No</span></td>
+            <td class="p-3 text-center flex justify-center gap-2">
+<button onclick="window.location.href='/Features/UserManagement/Admin/AdminCustomerDetails/index.html'" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button class="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600 text-sm">UnBlock</button>
+            </td>
+          </tr>
+
+          <!-- Row 3 -->
+          <tr class="hover:bg-gray-50">
+            <td class="p-3">#C1003</td>
+            <td class="p-3">Kohli</td>
+            <td class="p-3">+91 9876543212</td>
+            <td class="p-3">charlie@example.com</td>
+            <td class="p-3">06 Sep 2025</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium">No</span></td>
+            <td class="p-3 text-center flex justify-center gap-2">
+<button onclick="window.location.href='/Features/UserManagement/Admin/AdminCustomerDetails/index.html'" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm">Block</button>
+            </td>
+          </tr>
+                    <!-- Row 1 -->
+          <tr class="hover:bg-gray-50">
+            <td class="p-3">#C1001</td>
+            <td class="p-3">Michael Jordan</td>
+            <td class="p-3">+91 9876543210</td>
+            <td class="p-3">alice@example.com</td>
+            <td class="p-3">20 Sep 2025</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">Yes</span></td>
+            <td class="p-3 text-center flex justify-center gap-2">
+<button onclick="window.location.href='/Features/UserManagement/Admin/AdminCustomerDetails/index.html'" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm">Block</button>
+            </td>
+          </tr>
+
+          <!-- Row 2 -->
+          <tr class="hover:bg-gray-50">
+            <td class="p-3">#C1002</td>
+            <td class="p-3">Lebron James</td>
+            <td class="p-3">+91 9876543211</td>
+            <td class="p-3">bob@example.com</td>
+            <td class="p-3">12 Sep 2025</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium">No</span></td>
+            <td class="p-3 text-center flex justify-center gap-2">
+<button onclick="window.location.href='/Features/UserManagement/Admin/AdminCustomerDetails/index.html'" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button class="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600 text-sm">UnBlock</button>
+            </td>
+          </tr>
+
+          <!-- Row 3 -->
+          <tr class="hover:bg-gray-50">
+            <td class="p-3">#C1003</td>
+            <td class="p-3">Charlie Davis</td>
+            <td class="p-3">+91 9876543212</td>
+            <td class="p-3">charlie@example.com</td>
+            <td class="p-3">06 Sep 2025</td>
+            <td class="p-3"><span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium">No</span></td>
+            <td class="p-3 text-center flex justify-center gap-2">
+<button onclick="window.location.href='/Features/UserManagement/Admin/AdminCustomerDetails/index.html'" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
+              <button class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm">Block</button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ✅ Pagination -->
+    <nav class="flex flex-col md:flex-row justify-between items-center mt-6 space-y-4 md:space-y-0">
+      <!-- Prev -->
+      <button onclick="prevPage()" class="px-5 py-2 flex items-center space-x-2 border rounded-full bg-gray-200 hover:bg-gray-300">
+        <span class="material-icons text-sm">chevron_left</span>
+        <span>Prev</span>
+      </button>
+
+      <!-- Page Numbers -->
+      <ul class="flex space-x-2">
+        <li><button onclick="showPage(1)" class="px-4 py-2 rounded-full bg-yellow-500 text-white shadow">1</button></li>
+        <li><button onclick="showPage(2)" class="px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">2</button></li>
+        <li><button onclick="showPage(3)" class="px-4 py-2 rounded-full bg-gray-200 hover:bg-yellow-100">3</button></li>
+      </ul>
+
+      <!-- Next -->
+      <button onclick="nextPage()" class="px-5 py-2 flex items-center space-x-2 border rounded-full bg-gray-200 hover:bg-gray-300">
+        <span>Next</span>
+        <span class="material-icons text-sm">chevron_right</span>
+      </button>
+
+      <!-- Jumper -->
+      <div class="flex items-center space-x-2">
+        <label for="pageInput" class="text-sm text-gray-600 font-medium">Jump to:</label>
+        <input id="pageInput" type="number" min="1" placeholder="Page #"
+          class="w-20 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 shadow-sm">
+        <button onclick="jumpToPage()" class="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow flex items-center space-x-1">
+          <span class="material-icons text-sm">login</span>
+          <span>Go</span>
+        </button>
+      </div>
+    </nav>
+  </main>
+
+
+<script src="./script.js"></script>
+</body>
+</html>

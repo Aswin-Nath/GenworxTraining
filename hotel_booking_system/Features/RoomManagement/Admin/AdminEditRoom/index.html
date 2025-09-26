@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - Edit Room (LocalStorage)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    /* Utility styles */
+    .preview-btn {
+      position: absolute;
+      top: 0.25rem;
+      right: 0.25rem;
+      background-color: #ef4444;
+      color: white;
+      border-radius: 9999px;
+      padding: 0.25rem;
+      font-size: 0.75rem;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+  <!-- ✅ Navbar -->
+  <div id="navbar"></div>
+
+  <!-- ✅ Sidebar -->
+  <div id="sidebar" class="fixed top-16 left-0 w-64 h-screen shadow-lg bg-white"></div>
+
+  <!-- ✅ Main Content -->
+  <main class="ml-64 pt-16 p-8 h-screen overflow-y-auto">
+
+    <!-- Page Header -->
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-bold text-gray-800">Edit Room</h2>
+      <button onclick="goBack()" 
+        class="flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg shadow">
+        <span class="material-icons">arrow_back</span> Back
+      </button>
+    </div>
+
+    <!-- ✅ Edit Room Form -->
+    <section class="bg-white rounded-2xl border border-gray-200 p-6 shadow-md space-y-6">
+      <form id="editRoomForm" class="space-y-6">
+
+        <!-- Room number (read-only) -->
+<div>
+  <label class="block text-gray-700 font-medium mb-1">Room Number:</label>
+  <input id="roomNumber" type="text" class="w-full border p-3 rounded-lg bg-gray-100" readonly>
+</div>
+
+<!-- Room Type -->
+<div>
+  <label class="block text-gray-700 font-medium mb-1">Room Type:<span class="text-red-500">*</span></label>
+  <select id="roomType" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
+    <option>Deluxe</option>
+    <option>Suite</option>
+    <option>Standard</option>
+    <option>Executive</option>
+    <option>Presidential</option>
+    <option>Family</option>
+    <option>Villa</option>
+    <option>Penthouse</option>
+    <option>Studio</option>
+  </select>
+</div>
+
+<!-- Price / Night -->
+<div>
+  <label class="block text-gray-700 font-medium mb-1">Price / Night:<span class="text-red-500">*</span></label>
+  <input id="roomPrice" type="number" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
+</div>
+
+<!-- Capacity -->
+<div class="grid grid-cols-2 gap-4">
+  <div>
+    <label class="block text-gray-700 font-medium mb-1">Adults Capacity:<span class="text-red-500">*</span></label>
+    <input id="roomAdults" type="number" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
+  </div>
+  <div>
+    <label class="block text-gray-700 font-medium mb-1">Children Capacity:<span class="text-red-500">*</span></label>
+    <input id="roomChildren" type="number" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500">
+  </div>
+</div>
+
+<!-- Room Description -->
+<div>
+  <label class="block text-gray-700 font-medium mb-1">Room Description:<span class="text-red-500">*</span></label>
+  <textarea id="roomDesc" maxlength="1000" rows="5" 
+    class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500"></textarea>
+  <p id="descCount" class="text-sm text-gray-500">0 / 1000</p>
+</div>
+
+
+        <!-- Room Amenities -->
+        <div>
+          <label class="block text-gray-700 font-medium mb-2">Room Amenities:</label>
+          <div id="amenitiesList" class="grid grid-cols-2 md:grid-cols-3 gap-2">
+            <!-- checkboxes injected -->
+          </div>
+        </div>
+
+        <!-- Room Images -->
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Room Images:</label>
+          <input type="file" id="roomImages" multiple accept="image/*" class="hidden" onchange="previewImages(event)">
+          <div onclick="document.getElementById('roomImages').click()" 
+            class="border-dashed border-2 border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:bg-gray-50">
+            <span class="material-icons text-4xl text-orange-500">add_photo_alternate</span>
+            <p class="text-gray-500 text-sm">Click to upload new images</p>
+          </div>
+          <div id="imagePreview" class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4"></div>
+        </div>
+
+        <!-- Room Videos -->
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">Room Videos:</label>
+          <input type="file" id="roomVideos" multiple accept="video/*" class="hidden" onchange="previewVideos(event)">
+          <div onclick="document.getElementById('roomVideos').click()" 
+            class="border-dashed border-2 border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:bg-gray-50">
+            <span class="material-icons text-4xl text-orange-500">video_library</span>
+            <p class="text-gray-500 text-sm">Click to upload new videos</p>
+          </div>
+          <div id="videoPreview" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4"></div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-end gap-4 pt-4">
+          <button type="button" onclick="goBack()" class="px-5 py-2 bg-gray-400 hover:bg-gray-500 text-white rounded-lg shadow">Back</button>
+          <button type="button" onclick="confirmSave()" class="px-5 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow">Save Changes</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- ✅ Save Confirmation Modal -->
+  <div id="saveConfirmModal" class="fixed inset-0 bg-black bg-opacity-50 items-center justify-center hidden z-50">
+    <div class="bg-white w-full max-w-md rounded-2xl shadow-lg p-6 space-y-6 text-center">
+      <h2 class="text-xl font-bold text-gray-800">Confirm Save</h2>
+      <p class="text-gray-600">Are you sure you want to save changes to this room?</p>
+      <div class="flex justify-center gap-4">
+        <button onclick="closeSaveModal()" class="px-5 py-2 bg-gray-400 hover:bg-gray-500 text-white rounded-lg shadow">Cancel</button>
+        <button onclick="saveRoom()" class="px-5 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow">Yes, Save</button>
+      </div>
+    </div>
+  </div>
+
+
+<script src="./script.js"></script>
+</body>
+</html>

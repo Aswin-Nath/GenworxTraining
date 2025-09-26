@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Navbar with Notifications Floater</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+  <!-- ✅ Navbar -->
+  <header class="flex justify-between items-center bg-white shadow-md px-4 sm:px-6 py-2 fixed top-0 left-0 w-full z-50">
+    <!-- Logo + Title -->
+    <a class="flex items-center space-x-2">
+      <img src="/assets/Hotel_logo.png" 
+           alt="Hotel Logo" 
+           class="h-8 sm:h-10 rounded-full border-2 border-yellow-600 p-1">
+      <h1 class="text-lg sm:text-xl font-bold text-yellow-700">LuxuryStay</h1>
+    </a>
+
+    <!-- Desktop Buttons -->
+    <div class="hidden md:flex items-center space-x-6 text-sm sm:text-base">
+
+      <!-- 🔔 Notification Dropdown -->
+      <div class="relative">
+        <button id="notifBtn" class="relative focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" 
+               class="h-6 w-6 text-gray-600 hover:text-yellow-600 transition" 
+               fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 
+                     0118 14.158V11a6.002 6.002 0 
+                     00-4-5.659V5a2 2 0 
+                     10-4 0v.341C7.67 6.165 6 8.388 
+                     6 11v3.159c0 .538-.214 1.055-.595 
+                     1.436L4 17h5m6 0v1a3 3 0 
+                     11-6 0v-1m6 0H9" />
+          </svg>
+          <!-- Red Dot -->
+          <span id="notifDot" class="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-red-500"></span>
+        </button>
+
+        <!-- ✅ Floater Panel -->
+        <div id="notifDropdown" 
+             class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+          
+          <!-- Header -->
+          <div class="px-4 py-2 border-b flex justify-between items-center">
+            <span class="font-semibold text-gray-700">Notifications</span>
+            <a href="/Features/Notifications/Admin/index.html" 
+               class="text-sm text-blue-600 hover:underline">
+               View All
+            </a>
+          </div>
+
+          <!-- List -->
+          <div id="notifList" class="divide-y max-h-72 overflow-y-auto"></div>
+
+          <!-- Footer -->
+          <div class="px-4 py-2 border-t text-center">
+            <a href="/Features/Notifications/Admin/index.html" 
+               class="text-sm text-gray-500 hover:underline">
+               Go to Notifications
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 🚪 Logout Button -->
+      <button onclick="localStorage.setItem('is_customer_logged_in',false);window.location.href = '/Features/LandingPages/Customer/index.html';" 
+        class="px-4 py-2 bg-red-600 text-center text-white font-medium rounded-lg hover:bg-red-700 transition">
+        Logout
+      </button>
+    </div>
+  </header>
+
+  <!-- ✅ Script -->
+  <script>
+    // Sample notifications
+    const latestNotifs = [
+      { type: "booking", msg: "New booking: Room 201 confirmed", time: "2m ago" },
+      { type: "issue", msg: "Issue reported in Room 105", time: "30m ago" },
+      { type: "refund", msg: "Refund processed for BK#1234", time: "1h ago" }
+    ];
+
+    function notifIcon(type) {
+      switch(type) {
+        case "booking": return `<i class="fas fa-calendar-check text-green-600"></i>`;
+        case "issue": return `<i class="fas fa-exclamation-triangle text-red-600"></i>`;
+        case "refund": return `<i class="fas fa-money-bill-wave text-yellow-500"></i>`;
+        default: return `<i class="fas fa-bell text-gray-500"></i>`;
+      }
+    }
+
+    function renderNotifs() {
+      const list = document.getElementById("notifList");
+      if (!list) return;
+      list.innerHTML = latestNotifs.map(n => `
+        <div class="px-4 py-3 flex items-start space-x-3 hover:bg-gray-50">
+          <div>${notifIcon(n.type)}</div>
+          <div class="flex-1">
+            <p class="text-sm text-gray-700">${n.msg}</p>
+            <span class="text-xs text-gray-400">${n.time}</span>
+          </div>
+        </div>
+      `).join("");
+      document.getElementById("notifDot").classList.remove("hidden");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderNotifs();
+      const btn = document.getElementById("notifBtn");
+      const drop = document.getElementById("notifDropdown");
+      
+      if (btn && drop) {
+        btn.addEventListener("click", () => {
+          drop.classList.toggle("hidden");
+        });
+
+        // Close on outside click
+        document.addEventListener("click", (e) => {
+          if (!btn.contains(e.target) && !drop.contains(e.target)) {
+            drop.classList.add("hidden");
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

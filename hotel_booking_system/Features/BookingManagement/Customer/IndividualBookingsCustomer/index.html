@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - Stay Details</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+  <div id="navbar"></div>
+
+  <!-- Layout with responsive sidebar -->
+  <div class="flex flex-col lg:flex-row max-w-7xl mx-auto w-full py-4 sm:py-6 lg:py-8 px-4 lg:px-8 gap-4 lg:gap-8 mt-16 lg:mt-20">
+    
+    <!-- Responsive Sidebar -->
+    <aside class="w-full lg:w-64 bg-white shadow-lg rounded-2xl p-4 md:p-6 h-fit overflow-x-auto lg:overflow-visible">
+      <nav class="flex lg:block space-x-4 lg:space-x-0 lg:space-y-4 text-gray-700 font-medium text-sm md:text-base">
+        <a href="/Features/Dashboard/Customer/index.html" data-page="dashboard" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Overview</a>
+        <a href="/Features/BookingManagement/Customer/MyBookings/index.html" data-page="booking" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Bookings</a>
+        <a href="/Features/UserManagement/Customer/SavedRoomsCustomer/index.html" data-page="saved" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Wishlist</a>
+        <a href="/Features/IssueManagement/Customer/MyIssues/index.html" data-page="issues" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Issues</a>
+        <a href="/Features/RefundManagement/Customer/MyRefunds/index.html" data-page="refunds" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Refunds</a>
+        <a href="/Features/UserManagement/Customer/ProfileDisplayCustomer/index.html" data-page="profile" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Profile</a>
+        <a href="/Features/ReportManagement/Customer/ReportSections/index.html" data-page="report" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Reports</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 space-y-6 sm:space-y-8 lg:space-y-12">
+      <!-- Page Header -->
+      <div class="relative rounded-2xl border-2 border-red-400 bg-[#fdfaf4] py-6 sm:py-8 text-center shadow">
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl text-gray-800 font-bold">Stay Details</h2>
+        <p class="text-sm sm:text-base text-gray-500 mt-2">Complete overview of your stay including booking, issues, and invoice</p>
+      </div>
+
+      <!-- ✅ Back Button -->
+      <div class="flex justify-start">
+        <button onclick="window.history.back()" 
+          class="flex items-center gap-2 bg-gradient-to-r from-yellow-500 to-pink-500 text-white px-5 py-2 rounded-lg shadow hover:opacity-90">
+          <span class="material-icons text-sm">arrow_back</span> Back
+        </button>
+      </div>
+
+      <!-- Booking + Hotel Info -->
+      <section class="grid gap-4 sm:gap-6">
+        <div class="bg-white rounded-2xl border-2 border-yellow-400 p-4 sm:p-6 shadow-sm">
+          <h3 class="text-lg font-semibold text-yellow-700 mb-4">Booking Details</h3>
+          <ul class="space-y-3 text-gray-700">
+            <li><span class="font-medium">Booking ID: </span>1001</li>
+            <li><span class="font-medium">Rooms:</span> 1, 2, 3, 4</li>
+            <li><span class="font-medium">Guests:</span> 14 People</li>
+            <li><span class="font-medium">Check-in:</span> 21 Sept 2025, 2:00 PM</li>
+            <li><span class="font-medium">Check-out:</span> 25 Sept 2025, 12:00 PM</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Guest Information -->
+      <section class="bg-white rounded-2xl border-2 border-yellow-400 p-4 sm:p-6 shadow-sm">
+        <h3 class="text-base sm:text-lg font-semibold text-yellow-700 mb-4">Guest Information</h3>
+        <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+          <div class="p-4 rounded-xl bg-gray-50 border">
+            <p class="text-sm text-gray-500">Lead Guest</p>
+            <p class="text-lg font-semibold">Arjun Kumar</p>
+            <p class="text-gray-600">arjun.kumar@example.com</p>
+            <p class="text-gray-600">+91 99887 77665</p>
+          </div>
+          <div class="p-4 rounded-xl bg-gray-50 border">
+            <p class="text-sm text-gray-500">Special Requests</p>
+            <p class="text-lg font-semibold">Vegetarian Meals, Late Check-in, Extra Pillows</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Issues -->
+      <section class="bg-white rounded-2xl border-2 border-pink-400 p-4 sm:p-6 shadow-sm">
+        <h3 class="text-lg font-semibold text-yellow-700 mb-4">Reported Issues</h3>
+        <div class="space-y-3">
+          <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+            <span>Room Service Delay</span>
+            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">Resolved</span>
+          </div>
+          <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+            <span>AC Not Working</span>
+            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">Pending</span>
+          </div>
+          <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+            <span>Noisy Corridor</span>
+            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Reported</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Invoice -->
+      <section class="bg-white rounded-2xl border-2 border-yellow-400 p-4 sm:p-6 shadow-sm">
+        <h3 class="text-base sm:text-lg font-semibold text-yellow-700 mb-4">Invoice of the Stay</h3>
+        <div class="overflow-x-auto -mx-4 sm:mx-0">
+          <table class="w-full border border-gray-200 rounded-lg text-sm sm:text-base">
+            <thead class="bg-yellow-100">
+              <tr>
+                <th class="px-4 py-2 text-left">Room</th>
+                <th class="px-4 py-2 text-left">Rent</th>
+                <th class="px-4 py-2 text-left">Tax</th>
+                <th class="px-4 py-2 text-left">Amount</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y">
+              <tr><td class="px-4 py-2">Room 1</td><td>₹5000</td><td>₹500</td><td>₹5500</td></tr>
+              <tr><td class="px-4 py-2">Room 2</td><td>₹4000</td><td>₹400</td><td>₹4400</td></tr>
+              <tr><td class="px-4 py-2">Room 3</td><td>₹4500</td><td>₹450</td><td>₹4950</td></tr>
+              <tr><td class="px-4 py-2">Room 4</td><td>₹6000</td><td>₹600</td><td>₹6600</td></tr>
+              <tr class="bg-yellow-50 font-semibold">
+                <td colspan="3" class="px-4 py-2 text-right">Total</td>
+                <td class="px-4 py-2">₹21,450</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="mt-4 flex justify-end">
+          <button class="w-full sm:w-auto bg-gradient-to-r from-yellow-500 to-pink-500 text-white px-4 sm:px-6 py-2 rounded-lg shadow hover:opacity-90">
+            Download Invoice
+          </button>
+        </div>
+      </section>
+
+      <!-- Payment -->
+      <section class="bg-white rounded-2xl border-2 border-pink-400 p-4 sm:p-6 shadow-sm">
+        <h3 class="text-lg font-semibold text-yellow-700 mb-4">Payment Information</h3>
+        <ul class="space-y-2 text-gray-700">
+          <li><span class="font-medium">Payment Method:</span> Credit Card (**** 2345)</li>
+          <li><span class="font-medium">Transaction ID:</span> TXN123456789</li>
+          <li><span class="font-medium">Payment Date:</span> 15 Sept 2025</li>
+        </ul>
+      </section>
+
+      <!-- Review Section -->
+      <section class="bg-white rounded-2xl border-2 border-yellow-400 p-4 sm:p-6 shadow-sm">
+        <h3 class="text-lg font-semibold text-yellow-700 mb-4">Write a Review</h3>
+        <form id="reviewForm" class="space-y-4">
+          <!-- Rating Input -->
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-700">Your Rating</label>
+            <div class="flex gap-2">
+              <input type="radio" name="rating" value="5" id="star5" class="hidden peer" required>
+              <label for="star5" class="text-2xl cursor-pointer text-gray-300 hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
+              <input type="radio" name="rating" value="4" id="star4" class="hidden peer">
+              <label for="star4" class="text-2xl cursor-pointer text-gray-300 hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
+              <input type="radio" name="rating" value="3" id="star3" class="hidden peer">
+              <label for="star3" class="text-2xl cursor-pointer text-gray-300 hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
+              <input type="radio" name="rating" value="2" id="star2" class="hidden peer">
+              <label for="star2" class="text-2xl cursor-pointer text-gray-300 hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
+              <input type="radio" name="rating" value="1" id="star1" class="hidden peer">
+              <label for="star1" class="text-2xl cursor-pointer text-gray-300 hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
+            </div>
+          </div>
+          
+          <div>
+            <textarea id="reviewText" 
+                      maxlength="200" 
+                      rows="3" 
+                      placeholder="Share your experience (max 200 characters)"
+                      class="w-full border border-gray-300 rounded-lg p-3 
+                             focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 
+                             resize-none"></textarea>
+            <p class="text-sm text-gray-500 text-right mt-1">
+              <span id="charCount">0</span>/200
+            </p>
+          </div>
+          <div class="flex justify-end">
+            <button type="submit"
+                    class="bg-gradient-to-r from-yellow-500 to-pink-500 text-white px-6 py-2 rounded-lg shadow hover:opacity-90">
+              Submit Review
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" 
+       class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-full opacity-0 transition-all duration-300">
+    Review added! Thank you for your feedback.
+  </div>
+
+  <!-- ✅ Footer -->
+  <div id="footer"></div>
+
+
+
+  
+<script src="./script.js"></script>
+</body>
+</html>

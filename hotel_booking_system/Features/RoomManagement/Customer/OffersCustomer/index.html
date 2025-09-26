@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - Offers Details</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+  <!-- ✅ Navbar -->
+  <div id="navbar"></div>
+
+  <!-- ✅ Offers Details -->
+  <section class="px-4 sm:px-6 max-w-7xl mx-auto space-y-12 sm:space-y-16 py-6">
+
+    <!-- Header -->
+    <header class="relative rounded-xl bg-gradient-to-r from-yellow-400 via-red-400 to-red-500 py-12 sm:py-20 text-center text-white shadow-md sm:mt-20 overflow-hidden">
+      <div class="relative z-10">
+        <h1 class="text-3xl sm:text-5xl font-extrabold drop-shadow-lg">Exclusive Offers</h1>
+        <p class="text-base sm:text-lg mt-3 opacity-95">Special packages curated just for you</p>
+
+        <div class="mt-6 flex flex-wrap justify-center gap-3 sm:space-x-4">
+          <span class="bg-white text-yellow-600 px-4 py-2 rounded-full text-xs sm:text-sm font-medium shadow">✨ Limited Time</span>
+          <span class="bg-white text-red-600 px-4 py-2 rounded-full text-xs sm:text-sm font-medium shadow">🔥 Best Deals</span>
+        </div>
+      </div>
+    </header>
+  
+<!-- ✅ Compact Advanced Filter Section -->
+<div class="bg-white shadow-md border border-gray-200 rounded-lg mt-0 p-3 mb-4">
+  <div class="flex flex-wrap items-end gap-3">
+
+    <!-- Package Type -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Package Type</label>
+      <select class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <option value="">All Packages</option>
+        <option value="weekend">Weekend Getaway</option>
+        <option value="family">Family Package</option>
+        <option value="honeymoon">Honeymoon Special</option>
+        <option value="business">Business Traveler</option>
+        <option value="spa">Spa & Wellness</option>
+        <option value="adventure">Adventure</option>
+        <option value="romantic">Romantic Escape</option>
+      </select>
+    </div>
+
+    <!-- Price Range -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Price Range (₹)</label>
+      <select class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <option value="">All Prices</option>
+        <option value="0-5000">Under ₹5,000</option>
+        <option value="5000-8000">₹5,000 - ₹8,000</option>
+        <option value="8000-12000">₹8,000 - ₹12,000</option>
+        <option value="12000-15000">₹12,000 - ₹15,000</option>
+        <option value="15000-20000">₹15,000 - ₹20,000</option>
+        <option value="20000+">₹20,000+</option>
+      </select>
+    </div>
+
+    <!-- Duration -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Duration</label>
+      <select class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <option value="">Any Duration</option>
+        <option value="1">1 Night</option>
+        <option value="2">2 Nights</option>
+        <option value="3">3 Nights</option>
+        <option value="4-5">4-5 Nights</option>
+        <option value="6-7">6-7 Nights</option>
+        <option value="8+">8+ Nights</option>
+      </select>
+    </div>
+
+    <!-- Sort By -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Sort By</label>
+      <select class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <option value="recommended">Recommended</option>
+        <option value="popularity">Most Popular</option>
+        <option value="price-low">Price: Low → High</option>
+        <option value="price-high">Price: High → Low</option>
+        <option value="rating">Guest Rating</option>
+        <option value="savings">Biggest Savings</option>
+        <option value="duration">Duration</option>
+      </select>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="ml-auto flex gap-2">
+      <button class="px-3 py-2 bg-gray-100 text-gray-700 text-sm rounded-md hover:bg-gray-200 flex items-center gap-1">
+        <span class="material-icons text-xs">refresh</span>
+        Reset
+      </button>
+      <button class="px-4 py-2 bg-yellow-600 text-white text-sm rounded-md hover:bg-yellow-700 flex items-center gap-1">
+        <span class="material-icons text-xs">filter_alt</span>
+        Apply
+      </button>
+    </div>
+
+  </div>
+</div>
+
+       
+    <!-- ✅ Offer Card Template -->
+    <!-- Weekend Getaway -->
+    <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
+      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80"
+           class="w-full h-48 sm:h-80 object-cover">
+      <div class="p-6 sm:p-10">
+        <h3 class="text-xl sm:text-2xl font-bold text-yellow-700">Weekend Getaway</h3>
+        <div class="flex items-center mt-2 text-yellow-500 text-sm sm:text-base">
+          ⭐⭐⭐⭐☆ <span class="ml-2 text-gray-600">(4.2 / 5 from 320 reviews)</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 text-sm sm:text-base">
+          <div>
+            <ul class="list-disc ml-6 text-gray-600 space-y-1">
+              <li>2 Nights Stay in Deluxe Room</li>
+              <li>20% Off on Spa Treatments</li>
+              <li>Complimentary Breakfast</li>
+              <li>Price: ₹7,500 / couple</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold text-gray-800 mb-2">Highlights</h4>
+            <ul class="list-disc ml-6 text-gray-600 space-y-1">
+              <li>Access to Infinity Pool</li>
+              <li>Free Welcome Drink</li>
+              <li>Late Checkout Included</li>
+              <li>Spa Vouchers Included</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs sm:text-sm text-gray-600 gap-2">
+          <span><span class="font-semibold">120+ bookings</span> this month</span>
+          <span class="text-green-600 font-medium">Popular Choice</span>
+        </div>
+        <p class="mt-2 text-xs sm:text-sm text-gray-500">Valid until: <span class="font-medium">30th Sept 2025</span></p>
+
+        <button onclick="window.location.href='/Features/BookingManagement/Customer/BookingRooms/index.html'" class="mt-6 px-5 py-3 bg-gradient-to-r from-yellow-600 to-red-600 text-white rounded-lg font-medium hover:opacity-90 transition text-sm sm:text-base w-full sm:w-auto">
+          Book Now
+        </button>
+      </div>
+    </div>
+
+    <!-- Family Package -->
+    <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
+      <img src="https://images.unsplash.com/photo-1505691723518-36a5ac3be353?auto=format&fit=crop&w=1600&q=80"
+           class="w-full h-48 sm:h-80 object-cover">
+      <div class="p-6 sm:p-10">
+        <h3 class="text-xl sm:text-2xl font-bold text-yellow-700">Family Package</h3>
+        <div class="flex items-center mt-2 text-yellow-500 text-sm sm:text-base">
+          ⭐⭐⭐⭐⭐ <span class="ml-2 text-gray-600">(4.7 / 5 from 450 reviews)</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 text-sm sm:text-base">
+          <div>
+            <ul class="list-disc ml-6 text-gray-600 space-y-1">
+              <li>Kids Stay Free</li>
+              <li>Complimentary Breakfast for All</li>
+              <li>Free Wi-Fi & Family Activities</li>
+              <li>Price: ₹12,000 / family (2 Adults + 2 Kids)</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold text-gray-800 mb-2">Highlights</h4>
+            <ul class="list-disc ml-6 text-gray-600 space-y-1">
+              <li>Outdoor Playground for Kids</li>
+              <li>Complimentary Movie Night</li>
+              <li>Special Kids Menu</li>
+              <li>Evening Bonfire Experience</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs sm:text-sm text-gray-600 gap-2">
+          <span><span class="font-semibold">200+ bookings</span> this month</span>
+          <span class="text-blue-600 font-medium">Best for Families</span>
+        </div>
+        <p class="mt-2 text-xs sm:text-sm text-gray-500">Valid until: <span class="font-medium">31st Dec 2025</span></p>
+
+        <button onclick="window.location.href='/Features/BookingManagement/Customer/BookingRooms/index.html'" class="mt-6 px-5 py-3 bg-gradient-to-r from-yellow-600 to-red-600 text-white rounded-lg font-medium hover:opacity-90 transition text-sm sm:text-base w-full sm:w-auto">
+          Book Now
+        </button>
+      </div>
+    </div>
+
+    <!-- Honeymoon Special -->
+    <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
+      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80"
+           class="w-full h-48 sm:h-80 object-cover">
+      <div class="p-6 sm:p-10">
+        <h3 class="text-xl sm:text-2xl font-bold text-yellow-700">Honeymoon Special</h3>
+        <div class="flex items-center mt-2 text-yellow-500 text-sm sm:text-base">
+          ⭐⭐⭐⭐☆ <span class="ml-2 text-gray-600">(4.5 / 5 from 280 reviews)</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 text-sm sm:text-base">
+          <div>
+            <ul class="list-disc ml-6 text-gray-600 space-y-1">
+              <li>Candlelight Dinner & Champagne</li>
+              <li>Private Suite Stay</li>
+              <li>Late Checkout</li>
+              <li>Price: ₹14,000 / couple</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold text-gray-800 mb-2">Highlights</h4>
+            <ul class="list-disc ml-6 text-gray-600 space-y-1">
+              <li>Romantic Room Decoration</li>
+              <li>Complimentary Spa Session</li>
+              <li>Sunset Balcony Views</li>
+              <li>Surprise Gift Hamper</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs sm:text-sm text-gray-600 gap-2">
+          <span><span class="font-semibold">95+ bookings</span> this month</span>
+          <span class="text-pink-600 font-medium">Couples’ Favorite</span>
+        </div>
+        <p class="mt-2 text-xs sm:text-sm text-gray-500">Valid until: <span class="font-medium">15th Nov 2025</span></p>
+
+        <button onclick="window.location.href='/Features/BookingManagement/Customer/BookingRooms/index.html'" class="mt-6 px-5 py-3 bg-gradient-to-r from-yellow-600 to-red-600 text-white rounded-lg font-medium hover:opacity-90 transition text-sm sm:text-base w-full sm:w-auto">
+          Book Now
+        </button>
+      </div>
+    </div>
+
+    <!-- Business Traveler Package -->
+    <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
+      <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1600&q=80"
+           class="w-full h-48 sm:h-80 object-cover">
+      <div class="p-6 sm:p-10">
+        <h3 class="text-xl sm:text-2xl font-bold text-yellow-700">Business Traveler Package</h3>
+        <div class="flex items-center mt-2 text-yellow-500 text-sm sm:text-base">
+          ⭐⭐⭐⭐☆ <span class="ml-2 text-gray-600">(4.3 / 5 from 150 reviews)</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 text-sm sm:text-base">
+          <div>
+            <ul class="list-disc ml-6 text-gray-600 space-y-1">
+              <li>2 Nights in Executive Suite</li>
+              <li>Complimentary Meeting Room Access</li>
+              <li>High-Speed Wi-Fi + Airport Transfer</li>
+              <li>Price: ₹10,000 / person</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold text-gray-800 mb-2">Highlights</h4>
+            <ul class="list-disc ml-6 text-gray-600 space-y-1">
+              <li>Free Coffee & Snacks in Lounge</li>
+              <li>Priority Check-in & Checkout</li>
+              <li>Daily Laundry Service</li>
+              <li>Dedicated Business Desk</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs sm:text-sm text-gray-600 gap-2">
+          <span><span class="font-semibold">60+ bookings</span> this month</span>
+          <span class="text-purple-600 font-medium">Ideal for Business Trips</span>
+        </div>
+        <p class="mt-2 text-xs sm:text-sm text-gray-500">Valid until: <span class="font-medium">30th Oct 2025</span></p>
+
+        <button class="mt-6 px-5 py-3 bg-gradient-to-r from-yellow-600 to-red-600 text-white rounded-lg font-medium hover:opacity-90 transition text-sm sm:text-base w-full sm:w-auto">
+          Book Now
+        </button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ✅ Footer -->
+  <div id="footer"></div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

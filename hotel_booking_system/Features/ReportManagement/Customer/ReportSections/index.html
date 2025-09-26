@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - Reports</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+
+  <!-- ✅ Navbar -->
+  <div id="navbar"></div>
+
+  <!-- ✅ Layout -->
+  <div class="flex flex-col md:flex-row flex-1 max-w-7xl mx-auto w-full py-6 px-4 lg:px-8 gap-6 mt-20">
+
+    <!-- ✅ Sidebar -->
+    <aside class="w-full lg:w-64 bg-white shadow-lg rounded-2xl p-4 md:p-6 h-fit overflow-x-auto lg:overflow-visible">
+      <nav class="flex lg:block space-x-4 lg:space-x-0 lg:space-y-4 text-gray-700 font-medium text-sm md:text-base">
+        <a href="/Features/Dashboard/Customer/index.html" data-page="dashboard" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Overview</a>
+        <a href="/Features/BookingManagement/Customer/MyBookings/index.html" data-page="booking" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Bookings</a>
+        <a href="/Features/UserManagement/Customer/SavedRoomsCustomer/index.html" data-page="saved" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Wishlist</a>
+        <a href="/Features/IssueManagement/Customer/MyIssues/index.html" data-page="issues" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Issues</a>
+        <a href="/Features/RefundManagement/Customer/MyRefunds/index.html" data-page="refunds" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Refunds</a>
+        <a href="/Features/UserManagement/Customer/ProfileDisplayCustomer/index.html" data-page="profile" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Profile</a>
+        <a href="/Features/ReportManagement/Customer/ReportSections/index.html" data-page="report" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Reports</a>
+      </nav>
+    </aside>
+    <!-- ✅ Main Content -->
+    <main class="flex-1 space-y-8 md:space-y-12">
+
+      <!-- ✅ Welcome Header -->
+      <div class="relative rounded-2xl p-[3px] bg-gradient-to-r from-yellow-600 to-red-700 shadow">
+        <div class="bg-[#fdfaf4] rounded-2xl py-6 md:py-8 text-center">
+          <h2 class="text-2xl md:text-4xl text-gray-800 font-bold" style="font-family: 'Pacifico', cursive;">
+            Hotel Reports
+          </h2>
+          <p class="mt-2 text-gray-600 text-sm md:text-base">View insights about your hotel bookings, sales, payments, and more.</p>
+        </div>
+      </div>
+
+      <!-- ✅ Customer Reports Categories -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+
+        <!-- Booking Reports -->
+        <div>
+          <h2 class="font-semibold text-base md:text-lg flex items-center mb-3">🏨 Bookings</h2>
+          <ul class="space-y-2 text-blue-600 text-sm md:text-base">
+            <li><a href="/Features/ReportManagement/Customer/IndividualReports/room-occupancy.html" class="hover:underline">My Stay History</a></li>
+            <li><a href="/Features/ReportManagement/Customer/IndividualReports/cancellation-history.html" class="hover:underline">Cancellation History</a></li>
+          </ul>
+        </div>
+
+        <!-- Payments & Refunds -->
+        <div>
+          <h2 class="font-semibold text-base md:text-lg flex items-center mb-3">💰 Payments & Refunds</h2>
+          <ul class="space-y-2 text-blue-600 text-sm md:text-base">
+            <li><a href="/Features/ReportManagement/Customer/IndividualReports/payments-received.html" class="hover:underline">Payments Made</a></li>
+            <li><a href="/Features/ReportManagement/Customer/IndividualReports/refund-history.html" class="hover:underline">Refund History</a></li>
+          </ul>
+        </div>
+
+        <!-- Issues & Support -->
+        <div>
+          <h2 class="font-semibold text-base md:text-lg flex items-center mb-3">📑 Issues</h2>
+          <ul class="space-y-2 text-blue-600 text-sm md:text-base">
+            <li><a href="/Features/ReportManagement/Customer/IndividualReports/issues-summary.html" class="hover:underline">My Reported Issues</a></li>
+          </ul>
+        </div>
+
+        <!-- Profile Insights -->
+        <div>
+          <h2 class="font-semibold text-base md:text-lg flex items-center mb-3">👤 Profile Insights</h2>
+          <ul class="space-y-2 text-blue-600 text-sm md:text-base">
+            <li><a href="/Features/ReportManagement/Customer/IndividualReports/saved-rooms.html" class="hover:underline">Wishlist</a></li>
+            <li><a href="/Features/ReportManagement/Customer/IndividualReports/review-history.html" class="hover:underline">My Reviews & Ratings</a></li>
+          </ul>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <!-- ✅ Footer -->
+  <div id="footer"></div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

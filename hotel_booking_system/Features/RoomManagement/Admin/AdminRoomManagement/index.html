@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - Room Management (LocalStorage)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    /* small polish */
+    .stat-badge { min-width: 72px; display: inline-block; text-align: center; }
+    /* ensure modal scroll works on small screens */
+    #addRoomModal .max-h-\[90vh\] { max-height: 90vh; }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+  <!-- ✅ Navbar -->
+  <div id="navbar"></div>
+
+  <!-- ✅ Sidebar -->
+  <div id="sidebar" class="fixed top-16 left-0 w-64 h-screen shadow-lg bg-white"></div>
+
+  <!-- ✅ Main Content -->
+<main class="ml-64 pt-20 p-8 min-h-screen overflow-y-auto bg-gray-50">
+
+    <!-- Page Title + Add -->
+    <div class="mb-6 flex justify-between items-center">
+      <div>
+        <h2 class="text-2xl font-bold text-gray-800">Room Management</h2>
+      </div>
+      <div class="flex flex-row gap-x-4">
+      <button onclick="toggleBulkUploadModal()" class="flex flex-row gap-x-3 p-3 bg-yellow-600 text-white rounded-full hover:bg-yellow-700 shadow">
+        <span class="material-icons">cloud_upload</span>
+        Bulk Add
+      </button>
+      <button onclick="toggleAddRoomModal()" class="flex flex-row gap-x-3 p-3 bg-yellow-600 text-white rounded-full hover:bg-yellow-700 shadow">
+        <span class="material-icons">add</span>
+        Add
+      </button>
+      </div>
+    </div>
+
+    <!-- Bulk Upload Modal -->
+    <div id="bulkUploadModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+      <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="mt-3">
+          <h3 class="text-lg font-medium text-gray-900 mb-4">Bulk Add Rooms</h3>
+          <div class="space-y-4">
+            <div>
+              <p class="text-sm text-gray-600 mb-2">Download the template file first:</p>
+              <button onclick="downloadTemplate()" class="flex items-center px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                <span class="material-icons mr-2">download</span>
+                Download Template
+              </button>
+            </div>
+            <div>
+              <p class="text-sm text-gray-600 mb-2">Upload your filled template:</p>
+              <input type="file" id="csvFileInput" accept=".csv" class="block w-full text-sm text-gray-500
+                file:mr-4 file:py-2 file:px-4
+                file:rounded-full file:border-0
+                file:text-sm file:font-semibold
+                file:bg-yellow-50 file:text-yellow-700
+                hover:file:bg-yellow-100
+              "/>
+            </div>
+            <div class="flex justify-end space-x-3">
+              <button onclick="toggleBulkUploadModal()" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">Cancel</button>
+              <button onclick="handleBulkUpload()" class="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700">Upload</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="hidden fixed bottom-5 right-5 px-4 py-2 bg-green-500 text-white rounded shadow-lg z-50"></div>
+
+<!-- ✅ Compact Room Filter -->
+<div class="bg-white shadow-md border border-gray-200 rounded-lg p-3 mb-4">
+
+  <div class="flex flex-wrap items-end gap-3">
+
+    <!-- Room Status -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Room Status</label>
+      <select id="filterStatus" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
+        <option value="All">All</option>
+        <option value="Available">Available</option>
+        <option value="Occupied">Occupied</option>
+        <option value="Maintenance">Maintenance</option>
+        <option value="Frozen">Frozen</option>
+      </select>
+    </div>
+
+    <!-- Room Type -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Room Type</label>
+      <select id="filterType" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
+        <option value="All">All</option>
+        <option value="Deluxe">Deluxe</option>
+        <option value="Suite">Suite</option>
+        <option value="Standard">Standard</option>
+        <option value="Executive">Executive</option>
+      </select>
+    </div>
+
+    <!-- Price Range -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Price Range (₹)</label>
+      <div class="flex items-center gap-2">
+        <input type="number" id="minPrice" placeholder="Min ₹" class="w-24 p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
+        <span class="text-gray-400">—</span>
+        <input type="number" id="maxPrice" placeholder="Max ₹" class="w-24 p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
+      </div>
+    </div>
+
+    <!-- Stay Period -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Stay Period</label>
+      <div class="flex items-center gap-2">
+        <input id="filterCheckIn" type="date" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
+        <span class="text-gray-400">—</span>
+        <input id="filterCheckOut" type="date" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="ml-auto flex gap-2">
+      <button class="px-3 py-2 bg-gray-100 text-gray-700 text-sm rounded-md hover:bg-gray-200 flex items-center gap-1">
+        <span class="material-icons text-xs">refresh</span>
+        Reset
+      </button>
+      <button id="applyFilterBtn" class="px-4 py-2 bg-yellow-600 text-white text-sm rounded-md hover:bg-yellow-700 flex items-center gap-1">
+        <span class="material-icons text-xs">filter_alt</span>
+        Apply
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+
+    <!-- ✅ Table -->
+    <div class="overflow-x-auto bg-white shadow-lg border border-gray-200 rounded-xl">
+      <table class="w-full text-sm">
+        <thead class="bg-yellow-50 border-b border-gray-300">
+          <tr>
+            <th class="p-3 text-left font-semibold text-gray-700">Room No</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Room Type</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Status</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Guest Name</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Next Check-out</th>
+            <th class="p-3 text-left font-semibold text-gray-700">Next Check-in</th>
+            <th class="p-3 text-center font-semibold text-gray-700">Action</th>
+          </tr>
+        </thead>
+        <tbody id="roomTableBody" class="divide-y divide-gray-200">
+          <!-- Rows dynamically generated -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ✅ Pagination -->
+    <nav class="flex flex-col md:flex-row justify-between items-center mt-6 space-y-4 md:space-y-0">
+      <button onclick="prevPage()" class="px-5 py-2 flex items-center space-x-2 border rounded-full bg-gray-200 hover:bg-gray-300">
+        <span class="material-icons text-sm">chevron_left</span><span>Prev</span>
+      </button>
+      <ul id="paginationNumbers" class="flex space-x-2"></ul>
+      <button onclick="nextPage()" class="px-5 py-2 flex items-center space-x-2 border rounded-full bg-gray-200 hover:bg-gray-300">
+        <span>Next</span><span class="material-icons text-sm">chevron_right</span>
+      </button>
+      <div class="flex items-center space-x-2">
+        <label for="pageInput" class="text-sm text-gray-600 font-medium">Jump to:</label>
+        <input id="pageInput" type="number" min="1" placeholder="Page #"
+          class="w-20 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 shadow-sm">
+        <button onclick="jumpToPage()" class="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow flex items-center space-x-1">
+          <span class="material-icons text-sm">login</span><span>Go</span>
+        </button>
+      </div>
+    </nav>
+
+  </main>
+
+  <!-- =========================
+       Add Room Modal (unchanged UI)
+       Will wire to LocalStorage
+       ========================= -->
+<div id="addRoomModal" class="fixed inset-0 bg-black bg-opacity-50 items-center justify-center hidden z-50">
+  <div class="bg-white w-full max-w-2xl max-h-[90vh] rounded-2xl shadow-lg p-6 relative overflow-y-auto">
+
+    <!-- Close Button -->
+    <button onclick="toggleAddRoomModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+      <span class="material-icons">close</span>
+    </button>
+
+    <!-- Modal Title -->
+    <div class="flex items-center gap-3 mb-6">
+      <h2 class="text-xl font-bold text-gray-800">Add Room</h2>
+    </div>
+
+    <!-- Form -->
+    <form id="addRoomForm" class="space-y-6">
+      <!-- Room number -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">
+          Room number:<span class="text-red-500">*</span>
+        </label>
+        <input id="roomNumber" type="text" placeholder="Enter the Room Number" 
+          class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500" required>
+      </div>
+
+      <!-- Room Type (Dropdown) -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">
+          Room Type:<span class="text-red-500">*</span>
+        </label>
+        <select id="roomType" 
+          class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500" required>
+          <option value="">Select Type</option>
+          <option value="Deluxe">Deluxe</option>
+          <option value="Suite">Suite</option>
+          <option value="Standard">Standard</option>
+          <option value="Executive">Executive</option>
+          <option value="Family">Family</option>
+          <option value="Villa">Villa</option>
+        </select>
+      </div>
+
+      <!-- Price / Night -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">
+          Price / Night:<span class="text-red-500">*</span>
+        </label>
+        <input id="roomPrice" type="number" placeholder="Enter the Price per Night" 
+          class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500" required>
+      </div>
+
+      <!-- Capacity (Adults + Children) -->
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">
+            Adults Capacity:<span class="text-red-500">*</span>
+          </label>
+          <input id="roomAdults" type="number" min="1" placeholder="Max Adults" 
+            class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500" required>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">
+            Children Capacity:<span class="text-red-500">*</span>
+          </label>
+          <input id="roomChildren" type="number" min="0" placeholder="Max Children" 
+            class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500" required>
+        </div>
+      </div>
+
+      <!-- Room Description -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">
+          Room Description:
+        </label>
+        <textarea id="roomDesc" rows="3" placeholder="Enter room description" 
+          class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-yellow-500"></textarea>
+      </div>
+
+      <!-- Room Amenities -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-2">
+          Room Amenities:
+        </label>
+        <div class="grid grid-cols-3 gap-2">
+          <label class="flex items-center gap-2"><input type="checkbox" value="AC" class="amenity accent-yellow-600"> AC</label>
+          <label class="flex items-center gap-2"><input type="checkbox" value="Wi-Fi" class="amenity accent-yellow-600"> Wi-Fi</label>
+          <label class="flex items-center gap-2"><input type="checkbox" value="TV" class="amenity accent-yellow-600"> TV</label>
+          <label class="flex items-center gap-2"><input type="checkbox" value="Mini Bar" class="amenity accent-yellow-600"> Mini Bar</label>
+          <label class="flex items-center gap-2"><input type="checkbox" value="Balcony" class="amenity accent-yellow-600"> Balcony</label>
+          <label class="flex items-center gap-2"><input type="checkbox" value="Heater" class="amenity accent-yellow-600"> Heater</label>
+        </div>
+      </div>
+
+      <!-- Room Images -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">
+          Room Images:
+        </label>
+        <div class="border-dashed border-2 border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:bg-gray-50">
+          <span class="material-icons text-4xl text-orange-500">add_photo_alternate</span>
+          <p class="text-gray-500 text-sm">Click to upload images (UI-only for demo)</p>
+          <input type="file" multiple class="hidden">
+        </div>
+      </div>
+
+      <!-- Room Videos -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">
+          Room Videos:
+        </label>
+        <div class="border-dashed border-2 border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:bg-gray-50">
+          <span class="material-icons text-4xl text-orange-500">video_library</span>
+          <p class="text-gray-500 text-sm">Click to upload videos (UI-only for demo)</p>
+          <input type="file" accept="video/*" multiple class="hidden">
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-end gap-4 pt-4">
+        <button type="reset" id="addReset" 
+          class="px-5 py-2 bg-yellow-400 hover:bg-yellow-500 text-black rounded-lg shadow">
+          Reset Details
+        </button>
+        <button type="submit" 
+          class="px-5 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow">
+          Add Room
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+  <!-- =========================
+       Scripts
+       ========================= -->
+
+
+<script src="./script.js"></script>
+</body>
+</html>

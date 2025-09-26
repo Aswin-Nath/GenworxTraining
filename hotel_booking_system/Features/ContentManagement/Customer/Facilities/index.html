@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - Facilities</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+  <!-- ✅ Navbar -->
+  <div id="navbar"></div>
+
+  <!-- ✅ Facilities Section -->
+  <section class="px-4 sm:px-6 max-w-7xl mx-auto space-y-12 sm:space-y-16 py-6">
+
+    <!-- Header -->
+    <header class="relative rounded-xl bg-gradient-to-r from-yellow-400 via-red-400 to-red-500 py-12 sm:py-20 text-center text-white shadow-md sm:mt-20 overflow-hidden">
+      <div class="relative z-10">
+        <h1 class="text-3xl sm:text-5xl font-extrabold drop-shadow-lg">Our Facilities</h1>
+        <p class="text-base sm:text-lg mt-3 opacity-95">Every detail crafted for your comfort and convenience</p>
+      </div>
+    </header>
+
+<!-- ✅ Compact Facility Filter -->
+<div class="bg-white shadow-md border border-gray-200 rounded-lg p-3 mb-4">
+
+  <div class="flex flex-wrap items-end gap-3">
+
+    <!-- Facility Type -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Facility Type</label>
+      <select class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <option value="">All Facilities</option>
+        <option value="wellness">Wellness & Spa</option>
+        <option value="fitness">Fitness & Recreation</option>
+        <option value="dining">Dining & Lounges</option>
+        <option value="business">Business & Events</option>
+      </select>
+    </div>
+
+    <!-- Availability -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Availability</label>
+      <select class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <option value="">Any Time</option>
+        <option value="morning">Morning (6 AM - 12 PM)</option>
+        <option value="afternoon">Afternoon (12 PM - 6 PM)</option>
+        <option value="evening">Evening (6 PM - 12 AM)</option>
+        <option value="24hours">24/7 Available</option>
+      </select>
+    </div>
+
+    <!-- Access Level -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Access Level</label>
+      <select class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <option value="">All Access Types</option>
+        <option value="all-guests">All Guests</option>
+        <option value="members">Members Only</option>
+        <option value="premium">Premium Guests</option>
+        <option value="booking-required">Booking Required</option>
+      </select>
+    </div>
+
+    <!-- Sort By -->
+    <div class="flex flex-col">
+      <label class="text-xs font-medium text-gray-600 mb-1">Sort By</label>
+      <select class="p-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-500">
+        <option value="popular">Most Popular</option>
+        <option value="availability">Availability</option>
+        <option value="capacity">Capacity</option>
+        <option value="name">Name A-Z</option>
+      </select>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="ml-auto flex gap-2">
+      <button class="px-3 py-2 bg-gray-100 text-gray-700 text-sm rounded-md hover:bg-gray-200 flex items-center gap-1">
+        <span class="material-icons text-xs">refresh</span>
+        Reset
+      </button>
+      <button class="px-4 py-2 bg-yellow-600 text-white text-sm rounded-md hover:bg-yellow-700 flex items-center gap-1">
+        <span class="material-icons text-xs">filter_alt</span>
+        Apply
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+    <!-- ✅ Facilities Grid -->
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-10">
+
+      <!-- Wellness Spa -->
+      <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
+        <img src="/assets/spa.png" alt="Wellness Spa" class="w-full h-48 sm:h-64 object-cover">
+        <div class="p-6 sm:p-8">
+          <h3 class="text-xl sm:text-2xl font-bold text-yellow-700">Wellness Spa</h3>
+          <p class="text-gray-600 text-sm sm:text-base mt-2">Rejuvenating treatments using natural oils and world-class techniques.</p>
+          <ul class="list-disc ml-6 text-gray-600 text-sm sm:text-base mt-3 space-y-1">
+            <li>Aromatherapy with essential oils</li>
+            <li>Ayurvedic massages</li>
+            <li>Hot stone therapy & steam rooms</li>
+            <li>Meditation & yoga spaces</li>
+          </ul>
+          <p class="mt-3 text-sm text-gray-500"><span class="font-semibold">Timings:</span> 8:00 AM – 9:00 PM</p>
+          <p class="mt-2 text-green-600 font-medium">Popular Choice</p>
+        </div>
+      </div>
+
+      <!-- Infinity Pool -->
+      <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
+        <img src="/assets/pool.jpg" alt="Infinity Pool" class="w-full h-48 sm:h-64 object-cover">
+        <div class="p-6 sm:p-8">
+          <h3 class="text-xl sm:text-2xl font-bold text-red-600">Infinity Pool</h3>
+          <p class="text-gray-600 text-sm sm:text-base mt-2">Swim overlooking breathtaking city views in a temperature-controlled pool.</p>
+          <ul class="list-disc ml-6 text-gray-600 text-sm sm:text-base mt-3 space-y-1">
+            <li>Kids’ pool with safety measures</li>
+            <li>Poolside loungers & cabanas</li>
+            <li>Poolside bar & snacks</li>
+            <li>Certified lifeguards</li>
+          </ul>
+          <p class="mt-3 text-sm text-gray-500"><span class="font-semibold">Best Time:</span> Sunset swims</p>
+          <p class="mt-2 text-blue-600 font-medium">Guest Favorite</p>
+        </div>
+      </div>
+
+      <!-- Fine Dining -->
+      <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" alt="Fine Dining" class="w-full h-48 sm:h-64 object-cover">
+        <div class="p-6 sm:p-8">
+          <h3 class="text-xl sm:text-2xl font-bold text-yellow-700">Fine Dining</h3>
+          <p class="text-gray-600 text-sm sm:text-base mt-2">Indulge in gourmet meals prepared by master chefs with global cuisines.</p>
+          <ul class="list-disc ml-6 text-gray-600 text-sm sm:text-base mt-3 space-y-1">
+            <li>Multi-cuisine live kitchens</li>
+            <li>Exclusive wine cellar</li>
+            <li>Private dining rooms</li>
+            <li>24/7 in-room dining</li>
+          </ul>
+          <p class="mt-3 text-sm text-gray-500"><span class="font-semibold">Dress Code:</span> Smart casuals</p>
+          <p class="mt-2 text-purple-600 font-medium">Premium Experience</p>
+        </div>
+      </div>
+
+      <!-- Fitness Center -->
+      <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
+        <img src="/assets/gym.png" alt="Fitness Center" class="w-full h-48 sm:h-64 object-cover">
+        <div class="p-6 sm:p-8">
+          <h3 class="text-xl sm:text-2xl font-bold text-red-600">Fitness Center</h3>
+          <p class="text-gray-600 text-sm sm:text-base mt-2">Stay active with modern equipment, trainers, yoga & Zumba sessions.</p>
+          <ul class="list-disc ml-6 text-gray-600 text-sm sm:text-base mt-3 space-y-1">
+            <li>Cardio & strength training</li>
+            <li>Personal trainers</li>
+            <li>Yoga & Zumba sessions</li>
+            <li>Healthy meal plans</li>
+          </ul>
+          <p class="mt-3 text-sm text-gray-500"><span class="font-semibold">Open:</span> 24/7 for guests</p>
+          <p class="mt-2 text-green-600 font-medium">Always Accessible</p>
+        </div>
+      </div>
+
+      <!-- Conference Hall -->
+      <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
+        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80" alt="Conference Hall" class="w-full h-48 sm:h-64 object-cover">
+        <div class="p-6 sm:p-8">
+          <h3 class="text-xl sm:text-2xl font-bold text-yellow-700">Conference Hall</h3>
+          <p class="text-gray-600 text-sm sm:text-base mt-2">Perfect for corporate meetings & private functions with modern AV setup.</p>
+          <ul class="list-disc ml-6 text-gray-600 text-sm sm:text-base mt-3 space-y-1">
+            <li>Capacity 500+ guests</li>
+            <li>4K projectors & AV equipment</li>
+            <li>High-speed Wi-Fi</li>
+            <li>Customizable décor</li>
+          </ul>
+          <p class="mt-3 text-sm text-gray-500"><span class="font-semibold">Bookings:</span> On request</p>
+          <p class="mt-2 text-blue-600 font-medium">Corporate Ready</p>
+        </div>
+      </div>
+
+      <!-- Luxury Lounge -->
+      <div class="overflow-hidden rounded-3xl shadow-lg bg-white hover:shadow-2xl transition duration-300">
+        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80" alt="Luxury Lounge" class="w-full h-48 sm:h-64 object-cover">
+        <div class="p-6 sm:p-8">
+          <h3 class="text-xl sm:text-2xl font-bold text-red-600">Luxury Lounge</h3>
+          <p class="text-gray-600 text-sm sm:text-base mt-2">Elegant lounge with cocktails, live music & private corners for relaxation.</p>
+          <ul class="list-disc ml-6 text-gray-600 text-sm sm:text-base mt-3 space-y-1">
+            <li>Live jazz & band performances</li>
+            <li>Premium cigars & cocktails</li>
+            <li>Reading corners & mini library</li>
+            <li>VIP & member-only access</li>
+          </ul>
+          <p class="mt-3 text-sm text-gray-500"><span class="font-semibold">Open:</span> 5:00 PM – Midnight</p>
+          <p class="mt-2 text-pink-600 font-medium">Exclusive Access</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ✅ Footer -->
+  <div id="footer"></div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

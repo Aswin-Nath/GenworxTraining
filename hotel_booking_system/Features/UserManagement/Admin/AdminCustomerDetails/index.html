@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LuxuryStay - Customer Details</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    /* small polish so table cells wrap nicely when content grows */
+    td, th { white-space: nowrap; }
+    @media (max-width: 900px) {
+      td, th { white-space: normal; }
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+  <!-- Navbar placeholder -->
+  <div id="navbar"></div>
+
+  <!-- Sidebar placeholder -->
+  <div id="sidebar" class="fixed top-16 left-0 w-64 h-screen shadow-lg bg-white"></div>
+
+  <!-- Main content -->
+  <main class="ml-64 pt-16 p-8 min-h-screen space-y-8">
+
+    <!-- Header -->
+    <div class="flex items-center gap-3 mb-6">
+      <button onclick="window.history.back()"
+        class="flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-2 rounded-lg shadow">
+        <span class="material-icons text-sm">arrow_back</span> Back
+      </button>
+      <div class="flex-1">
+        <h2 class="text-2xl font-bold text-gray-800">Customer Details</h2>
+        <p class="text-sm text-gray-600">Profile, bookings, issues and actions (admin view)</p>
+      </div>
+
+      <!-- Customer status badge -->
+      <div id="statusBadge" class="ml-4">
+        <!-- inserted by JS -->
+      </div>
+    </div>
+
+    <!-- Basic details card -->
+    <section class="bg-white rounded-2xl border border-gray-200 p-6 shadow-md">
+      <div class="flex items-start justify-between gap-6">
+        <div>
+          <h3 class="text-lg font-semibold text-yellow-700 mb-4">Customer Basic Details</h3>
+          <div class="space-y-2 text-gray-700">
+            <p><span class="font-medium">Name:</span> <span id="custName">Aswinnath</span></p>
+            <p><span class="font-medium">Gender:</span> <span id="custGender">Male</span></p>
+            <p><span class="font-medium">DoB & Age:</span> <span id="custDob">05 Jan 2000 (25 years)</span></p>
+            <p><span class="font-medium">Mobile Number:</span> <span id="custPhone">+91 9876543210</span></p>
+            <p><span class="font-medium">Email:</span> <span id="custEmail">aswinnath@example.com</span></p>
+            <p id="custBlockedNote" class="text-sm mt-2 hidden"><span class="text-red-600 font-medium">Customer is blocked</span></p>
+          </div>
+        </div>
+
+        <!-- Payments & Room types quick card -->
+        <div class="w-80">
+          <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+            <h4 class="text-sm font-semibold text-gray-700 mb-2">Payments Mode</h4>
+            <div id="paymentsModeList" class="flex flex-col gap-2 text-sm text-gray-700">
+              <!-- items injected -->
+            </div>
+            <hr class="my-3">
+            <h4 class="text-sm font-semibold text-gray-700 mb-2">Room Types Ordered</h4>
+            <div id="roomTypesList" class="flex flex-col gap-2 text-sm text-gray-700">
+              <!-- injected -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking details card -->
+    <section class="bg-white rounded-2xl border border-gray-200 p-6 shadow-md">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-semibold text-yellow-700">Booking Details</h3>
+        <div class="text-sm text-gray-600">Total bookings: <span id="bookingCount">0</span></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-gray-700 mb-4">
+        <p><span class="font-medium">No of Bookings:</span> <span id="statBookings">0</span></p>
+        <p><span class="font-medium">No of Nights Stayed:</span> <span id="statNights">0</span></p>
+        <p><span class="font-medium">No of Cancellations:</span> <span id="statCancels">0</span></p>
+        <p><span class="font-medium">Total Amount Spent:</span> <span id="statAmount">₹0</span></p>
+      </div>
+
+      <!-- bookings table -->
+      <div class="overflow-x-auto rounded-lg border border-gray-100">
+        <table class="w-full text-sm" id="bookingsTable">
+          <thead class="bg-yellow-50 border-b">
+            <tr>
+              <th class="p-3 text-left">Booking ID</th>
+              <th class="p-3 text-left">Room</th>
+              <th class="p-3 text-left">Check-in</th>
+              <th class="p-3 text-left">Check-out</th>
+              <th class="p-3 text-left">Amount</th>
+              <th class="p-3 text-left">Payment Mode</th>
+              <th class="p-3 text-left">Status</th>
+            </tr>
+          </thead>
+          <tbody id="bookingsTbody" class="divide-y divide-gray-200">
+            <!-- JS renders rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- bookings pagination controls -->
+      <div class="mt-4 flex items-center justify-between">
+        <div class="text-sm text-gray-600">Showing <span id="bookingsShowing"></span></div>
+        <div class="flex items-center gap-2">
+          <button id="bookPrev" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Prev</button>
+          <div id="bookPages" class="flex gap-1"></div>
+          <button id="bookNext" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Issues details card -->
+    <section class="bg-white rounded-2xl border border-gray-200 p-6 shadow-md">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-semibold text-yellow-700">Issue Details</h3>
+        <div class="text-sm text-gray-600">Total issues: <span id="issuesCount">0</span></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-gray-700 mb-4">
+        <p><span class="font-medium">No of Issues:</span> <span id="statIssues">0</span></p>
+        <p><span class="font-medium">Resolved Issues:</span> <span id="statResolved">0</span></p>
+        <p><span class="font-medium">Pending Issues:</span> <span id="statPending">0</span></p>
+      </div>
+
+      <!-- issues table -->
+      <div class="overflow-x-auto rounded-lg border border-gray-100">
+        <table class="w-full text-sm" id="issuesTable">
+          <thead class="bg-yellow-50 border-b">
+            <tr>
+              <th class="p-3 text-left">Issue ID</th>
+              <th class="p-3 text-left">Title</th>
+              <th class="p-3 text-left">Reported On</th>
+              <th class="p-3 text-left">Assigned To</th>
+              <th class="p-3 text-left">Status</th>
+            </tr>
+          </thead>
+          <tbody id="issuesTbody" class="divide-y divide-gray-200">
+            <!-- JS renders rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- issues pagination -->
+      <div class="mt-4 flex items-center justify-between">
+        <div class="text-sm text-gray-600">Showing <span id="issuesShowing"></span></div>
+        <div class="flex items-center gap-2">
+          <button id="issuePrev" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Prev</button>
+          <div id="issuePages" class="flex gap-1"></div>
+          <button id="issueNext" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Action Buttons (bottom-right) -->
+    <div id="actionButtons" class="flex justify-end gap-4 mt-6">
+      <!-- rendered by JS (only one shown at a time) -->
+    </div>
+
+  </main>
+
+
+
+<script src="./script.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxuryStay - Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+
+  <!-- ✅ Main Navbar -->
+  <div id="navbar"></div>
+
+  <!-- ✅ Layout -->
+  <div class="flex flex-col md:flex-row flex-1 max-w-7xl mx-auto w-full py-6 px-4 lg:px-8 gap-6 mt-20">
+
+    <!-- ✅ Sidebar -->
+    <aside class="w-full lg:w-64 bg-white shadow-lg rounded-2xl p-4 md:p-6 h-fit overflow-x-auto lg:overflow-visible">
+      <nav class="flex lg:block space-x-4 lg:space-x-0 lg:space-y-4 text-gray-700 font-medium text-sm md:text-base">
+        <a href="/Features/Dashboard/Customer/index.html" data-page="dashboard" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Overview</a>
+        <a href="/Features/BookingManagement/Customer/MyBookings/index.html" data-page="booking" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Bookings</a>
+        <a href="/Features/UserManagement/Customer/SavedRoomsCustomer/index.html" data-page="saved" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Wishlist</a>
+        <a href="/Features/IssueManagement/Customer/MyIssues/index.html" data-page="issues" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Issues</a>
+        <a href="/Features/RefundManagement/Customer/MyRefunds/index.html" data-page="refunds" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Refunds</a>
+        <a href="/Features/UserManagement/Customer/ProfileDisplayCustomer/index.html" data-page="profile" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Profile</a>
+        <a href="/Features/ReportManagement/Customer/ReportSections/index.html" data-page="report" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Reports</a>
+      </nav>
+    </aside>
+
+    <!-- ✅ Main Content -->
+    <main class="flex-1 space-y-8 md:space-y-12">
+
+      <!-- ✅ Welcome Header -->
+      <div class="relative rounded-2xl p-[3px] bg-gradient-to-r from-yellow-600 to-red-700 shadow">
+        <div class="bg-[#fdfaf4] rounded-2xl py-6 md:py-8 text-center">
+          <h2 class="text-2xl md:text-4xl text-gray-800 font-bold" style="font-family: 'Pacifico', cursive;">
+            Your Profile
+          </h2>
+        </div>
+      </div>
+
+      <!-- ✅ Profile Card -->
+      <div class="max-w-4xl mx-auto bg-white shadow-xl border border-gray-200 rounded-2xl p-4 md:p-8 space-y-6">
+
+        <!-- Profile Image -->
+        <div class="flex flex-col items-center text-center mb-6">
+          <div class="relative">
+            <img id="profileImage" src="https://via.placeholder.com/150" 
+              class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-yellow-600 shadow-md object-cover" alt="Profile">
+            <label for="uploadImage" 
+              class="absolute bottom-0 right-0 bg-yellow-500 text-white p-2 rounded-full shadow cursor-pointer hover:bg-yellow-600">
+              <span class="material-icons text-sm">edit</span>
+            </label>
+            <input type="file" id="uploadImage" accept="image/*" class="hidden">
+          </div>
+          <p class="mt-3 text-gray-700 font-medium text-sm md:text-base">Update Profile Picture</p>
+        </div>
+
+        <!-- Editable Profile Info -->
+        <div class="space-y-6">
+
+          <!-- Name -->
+          <div class="border-b pb-4">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+              <div>
+                <p class="text-gray-700 font-medium text-sm md:text-base">Name</p>
+                <p id="name-display" class="text-gray-900 font-semibold text-sm md:text-base">Not set</p>
+              </div>
+              <button onclick="toggleEdit('name')" class="text-red-600 hover:underline flex items-center space-x-1 text-sm md:text-base">
+                <span class="material-icons text-sm">edit</span><span>Edit</span>
+              </button>
+            </div>
+            <div id="name-edit-row" class="hidden mt-3 flex flex-col sm:flex-row gap-3">
+              <input id="name-input" type="text" class="flex-1 p-2 border rounded focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
+              <button onclick="saveField('name')" class="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 shadow text-sm md:text-base">Save</button>
+            </div>
+          </div>
+
+          <!-- Gender -->
+          <div class="border-b pb-4">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+              <div>
+                <p class="text-gray-700 font-medium text-sm md:text-base">Gender</p>
+                <p id="gender-display" class="text-gray-900 font-semibold text-sm md:text-base">Not set</p>
+              </div>
+              <button onclick="toggleEdit('gender')" class="text-red-600 hover:underline flex items-center space-x-1 text-sm md:text-base">
+                <span class="material-icons text-sm">edit</span><span>Edit</span>
+              </button>
+            </div>
+            <div id="gender-edit-row" class="hidden mt-3 flex flex-col sm:flex-row gap-3">
+              <input id="gender-input" type="text" class="flex-1 p-2 border rounded focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
+              <button onclick="saveField('gender')" class="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 shadow text-sm md:text-base">Save</button>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="border-b pb-4">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+              <div>
+                <p class="text-gray-700 font-medium text-sm md:text-base">Email</p>
+                <p id="email-display" class="text-gray-900 font-semibold text-sm md:text-base">Not set</p>
+              </div>
+              <button onclick="toggleEdit('email')" class="text-red-600 hover:underline flex items-center space-x-1 text-sm md:text-base">
+                <span class="material-icons text-sm">edit</span><span>Edit</span>
+              </button>
+            </div>
+            <div id="email-edit-row" class="hidden mt-3 flex flex-col sm:flex-row gap-3">
+              <input id="email-input" type="email" class="flex-1 p-2 border rounded focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
+              <button onclick="saveField('email')" class="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 shadow text-sm md:text-base">Save</button>
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div class="border-b pb-4">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+              <div>
+                <p class="text-gray-700 font-medium text-sm md:text-base">Phone</p>
+                <p id="phone-display" class="text-gray-900 font-semibold text-sm md:text-base">Not set</p>
+              </div>
+              <button onclick="toggleEdit('phone')" class="text-red-600 hover:underline flex items-center space-x-1 text-sm md:text-base">
+                <span class="material-icons text-sm">edit</span><span>Edit</span>
+              </button>
+            </div>
+            <div id="phone-edit-row" class="hidden mt-3 flex flex-col sm:flex-row gap-3">
+              <input id="phone-input" type="tel" class="flex-1 p-2 border rounded focus:ring-2 focus:ring-yellow-500 text-sm md:text-base">
+              <button onclick="saveField('phone')" class="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 shadow text-sm md:text-base">Save</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ✅ Footer -->
+  <div id="footer"></div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
