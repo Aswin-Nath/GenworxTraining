@@ -90,53 +90,58 @@
       });
     }
 
-    // Add room
-    addRoomBtn?.addEventListener("click", () => {
-      const roomDiv = document.createElement("div");
-      roomDiv.className = "room-card border p-5 rounded-xl mb-6 bg-gray-50 shadow-sm";
-      roomDiv.innerHTML = `
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="room-title font-semibold text-lg">Room</h3>
-          <select class="border rounded-lg p-2 focus:ring-2 focus:ring-yellow-500">
-            <option>Deluxe Room</option>
-            <option>Executive Suite</option>
-            <option>Presidential Suite</option>
-          </select>
+// Add room
+addRoomBtn?.addEventListener("click", () => {
+  const roomDiv = document.createElement("div");
+  roomDiv.className = "room-card border p-4 sm:p-5 rounded-lg sm:rounded-xl mb-4 sm:mb-6 bg-gray-50 shadow-sm";
+
+  roomDiv.innerHTML = `
+    <!-- Row 1: Room No + Room Type -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-4 gap-2 sm:gap-0">
+      <h3 class="room-title font-semibold text-base sm:text-lg">Room</h3>
+      <select class="border rounded-lg p-2 w-full sm:w-auto focus:ring-2 focus:ring-yellow-500">
+        <option>Deluxe Room</option>
+        <option>Executive Suite</option>
+        <option>Presidential Suite</option>
+      </select>
+    </div>
+
+    <!-- Row 2: Adults + Children -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-4">
+      <div class="flex items-center justify-between">
+        <label class="text-sm sm:text-base font-medium">Adults</label>
+        <div class="flex items-center space-x-3">
+          <button class="decrease w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-lg">−</button>
+          <input type="number" value="1" min="1" class="w-12 text-center border rounded-md p-1">
+          <button class="increase w-8 h-8 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center text-lg">+</button>
         </div>
+      </div>
 
-        <div class="grid grid-cols-2 gap-6">
-          <div class="flex items-center justify-between">
-            <label class="text-sm font-medium">Adults</label>
-            <div class="flex items-center space-x-3">
-              <button class="decrease w-8 h-8 rounded-full bg-gray-200">−</button>
-              <input type="number" value="1" min="1" class="w-12 text-center border rounded-md p-1">
-              <button class="increase w-8 h-8 rounded-full bg-yellow-500 text-white">+</button>
-            </div>
-          </div>
-          <div class="flex items-center justify-between">
-            <label class="text-sm font-medium">Children</label>
-            <div class="flex items-center space-x-3">
-              <button class="decrease w-8 h-8 rounded-full bg-gray-200">−</button>
-              <input type="number" value="0" min="0" class="w-12 text-center border rounded-md p-1">
-              <button class="increase w-8 h-8 rounded-full bg-yellow-500 text-white">+</button>
-            </div>
-          </div>
+      <div class="flex items-center justify-between">
+        <label class="text-sm sm:text-base font-medium">Children</label>
+        <div class="flex items-center space-x-3">
+          <button class="decrease w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-lg">−</button>
+          <input type="number" value="0" min="0" class="w-12 text-center border rounded-md p-1">
+          <button class="increase w-8 h-8 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center text-lg">+</button>
         </div>
+      </div>
+    </div>
 
-        <button class="remove-room mt-4 text-sm text-red-500 hover:underline">Remove Room</button>
-      `;
+    <button class="remove-room mt-2 text-xs sm:text-sm text-red-500 hover:underline">Remove Room</button>
+  `;
 
-      roomsContainer.appendChild(roomDiv);
-      addCounterListeners(roomDiv);
+  roomsContainer.appendChild(roomDiv);
+  addCounterListeners(roomDiv);
 
-      // Remove room + reindex
-      roomDiv.querySelector(".remove-room").addEventListener("click", () => {
-        roomDiv.remove();
-        reindexRooms();
-      });
+  // Remove room + reindex
+  roomDiv.querySelector(".remove-room").addEventListener("click", () => {
+    roomDiv.remove();
+    reindexRooms();
+  });
 
-      reindexRooms();
-    });
+  reindexRooms();
+});
+
 
     // Init counters for first room
     addCounterListeners(document.querySelector(".room-card"));

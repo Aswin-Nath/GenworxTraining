@@ -6,9 +6,7 @@ const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "tr
 // ✅ Navbar loader
 let navbarPath = "/Features/Components/Navbars/NotCustomerNavbar/index.html"; // default (logged-out)
 
-if (isAdminLoggedIn) {
-  navbarPath = "/Features/Components/Navbars/AdminLandingNavbar/index.html";
-} else if (isCustomerLoggedIn) {
+if (isCustomerLoggedIn) {
   navbarPath = "/Features/Components/Navbars/LoggedCustomerNavbar/index.html";
 }
 

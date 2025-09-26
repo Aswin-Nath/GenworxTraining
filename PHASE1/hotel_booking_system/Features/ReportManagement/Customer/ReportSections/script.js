@@ -3,11 +3,10 @@
 
 // ✅ Navbar loader
 let navbarPath = "/Features/Components/Navbars/NotCustomerNavbar/index.html"; // default (logged-out)
-
 if (isCustomerLoggedIn) {
-  navbarPath = "/Features/Components/Navbars/LoggedCustomerNavbar/index.html";
+    navbarPath = "/Features/Components/Navbars/LoggedCustomerNavbar/index.html";
 }
-
+console.log(navbarPath)
 fetch(navbarPath)
   .then(res => res.text())
   .then(html => {
