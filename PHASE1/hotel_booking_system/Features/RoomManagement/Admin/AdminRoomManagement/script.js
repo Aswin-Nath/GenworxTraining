@@ -442,8 +442,8 @@ function downloadTemplate() {
   // Template CSV content
   const template = [
     "Room Number,Type,Price,Adults Capacity,Children Capacity,Description,Amenities",
-    '1110,Deluxe,4500,2,1,"Spacious deluxe room with sea view","AC,Wi-Fi,TV"',
-    '1001,Standard,3000,2,1,"Comfortable standard room","AC,Wi-Fi"'
+    '137,Deluxe,4500,2,1,"Spacious deluxe room with sea view","AC,Wi-Fi,TV"',
+    '147,Standard,3000,2,1,"Comfortable standard room","AC,Wi-Fi"'
   ].join("\n");
 
   // Create Blob for CSV

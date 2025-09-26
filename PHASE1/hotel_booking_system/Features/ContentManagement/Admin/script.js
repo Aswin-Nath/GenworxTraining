@@ -92,7 +92,7 @@ function renderContent() {
       const type=document.getElementById("addContentType").value;
       const title=document.getElementById("contentTitle").value;
       const desc=document.getElementById("contentDesc").value;
-      const media="/assets/hotel_logo.png";
+      const media="/assets/Hotel_logo.png";
       contents[type].unused.push({title,desc,media});
       toggleAddContentModal();
       renderContent();
@@ -113,7 +113,7 @@ function renderContent() {
       const newType=document.getElementById("editContentType").value;
       const newTitle=document.getElementById("editTitle").value;
       const newDesc=document.getElementById("editDesc").value;
-      const item={title:newTitle,desc:newDesc,media:"/assets/hotel_logo.png"};
+      const item={title:newTitle,desc:newDesc,media:"/assets/Hotel_logo.png"};
       contents[tab][type].splice(index,1);
       contents[newType].used.push(item);
       toggleEditContentModal();
