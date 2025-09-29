@@ -77,7 +77,11 @@
     </div>
 
     <!-- Toast Notification -->
-    <div id="toast" class="hidden fixed bottom-5 right-5 px-4 py-2 bg-green-500 text-white rounded shadow-lg z-50"></div>
+    <!-- Toast Notification -->
+    <div id="toast" class="hidden fixed top-4 right-4 px-6 py-3 bg-green-500 text-white rounded-lg shadow-lg z-50 flex items-center gap-2">
+        <span class="material-icons text-sm">check_circle</span>
+        <span id="toastMessage">Action completed successfully!</span>
+    </div>
 
 <!-- ✅ Compact Room Filter -->
 <div class="bg-white shadow-md border border-gray-200 rounded-lg p-3 mb-4">
@@ -130,7 +134,7 @@
 
     <!-- Action Buttons -->
     <div class="ml-auto flex gap-2">
-      <button class="px-3 py-2 bg-gray-100 text-gray-700 text-sm rounded-md hover:bg-gray-200 flex items-center gap-1">
+      <button id="resetFilterBtn" class="px-3 py-2 bg-gray-100 text-gray-700 text-sm rounded-md hover:bg-gray-200 flex items-center gap-1">
         <span class="material-icons text-xs">refresh</span>
         Reset
       </button>
@@ -150,13 +154,48 @@
       <table class="w-full text-sm">
         <thead class="bg-yellow-50 border-b border-gray-300">
           <tr>
-            <th class="p-3 text-left font-semibold text-gray-700">Room No</th>
-            <th class="p-3 text-left font-semibold text-gray-700">Room Type</th>
-            <th class="p-3 text-left font-semibold text-gray-700">Status</th>
-            <th class="p-3 text-left font-semibold text-gray-700">Guest Name</th>
-            <th class="p-3 text-left font-semibold text-gray-700">Next Check-out</th>
-            <th class="p-3 text-left font-semibold text-gray-700">Next Check-in</th>
-            <th class="p-3 text-center font-semibold text-gray-700">Action</th>
+            <th class="p-3 text-left font-semibold text-gray-700">
+              <div class="flex items-center gap-2">
+                <span class="material-icons text-lg text-gray-500">meeting_room</span>
+                Room No
+              </div>
+            </th>
+            <th class="p-3 text-left font-semibold text-gray-700">
+              <div class="flex items-center gap-2">
+                <span class="material-icons text-lg text-gray-500">king_bed</span>
+                Room Type
+              </div>
+            </th>
+            <th class="p-3 text-left font-semibold text-gray-700">
+              <div class="flex items-center gap-2">
+                <span class="material-icons text-lg text-gray-500">info</span>
+                Status
+              </div>
+            </th>
+            <th class="p-3 text-left font-semibold text-gray-700">
+              <div class="flex items-center gap-2">
+                <span class="material-icons text-lg text-gray-500">person</span>
+                Guest
+              </div>
+            </th>
+            <th class="p-3 text-left font-semibold text-gray-700">
+              <div class="flex items-center gap-2">
+                <span class="material-icons text-lg text-gray-500">logout</span>
+                Check-out
+              </div>
+            </th>
+            <th class="p-3 text-left font-semibold text-gray-700">
+              <div class="flex items-center gap-2">
+                <span class="material-icons text-lg text-gray-500">login</span>
+                Check-in
+              </div>
+            </th>
+            <th class="p-3 text-center font-semibold text-gray-700">
+              <div class="flex items-center justify-center gap-2">
+                <span class="material-icons text-lg text-gray-500">settings</span>
+                Action
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody id="roomTableBody" class="divide-y divide-gray-200">

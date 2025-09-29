@@ -1,6 +1,450 @@
 
+// ✅ Comprehensive Booking Table Data and Functionality
+
+// Sample booking data for dynamic loading
+const bookingsData = [
+  {
+    id: "B-2024-001",
+    room: "Deluxe Room 205",
+    dates: "28 Sep → 02 Oct",
+    nights: 4,
+    guests: "2 Adults",
+    guestName: "John Smith",
+    amount: 22500,
+    status: "staying",
+    statusText: "Currently Staying",
+    statusClass: "bg-green-100 text-green-800",
+    statusIcon: "hotel",
+    roomType: "deluxe"
+  },
+  {
+    id: "B-2024-002",
+    room: "Executive Suite 301",
+    dates: "26 Sep → 29 Sep",
+    nights: 3,
+    guests: "2 Adults",
+    guestName: "Sarah Johnson",
+    amount: 45000,
+    status: "checkout-today",
+    statusText: "Checkout Today",
+    statusClass: "bg-orange-100 text-orange-800",
+    statusIcon: "schedule",
+    roomType: "suite"
+  },
+  {
+    id: "B-2024-003",
+    room: "Deluxe Room 108",
+    dates: "05 Oct → 08 Oct",
+    nights: 3,
+    guests: "2 Adults, 1 Child",
+    guestName: "Michael Brown",
+    amount: 18000,
+    status: "upcoming",
+    statusText: "Upcoming",
+    statusClass: "bg-blue-100 text-blue-800",
+    statusIcon: "upcoming",
+    roomType: "deluxe"
+  },
+  {
+    id: "B-2024-004",
+    room: "Presidential Suite 501",
+    dates: "29 Sep → 03 Oct",
+    nights: 4,
+    guests: "4 Adults",
+    guestName: "Robert Wilson",
+    amount: 75000,
+    status: "checkin-today",
+    statusText: "Check-in Today",
+    statusClass: "bg-purple-100 text-purple-800",
+    statusIcon: "login",
+    roomType: "presidential"
+  },
+  {
+    id: "B-2024-005",
+    room: "Executive Room 402",
+    dates: "20 Sep → 24 Sep",
+    nights: 4,
+    guests: "2 Adults",
+    guestName: "Emily Davis",
+    amount: 32000,
+    status: "completed",
+    statusText: "Completed",
+    statusClass: "bg-green-100 text-green-800",
+    statusIcon: "check_circle",
+    roomType: "executive"
+  },
+  {
+    id: "B-2024-006",
+    room: "Family Suite 203",
+    dates: "15 Oct → 18 Oct",
+    nights: 3,
+    guests: "2 Adults, 2 Children",
+    guestName: "Lisa Anderson",
+    amount: 28000,
+    status: "cancelled",
+    statusText: "Cancelled",
+    statusClass: "bg-red-100 text-red-800",
+    statusIcon: "cancel",
+    roomType: "family"
+  },
+  {
+    id: "B-2024-007",
+    room: "Deluxe Room 304",
+    dates: "12 Oct → 15 Oct",
+    nights: 3,
+    guests: "2 Adults",
+    guestName: "David Thompson",
+    amount: 21000,
+    status: "upcoming",
+    statusText: "Upcoming",
+    statusClass: "bg-blue-100 text-blue-800",
+    statusIcon: "upcoming",
+    roomType: "deluxe"
+  },
+  {
+    id: "B-2024-008",
+    room: "Executive Suite 405",
+    dates: "10 Sep → 14 Sep",
+    nights: 4,
+    guests: "3 Adults",
+    guestName: "Jennifer Martinez",
+    amount: 55000,
+    status: "completed",
+    statusText: "Completed",
+    statusClass: "bg-green-100 text-green-800",
+    statusIcon: "check_circle",
+    roomType: "suite"
+  },
+  // Add more bookings for pagination
+  {
+    id: "B-2024-009",
+    room: "Deluxe Room 107",
+    dates: "25 Oct → 28 Oct",
+    nights: 3,
+    guests: "1 Adult",
+    guestName: "Mark Johnson",
+    amount: 16500,
+    status: "upcoming",
+    statusText: "Upcoming",
+    statusClass: "bg-blue-100 text-blue-800",
+    statusIcon: "upcoming",
+    roomType: "deluxe"
+  },
+  {
+    id: "B-2024-010",
+    room: "Presidential Suite 502",
+    dates: "01 Nov → 05 Nov",
+    nights: 4,
+    guests: "6 Adults",
+    guestName: "Richard Smith",
+    amount: 80000,
+    status: "upcoming",
+    statusText: "Upcoming",
+    statusClass: "bg-blue-100 text-blue-800",
+    statusIcon: "upcoming",
+    roomType: "presidential"
+  }
+];
+
+let filteredBookings = [...bookingsData];
+let currentPage = 1;
+const itemsPerPage = 5;
+
+// Filter functionality
+function applyBookingFilters() {
+  const searchTerm = document.getElementById('bookingSearch')?.value.toLowerCase() || '';
+  const statusFilter = document.getElementById('statusFilter')?.value || '';
+  const roomTypeFilter = document.getElementById('roomTypeFilter')?.value || '';
+  const minAmount = parseFloat(document.getElementById('minAmount')?.value) || 0;
+  const maxAmount = parseFloat(document.getElementById('maxAmount')?.value) || Infinity;
+  const startDate = document.getElementById('startDate')?.value || '';
+  const endDate = document.getElementById('endDate')?.value || '';
+
+  filteredBookings = bookingsData.filter(booking => {
+    // Search filter
+    if (searchTerm && !booking.id.toLowerCase().includes(searchTerm) &&
+        !booking.room.toLowerCase().includes(searchTerm) &&
+        !booking.guestName.toLowerCase().includes(searchTerm)) {
+      return false;
+    }
+
+    // Status filter
+    if (statusFilter && booking.status !== statusFilter) {
+      return false;
+    }
+
+    // Room type filter
+    if (roomTypeFilter && booking.roomType !== roomTypeFilter) {
+      return false;
+    }
+
+    // Amount filter
+    if (booking.amount < minAmount || booking.amount > maxAmount) {
+      return false;
+    }
+
+    // Date filter (simplified - would need proper date parsing in real app)
+    if (startDate || endDate) {
+      // Basic date filtering logic would go here
+    }
+
+    return true;
+  });
+
+  currentPage = 1;
+  renderBookingsTable();
+  updatePaginationInfo();
+}
+
+// Clear filters
+function clearBookingFilters() {
+  document.getElementById('bookingSearch').value = '';
+  document.getElementById('statusFilter').value = '';
+  document.getElementById('roomTypeFilter').value = '';
+  document.getElementById('minAmount').value = '';
+  document.getElementById('maxAmount').value = '';
+  document.getElementById('startDate').value = '';
+  document.getElementById('endDate').value = '';
+  
+  filteredBookings = [...bookingsData];
+  currentPage = 1;
+  renderBookingsTable();
+  updatePaginationInfo();
+}
+
+// Render table rows
+function renderBookingsTable() {
+  const tbody = document.getElementById('bookingsTableBody');
+  if (!tbody) return;
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const pageBookings = filteredBookings.slice(startIndex, endIndex);
+
+  tbody.innerHTML = pageBookings.map(booking => `
+    <tr class="hover:bg-gray-50" data-status="${booking.status}" data-room-type="${booking.roomType}" data-amount="${booking.amount}" data-booking-id="${booking.id}" data-guest="${booking.guestName}">
+      <td class="p-3">
+        <div>
+          <span class="font-medium text-gray-800">${booking.room}</span>
+          <p class="text-xs text-gray-500 mt-0.5">Booking ID: ${booking.id}</p>
+        </div>
+      </td>
+      <td class="p-3">
+        <div>
+          <p class="text-gray-800">${booking.dates}</p>
+          <p class="text-xs text-gray-500 mt-0.5">${booking.nights} nights</p>
+        </div>
+      </td>
+      <td class="p-3">
+        <div>
+          <p class="text-gray-800">${booking.guests}</p>
+          <p class="text-xs text-gray-500 mt-0.5">Guest: ${booking.guestName}</p>
+        </div>
+      </td>
+      <td class="p-3">
+        <div class="font-medium text-gray-800">₹${booking.amount.toLocaleString()}</div>
+      </td>
+      <td class="p-3">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${booking.statusClass}">
+          <span class="material-icons text-sm mr-1">${booking.statusIcon}</span>
+          ${booking.statusText}
+        </span>
+      </td>
+      <td class="p-3">
+        <div class="flex justify-center items-center space-x-2">
+          <button onclick="window.location.href='/Features/BookingManagement/Customer/IndividualBookingsCustomer/index.html'" 
+            class="p-1.5 hover:bg-gray-100 rounded-lg" title="View Details">
+            <span class="material-icons text-blue-600">visibility</span>
+          </button>
+          ${getActionButtons(booking)}
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// Get appropriate action buttons based on booking status
+function getActionButtons(booking) {
+  switch(booking.status) {
+    case 'staying':
+      return `
+        <button onclick="window.location.href='/Features/BookingManagement/Customer/EditBookings/index.html'"
+          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Modify Booking">
+          <span class="material-icons text-orange-600">edit_note</span>
+        </button>
+        <button class="p-1.5 rounded-lg cursor-not-allowed opacity-50" title="Early checkout not available" disabled>
+          <span class="material-icons text-gray-400">logout</span>
+        </button>
+      `;
+    case 'checkout-today':
+      return `
+        <button onclick="initiateCheckout('${booking.id}')"
+          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Checkout">
+          <span class="material-icons text-green-600">check_circle</span>
+        </button>
+        <button onclick="extendStay('${booking.id}')"
+          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Extend Stay">
+          <span class="material-icons text-blue-600">access_time</span>
+        </button>
+      `;
+    case 'checkin-today':
+      return `
+        <button onclick="initiateCheckin('${booking.id}')"
+          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Check In">
+          <span class="material-icons text-green-600">login</span>
+        </button>
+        <button data-cancel="booking" data-id="${booking.id}" data-label="Booking #${booking.id}"
+          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Cancel Booking">
+          <span class="material-icons text-red-600">cancel</span>
+        </button>
+      `;
+    case 'upcoming':
+      return `
+        <button onclick="window.location.href='/Features/BookingManagement/Customer/EditBookings/index.html'"
+          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Modify Booking">
+          <span class="material-icons text-orange-600">edit_note</span>
+        </button>
+        <button data-cancel="booking" data-id="${booking.id}" data-label="Booking #${booking.id}"
+          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Cancel Booking">
+          <span class="material-icons text-red-600">cancel</span>
+        </button>
+      `;
+    case 'completed':
+      return `
+        <button onclick="downloadInvoice('${booking.id}')"
+          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Download Invoice">
+          <span class="material-icons text-green-600">download</span>
+        </button>
+        <button onclick="rateStay('${booking.id}')"
+          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Rate Your Stay">
+          <span class="material-icons text-yellow-600">star</span>
+        </button>
+      `;
+    case 'cancelled':
+      return `
+        <button onclick="rebookStay('${booking.id}')"
+          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Book Again">
+          <span class="material-icons text-green-600">refresh</span>
+        </button>
+        <button onclick="viewRefund('${booking.id}')"
+          class="p-1.5 hover:bg-gray-100 rounded-lg" title="View Refund Status">
+          <span class="material-icons text-orange-600">account_balance_wallet</span>
+        </button>
+      `;
+    default:
+      return '';
+  }
+}
+
+// Pagination functions
+function updatePaginationInfo() {
+  const totalPages = Math.ceil(filteredBookings.length / itemsPerPage);
+  const startItem = filteredBookings.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
+  const endItem = Math.min(currentPage * itemsPerPage, filteredBookings.length);
+  
+  // Update pagination display (if elements exist)
+  const pageInfo = document.querySelector('.pagination-info');
+  if (pageInfo) {
+    pageInfo.textContent = `Showing ${startItem}-${endItem} of ${filteredBookings.length} bookings`;
+  }
+}
+
+function nextPage() {
+  const totalPages = Math.ceil(filteredBookings.length / itemsPerPage);
+  if (currentPage < totalPages) {
+    currentPage++;
+    renderBookingsTable();
+    updatePaginationInfo();
+  }
+}
+
+function prevPage() {
+  if (currentPage > 1) {
+    currentPage--;
+    renderBookingsTable();
+    updatePaginationInfo();
+  }
+}
+
+function goToPage(page) {
+  const totalPages = Math.ceil(filteredBookings.length / itemsPerPage);
+  if (page >= 1 && page <= totalPages) {
+    currentPage = page;
+    renderBookingsTable();
+    updatePaginationInfo();
+  }
+}
+
+// Action button functions
+function initiateCheckout(bookingId) {
+  showToast(`Checkout process initiated for booking ${bookingId}`, 'success');
+}
+
+function extendStay(bookingId) {
+  showToast(`Extend stay request submitted for booking ${bookingId}`, 'info');
+}
+
+function initiateCheckin(bookingId) {
+  showToast(`Check-in process initiated for booking ${bookingId}`, 'success');
+}
+
+function downloadInvoice(bookingId) {
+  showToast(`Downloading invoice for booking ${bookingId}`, 'success');
+}
+
+function rateStay(bookingId) {
+  showToast(`Opening rating form for booking ${bookingId}`, 'info');
+}
+
+function rebookStay(bookingId) {
+  showToast(`Redirecting to booking page for similar stay`, 'info');
+}
+
+function viewRefund(bookingId) {
+  window.location.href = `/Features/RefundManagement/Customer/MyRefunds/index.html?booking=${bookingId}`;
+}
+
+// Toast notification function
+function showToast(message, type = 'success') {
+  const toast = document.createElement('div');
+  const bgColor = type === 'success' ? 'bg-green-600' : type === 'info' ? 'bg-blue-600' : 'bg-red-600';
+  toast.className = `${bgColor} text-white px-4 py-2 rounded-lg shadow-lg fixed bottom-4 right-4 z-50 transition-all duration-300 transform translate-y-full opacity-0`;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  
+  // Show toast
+  setTimeout(() => {
+    toast.classList.remove('translate-y-full', 'opacity-0');
+  }, 100);
+  
+  // Hide toast
+  setTimeout(() => {
+    toast.classList.add('translate-y-full', 'opacity-0');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialize table and filters
+  renderBookingsTable();
+  updatePaginationInfo();
+  
+  // Add event listeners for filters
+  const searchInput = document.getElementById('bookingSearch');
+  const statusFilter = document.getElementById('statusFilter');
+  const roomTypeFilter = document.getElementById('roomTypeFilter');
+  const minAmount = document.getElementById('minAmount');
+  const maxAmount = document.getElementById('maxAmount');
+  const startDate = document.getElementById('startDate');
+  const endDate = document.getElementById('endDate');
+  
+  if (searchInput) searchInput.addEventListener('input', applyBookingFilters);
+  if (statusFilter) statusFilter.addEventListener('change', applyBookingFilters);
+  if (roomTypeFilter) roomTypeFilter.addEventListener('change', applyBookingFilters);
+  if (minAmount) minAmount.addEventListener('input', applyBookingFilters);
+  if (maxAmount) maxAmount.addEventListener('input', applyBookingFilters);
+  if (startDate) startDate.addEventListener('change', applyBookingFilters);
+  if (endDate) endDate.addEventListener('change', applyBookingFilters);
   // Elements
   const modal = document.getElementById('unifiedCancelModal');
   const ucmTitle = document.getElementById('ucmTitle');
@@ -368,24 +812,16 @@ addRoomBtn?.addEventListener("click", () => {
       }
     });
 
-    // Pagination
-    let currentPage = 1;
-    const rowsPerPage = 5;
-    function showPage(page) {
-      const rows = document.querySelectorAll("#bookingsTableBody tr");
-      const totalPages = Math.ceil(rows.length / rowsPerPage);
-      if (page < 1) page = 1;
-      if (page > totalPages) page = totalPages;
-      currentPage = page;
-      rows.forEach((row, i) => {
-        row.style.display = (i >= (page - 1) * rowsPerPage && i < page * rowsPerPage) ? "" : "none";
+    // ✅ Function to update Edit buttons to Modify buttons (legacy support)
+    function updateEditButtons() {
+      const editButtons = document.querySelectorAll('button[title="Edit Booking"]');
+      editButtons.forEach(button => {
+        button.setAttribute('title', 'Modify Booking');
+        const icon = button.querySelector('.material-icons');
+        if (icon && icon.textContent === 'edit') {
+          icon.textContent = 'edit_note';
+          icon.classList.remove('text-green-600');
+          icon.classList.add('text-orange-600');
+        }
       });
     }
-    function prevPage() { showPage(currentPage - 1); }
-    function nextPage() { showPage(currentPage + 1); }
-    function goToPage(p) { showPage(p); }
-    function jumpToPage() {
-      const p = parseInt(document.getElementById("pageInput").value);
-      if (p) showPage(p);
-    }
-    document.addEventListener("DOMContentLoaded", () => showPage(1));

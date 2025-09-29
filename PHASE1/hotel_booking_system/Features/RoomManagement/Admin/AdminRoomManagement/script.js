@@ -1,4 +1,33 @@
     /******************************
+     * Toast functionality         *
+     ******************************/
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toastMessage');
+        
+        toastMessage.textContent = message;
+        
+        // Update toast styling based on type
+        toast.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 flex items-center gap-2`;
+        
+        if (type === 'success') {
+            toast.classList.add('bg-green-500', 'text-white');
+        } else if (type === 'error') {
+            toast.classList.add('bg-red-500', 'text-white');
+        } else if (type === 'info') {
+            toast.classList.add('bg-blue-500', 'text-white');
+        }
+        
+        // Show toast
+        toast.classList.remove('hidden');
+        
+        // Hide after 3 seconds
+        setTimeout(() => {
+            toast.classList.add('hidden');
+        }, 3000);
+    }
+
+    /******************************
      * LocalStorage helper layer  *
      ******************************/
     function getRooms() {
@@ -53,22 +82,74 @@
         tr.className = 'hover:bg-gray-50';
         tr.dataset.index = idx;
 
-        const statusBadge = room.frozen ? `<span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium">Frozen</span>` :
-                             (room.status === 'Available' ? `<span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">Available</span>` :
-                             (room.status === 'Occupied' ? `<span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium">Occupied</span>` :
-                             `<span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium">Maintenance</span>`));
+        const statusBadge = room.frozen ? 
+          `<span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium flex items-center gap-1">
+            <span class="material-icons text-sm text-red-500">lock</span>
+            Frozen
+          </span>` :
+          (room.status === 'Available' ? 
+          `<span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium flex items-center gap-1">
+            <span class="material-icons text-sm text-green-500">check_circle</span>
+            Available
+          </span>` :
+          (room.status === 'Occupied' ? 
+          `<span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium flex items-center gap-1">
+            <span class="material-icons text-sm text-yellow-500">person</span>
+            Occupied
+          </span>` :
+          `<span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium flex items-center gap-1">
+            <span class="material-icons text-sm text-red-500">handyman</span>
+            Maintenance
+          </span>`));
 
         tr.innerHTML = `
-          <td class="p-3">${escapeHtml(room.roomNumber)}</td>
-          <td class="p-3">${escapeHtml(room.type)}</td>
+          <td class="p-3">
+            <div class="flex items-center gap-2">
+              <span class="material-icons text-gray-400 text-sm">meeting_room</span>
+              ${escapeHtml(room.roomNumber)}
+            </div>
+          </td>
+          <td class="p-3">
+            <div class="flex items-center gap-2">
+              <span class="material-icons text-gray-400 text-sm">king_bed</span>
+              ${escapeHtml(room.type)}
+            </div>
+          </td>
           <td class="p-3">${statusBadge}</td>
-          <td class="p-3">${escapeHtml(room.guestName || '-')}</td>
-          <td class="p-3">${escapeHtml(room.nextCheckOut || '-')}</td>
-          <td class="p-3">${escapeHtml(room.nextCheckIn || '-')}</td>
+          <td class="p-3">
+            <div class="flex items-center gap-2">
+              <span class="material-icons text-gray-400 text-sm">person</span>
+              ${escapeHtml(room.guestName || '-')}
+            </div>
+          </td>
+          <td class="p-3">
+            <div class="flex items-center gap-2">
+              <span class="material-icons text-gray-400 text-sm">logout</span>
+              ${escapeHtml(room.nextCheckOut || '-')}
+            </div>
+          </td>
+          <td class="p-3">
+            <div class="flex items-center gap-2">
+              <span class="material-icons text-gray-400 text-sm">login</span>
+              ${escapeHtml(room.nextCheckIn || '-')}
+            </div>
+          </td>
           <td class="p-3 text-center flex justify-center space-x-2">
-            <button onclick="viewRoom('${encodeURIComponent(room.roomNumber)}')" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">View</button>
-            <button onclick="editRoom('${encodeURIComponent(room.roomNumber)}')" class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-sm">Edit</button>
-            <button onclick="toggleFreeze('${encodeURIComponent(room.roomNumber)}')" class="px-3 py-1 ${room.frozen ? 'bg-emerald-500' : 'bg-purple-500'} text-white rounded-lg hover:opacity-90 text-sm">${room.frozen ? 'Unfreeze' : 'Freeze'}</button>
+            <button onclick="viewRoom('${encodeURIComponent(room.roomNumber)}')" 
+                    class="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                    title="View Room Details">
+              <span class="material-icons text-sm">visibility</span>
+            </button>
+            <button onclick="editRoom('${encodeURIComponent(room.roomNumber)}')" 
+                    class="p-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg"
+                    title="Edit Room">
+              <span class="material-icons text-sm">edit</span>
+            </button>
+            <button onclick="toggleFreeze('${encodeURIComponent(room.roomNumber)}')" 
+                    class="p-2 ${room.frozen ? 'bg-emerald-500 hover:bg-emerald-600' : 'bg-purple-500 hover:bg-purple-600'} text-white rounded-lg"
+                    title="${room.frozen ? 'Unfreeze Room' : 'Freeze Room'}">
+              <span class="material-icons text-sm">${room.frozen ? 'lock_open' : 'lock'}</span>
+            </button>
           </td>
         `;
         tbody.appendChild(tr);
@@ -272,6 +353,22 @@
     document.getElementById('applyFilterBtn').addEventListener('click', function () {
       const filtered = applyCurrentFiltersAndSearch();
       renderRoomsTable(filtered);
+      showToast('Filters applied successfully', 'info');
+    });
+
+    // Reset filter functionality
+    document.getElementById('resetFilterBtn').addEventListener('click', function () {
+      // Reset all filter fields
+      document.getElementById('filterStatus').value = 'All';
+      document.getElementById('filterType').value = 'All';
+      document.getElementById('minPrice').value = '';
+      document.getElementById('maxPrice').value = '';
+      document.getElementById('filterCheckIn').value = '';
+      document.getElementById('filterCheckOut').value = '';
+      
+      // Reset table to show all rooms
+      renderRoomsTable();
+      showToast('Filters have been reset', 'info');
     });
 
 

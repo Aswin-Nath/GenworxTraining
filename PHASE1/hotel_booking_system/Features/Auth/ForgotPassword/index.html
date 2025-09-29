@@ -49,12 +49,19 @@
                        placeholder="Enter your email address">
             </div>
 
-            <button type="submit"
-                    class="w-full bg-gradient-to-r from-amber-600 to-yellow-500 text-white 
-                           py-2.5 rounded-lg hover:from-amber-700 hover:to-yellow-600 
-                           shadow-md transition">
-                Send Reset Link
-            </button>
+            <!-- Buttons -->
+            <div class="flex gap-3">
+                <button type="reset"
+                        class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2.5 rounded-lg shadow-md transition">
+                    Reset
+                </button>
+                <button type="submit"
+                        class="flex-1 bg-gradient-to-r from-amber-600 to-yellow-500 text-white 
+                               py-2.5 rounded-lg hover:from-amber-700 hover:to-yellow-600 
+                               shadow-md transition">
+                    Send Reset Link
+                </button>
+            </div>
 
             <p class="text-sm text-center text-gray-600">
                 Remember your password?
@@ -67,13 +74,13 @@
 </div>
 
 <!-- Toast Notification -->
-<div id="toast" class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-full opacity-0 transition-all duration-300">
-    Password reset link has been sent to your email!
+<div id="toast" class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full opacity-0 transition-all duration-300 z-50">
+    <div class="flex items-center gap-2">
+        <span class="material-icons text-sm">check_circle</span>
+        <span id="toastMessage">Password reset link has been sent to your email!</span>
+    </div>
 </div>
 
-<script src="./script.js"></script>
-</body>
-</html>
 <script src="./script.js"></script>
 </body>
 </html>

@@ -42,36 +42,45 @@
         </div>
       </div>
 
-<!-- ✅ Compact Booking Filter -->
-<div class="bg-white shadow-md border border-gray-200 rounded-lg p-3 mb-4">
+<!-- ✅ Enhanced Booking Filter with Search -->
+<div class="bg-white shadow-md border border-gray-200 rounded-lg p-4 mb-4">
+  
+  <!-- Search Bar -->
+  <div class="mb-4">
+    <div class="relative">
+      <span class="material-icons absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">search</span>
+      <input type="text" id="bookingSearch" placeholder="Search by booking ID, room, guest name..." 
+             class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+    </div>
+  </div>
 
   <div class="flex flex-wrap items-end gap-3">
 
     <!-- Booking Status -->
     <div class="flex flex-col">
       <label class="text-xs font-medium text-gray-600 mb-1">Booking Status</label>
-      <select class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
-        <option>All Statuses</option>
-        <option>Currently Staying</option>
-        <option>Upcoming Stay</option>
-        <option>Checking In Today</option>
-        <option>Checking Out Today</option>
-        <option>Completed</option>
-        <option>Cancelled</option>
-        <option>No Show</option>
+      <select id="statusFilter" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
+        <option value="">All Statuses</option>
+        <option value="staying">Currently Staying</option>
+        <option value="upcoming">Upcoming Stay</option>
+        <option value="checkin-today">Checking In Today</option>
+        <option value="checkout-today">Checking Out Today</option>
+        <option value="completed">Completed</option>
+        <option value="cancelled">Cancelled</option>
+        <option value="no-show">No Show</option>
       </select>
     </div>
 
     <!-- Room Type -->
     <div class="flex flex-col">
       <label class="text-xs font-medium text-gray-600 mb-1">Room Type</label>
-      <select class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
-        <option>All Types</option>
-        <option>Deluxe</option>
-        <option>Executive</option>
-        <option>Suite</option>
-        <option>Presidential</option>
-        <option>Family</option>
+      <select id="roomTypeFilter" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
+        <option value="">All Types</option>
+        <option value="deluxe">Deluxe</option>
+        <option value="executive">Executive</option>
+        <option value="suite">Suite</option>
+        <option value="presidential">Presidential</option>
+        <option value="family">Family</option>
       </select>
     </div>
 
@@ -79,9 +88,9 @@
     <div class="flex flex-col">
       <label class="text-xs font-medium text-gray-600 mb-1">Total Amount (₹)</label>
       <div class="flex items-center gap-2">
-        <input type="number" placeholder="Min ₹" class="w-24 p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
+        <input type="number" id="minAmount" placeholder="Min ₹" class="w-24 p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
         <span class="text-gray-400">—</span>
-        <input type="number" placeholder="Max ₹" class="w-24 p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
+        <input type="number" id="maxAmount" placeholder="Max ₹" class="w-24 p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
       </div>
     </div>
 
@@ -89,15 +98,15 @@
     <div class="flex flex-col">
       <label class="text-xs font-medium text-gray-600 mb-1">Stay Period</label>
       <div class="flex items-center gap-2">
-        <input type="date" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
+        <input type="date" id="startDate" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
         <span class="text-gray-400">—</span>
-        <input type="date" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
+        <input type="date" id="endDate" class="p-2 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
       </div>
     </div>
 
     <!-- Action Buttons -->
     <div class="ml-auto flex gap-2">
-      <button class="px-3 py-2 bg-gray-100 text-gray-700 text-sm rounded-md hover:bg-gray-200 flex items-center gap-1">
+      <button onclick="clearBookingFilters()" class="px-3 py-2 bg-gray-100 text-gray-700 text-sm rounded-md hover:bg-gray-200 flex items-center gap-1">
         <span class="material-icons text-xs">refresh</span>
         Reset
       </button>
@@ -119,15 +128,45 @@
         <table class="w-full text-sm">
           <thead>
             <tr class="bg-yellow-50 border-b border-gray-300">
-              <th class="p-3 text-left font-semibold text-gray-700 w-[25%]">Booking</th>
-              <th class="p-3 text-left font-semibold text-gray-700 w-[20%]">Stay Dates</th>
-              <th class="p-3 text-left font-semibold text-gray-700 w-[15%]">Guests</th>
-              <th class="p-3 text-left font-semibold text-gray-700 w-[15%]">Amount</th>
-              <th class="p-3 text-left font-semibold text-gray-700 w-[10%]">Status</th>
-              <th class="p-3 text-center font-semibold text-gray-700 w-[15%]">Actions</th>
+              <th class="p-3 text-left font-semibold text-gray-700 w-[25%]">
+                <div class="flex items-center gap-2">
+                  <span class="material-icons text-lg">confirmation_number</span>
+                  Booking
+                </div>
+              </th>
+              <th class="p-3 text-left font-semibold text-gray-700 w-[20%]">
+                <div class="flex items-center gap-2">
+                  <span class="material-icons text-lg">date_range</span>
+                  Stay Dates
+                </div>
+              </th>
+              <th class="p-3 text-left font-semibold text-gray-700 w-[15%]">
+                <div class="flex items-center gap-2">
+                  <span class="material-icons text-lg">people</span>
+                  Guests
+                </div>
+              </th>
+              <th class="p-3 text-left font-semibold text-gray-700 w-[15%]">
+                <div class="flex items-center gap-2">
+                  <span class="material-icons text-lg">payments</span>
+                  Amount
+                </div>
+              </th>
+              <th class="p-3 text-left font-semibold text-gray-700 w-[10%]">
+                <div class="flex items-center gap-2">
+                  <span class="material-icons text-lg">info</span>
+                  Status
+                </div>
+              </th>
+              <th class="p-3 text-center font-semibold text-gray-700 w-[15%]">
+                <div class="flex items-center justify-center gap-2">
+                  <span class="material-icons text-lg">settings</span>
+                  Actions
+                </div>
+              </th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-200">
+          <tbody id="bookingsTableBody" class="divide-y divide-gray-200">
             <tr class="hover:bg-gray-50">
               <td class="p-3">
                 <div>
@@ -158,13 +197,13 @@
               </td>
               <td class="p-3">
                 <div class="flex justify-center items-center space-x-2">
-                  <button onclick="window.location.href='/Features/BookingManagement//Customer/IndividualBookingsCustomer/index.html'" 
+                  <button onclick="window.location.href='/Features/BookingManagement/Customer/IndividualBookingsCustomer/index.html'" 
                     class="p-1.5 hover:bg-gray-100 rounded-lg" title="View Details">
                     <span class="material-icons text-blue-600">visibility</span>
                   </button>
                   <button onclick="window.location.href='/Features/BookingManagement/Customer/EditBookings/index.html'"
-                    class="p-1.5 hover:bg-gray-100 rounded-lg" title="Edit Booking">
-                    <span class="material-icons text-green-600">edit</span>
+                    class="p-1.5 hover:bg-gray-100 rounded-lg" title="Modify Booking">
+                    <span class="material-icons text-orange-600">edit_note</span>
                   </button>
                   <button data-cancel="booking" data-id="1001" data-label="Booking #1001"
                     class="p-1.5 hover:bg-gray-100 rounded-lg" title="Cancel Booking">

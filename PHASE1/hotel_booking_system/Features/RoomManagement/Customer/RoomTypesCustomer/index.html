@@ -95,11 +95,11 @@
 
     <!-- Action Buttons -->
     <div class="ml-auto flex gap-2">
-      <button class="px-3 py-2 bg-gray-100 text-gray-700 text-sm rounded-md hover:bg-gray-200 flex items-center gap-1">
+      <button id="resetFilterBtn" class="px-3 py-2 bg-gray-100 text-gray-700 text-sm rounded-md hover:bg-gray-200 flex items-center gap-1">
         <span class="material-icons text-xs">refresh</span>
         Reset
       </button>
-      <button class="px-4 py-2 bg-yellow-600 text-white text-sm rounded-md hover:bg-yellow-700 flex items-center gap-1">
+      <button id="applyFilterBtn" class="px-4 py-2 bg-yellow-600 text-white text-sm rounded-md hover:bg-yellow-700 flex items-center gap-1">
         <span class="material-icons text-xs">filter_alt</span>
         Apply
       </button>
@@ -135,6 +135,15 @@
           <button class="openReviews text-yellow-600 font-medium hover:underline text-sm sm:text-base">View Reviews</button>
           <button class="remindMe text-blue-600 font-medium hover:underline text-sm sm:text-base" 
                   data-room="Deluxe Room">Remind Me</button>
+        </div>
+        
+        <!-- Save Room Action -->
+        <div class="mt-4">
+          <button class="saveRoom flex items-center gap-2 px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition text-sm" 
+                  data-room="Deluxe Room" data-type="Deluxe" data-price="4500" data-saved="false">
+            <span class="material-icons text-sm save-icon">bookmark_border</span>
+            <span class="save-text">Save Room</span>
+          </button>
         </div>
       </div>
       <div class="space-y-6">
@@ -188,6 +197,15 @@
           <button class="openReviews text-yellow-600 font-medium hover:underline text-sm sm:text-base">View Reviews</button>
           <button class="remindMe text-blue-600 font-medium hover:underline text-sm sm:text-base" 
                   data-room="Executive Suite">Remind Me</button>
+        </div>
+        
+        <!-- Save Room Action -->
+        <div class="mt-4">
+          <button class="saveRoom flex items-center gap-2 px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition text-sm" 
+                  data-room="Executive Suite" data-type="Executive" data-price="7800" data-saved="false">
+            <span class="material-icons text-sm save-icon">bookmark_border</span>
+            <span class="save-text">Save Room</span>
+          </button>
         </div>
       </div>
       <div class="space-y-6">
@@ -251,6 +269,15 @@
           <button class="openReviews text-yellow-600 font-medium hover:underline text-sm sm:text-base">View Reviews</button>
           <button class="remindMe text-blue-600 font-medium hover:underline text-sm sm:text-base" 
                   data-room="Presidential Suite">Remind Me</button>
+        </div>
+        
+        <!-- Save Room Action -->
+        <div class="mt-4">
+          <button class="saveRoom flex items-center gap-2 px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition text-sm" 
+                  data-room="Presidential Suite" data-type="Presidential" data-price="15000" data-saved="false">
+            <span class="material-icons text-sm save-icon">bookmark_border</span>
+            <span class="save-text">Save Room</span>
+          </button>
         </div>
       </div>
       <div class="space-y-6">
@@ -430,8 +457,11 @@
 </div>
 
 <!-- Toast Notification -->
-<div id="toast" class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-full opacity-0 transition-all duration-300">
-    You will be reminded during the selected dates!
+<div id="toast" class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full opacity-0 transition-all duration-300 z-50">
+    <div class="flex items-center gap-2">
+        <span class="material-icons text-sm">check_circle</span>
+        <span id="toastMessage">Action completed successfully!</span>
+    </div>
 </div>
 
 <!-- ✅ Footer -->

@@ -34,12 +34,28 @@
         <p class="text-sm sm:text-base text-gray-500 mt-2">Complete overview of your stay including booking, issues, and invoice</p>
       </div>
 
-      <!-- ✅ Back Button -->
-      <div class="flex justify-start">
+      <!-- ✅ Back Button and Action Buttons -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <button onclick="window.history.back()" 
           class="flex items-center gap-2 bg-gradient-to-r from-yellow-500 to-pink-500 text-white px-5 py-2 rounded-lg shadow hover:opacity-90">
           <span class="material-icons text-sm">arrow_back</span> Back
         </button>
+        
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap gap-3">
+          <button onclick="modifyBooking()" class="flex items-center gap-2 px-4 py-2 bg-orange-600 text-white rounded-lg shadow hover:bg-orange-700 transition">
+            <span class="material-icons text-sm">edit_note</span>
+            Modify Booking
+          </button>
+          <button onclick="cancelBooking()" class="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition">
+            <span class="material-icons text-sm">cancel</span>
+            Cancel Booking
+          </button>
+          <button onclick="raiseIssue()" class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
+            <span class="material-icons text-sm">report_problem</span>
+            Raise Issue
+          </button>
+        </div>
       </div>
 
       <!-- Booking + Hotel Info -->
@@ -77,17 +93,44 @@
       <section class="bg-white rounded-2xl border-2 border-pink-400 p-4 sm:p-6 shadow-sm">
         <h3 class="text-lg font-semibold text-yellow-700 mb-4">Reported Issues</h3>
         <div class="space-y-3">
-          <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-            <span>Room Service Delay</span>
-            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">Resolved</span>
+          <div onclick="viewIssueDetails('ISS-001')" class="flex justify-between items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors">
+            <div class="flex items-center gap-3">
+              <span class="material-icons text-red-500">restaurant</span>
+              <div>
+                <p class="font-medium text-gray-800">Room Service Delay</p>
+                <p class="text-sm text-gray-500">Issue ID: ISS-001</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">Resolved</span>
+              <span class="material-icons text-blue-600">visibility</span>
+            </div>
           </div>
-          <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-            <span>AC Not Working</span>
-            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">Pending</span>
+          <div onclick="viewIssueDetails('ISS-002')" class="flex justify-between items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors">
+            <div class="flex items-center gap-3">
+              <span class="material-icons text-blue-500">ac_unit</span>
+              <div>
+                <p class="font-medium text-gray-800">AC Not Working</p>
+                <p class="text-sm text-gray-500">Issue ID: ISS-002</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">Pending</span>
+              <span class="material-icons text-blue-600">visibility</span>
+            </div>
           </div>
-          <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-            <span>Noisy Corridor</span>
-            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Reported</span>
+          <div onclick="viewIssueDetails('ISS-003')" class="flex justify-between items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors">
+            <div class="flex items-center gap-3">
+              <span class="material-icons text-orange-500">volume_up</span>
+              <div>
+                <p class="font-medium text-gray-800">Noisy Corridor</p>
+                <p class="text-sm text-gray-500">Issue ID: ISS-003</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Reported</span>
+              <span class="material-icons text-blue-600">visibility</span>
+            </div>
           </div>
         </div>
       </section>
@@ -118,7 +161,8 @@
           </table>
         </div>
         <div class="mt-4 flex justify-end">
-          <button class="w-full sm:w-auto bg-gradient-to-r from-yellow-500 to-pink-500 text-white px-4 sm:px-6 py-2 rounded-lg shadow hover:opacity-90">
+          <button onclick="downloadInvoice()" class="w-full sm:w-auto bg-gradient-to-r from-yellow-500 to-pink-500 text-white px-4 sm:px-6 py-2 rounded-lg shadow hover:opacity-90 transition-all">
+            <span class="material-icons text-sm mr-2">download</span>
             Download Invoice
           </button>
         </div>
@@ -141,18 +185,15 @@
           <!-- Rating Input -->
           <div class="space-y-2">
             <label class="block text-sm font-medium text-gray-700">Your Rating</label>
-            <div class="flex gap-2">
-              <input type="radio" name="rating" value="5" id="star5" class="hidden peer" required>
-              <label for="star5" class="text-2xl cursor-pointer text-gray-300 hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
-              <input type="radio" name="rating" value="4" id="star4" class="hidden peer">
-              <label for="star4" class="text-2xl cursor-pointer text-gray-300 hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
-              <input type="radio" name="rating" value="3" id="star3" class="hidden peer">
-              <label for="star3" class="text-2xl cursor-pointer text-gray-300 hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
-              <input type="radio" name="rating" value="2" id="star2" class="hidden peer">
-              <label for="star2" class="text-2xl cursor-pointer text-gray-300 hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
-              <input type="radio" name="rating" value="1" id="star1" class="hidden peer">
-              <label for="star1" class="text-2xl cursor-pointer text-gray-300 hover:text-yellow-400 peer-checked:text-yellow-400">★</label>
+            <div class="flex gap-1" id="starRating">
+              <span class="star text-3xl cursor-pointer text-gray-300 hover:text-yellow-400 transition-colors" data-value="1">★</span>
+              <span class="star text-3xl cursor-pointer text-gray-300 hover:text-yellow-400 transition-colors" data-value="2">★</span>
+              <span class="star text-3xl cursor-pointer text-gray-300 hover:text-yellow-400 transition-colors" data-value="3">★</span>
+              <span class="star text-3xl cursor-pointer text-gray-300 hover:text-yellow-400 transition-colors" data-value="4">★</span>
+              <span class="star text-3xl cursor-pointer text-gray-300 hover:text-yellow-400 transition-colors" data-value="5">★</span>
             </div>
+            <input type="hidden" name="rating" id="selectedRating" required>
+            <p class="text-sm text-gray-500" id="ratingText">Click to rate your experience</p>
           </div>
           
           <div>
@@ -167,7 +208,11 @@
               <span id="charCount">0</span>/200
             </p>
           </div>
-          <div class="flex justify-end">
+          <div class="flex justify-end gap-3">
+            <button type="reset"
+                    class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg shadow">
+              Reset
+            </button>
             <button type="submit"
                     class="bg-gradient-to-r from-yellow-500 to-pink-500 text-white px-6 py-2 rounded-lg shadow hover:opacity-90">
               Submit Review

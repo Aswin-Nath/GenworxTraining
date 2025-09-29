@@ -120,9 +120,44 @@ function initNotifications() {
       </button>
     </div>
 
+    <!-- Modification Request Alert (if exists) -->
+    <div id="modificationAlert" class="bg-orange-50 border-l-4 border-l-orange-400 p-4 rounded-lg shadow-md">
+      <div class="flex items-center justify-between">
+        <div class="flex items-start gap-3">
+          <span class="material-icons text-orange-500">warning</span>
+          <div>
+            <h4 class="font-semibold text-orange-800">Modification Request Pending</h4>
+            <p class="text-orange-700 text-sm mt-1">Customer has requested changes to this booking. Review and take action.</p>
+            <div class="mt-2 text-sm">
+              <p><span class="font-medium">Requested on:</span> 20 Sept 2023, 3:45 PM</p>
+              <p><span class="font-medium">Type:</span> Room Change & Date Extension</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="viewModificationDetails()" class="px-3 py-1 bg-orange-100 text-orange-800 rounded hover:bg-orange-200 text-sm">
+            View Details
+          </button>
+          <button onclick="window.location.href='../Customer/EditBookings/index.html'" class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm flex items-center gap-1">
+            <span class="material-icons text-sm">edit</span>
+            Edit
+          </button>
+          <button onclick="dismissModificationAlert()" class="px-2 py-1 text-orange-600 hover:text-orange-800">
+            <span class="material-icons text-sm">close</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Booking Summary -->
     <section class="bg-white rounded-2xl border-2 border-yellow-400 p-6 shadow-md">
-      <h3 class="text-lg font-semibold text-yellow-700 mb-4">Booking Summary</h3>
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-semibold text-yellow-700">Booking Summary</h3>
+        <button onclick="downloadInvoice()" class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm">
+          <span class="material-icons text-sm">download</span>
+          Download Invoice
+        </button>
+      </div>
       <div class="grid md:grid-cols-2 gap-6">
         <!-- Left Column -->
         <div class="space-y-3">
@@ -142,7 +177,66 @@ function initNotifications() {
           <p><span class="font-medium">Payment Method:</span> Credit Card (**** 2345)</p>
           <p><span class="font-medium">Transaction ID:</span> TXN123456789</p>
           <p><span class="font-medium">Total Amount:</span> ₹45,000</p>
-          <p><span class="font-medium">Special Requests:</span> Early check-in, Extra pillows</p>
+          <p><span class="font-medium">Booking Status:</span> 
+            <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs">Active</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Special Requests Section -->
+    <section class="bg-white rounded-2xl border-2 border-purple-400 p-6 shadow-md">
+      <h3 class="text-lg font-semibold text-purple-700 mb-4 flex items-center gap-2">
+        <span class="material-icons">star</span>
+        Special Requests & Preferences
+      </h3>
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Special Requests -->
+        <div class="bg-purple-50 rounded-xl p-4 border border-purple-200">
+          <h4 class="font-semibold text-purple-800 mb-3 flex items-center gap-2">
+            <span class="material-icons text-sm">request_quote</span>
+            Customer Requests
+          </h4>
+          <div class="space-y-2">
+            <div class="flex items-start gap-2">
+              <span class="material-icons text-green-600 text-sm mt-0.5">check_circle</span>
+              <span class="text-sm">Early check-in (before 2:00 PM) - <span class="text-green-600 font-medium">Approved</span></span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="material-icons text-green-600 text-sm mt-0.5">check_circle</span>
+              <span class="text-sm">Extra pillows for Room 101 - <span class="text-green-600 font-medium">Fulfilled</span></span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="material-icons text-orange-500 text-sm mt-0.5">schedule</span>
+              <span class="text-sm">High floor rooms preferred - <span class="text-orange-500 font-medium">Partially Met</span></span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="material-icons text-blue-600 text-sm mt-0.5">info</span>
+              <span class="text-sm">Quiet rooms away from elevator - <span class="text-blue-600 font-medium">Noted</span></span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Dietary & Accessibility -->
+        <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
+          <h4 class="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+            <span class="material-icons text-sm">accessibility</span>
+            Dietary & Accessibility
+          </h4>
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <span class="material-icons text-red-500 text-sm">no_food</span>
+              <span class="text-sm">Vegetarian meals only</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="material-icons text-orange-500 text-sm">warning</span>
+              <span class="text-sm">Nut allergy (severe)</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="material-icons text-blue-600 text-sm">accessible</span>
+              <span class="text-sm">No accessibility requirements</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -178,16 +272,28 @@ function initNotifications() {
 
     <!-- Room Details -->
     <section class="bg-white rounded-2xl border-2 border-yellow-400 p-6 shadow-md">
-      <h3 class="text-lg font-semibold text-yellow-700 mb-4">Room Details</h3>
+      <h3 class="text-lg font-semibold text-yellow-700 mb-4 flex items-center gap-2">
+        <span class="material-icons">hotel</span>
+        Room Details & Management
+      </h3>
       <div class="space-y-6">
         <!-- Room 1 -->
-        <div class="border rounded-xl p-4">
+        <div class="border rounded-xl p-4 hover:shadow-md transition-shadow">
           <div class="flex justify-between items-start mb-4">
             <div>
-              <h4 class="font-semibold text-gray-800">Room 101 - Deluxe Room</h4>
+              <h4 class="font-semibold text-gray-800 flex items-center gap-2">
+                <span class="material-icons text-blue-600 text-sm">hotel</span>
+                Room 101 - Deluxe Room
+              </h4>
               <p class="text-gray-500">₹12,000 per night</p>
             </div>
-            <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs">Occupied</span>
+            <div class="flex items-center gap-2">
+              <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs">Occupied</span>
+              <button onclick="transferRoom('101')" class="px-3 py-1 bg-orange-100 text-orange-700 rounded hover:bg-orange-200 text-xs flex items-center gap-1">
+                <span class="material-icons text-xs">swap_horiz</span>
+                Transfer
+              </button>
+            </div>
           </div>
           <div class="grid md:grid-cols-2 gap-4">
             <div>
@@ -201,16 +307,29 @@ function initNotifications() {
               <p><span class="font-medium">Floor:</span> 1st Floor</p>
             </div>
           </div>
+          <!-- Room-specific special requests -->
+          <div class="mt-3 pt-3 border-t border-gray-200">
+            <p class="text-sm text-gray-600"><span class="font-medium">Room Notes:</span> Extra pillows provided, Early check-in processed</p>
+          </div>
         </div>
 
         <!-- Room 2 -->
-        <div class="border rounded-xl p-4">
+        <div class="border rounded-xl p-4 hover:shadow-md transition-shadow">
           <div class="flex justify-between items-start mb-4">
             <div>
-              <h4 class="font-semibold text-gray-800">Room 205 - Executive Suite</h4>
+              <h4 class="font-semibold text-gray-800 flex items-center gap-2">
+                <span class="material-icons text-blue-600 text-sm">hotel</span>
+                Room 205 - Executive Suite
+              </h4>
               <p class="text-gray-500">₹18,000 per night</p>
             </div>
-            <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs">Occupied</span>
+            <div class="flex items-center gap-2">
+              <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs">Occupied</span>
+              <button onclick="transferRoom('205')" class="px-3 py-1 bg-orange-100 text-orange-700 rounded hover:bg-orange-200 text-xs flex items-center gap-1">
+                <span class="material-icons text-xs">swap_horiz</span>
+                Transfer
+              </button>
+            </div>
           </div>
           <div class="grid md:grid-cols-2 gap-4">
             <div>
@@ -224,16 +343,30 @@ function initNotifications() {
               <p><span class="font-medium">Floor:</span> 2nd Floor</p>
             </div>
           </div>
+          <div class="mt-3 pt-3 border-t border-gray-200">
+            <p class="text-sm text-gray-600"><span class="font-medium">Room Notes:</span> Premium suite with complimentary amenities</p>
+          </div>
         </div>
 
-        <!-- Room 3 -->
-        <div class="border rounded-xl p-4">
+        <!-- Room 3 with pending transfer request -->
+        <div class="border rounded-xl p-4 hover:shadow-md transition-shadow bg-yellow-50 border-yellow-300">
           <div class="flex justify-between items-start mb-4">
             <div>
-              <h4 class="font-semibold text-gray-800">Room 304 - Deluxe Room</h4>
+              <h4 class="font-semibold text-gray-800 flex items-center gap-2">
+                <span class="material-icons text-blue-600 text-sm">hotel</span>
+                Room 304 - Deluxe Room
+                <span class="material-icons text-orange-500 text-sm" title="Transfer pending">pending</span>
+              </h4>
               <p class="text-gray-500">₹15,000 per night</p>
             </div>
-            <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs">Occupied</span>
+            <div class="flex items-center gap-2">
+              <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs">Occupied</span>
+              <span class="px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs">Transfer Pending</span>
+              <button onclick="transferRoom('304')" class="px-3 py-1 bg-orange-100 text-orange-700 rounded hover:bg-orange-200 text-xs flex items-center gap-1">
+                <span class="material-icons text-xs">swap_horiz</span>
+                Manage
+              </button>
+            </div>
           </div>
           <div class="grid md:grid-cols-2 gap-4">
             <div>
@@ -245,6 +378,15 @@ function initNotifications() {
               <p><span class="font-medium">Meal Plan:</span> Breakfast Included</p>
               <p><span class="font-medium">Room Size:</span> 32 sq.m</p>
               <p><span class="font-medium">Floor:</span> 3rd Floor</p>
+            </div>
+          </div>
+          <div class="mt-3 pt-3 border-t border-orange-200">
+            <div class="flex items-start gap-2">
+              <span class="material-icons text-orange-500 text-sm mt-0.5">info</span>
+              <div>
+                <p class="text-sm text-orange-800"><span class="font-medium">Transfer Note:</span> Customer requested room change due to AC issues. Maintenance scheduled.</p>
+                <p class="text-xs text-orange-600 mt-1">Requested: 23 Sept 2023, 10:30 AM</p>
+              </div>
             </div>
           </div>
         </div>
@@ -307,14 +449,185 @@ function initNotifications() {
 
     <!-- Action Buttons -->
     <div class="flex justify-end gap-4">
-      <button class="px-5 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 shadow flex items-center gap-2">
+      <button onclick="editBooking()" class="px-5 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 shadow flex items-center gap-2">
         <span class="material-icons text-sm">edit</span> Edit Booking
       </button>
-      <button class="px-5 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 shadow flex items-center gap-2">
+      <button onclick="cancelBooking()" class="px-5 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 shadow flex items-center gap-2">
         <span class="material-icons text-sm">cancel</span> Cancel Booking
       </button>
     </div>
   </main>
+
+  <!-- Modification Details Modal -->
+  <div id="modificationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+    <div class="bg-white rounded-2xl max-w-2xl w-full m-4 p-6 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-xl font-semibold text-gray-800 flex items-center gap-2">
+          <span class="material-icons text-orange-500">edit_note</span>
+          Modification Request Details
+        </h3>
+        <button onclick="closeModificationModal()" class="text-gray-400 hover:text-gray-600">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      
+      <div class="space-y-6">
+        <!-- Request Overview -->
+        <div class="bg-orange-50 rounded-lg p-4 border border-orange-200">
+          <h4 class="font-semibold text-orange-800 mb-3">Request Summary</h4>
+          <div class="grid md:grid-cols-2 gap-4 text-sm">
+            <div>
+              <p><span class="font-medium">Request Date:</span> 20 Sept 2023, 3:45 PM</p>
+              <p><span class="font-medium">Request Type:</span> Room Change & Date Extension</p>
+              <p><span class="font-medium">Priority:</span> <span class="px-2 py-1 bg-orange-100 text-orange-800 rounded text-xs">Medium</span></p>
+            </div>
+            <div>
+              <p><span class="font-medium">Customer:</span> Arjun Kumar</p>
+              <p><span class="font-medium">Status:</span> <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-xs">Pending Review</span></p>
+              <p><span class="font-medium">Estimated Impact:</span> ₹2,500 additional</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Requested Changes -->
+        <div>
+          <h4 class="font-semibold text-gray-800 mb-3">Requested Changes</h4>
+          <div class="space-y-4">
+            <!-- Room Change Request -->
+            <div class="border rounded-lg p-4 bg-gray-50">
+              <h5 class="font-medium text-gray-800 mb-2 flex items-center gap-2">
+                <span class="material-icons text-blue-600 text-sm">swap_horiz</span>
+                Room Transfer Request
+              </h5>
+              <div class="grid md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p><span class="font-medium">From:</span> Room 304 (Deluxe Room)</p>
+                  <p><span class="font-medium">Reason:</span> AC malfunction</p>
+                </div>
+                <div>
+                  <p><span class="font-medium">To:</span> Room 402 (Executive Suite)</p>
+                  <p><span class="font-medium">Additional Cost:</span> ₹1,500/night</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Date Extension Request -->
+            <div class="border rounded-lg p-4 bg-gray-50">
+              <h5 class="font-medium text-gray-800 mb-2 flex items-center gap-2">
+                <span class="material-icons text-purple-600 text-sm">calendar_today</span>
+                Date Extension Request
+              </h5>
+              <div class="grid md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p><span class="font-medium">Current Check-out:</span> 25 Sept 2023</p>
+                  <p><span class="font-medium">Reason:</span> Flight delayed</p>
+                </div>
+                <div>
+                  <p><span class="font-medium">New Check-out:</span> 26 Sept 2023</p>
+                  <p><span class="font-medium">Additional Cost:</span> ₹1,000</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Customer Message -->
+        <div>
+          <h4 class="font-semibold text-gray-800 mb-3">Customer Message</h4>
+          <div class="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <p class="text-gray-700 italic">
+              "Hi, we're experiencing issues with the AC in Room 304 and it's quite uncomfortable for our family with young children. 
+              Could we please be moved to a better room? Also, our flight got delayed so we'll need to extend our stay by one night. 
+              Please let us know about the additional charges. Thank you for your understanding."
+            </p>
+            <p class="text-sm text-gray-500 mt-2">Submitted via: Mobile App</p>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-end gap-3 pt-4 border-t">
+          <button onclick="rejectModification()" class="px-4 py-2 text-red-700 border border-red-300 rounded-lg hover:bg-red-50">
+            Reject Request
+          </button>
+          <button onclick="approveModification()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+            Approve Changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Room Transfer Modal -->
+  <div id="roomTransferModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+    <div class="bg-white rounded-2xl max-w-lg w-full m-4 p-6">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-xl font-semibold text-gray-800 flex items-center gap-2">
+          <span class="material-icons text-orange-500">swap_horiz</span>
+          Transfer Room
+        </h3>
+        <button onclick="closeTransferModal()" class="text-gray-400 hover:text-gray-600">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      
+      <form id="transferForm" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Current Room</label>
+          <input type="text" id="currentRoom" disabled class="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg">
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Available Rooms</label>
+          <select id="newRoom" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500">
+            <option value="">Select new room...</option>
+            <option value="401">Room 401 - Executive Suite (₹18,000/night)</option>
+            <option value="402">Room 402 - Executive Suite (₹18,000/night)</option>
+            <option value="105">Room 105 - Deluxe Room (₹12,000/night)</option>
+            <option value="206">Room 206 - Deluxe Room (₹15,000/night)</option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Reason for Transfer</label>
+          <select id="transferReason" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500">
+            <option value="">Select reason...</option>
+            <option value="maintenance">Room Maintenance</option>
+            <option value="customer_request">Customer Request</option>
+            <option value="upgrade">Room Upgrade</option>
+            <option value="technical_issue">Technical Issue</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Additional Notes</label>
+          <textarea id="transferNotes" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 resize-none" 
+                    placeholder="Any additional details about the transfer..."></textarea>
+        </div>
+        
+        <div class="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
+          <p class="text-sm text-yellow-800 flex items-start gap-2">
+            <span class="material-icons text-yellow-600 text-sm mt-0.5">info</span>
+            The customer will be notified about the room change and any price differences will be adjusted in the final bill.
+          </p>
+        </div>
+        
+        <div class="flex justify-end gap-3 pt-4">
+          <button type="button" onclick="closeTransferModal()" class="px-4 py-2 text-gray-700 border rounded-lg hover:bg-gray-50">
+            Cancel
+          </button>
+          <button type="submit" class="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700">
+            Confirm Transfer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform -translate-y-full opacity-0 transition-all duration-300 z-50">
+    Action completed successfully!
+  </div>
 
 <script src="./script.js"></script>
 </body>

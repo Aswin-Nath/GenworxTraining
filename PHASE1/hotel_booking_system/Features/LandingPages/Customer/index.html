@@ -8,6 +8,7 @@
     <title>LuxuryStay Hotel - Official Site</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 
     <style>
@@ -385,32 +386,77 @@
     <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-12 max-w-6xl mx-auto text-left">
 
       <!-- New York -->
-      <div>
-        <img src="/assets/nyc.jpg" alt="New York" class="w-full h-56 object-cover rounded-md mb-4">
-        <h3 class="font-serif text-lg sm:text-xl font-bold uppercase">New York City</h3>
+      <div class="group cursor-pointer hover:scale-105 transition-transform duration-300" onclick="exploreDestination('newyork')">
+        <div class="relative overflow-hidden rounded-lg shadow-lg">
+          <img src="/assets/nyc.jpg" alt="New York" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-300">
+          <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+            <span class="text-white font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2">
+              <i class="fas fa-plane"></i>
+              Explore Now
+            </span>
+          </div>
+        </div>
+        <h3 class="font-serif text-lg sm:text-xl font-bold uppercase mt-4 group-hover:text-yellow-600 transition-colors">New York City</h3>
         <p class="text-gray-600 text-sm mt-2">
           The city that never sleeps – Broadway shows, skyline views, vibrant nightlife, and endless culture.
         </p>
+        <div class="flex items-center justify-between mt-3">
+          <span class="text-yellow-600 font-medium">Starting from $299/night</span>
+          <i class="fas fa-arrow-right text-yellow-600 group-hover:translate-x-2 transition-transform"></i>
+        </div>
       </div>
 
       <!-- Maldives -->
-      <div>
-        <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=600&q=80" alt="Maldives" class="w-full h-56 object-cover rounded-md mb-4">
-        <h3 class="font-serif text-lg sm:text-xl font-bold uppercase">Maldives</h3>
+      <div class="group cursor-pointer hover:scale-105 transition-transform duration-300" onclick="exploreDestination('maldives')">
+        <div class="relative overflow-hidden rounded-lg shadow-lg">
+          <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=600&q=80" alt="Maldives" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-300">
+          <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+            <span class="text-white font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2">
+              <i class="fas fa-plane"></i>
+              Explore Now
+            </span>
+          </div>
+        </div>
+        <h3 class="font-serif text-lg sm:text-xl font-bold uppercase mt-4 group-hover:text-yellow-600 transition-colors">Maldives</h3>
         <p class="text-gray-600 text-sm mt-2">
           Crystal-clear waters, luxury beach villas, and serene retreats — the Maldives is paradise on Earth.
         </p>
+        <div class="flex items-center justify-between mt-3">
+          <span class="text-yellow-600 font-medium">Starting from $599/night</span>
+          <i class="fas fa-arrow-right text-yellow-600 group-hover:translate-x-2 transition-transform"></i>
+        </div>
       </div>
 
       <!-- Paris -->
-      <div>
-        <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=80" alt="Paris" class="w-full h-56 object-cover rounded-md mb-4">
-        <h3 class="font-serif text-lg sm:text-xl font-bold uppercase">Paris</h3>
+      <div class="group cursor-pointer hover:scale-105 transition-transform duration-300" onclick="exploreDestination('paris')">
+        <div class="relative overflow-hidden rounded-lg shadow-lg">
+          <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=80" alt="Paris" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-300">
+          <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+            <span class="text-white font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2">
+              <i class="fas fa-plane"></i>
+              Explore Now
+            </span>
+          </div>
+        </div>
+        <h3 class="font-serif text-lg sm:text-xl font-bold uppercase mt-4 group-hover:text-yellow-600 transition-colors">Paris</h3>
         <p class="text-gray-600 text-sm mt-2">
           Romance by the Eiffel Tower, gourmet dining, and rich cultural treasures in the City of Love.
         </p>
+        <div class="flex items-center justify-between mt-3">
+          <span class="text-yellow-600 font-medium">Starting from $399/night</span>
+          <i class="fas fa-arrow-right text-yellow-600 group-hover:translate-x-2 transition-transform"></i>
+        </div>
       </div>
 
+    </div>
+    
+    <!-- View All Destinations Button -->
+    <div class="text-center mt-10">
+      <a href="/Features/RoomManagement/Customer/RoomTypesCustomer/index.html?filter=destinations" 
+         class="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-yellow-500 to-red-500 text-white font-semibold rounded-lg shadow-md hover:opacity-90 hover:scale-105 transition">
+        <i class="fas fa-globe-americas"></i>
+        Explore All Destinations
+      </a>
     </div>
   </section>
 
@@ -421,5 +467,20 @@
 
   <script src="/Features/Components/Navbars/LoggedCustomerNavbar/script.js"></script>
   <script src="./script.js"></script>
+  
+  <script>
+    // Destination exploration function
+    function exploreDestination(destination) {
+      const destinationUrls = {
+        'newyork': '/Features/BookingManagement/Customer/BookingRooms/index.html?destination=newyork',
+        'maldives': '/Features/BookingManagement/Customer/BookingRooms/index.html?destination=maldives',
+        'paris': '/Features/BookingManagement/Customer/BookingRooms/index.html?destination=paris'
+      };
+      
+      if (destinationUrls[destination]) {
+        window.location.href = destinationUrls[destination];
+      }
+    }
+  </script>
 </body>
   </html>

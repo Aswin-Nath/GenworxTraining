@@ -1,3 +1,106 @@
+// Toast functionality
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toastMessage');
+    
+    toastMessage.textContent = message;
+    
+    // Update toast styling based on type
+    toast.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300 z-50`;
+    
+    if (type === 'success') {
+        toast.classList.add('bg-green-500', 'text-white');
+    } else if (type === 'error') {
+        toast.classList.add('bg-red-500', 'text-white');
+    } else if (type === 'info') {
+        toast.classList.add('bg-blue-500', 'text-white');
+    }
+    
+    // Show toast
+    toast.classList.remove('translate-x-full', 'opacity-0');
+    
+    // Hide after 3 seconds
+    setTimeout(() => {
+        toast.classList.add('translate-x-full', 'opacity-0');
+    }, 3000);
+}
+
+// Save Room Toggle functionality
+function toggleSaveRoom(button, roomData) {
+    const savedRooms = JSON.parse(localStorage.getItem('savedRooms')) || [];
+    const existingIndex = savedRooms.findIndex(room => room.name === roomData.name);
+    const saveIcon = button.querySelector('.save-icon');
+    const saveText = button.querySelector('.save-text');
+    
+    if (existingIndex === -1) {
+        // Save the room
+        savedRooms.push({
+            name: roomData.name,
+            type: roomData.type,
+            price: roomData.price,
+            savedAt: new Date().toISOString()
+        });
+        localStorage.setItem('savedRooms', JSON.stringify(savedRooms));
+        
+        // Update button appearance
+        saveIcon.textContent = 'bookmark';
+        saveText.textContent = 'Saved';
+        button.classList.remove('bg-green-100', 'text-green-700', 'hover:bg-green-200');
+        button.classList.add('bg-yellow-100', 'text-yellow-700', 'hover:bg-yellow-200');
+        button.dataset.saved = 'true';
+        
+        showToast(`${roomData.name} has been saved!`, 'success');
+    } else {
+        // Remove the room
+        savedRooms.splice(existingIndex, 1);
+        localStorage.setItem('savedRooms', JSON.stringify(savedRooms));
+        
+        // Update button appearance
+        saveIcon.textContent = 'bookmark_border';
+        saveText.textContent = 'Save Room';
+        button.classList.remove('bg-yellow-100', 'text-yellow-700', 'hover:bg-yellow-200');
+        button.classList.add('bg-green-100', 'text-green-700', 'hover:bg-green-200');
+        button.dataset.saved = 'false';
+        
+        showToast(`${roomData.name} has been removed from saved rooms!`, 'info');
+    }
+}
+
+// Initialize saved rooms state on page load
+function initializeSavedRooms() {
+    const savedRooms = JSON.parse(localStorage.getItem('savedRooms')) || [];
+    
+    document.querySelectorAll('.saveRoom').forEach(button => {
+        const roomName = button.dataset.room;
+        const isSaved = savedRooms.some(room => room.name === roomName);
+        
+        if (isSaved) {
+            const saveIcon = button.querySelector('.save-icon');
+            const saveText = button.querySelector('.save-text');
+            
+            saveIcon.textContent = 'bookmark';
+            saveText.textContent = 'Saved';
+            button.classList.remove('bg-green-100', 'text-green-700', 'hover:bg-green-200');
+            button.classList.add('bg-yellow-100', 'text-yellow-700', 'hover:bg-yellow-200');
+            button.dataset.saved = 'true';
+        }
+    });
+}
+
+// Filter functionality
+function resetFilters() {
+    const filterSelects = document.querySelectorAll('#roomFilters select');
+    filterSelects.forEach(select => {
+        select.selectedIndex = 0;
+    });
+    showToast('Filters have been reset', 'info');
+}
+
+function applyFilters() {
+    // This would contain actual filtering logic in a real application
+    showToast('Filters applied successfully', 'info');
+}
+
 const modal = document.getElementById("roomModal");
   const reviewsModal = document.getElementById("reviewsModal");
 
@@ -279,7 +382,35 @@ closeReminder.addEventListener('click', () => {
     reminderModal.classList.add('hidden');
 });
 
-// Handle reminder form submission
+// Placeholder for old reminder form submission - now handled below
+
+// Close modals when clicking outside
+window.addEventListener('click', (e) => {
+    if (e.target === reminderModal) {
+        reminderModal.classList.add('hidden');
+    }
+});
+
+// Save Room functionality with toggle
+document.querySelectorAll('.saveRoom').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const roomData = {
+            name: btn.dataset.room,
+            type: btn.dataset.type,
+            price: btn.dataset.price
+        };
+        toggleSaveRoom(btn, roomData);
+    });
+});
+
+// Initialize saved rooms state
+document.addEventListener('DOMContentLoaded', initializeSavedRooms);
+
+// Filter functionality
+document.getElementById('resetFilterBtn').addEventListener('click', resetFilters);
+document.getElementById('applyFilterBtn').addEventListener('click', applyFilters);
+
+// Update reminder form toast to use new toast system
 reminderForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
@@ -288,11 +419,11 @@ reminderForm.addEventListener('submit', (e) => {
     
     // Validate dates
     if (new Date(toDate) < new Date(fromDate)) {
-        alert('To date must be after from date');
+        showToast('To date must be after from date', 'error');
         return;
     }
     
-    // Store reminder in localStorage (you can modify this to use your preferred storage method)
+    // Store reminder in localStorage
     const reminder = {
         roomType: reminderRoomType.textContent,
         fromDate,
@@ -304,28 +435,12 @@ reminderForm.addEventListener('submit', (e) => {
     reminders.push(reminder);
     localStorage.setItem('roomReminders', JSON.stringify(reminders));
     
-    // Close modal
+    // Close modal and show success
     reminderModal.classList.add('hidden');
-    
-    // Show toast
-    toast.style.transform = 'translateY(0)';
-    toast.style.opacity = '1';
-    
-    // Hide toast after 3 seconds
-    setTimeout(() => {
-        toast.style.transform = 'translateY(full)';
-        toast.style.opacity = '0';
-    }, 3000);
+    showToast('Reminder has been set successfully!', 'success');
     
     // Reset form
     reminderForm.reset();
-});
-
-// Close modals when clicking outside
-window.addEventListener('click', (e) => {
-    if (e.target === reminderModal) {
-        reminderModal.classList.add('hidden');
-    }
 });
 
     // ✅ Footer

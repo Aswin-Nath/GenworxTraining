@@ -1,130 +1,402 @@
+// Sample Refunds Data
+const refundsData = [
+  {
+    id: "RF-001",
+    bookingId: "BK-2024-001",
+    amount: 8500,
+    type: "Cancellation",
+    status: "Completed",
+    requestedDate: "2024-01-20",
+    processedDate: "2024-01-22",
+    reason: "Customer cancelled booking due to emergency",
+    method: "Original Payment Method"
+  },
+  {
+    id: "RF-002",
+    bookingId: "BK-2024-005",
+    amount: 1200,
+    type: "Service Issue",
+    status: "Processing",
+    requestedDate: "2024-01-18",
+    processedDate: null,
+    reason: "Room service billing error",
+    method: "Bank Transfer"
+  },
+  {
+    id: "RF-003",
+    bookingId: "BK-2024-012",
+    amount: 15000,
+    type: "Cancellation",
+    status: "Approved",
+    requestedDate: "2024-01-15",
+    processedDate: null,
+    reason: "Hotel overbooked, no available rooms",
+    method: "Original Payment Method"
+  },
+  {
+    id: "RF-004",
+    bookingId: "BK-2024-008",
+    amount: 750,
+    type: "Overbilling",
+    status: "Requested",
+    requestedDate: "2024-01-12",
+    processedDate: null,
+    reason: "Incorrect charges for minibar items",
+    method: "Credit Card"
+  },
+  {
+    id: "RF-005",
+    bookingId: "BK-2024-018",
+    amount: 5400,
+    type: "No Show",
+    status: "Rejected",
+    requestedDate: "2024-01-10",
+    processedDate: "2024-01-11",
+    reason: "Refund request outside policy terms",
+    method: "N/A"
+  },
+  {
+    id: "RF-006",
+    bookingId: "BK-2024-023",
+    amount: 3200,
+    type: "Service Issue",
+    status: "Completed",
+    requestedDate: "2024-01-08",
+    processedDate: "2024-01-10",
+    reason: "Air conditioning failure in room",
+    method: "Bank Transfer"
+  },
+  {
+    id: "RF-007",
+    bookingId: "BK-2024-015",
+    amount: 2800,
+    type: "Other",
+    status: "Processing",
+    requestedDate: "2024-01-05",
+    processedDate: null,
+    reason: "Medical emergency preventing travel",
+    method: "Original Payment Method"
+  },
+  {
+    id: "RF-008",
+    bookingId: "BK-2024-009",
+    amount: 4500,
+    type: "Cancellation",
+    status: "Cancelled",
+    requestedDate: "2024-01-03",
+    processedDate: "2024-01-04",
+    reason: "Customer withdrew refund request",
+    method: "N/A"
+  }
+];
+
+// Pagination variables
+let currentPage = 1;
+const refundsPerPage = 5;
+let filteredRefunds = [...refundsData];
+
+// Helper functions
+function showToast(message, type = 'success') {
+  const toast = document.createElement('div');
+  const bgColor = type === 'error' ? 'bg-red-600' : 'bg-green-600';
+  toast.className = `${bgColor} text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-3 fixed top-4 right-4 z-50`;
+  toast.innerHTML = `
+    <div class="flex-1 text-sm">${message}</div>
+    <button class="opacity-80 hover:opacity-100" onclick="this.parentElement.remove()">✕</button>
+  `;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 4000);
+}
+
+function getStatusColor(status) {
+  const colors = {
+    'Requested': 'bg-blue-100 text-blue-800',
+    'Processing': 'bg-yellow-100 text-yellow-800',
+    'Approved': 'bg-green-100 text-green-800',
+    'Completed': 'bg-green-100 text-green-800',
+    'Rejected': 'bg-red-100 text-red-800',
+    'Cancelled': 'bg-gray-100 text-gray-800'
+  };
+  return colors[status] || 'bg-gray-100 text-gray-800';
+}
+
+function getTypeColor(type) {
+  const colors = {
+    'Cancellation': 'bg-orange-100 text-orange-800',
+    'Service Issue': 'bg-red-100 text-red-800',
+    'Overbilling': 'bg-yellow-100 text-yellow-800',
+    'No Show': 'bg-purple-100 text-purple-800',
+    'Other': 'bg-gray-100 text-gray-800'
+  };
+  return colors[type] || 'bg-gray-100 text-gray-800';
+}
+
+function formatDate(dateString) {
+  if (!dateString) return 'N/A';
+  return new Date(dateString).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
+}
+
+function formatAmount(amount) {
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR'
+  }).format(amount);
+}
+
+// Apply filters function
+function applyRefundFilters() {
+  const searchTerm = document.getElementById('refundSearch').value.toLowerCase();
+  const statusFilter = document.getElementById('statusFilter').value;
+  const amountFilter = document.getElementById('amountFilter').value;
+  const typeFilter = document.getElementById('typeFilter').value;
+  const fromDate = document.getElementById('dateFrom').value;
+  const toDate = document.getElementById('dateTo').value;
+
+  filteredRefunds = refundsData.filter(refund => {
+    // Search filter
+    const matchesSearch = !searchTerm || 
+      refund.id.toLowerCase().includes(searchTerm) ||
+      refund.bookingId.toLowerCase().includes(searchTerm) ||
+      refund.amount.toString().includes(searchTerm) ||
+      refund.reason.toLowerCase().includes(searchTerm);
+
+    // Status filter
+    const matchesStatus = !statusFilter || refund.status === statusFilter;
+
+    // Type filter
+    const matchesType = !typeFilter || refund.type === typeFilter;
+
+    // Amount range filter
+    let matchesAmount = true;
+    if (amountFilter) {
+      const amount = refund.amount;
+      switch (amountFilter) {
+        case '0-1000':
+          matchesAmount = amount >= 0 && amount <= 1000;
+          break;
+        case '1000-5000':
+          matchesAmount = amount > 1000 && amount <= 5000;
+          break;
+        case '5000-10000':
+          matchesAmount = amount > 5000 && amount <= 10000;
+          break;
+        case '10000+':
+          matchesAmount = amount > 10000;
+          break;
+      }
+    }
+
+    // Date range filter
+    const refundDate = new Date(refund.requestedDate);
+    const matchesDateRange = (!fromDate || refundDate >= new Date(fromDate)) &&
+                            (!toDate || refundDate <= new Date(toDate));
+
+    return matchesSearch && matchesStatus && matchesType && matchesAmount && matchesDateRange;
+  });
+
+  currentPage = 1;
+  renderRefundsTable();
+  updatePaginationInfo();
+}
+
+// Render refunds table
+function renderRefundsTable() {
+  const tableBody = document.getElementById('refundsTableBody');
+  const startIndex = (currentPage - 1) * refundsPerPage;
+  const endIndex = startIndex + refundsPerPage;
+  const currentRefunds = filteredRefunds.slice(startIndex, endIndex);
+
+  if (currentRefunds.length === 0) {
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="8" class="px-6 py-12 text-center text-gray-500">
+          <i class="material-icons text-4xl mb-4 block">search_off</i>
+          No refunds found matching your criteria
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  tableBody.innerHTML = currentRefunds.map(refund => `
+    <tr class="hover:bg-gray-50 border-b border-gray-200">
+      <td class="px-6 py-4 whitespace-nowrap">
+        <div class="font-medium text-gray-900">${refund.id}</div>
+      </td>
+      <td class="px-6 py-4 whitespace-nowrap">
+        <div class="text-sm text-gray-900">${refund.bookingId}</div>
+      </td>
+      <td class="px-6 py-4 whitespace-nowrap">
+        <div class="font-semibold text-gray-900">${formatAmount(refund.amount)}</div>
+      </td>
+      <td class="px-6 py-4 whitespace-nowrap">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getTypeColor(refund.type)}">
+          ${refund.type}
+        </span>
+      </td>
+      <td class="px-6 py-4 whitespace-nowrap">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(refund.status)}">
+          ${refund.status}
+        </span>
+      </td>
+      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+        ${formatDate(refund.requestedDate)}
+      </td>
+      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+        ${formatDate(refund.processedDate)}
+      </td>
+      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+        <div class="flex space-x-2">
+          <button onclick="viewRefund('${refund.id}')" class="text-blue-600 hover:text-blue-900" title="View Details">
+            <i class="material-icons text-lg">visibility</i>
+          </button>
+          ${refund.status === 'Requested' || refund.status === 'Processing' ? `
+            <button class="text-gray-400 cursor-not-allowed opacity-50" title="Cancel not available" disabled>
+              <i class="material-icons text-lg">cancel</i>
+            </button>
+          ` : ''}
+          ${refund.status === 'Completed' ? `
+            <button class="text-gray-400 cursor-not-allowed opacity-50" title="Download not available" disabled>
+              <i class="material-icons text-lg">download</i>
+            </button>
+          ` : ''}
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// Update pagination info
+function updatePaginationInfo() {
+  const totalPages = Math.ceil(filteredRefunds.length / refundsPerPage);
+  const startItem = filteredRefunds.length === 0 ? 0 : (currentPage - 1) * refundsPerPage + 1;
+  const endItem = Math.min(currentPage * refundsPerPage, filteredRefunds.length);
+
+  document.getElementById('paginationInfo').textContent = 
+    `Showing ${startItem}-${endItem} of ${filteredRefunds.length} refunds`;
+
+  // Update pagination buttons
+  document.getElementById('prevButton').disabled = currentPage === 1;
+  document.getElementById('nextButton').disabled = currentPage === totalPages || totalPages === 0;
+
+  // Update page numbers
+  const pageNumbers = document.getElementById('pageNumbers');
+  pageNumbers.innerHTML = '';
+
+  if (totalPages <= 7) {
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.appendChild(createPageButton(i));
+    }
+  } else {
+    // Always show first page
+    pageNumbers.appendChild(createPageButton(1));
+
+    if (currentPage > 4) {
+      pageNumbers.appendChild(createEllipsis());
+    }
+
+    // Show pages around current page
+    const start = Math.max(2, currentPage - 2);
+    const end = Math.min(totalPages - 1, currentPage + 2);
+
+    for (let i = start; i <= end; i++) {
+      pageNumbers.appendChild(createPageButton(i));
+    }
+
+    if (currentPage < totalPages - 3) {
+      pageNumbers.appendChild(createEllipsis());
+    }
+
+    // Always show last page
+    if (totalPages > 1) {
+      pageNumbers.appendChild(createPageButton(totalPages));
+    }
+  }
+}
+
+function createPageButton(pageNum) {
+  const button = document.createElement('button');
+  button.textContent = pageNum;
+  button.className = `px-3 py-2 text-sm leading-tight ${
+    pageNum === currentPage 
+      ? 'text-blue-600 bg-blue-50 border-blue-300' 
+      : 'text-gray-500 bg-white border-gray-300 hover:bg-gray-50 hover:text-gray-700'
+  } border`;
+  button.onclick = () => goToPage(pageNum);
+  return button;
+}
+
+function createEllipsis() {
+  const span = document.createElement('span');
+  span.textContent = '...';
+  span.className = 'px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300';
+  return span;
+}
+
+// Pagination functions
+function goToPage(page) {
+  const totalPages = Math.ceil(filteredRefunds.length / refundsPerPage);
+  if (page >= 1 && page <= totalPages) {
+    currentPage = page;
+    renderRefundsTable();
+    updatePaginationInfo();
+  }
+}
+
+function previousPage() {
+  if (currentPage > 1) {
+    goToPage(currentPage - 1);
+  }
+}
+
+function nextPage() {
+  const totalPages = Math.ceil(filteredRefunds.length / refundsPerPage);
+  if (currentPage < totalPages) {
+    goToPage(currentPage + 1);
+  }
+}
+
+// Action functions
+function viewRefund(refundId) {
+  showToast(`Viewing details for refund ${refundId}`, 'success');
+  // In a real app, this would navigate to refund details page
+  setTimeout(() => {
+    window.location.href = '/Features/RefundManagement/Customer/RefundDetailsCustomer/index.html?id=' + refundId;
+  }, 1000);
+}
+
+// Clear filters function
+function clearFilters() {
+  document.getElementById('refundSearch').value = '';
+  document.getElementById('statusFilter').value = '';
+  document.getElementById('amountFilter').value = '';
+  document.getElementById('typeFilter').value = '';
+  document.getElementById('dateFrom').value = '';
+  document.getElementById('dateTo').value = '';
+  applyRefundFilters();
+}
+
+// Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  // Elements
-  const modal = document.getElementById('unifiedCancelModal');
-  const ucmTitle = document.getElementById('ucmTitle');
-  const ucmSubtitle = document.getElementById('ucmSubtitle');
-  const ucmBody = document.getElementById('ucmBody');
-  const ucmConfirmText = document.getElementById('ucmConfirmText');
-  const ucmBookingReason = document.getElementById('ucmBookingReason');
-  const ucmConfirmMsg = document.getElementById('ucmConfirmMsg');
-  const reasonInput = document.getElementById('ucmReasonInput');
-  const closeBtn = document.getElementById('ucmClose');
-  const abortBtn = document.getElementById('ucmAbort');
-  const confirmBtn = document.getElementById('ucmConfirm');
-  const toastContainer = document.getElementById('unifiedToast');
+  // Set up event listeners
+  document.getElementById('refundSearch').addEventListener('input', applyRefundFilters);
+  document.getElementById('statusFilter').addEventListener('change', applyRefundFilters);
+  document.getElementById('amountFilter').addEventListener('change', applyRefundFilters);
+  document.getElementById('typeFilter').addEventListener('change', applyRefundFilters);
+  document.getElementById('dateFrom').addEventListener('change', applyRefundFilters);
+  document.getElementById('dateTo').addEventListener('change', applyRefundFilters);
 
-  let currentTrigger = null; // element that opened modal
-  let currentType = null;
-  let currentId = null;
-  let currentLabel = null;
+  // Set up pagination buttons
+  document.getElementById('prevButton').addEventListener('click', previousPage);
+  document.getElementById('nextButton').addEventListener('click', nextPage);
 
-  // Helper: show toast (non-blocking)
-  function showToast(message, tone = 'success') {
-    const toast = document.createElement('div');
-    const bg = tone === 'error' ? 'bg-red-600' : 'bg-green-600';
-    toast.className = `${bg} text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-3`;
-    toast.style.minWidth = '220px';
-    toast.innerHTML = `<div class="flex-1 text-sm">${message}</div><button aria-label="close" class="opacity-80 hover:opacity-100">✕</button>`;
-    toastContainer.appendChild(toast);
-    toast.querySelector('button').addEventListener('click', () => toast.remove());
-    setTimeout(() => { try { toast.remove(); } catch (e) {} }, 4000);
-  }
-
-  // open unified modal configured by type
-  function openUnifiedModal(triggerEl) {
-    currentTrigger = triggerEl;
-    currentType = triggerEl.dataset.cancel; // booking | issue | refund
-    currentId = triggerEl.dataset.id || null;
-    currentLabel = triggerEl.dataset.label || (currentType ? currentType.toUpperCase() : 'Item');
-
-    // set header/subtitle and body
-    if (currentType === 'booking') {
-      ucmTitle.textContent = 'Cancel Booking';
-      ucmSubtitle.textContent = currentLabel + (currentId ? ` • ID ${currentId}` : '');
-      ucmConfirmText.classList.add('hidden');
-      ucmBookingReason.classList.remove('hidden');
-      reasonInput.value = '';
-      confirmBtn.textContent = 'Yes — Cancel Booking';
-    } else if (currentType === 'issue') {
-      ucmTitle.textContent = 'Cancel Issue Report';
-      ucmSubtitle.textContent = currentLabel + (currentId ? ` • ID ${currentId}` : '');
-      ucmConfirmMsg.textContent = 'This will mark the issue report as cancelled. Are you sure?';
-      ucmConfirmText.classList.remove('hidden');
-      ucmBookingReason.classList.add('hidden');
-      confirmBtn.textContent = 'Yes — Cancel Issue';
-    } else if (currentType === 'refund') {
-      ucmTitle.textContent = 'Cancel Refund';
-      ucmSubtitle.textContent = currentLabel + (currentId ? ` • ID ${currentId}` : '');
-      ucmConfirmMsg.textContent = 'Cancelling will stop further processing of this refund. Confirm to proceed.';
-      ucmConfirmText.classList.remove('hidden');
-      ucmBookingReason.classList.add('hidden');
-      confirmBtn.textContent = 'Yes — Cancel Refund';
-    } else {
-      // fallback (generic)
-      ucmTitle.textContent = 'Cancel';
-      ucmSubtitle.textContent = currentLabel || '';
-      ucmConfirmMsg.textContent = 'Confirm cancel?';
-      ucmConfirmText.classList.remove('hidden');
-      ucmBookingReason.classList.add('hidden');
-      confirmBtn.textContent = 'Yes — Cancel';
-    }
-
-    // show modal
-    modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-    // autofocus confirm for keyboard users
-    confirmBtn.focus();
-  }
-
-  function closeUnifiedModal() {
-    modal.classList.add('hidden');
-    document.body.style.overflow = '';
-    currentTrigger = null;
-    currentType = null;
-    currentId = null;
-    currentLabel = null;
-  }
-
-  // Global click handler: any button with [data-cancel] opens modal
-  document.body.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-cancel]');
-    if (!btn) return;
-    // prevent default if it's a link/button
-    e.preventDefault();
-    openUnifiedModal(btn);
-  });
-
-  // Modal controls
-  closeBtn.addEventListener('click', closeUnifiedModal);
-  abortBtn.addEventListener('click', closeUnifiedModal);
-
-  // clicking overlay closes if clicking directly on modal background
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeUnifiedModal();
-  });
-
-  // ESC closes
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeUnifiedModal();
-  });
-
-  // Confirm action: show toast only (no DOM update)
-  confirmBtn.addEventListener('click', () => {
-    const reason = (currentType === 'booking') ? (reasonInput.value || null) : null;
-    closeUnifiedModal();
-
-    // choose message
-    let msg = 'Cancelled';
-    if (currentType === 'booking') msg = currentLabel ? `${currentLabel} cancelled.` : 'Booking cancelled.';
-    else if (currentType === 'issue') msg = currentLabel ? `${currentLabel} cancelled.` : 'Issue cancelled.';
-    else if (currentType === 'refund') msg = currentLabel ? `${currentLabel} cancelled.` : 'Refund cancelled.';
-    // If reason present, add short note to toast message
-    if (reason) {
-      showToast(`${msg} Reason noted.`, 'success');
-    } else {
-      showToast(msg, 'success');
-    }
-  });
+  // Initial render
+  renderRefundsTable();
+  updatePaginationInfo();
 });
     function jumpToPage() {
   const pageInput = document.getElementById("pageInput").value;
@@ -342,26 +614,9 @@ addRoomBtn?.addEventListener("click", () => {
       .then(res => res.text())
       .then(data => { document.getElementById("footer").innerHTML = data; });
 
-    // Sidebar highlight
-    document.querySelectorAll("aside nav a").forEach(link => {
-      if (link.dataset.page === "refunds") {
-        link.classList.add("text-yellow-700", "font-semibold");
-      }
-    });
-
-    // Pagination JS (dummy, refine with backend later)
-    let currentPage = 1;
-    const rowsPerPage = 5;
-    function showPage(page) {
-      const rows = document.querySelectorAll("#refundTableBody tr");
-      const totalPages = Math.ceil(rows.length / rowsPerPage);
-      if (page < 1) page = 1;
-      if (page > totalPages) page = totalPages;
-      currentPage = page;
-      rows.forEach((row, i) => {
-        row.style.display = (i >= (page - 1) * rowsPerPage && i < page * rowsPerPage) ? "" : "none";
-      });
-    }
-    function prevPage() { showPage(currentPage - 1); }
-    function nextPage() { showPage(currentPage + 1); }
-    document.addEventListener("DOMContentLoaded", () => showPage(1));
+// Highlight sidebar
+document.querySelectorAll("aside nav a").forEach(link => {
+  if (link.dataset.page === "refunds") {
+    link.classList.add("text-yellow-700", "font-semibold");
+  }
+});

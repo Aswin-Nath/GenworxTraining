@@ -115,7 +115,10 @@
         <td class="p-3">21 Sep 2025</td>
         <td class="p-3">Payment</td>
         <td class="p-3">
-          <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium">Open</span>
+          <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium flex items-center gap-1">
+            <span class="material-icons text-sm animate-pulse text-yellow-500">error_outline</span>
+            Open
+          </span>
         </td>
         <td class="p-3">-</td>
         <td class="p-3 text-center flex justify-center space-x-2">
@@ -132,7 +135,10 @@
         <td class="p-3">20 Sep 2025</td>
         <td class="p-3">Booking</td>
         <td class="p-3">
-          <span class="px-3 py-1 rounded-full bg-yellow-200 text-yellow-800 text-xs font-medium">Pending</span>
+          <span class="px-3 py-1 rounded-full bg-yellow-200 text-yellow-800 text-xs font-medium flex items-center gap-1">
+            <span class="material-icons text-sm animate-pulse text-yellow-600">hourglass_empty</span>
+            Pending
+          </span>
         </td>
         <td class="p-3">-</td>
         <td class="p-3 text-center flex justify-center space-x-2">
@@ -149,7 +155,10 @@
         <td class="p-3">19 Sep 2025</td>
         <td class="p-3">Service</td>
         <td class="p-3">
-          <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">Resolved</span>
+          <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium flex items-center gap-1">
+            <span class="material-icons text-sm text-green-500">check_circle</span>
+            Resolved
+          </span>
         </td>
         <td class="p-3">20 Sep 2025</td>
         <td class="p-3 text-center flex justify-center space-x-2">
@@ -194,10 +203,9 @@
       </tr>
 
     </tbody>
-  </table>
-</div>
-
-    <!-- ✅ Pagination -->
+      </table>
+    </div>
+    
     <nav class="flex flex-col md:flex-row justify-between items-center mt-6 space-y-4 md:space-y-0">
       <!-- Prev -->
       <button onclick="prevPage()" class="px-5 py-2 flex items-center space-x-2 border rounded-full bg-gray-200 hover:bg-gray-300">
