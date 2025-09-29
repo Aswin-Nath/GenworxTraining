@@ -13,23 +13,23 @@
   <div id="navbar"></div>
 
   <!-- ✅ Layout -->
-  <div class="flex flex-1 max-w-7xl mx-auto w-full py-6 px-3 md:py-8 md:px-8 gap-6 mt-20 flex-col lg:flex-row">
+<div class="flex flex-col lg:flex-row max-w-7xl mx-auto w-full py-4 sm:py-6 lg:py-8 px-4 lg:px-8 gap-4 lg:gap-8 mt-16 lg:mt-20">
 
-    <!-- ✅ Sidebar -->
-    <aside class="w-full lg:w-64 bg-white shadow-lg rounded-2xl p-4 md:p-6 h-fit overflow-x-auto lg:overflow-visible">
-      <nav class="flex lg:block space-x-4 lg:space-x-0 lg:space-y-4 text-gray-700 font-medium text-sm md:text-base">
-        <a href="/Features/Dashboard/Customer/index.html" data-page="dashboard" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Overview</a>
-        <a href="/Features/BookingManagement/Customer/MyBookings/index.html" data-page="booking" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Bookings</a>
-        <a href="/Features/UserManagement/Customer/SavedRoomsCustomer/index.html" data-page="saved" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Wishlist</a>
-        <a href="/Features/IssueManagement/Customer/MyIssues/index.html" data-page="issues" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Issues</a>
-        <a href="/Features/RefundManagement/Customer/MyRefunds/index.html" data-page="refunds" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Refunds</a>
-        <a href="/Features/UserManagement/Customer/ProfileDisplayCustomer/index.html" data-page="profile" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Profile</a>
-        <a href="/Features/ReportManagement/Customer/ReportSections/index.html" data-page="report" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Reports</a>
-      </nav>
-    </aside>
+  <!-- ✅ Sidebar -->
+  <aside class="w-full lg:w-64 bg-white shadow-lg rounded-2xl p-4 md:p-6 h-fit overflow-x-auto lg:overflow-visible">
+    <nav class="flex lg:block space-x-4 lg:space-x-0 lg:space-y-4 text-gray-700 font-medium text-sm md:text-base">
+      <a href="/Features/Dashboard/Customer/index.html" data-page="dashboard" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Overview</a>
+      <a href="/Features/BookingManagement/Customer/MyBookings/index.html" data-page="booking" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Bookings</a>
+      <a href="/Features/UserManagement/Customer/SavedRoomsCustomer/index.html" data-page="saved" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Wishlist</a>
+      <a href="/Features/IssueManagement/Customer/MyIssues/index.html" data-page="issues" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Issues</a>
+      <a href="/Features/RefundManagement/Customer/MyRefunds/index.html" data-page="refunds" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Refunds</a>
+      <a href="/Features/UserManagement/Customer/ProfileDisplayCustomer/index.html" data-page="profile" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Profile</a>
+      <a href="/Features/ReportManagement/Customer/ReportSections/index.html" data-page="report" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Reports</a>
+    </nav>
+  </aside>
 
     <!-- ✅ Main Content -->
-    <main class="flex-1 space-y-8 md:space-y-12">
+  <main class="flex-1 space-y-6 sm:space-y-8 lg:space-y-12">
 
       <!-- ✅ Welcome Header -->
       <div class="relative rounded-2xl p-[3px] bg-gradient-to-r from-yellow-600 to-red-700 shadow">
@@ -99,112 +99,131 @@
 
 
 
-      <!-- ✅ Issues Table -->
-      <div class="overflow-x-auto bg-white shadow-lg border border-gray-200 rounded-xl">
-        <table class="w-full text-xs md:text-sm" id="issuesTable">
-          <thead>
-            <tr class="bg-yellow-50 border-b border-gray-300">
-              <th class="p-2 md:p-3 text-left font-semibold text-gray-700">Issue</th>
-              <th class="p-2 md:p-3 text-left font-semibold text-gray-700">Date</th>
-              <th class="p-2 md:p-3 text-left font-semibold text-gray-700">Room</th>
-              <th class="p-2 md:p-3 text-left font-semibold text-gray-700">Status</th>
-              <th class="p-2 md:p-3 text-center font-semibold text-gray-700">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="issuesTableBody" class="divide-y divide-gray-200">
+<div class="overflow-x-auto bg-white shadow-lg border border-gray-200 rounded-xl">
+  <table class="w-full text-xs md:text-sm" id="issuesTable">
+    <thead>
+      <tr class="bg-yellow-50 border-b border-gray-300">
+        <th class="p-2 md:p-3 text-left font-semibold text-gray-700">Issue</th>
+        <th class="p-2 md:p-3 text-left font-semibold text-gray-700">Date</th>
+        <th class="p-2 md:p-3 text-left font-semibold text-gray-700">Room</th>
+        <th class="p-2 md:p-3 text-left font-semibold text-gray-700">Status</th>
+        <th class="p-2 md:p-3 text-left font-semibold text-gray-700">Resolved On</th>
+        <th class="p-2 md:p-3 text-center font-semibold text-gray-700">Actions</th>
+      </tr>
+    </thead>
+    <tbody id="issuesTableBody" class="divide-y divide-gray-200">
 
-            <!-- ✅ Row 1 - Resolved -->
-            <tr class="hover:bg-gray-50">
-              <td class="p-2 md:p-3">
-                <span class="font-medium text-gray-800">Room Service Delay</span>
-                <p class="text-xs text-gray-500 mt-0.5">Issue #I-2001</p>
-              </td>
-              <td class="p-2 md:p-3">17 Sep 2025</td>
-              <td class="p-2 md:p-3">302</td>
-              <td class="p-2 md:p-3">
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                  <span class="material-icons text-sm mr-1">check_circle</span> Resolved
-                </span>
-              </td>
-              <td class="p-2 md:p-3 text-center">
-                <div class="flex justify-center items-center space-x-1 md:space-x-2">
-                  <button onclick="window.location.href='/Features/IssueManagement/Customer/IssueDetailsCustomer/index.html'" 
-                    class="p-1 hover:bg-gray-100 rounded-lg" title="View Issue">
-                    <span class="material-icons text-blue-600">visibility</span>
-                  </button>
-                  <button disabled class="p-1 rounded-lg cursor-not-allowed" title="Edit Disabled">
-                    <span class="material-icons text-gray-400">edit</span>
-                  </button>
-                  <button disabled class="p-1 rounded-lg cursor-not-allowed" title="Cancel Disabled">
-                    <span class="material-icons text-gray-400">cancel</span>
-                  </button>
-                </div>
-              </td>
-            </tr>
+      <!-- ✅ Row 1 - Resolved -->
+      <tr class="hover:bg-gray-50">
+        <td class="p-2 md:p-3">
+          <span class="font-medium text-gray-800">Room Service Delay</span>
+          <p class="text-xs text-gray-500 mt-0.5">Issue #I-2001</p>
+        </td>
+        <td class="p-2 md:p-3">17 Sep 2025</td>
+        <td class="p-2 md:p-3">302</td>
+        <td class="p-2 md:p-3">
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">
+            <span class="material-icons text-sm mr-1">check_circle</span> Resolved
+          </span>
+        </td>
+        <td class="p-2 md:p-3">18 Sep 2025</td>
+        <td class="p-2 md:p-3 text-center">
+          <div class="flex justify-center items-center space-x-1 md:space-x-2">
+            <!-- View -->
+            <button onclick="window.location.href='/Features/IssueManagement/Customer/IssueDetailsCustomer/index.html'" 
+              class="p-1.5 hover:bg-gray-100 rounded-lg" title="View Issue">
+              <span class="material-icons text-blue-600">visibility</span>
+            </button>
+            <!-- Edit (disabled) -->
+            <button disabled class="p-1.5 rounded-lg cursor-not-allowed" title="Edit Disabled">
+              <span class="material-icons text-gray-400">edit_note</span>
+            </button>
+            <!-- Cancel (disabled) -->
+            <button disabled 
+              class="p-1.5 rounded-lg cursor-not-allowed text-gray-400" 
+              title="Cancel Disabled">
+              ✕
+            </button>
+          </div>
+        </td>
+      </tr>
 
-            <!-- ✅ Row 2 - Pending -->
-            <tr class="hover:bg-gray-50">
-              <td class="p-2 md:p-3">
-                <span class="font-medium text-gray-800">AC Not Working</span>
-                <p class="text-xs text-gray-500 mt-0.5">Issue #I-2002</p>
-              </td>
-              <td class="p-2 md:p-3">16 Sep 2025</td>
-              <td class="p-2 md:p-3">415</td>
-              <td class="p-2 md:p-3">
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
-                  <span class="material-icons text-sm mr-1">hourglass_empty</span> Pending
-                </span>
-              </td>
-              <td class="p-2 md:p-3 text-center">
-                <div class="flex justify-center items-center space-x-1 md:space-x-2">
-                  <button onclick="window.location.href='/Features/IssueManagement/Customer/IssueDetailsCustomer/index.html'" 
-                    class="p-1 hover:bg-gray-100 rounded-lg" title="View Issue">
-                    <span class="material-icons text-blue-600">visibility</span>
-                  </button>
-                  <button onclick="window.location.href='/Features/IssueManagement/Customer/EditIssue/index.html'" 
-                    class="p-1 hover:bg-gray-100 rounded-lg" title="Edit Issue">
-                    <span class="material-icons text-green-600">edit</span>
-                  </button>
-                  <button data-cancel="issue" data-id="1002" data-label="Issue #1002"
-                    class="p-1 hover:bg-gray-100 rounded-lg" title="Cancel Issue">
-                    <span class="material-icons text-red-600">cancel</span>
-                  </button>
-                </div>
-              </td>
-            </tr>
+      <!-- ✅ Row 2 - Pending -->
+      <tr class="hover:bg-gray-50">
+        <td class="p-2 md:p-3">
+          <span class="font-medium text-gray-800">AC Not Working</span>
+          <p class="text-xs text-gray-500 mt-0.5">Issue #I-2002</p>
+        </td>
+        <td class="p-2 md:p-3">16 Sep 2025</td>
+        <td class="p-2 md:p-3">415</td>
+        <td class="p-2 md:p-3">
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
+            <span class="material-icons text-sm mr-1">hourglass_empty</span> Pending
+          </span>
+        </td>
+        <td class="p-2 md:p-3">-</td>
+        <td class="p-2 md:p-3 text-center">
+          <div class="flex justify-center items-center space-x-1 md:space-x-2">
+            <!-- View -->
+            <button onclick="window.location.href='/Features/IssueManagement/Customer/IssueDetailsCustomer/index.html'" 
+              class="p-1.5 hover:bg-gray-100 rounded-lg" title="View Issue">
+              <span class="material-icons text-blue-600">visibility</span>
+            </button>
+            <!-- Edit -->
+            <button onclick="window.location.href='/Features/IssueManagement/Customer/EditIssue/index.html'" 
+              class="p-1.5 rounded-lg text-yellow-700 hover:bg-yellow-100" 
+              title="Edit Issue">
+              <span class="material-icons">edit_note</span>
+            </button>
+            <!-- Cancel -->
+            <button data-cancel="issue" data-id="1002" data-label="Issue #1002"
+              class="p-1.5 rounded-lg text-red-600 hover:bg-red-100" 
+              title="Cancel Issue">
+              ✕
+            </button>
+          </div>
+        </td>
+      </tr>
 
-            <!-- ✅ Row 3 - Resolved -->
-            <tr class="hover:bg-gray-50">
-              <td class="p-2 md:p-3">
-                <span class="font-medium text-gray-800">Cleanliness Issue</span>
-                <p class="text-xs text-gray-500 mt-0.5">Issue #I-2003</p>
-              </td>
-              <td class="p-2 md:p-3">15 Sep 2025</td>
-              <td class="p-2 md:p-3">210</td>
-              <td class="p-2 md:p-3">
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                  <span class="material-icons text-sm mr-1">check_circle</span> Resolved
-                </span>
-              </td>
-              <td class="p-2 md:p-3 text-center">
-                <div class="flex justify-center items-center space-x-1 md:space-x-2">
-                  <button onclick="window.location.href='/Features/IssueManagement/Customer/IssueDetailsCustomer/index.html'" 
-                    class="p-1 hover:bg-gray-100 rounded-lg" title="View Issue">
-                    <span class="material-icons text-blue-600">visibility</span>
-                  </button>
-                  <button disabled class="p-1 rounded-lg cursor-not-allowed" title="Edit Disabled">
-                    <span class="material-icons text-gray-400">edit</span>
-                  </button>
-                  <button disabled class="p-1 rounded-lg cursor-not-allowed" title="Cancel Disabled">
-                    <span class="material-icons text-gray-400">cancel</span>
-                  </button>
-                </div>
-              </td>
-            </tr>
+      <!-- ✅ Row 3 - Resolved -->
+      <tr class="hover:bg-gray-50">
+        <td class="p-2 md:p-3">
+          <span class="font-medium text-gray-800">Cleanliness Issue</span>
+          <p class="text-xs text-gray-500 mt-0.5">Issue #I-2003</p>
+        </td>
+        <td class="p-2 md:p-3">15 Sep 2025</td>
+        <td class="p-2 md:p-3">210</td>
+        <td class="p-2 md:p-3">
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">
+            <span class="material-icons text-sm mr-1">check_circle</span> Resolved
+          </span>
+        </td>
+        <td class="p-2 md:p-3">16 Sep 2025</td>
+        <td class="p-2 md:p-3 text-center">
+          <div class="flex justify-center items-center space-x-1 md:space-x-2">
+            <!-- View -->
+            <button onclick="window.location.href='/Features/IssueManagement/Customer/IssueDetailsCustomer/index.html'" 
+              class="p-1.5 hover:bg-gray-100 rounded-lg" title="View Issue">
+              <span class="material-icons text-blue-600">visibility</span>
+            </button>
+            <!-- Edit (disabled) -->
+            <button disabled class="p-1.5 rounded-lg cursor-not-allowed" title="Edit Disabled">
+              <span class="material-icons text-gray-400">edit_note</span>
+            </button>
+            <!-- Cancel (disabled) -->
+            <button disabled 
+              class="p-1.5 rounded-lg cursor-not-allowed text-gray-400" 
+              title="Cancel Disabled">
+              ✕
+            </button>
+          </div>
+        </td>
+      </tr>
 
-          </tbody>
-        </table>
-      </div>
+    </tbody>
+  </table>
+</div>
+
 
       <!-- ✅ Pagination -->
       <nav class="flex flex-col md:flex-row justify-between items-center mt-6 space-y-4 md:space-y-0 text-sm md:text-base">

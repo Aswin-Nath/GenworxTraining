@@ -314,7 +314,7 @@ function renderCustomersTable() {
   tbody.innerHTML = pageCustomers.map(customer => {
     const loyaltyColors = {
       'Bronze': 'bg-orange-100 text-orange-800',
-      'Silver': 'bg-gray-100 text-gray-800', 
+      'Silver': 'bg-gray-100 text-gray-800',
       'Gold': 'bg-yellow-100 text-yellow-800',
       'Platinum': 'bg-purple-100 text-purple-800',
       'VIP': 'bg-red-100 text-red-800'
@@ -333,42 +333,61 @@ function renderCustomersTable() {
 
     return `
       <tr class="hover:bg-gray-50">
-        <td class="p-3 font-medium text-blue-600">${customer.id}</td>
+        <!-- ID -->
+        <td class="p-3 font-medium text-blue-600">
+          <div class="flex items-center gap-2">
+            <span class="material-icons text-gray-600 text-sm">badge</span>
+            ${customer.id}
+          </div>
+        </td>
+
+        <!-- Name + Bookings -->
         <td class="p-3">
           <div class="flex flex-col">
             <span class="font-medium text-gray-900">${customer.name}</span>
             <span class="text-xs text-gray-500">${customer.totalBookings} bookings</span>
           </div>
         </td>
+
+        <!-- Contact -->
         <td class="p-3">
-          <div class="flex flex-col text-sm">
+          <div class="flex flex-col text-sm gap-1">
             <span class="flex items-center gap-1">
-              <span class="material-icons text-gray-400 text-xs">phone</span>
+              <span class="material-icons text-gray-600 text-sm">phone</span>
               ${customer.phone}
             </span>
             <span class="flex items-center gap-1">
-              <span class="material-icons text-gray-400 text-xs">email</span>
+              <span class="material-icons text-gray-600 text-sm">email</span>
               ${customer.email}
             </span>
           </div>
         </td>
+
+        <!-- Loyalty -->
         <td class="p-3">
           <span class="px-2 py-1 rounded-full text-xs font-medium ${loyaltyColors[customer.loyaltyTier] || 'bg-gray-100 text-gray-800'}">
             ${customer.loyaltyTier}
           </span>
         </td>
-        <td class="p-3">
-          <div class="flex flex-col">
-            <span class="font-medium text-green-600">₹${customer.totalSpent.toLocaleString()}</span>
-            <span class="text-xs text-gray-500">Total spent</span>
-          </div>
-        </td>
+
+        <!-- Total Spent -->
         <td class="p-3">
           <div class="flex items-center gap-2">
-            <span class="material-icons text-gray-400 text-sm">event</span>
+            <span class="material-icons text-gray-600 text-sm">payments</span>
+            <span class="font-medium text-green-600">₹${customer.totalSpent.toLocaleString()}</span>
+          </div>
+          <span class="text-xs text-gray-500">Total spent</span>
+        </td>
+
+        <!-- Last Stay -->
+        <td class="p-3">
+          <div class="flex items-center gap-2">
+            <span class="material-icons text-gray-600 text-sm">event</span>
             ${new Date(customer.lastStay).toLocaleDateString()}
           </div>
         </td>
+
+        <!-- Status + Staying -->
         <td class="p-3">
           <div class="flex flex-col gap-1">
             <span class="px-2 py-1 rounded-full text-xs font-medium ${statusColors[customer.accountStatus]}">
@@ -379,26 +398,37 @@ function renderCustomersTable() {
             </span>
           </div>
         </td>
+
+        <!-- Actions -->
         <td class="p-3 text-center">
-          <div class="flex items-center justify-center gap-1">
+          <div class="flex items-center justify-center gap-1 flex-wrap">
+            <!-- View -->
             <button onclick="viewCustomer('${customer.id}')" 
-                    class="px-2 py-1 text-blue-700 hover:bg-blue-100 rounded transition text-sm" 
-                    title="View Details">
+              class="px-2 py-1 text-yellow-700 hover:bg-yellow-100 rounded transition text-sm"
+              title="View Details">
               <span class="material-icons text-sm">visibility</span>
             </button>
+
+            <!-- Edit -->
             <button onclick="editCustomer('${customer.id}')" 
-                    class="px-2 py-1 text-green-700 hover:bg-green-100 rounded transition text-sm"
-                    title="Edit Customer">  
+              class="px-2 py-1 text-green-700 hover:bg-green-100 rounded transition text-sm"
+              title="Edit Customer">  
               <span class="material-icons text-sm">edit</span>
             </button>
+
+            <!-- Block / Unblock -->
             <button onclick="${customer.accountStatus === 'Active' ? 'blockCustomer' : 'unblockCustomer'}('${customer.id}')"
-                    class="px-2 py-1 ${customer.accountStatus === 'Active' ? 'text-red-700 hover:bg-red-100' : 'text-green-700 hover:bg-green-100'} rounded transition text-sm"
-                    title="${customer.accountStatus === 'Active' ? 'Block' : 'Unblock'} Customer">
+              class="px-2 py-1 ${customer.accountStatus === 'Active' 
+                ? 'text-red-700 hover:bg-red-100' 
+                : 'text-green-700 hover:bg-green-100'} rounded transition text-sm"
+              title="${customer.accountStatus === 'Active' ? 'Block' : 'Unblock'} Customer">
               <span class="material-icons text-sm">${customer.accountStatus === 'Active' ? 'block' : 'check_circle'}</span>
             </button>
+
+            <!-- History -->
             <button onclick="customerHistory('${customer.id}')"
-                    class="px-2 py-1 text-purple-700 hover:bg-purple-100 rounded transition text-sm"
-                    title="View History">
+              class="px-2 py-1 text-purple-700 hover:bg-purple-100 rounded transition text-sm"
+              title="View History">
               <span class="material-icons text-sm">history</span>
             </button>
           </div>
@@ -409,6 +439,7 @@ function renderCustomersTable() {
 
   updatePaginationInfo();
 }
+
 
 // Update pagination info
 function updatePaginationInfo() {

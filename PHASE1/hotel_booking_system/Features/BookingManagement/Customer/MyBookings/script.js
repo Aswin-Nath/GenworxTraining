@@ -263,78 +263,34 @@ function renderBookingsTable() {
   `).join('');
 }
 
-// Get appropriate action buttons based on booking status
 function getActionButtons(booking) {
-  switch(booking.status) {
-    case 'staying':
-      return `
-        <button onclick="window.location.href='/Features/BookingManagement/Customer/EditBookings/index.html'"
-          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Modify Booking">
-          <span class="material-icons text-orange-600">edit_note</span>
-        </button>
-        <button class="p-1.5 rounded-lg cursor-not-allowed opacity-50" title="Early checkout not available" disabled>
-          <span class="material-icons text-gray-400">logout</span>
-        </button>
-      `;
-    case 'checkout-today':
-      return `
-        <button onclick="initiateCheckout('${booking.id}')"
-          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Checkout">
-          <span class="material-icons text-green-600">check_circle</span>
-        </button>
-        <button onclick="extendStay('${booking.id}')"
-          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Extend Stay">
-          <span class="material-icons text-blue-600">access_time</span>
-        </button>
-      `;
-    case 'checkin-today':
-      return `
-        <button onclick="initiateCheckin('${booking.id}')"
-          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Check In">
-          <span class="material-icons text-green-600">login</span>
-        </button>
-        <button data-cancel="booking" data-id="${booking.id}" data-label="Booking #${booking.id}"
-          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Cancel Booking">
-          <span class="material-icons text-red-600">cancel</span>
-        </button>
-      `;
-    case 'upcoming':
-      return `
-        <button onclick="window.location.href='/Features/BookingManagement/Customer/EditBookings/index.html'"
-          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Modify Booking">
-          <span class="material-icons text-orange-600">edit_note</span>
-        </button>
-        <button data-cancel="booking" data-id="${booking.id}" data-label="Booking #${booking.id}"
-          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Cancel Booking">
-          <span class="material-icons text-red-600">cancel</span>
-        </button>
-      `;
-    case 'completed':
-      return `
-        <button onclick="downloadInvoice('${booking.id}')"
-          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Download Invoice">
-          <span class="material-icons text-green-600">download</span>
-        </button>
-        <button onclick="rateStay('${booking.id}')"
-          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Rate Your Stay">
-          <span class="material-icons text-yellow-600">star</span>
-        </button>
-      `;
-    case 'cancelled':
-      return `
-        <button onclick="rebookStay('${booking.id}')"
-          class="p-1.5 hover:bg-gray-100 rounded-lg" title="Book Again">
-          <span class="material-icons text-green-600">refresh</span>
-        </button>
-        <button onclick="viewRefund('${booking.id}')"
-          class="p-1.5 hover:bg-gray-100 rounded-lg" title="View Refund Status">
-          <span class="material-icons text-orange-600">account_balance_wallet</span>
-        </button>
-      `;
-    default:
-      return '';
-  }
+  // Allow modify only if booking is 'upcoming'
+  const canModify = booking.status === 'upcoming';
+  // Allow cancel only if booking is 'upcoming'
+  const canCancel = booking.status === 'upcoming';
+
+  return `
+    <!-- Modify -->
+    <button ${canModify ? `onclick="window.location.href='/Features/BookingManagement/Customer/EditBookings/index.html?bookingId=${booking.id}'"` : 'disabled'}
+      class="p-1.5 rounded-lg ${canModify 
+        ? 'text-yellow-700 hover:bg-yellow-100' 
+        : 'text-gray-400 cursor-not-allowed'}"
+      title="${canModify ? 'Modify Booking' : 'Cannot Modify'}">
+      <span class="material-icons">edit_note</span>
+    </button>
+
+    <!-- Cancel -->
+    <button ${canCancel ? `data-cancel="booking" data-id="${booking.id}" data-label="${booking.room}"` : 'disabled'}
+      class="p-1.5 rounded-lg ${canCancel 
+        ? 'text-red-600 hover:bg-red-100' 
+        : 'text-gray-400 cursor-not-allowed'}"
+      title="${canCancel ? 'Cancel Booking' : 'Cannot Cancel'}">
+      <span class="material-icons">close</span>
+    </button>
+  `;
 }
+
+
 
 // Pagination functions
 function updatePaginationInfo() {

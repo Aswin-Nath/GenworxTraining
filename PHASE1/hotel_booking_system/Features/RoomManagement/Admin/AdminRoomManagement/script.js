@@ -70,95 +70,106 @@
      ******************************/
     let currentPage = 1;
     const rowsPerPage = 5;
+function renderRoomsTable(filteredRooms = null) {
+  const rooms = filteredRooms || getRooms();
+  const tbody = document.getElementById('roomTableBody');
+  tbody.innerHTML = '';
 
-    function renderRoomsTable(filteredRooms = null) {
-      const rooms = filteredRooms || getRooms();
-      const tbody = document.getElementById('roomTableBody');
-      tbody.innerHTML = '';
+  rooms.forEach((room, idx) => {
+    const tr = document.createElement('tr');
+    tr.className = 'hover:bg-gray-50';
+    tr.dataset.index = idx;
 
-      // create rows (we keep DOM stable)
-      rooms.forEach((room, idx) => {
-        const tr = document.createElement('tr');
-        tr.className = 'hover:bg-gray-50';
-        tr.dataset.index = idx;
-
-        const statusBadge = room.frozen ? 
-          `<span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium flex items-center gap-1">
-            <span class="material-icons text-sm text-red-500">lock</span>
-            Frozen
-          </span>` :
-          (room.status === 'Available' ? 
-          `<span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium flex items-center gap-1">
+    // ✅ Status badge
+    const statusBadge = room.frozen
+      ? `<span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium flex items-center gap-1">
+          <span class="material-icons text-sm text-red-500">lock</span>
+          Frozen
+        </span>`
+      : (room.status === 'Available'
+        ? `<span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium flex items-center gap-1">
             <span class="material-icons text-sm text-green-500">check_circle</span>
             Available
-          </span>` :
-          (room.status === 'Occupied' ? 
-          `<span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium flex items-center gap-1">
-            <span class="material-icons text-sm text-yellow-500">person</span>
-            Occupied
-          </span>` :
-          `<span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium flex items-center gap-1">
-            <span class="material-icons text-sm text-red-500">handyman</span>
-            Maintenance
-          </span>`));
+          </span>`
+        : (room.status === 'Occupied'
+          ? `<span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium flex items-center gap-1">
+              <span class="material-icons text-sm text-yellow-500">person</span>
+              Occupied
+            </span>`
+          : `<span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium flex items-center gap-1">
+              <span class="material-icons text-sm text-red-500">handyman</span>
+              Maintenance
+            </span>`));
 
-        tr.innerHTML = `
-          <td class="p-3">
-            <div class="flex items-center gap-2">
-              <span class="material-icons text-gray-400 text-sm">meeting_room</span>
-              ${escapeHtml(room.roomNumber)}
-            </div>
-          </td>
-          <td class="p-3">
-            <div class="flex items-center gap-2">
-              <span class="material-icons text-gray-400 text-sm">king_bed</span>
-              ${escapeHtml(room.type)}
-            </div>
-          </td>
-          <td class="p-3">${statusBadge}</td>
-          <td class="p-3">
-            <div class="flex items-center gap-2">
-              <span class="material-icons text-gray-400 text-sm">person</span>
-              ${escapeHtml(room.guestName || '-')}
-            </div>
-          </td>
-          <td class="p-3">
-            <div class="flex items-center gap-2">
-              <span class="material-icons text-gray-400 text-sm">logout</span>
-              ${escapeHtml(room.nextCheckOut || '-')}
-            </div>
-          </td>
-          <td class="p-3">
-            <div class="flex items-center gap-2">
-              <span class="material-icons text-gray-400 text-sm">login</span>
-              ${escapeHtml(room.nextCheckIn || '-')}
-            </div>
-          </td>
-          <td class="p-3 text-center flex justify-center space-x-2">
-            <button onclick="viewRoom('${encodeURIComponent(room.roomNumber)}')" 
-                    class="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                    title="View Room Details">
-              <span class="material-icons text-sm">visibility</span>
-            </button>
-            <button onclick="editRoom('${encodeURIComponent(room.roomNumber)}')" 
-                    class="p-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg"
-                    title="Edit Room">
-              <span class="material-icons text-sm">edit</span>
-            </button>
-            <button onclick="toggleFreeze('${encodeURIComponent(room.roomNumber)}')" 
-                    class="p-2 ${room.frozen ? 'bg-emerald-500 hover:bg-emerald-600' : 'bg-purple-500 hover:bg-purple-600'} text-white rounded-lg"
-                    title="${room.frozen ? 'Unfreeze Room' : 'Freeze Room'}">
-              <span class="material-icons text-sm">${room.frozen ? 'lock_open' : 'lock'}</span>
-            </button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
+    // ✅ Table row
+    tr.innerHTML = `
+      <td class="p-3 font-medium text-blue-600">
+        <div class="flex items-center gap-2">
+          <span class="material-icons text-gray-600 text-sm">meeting_room</span>
+          ${escapeHtml(room.roomNumber)}
+        </div>
+      </td>
+      <td class="p-3">
+        <div class="flex items-center gap-2">
+          <span class="material-icons text-gray-600 text-sm">king_bed</span>
+          ${escapeHtml(room.type)}
+        </div>
+      </td>
+      <td class="p-3">${statusBadge}</td>
+      <td class="p-3">
+        <div class="flex items-center gap-2">
+          <span class="material-icons text-gray-600 text-sm">person</span>
+          ${escapeHtml(room.guestName || '-')}
+        </div>
+      </td>
+      <td class="p-3">
+        <div class="flex items-center gap-2">
+          <span class="material-icons text-gray-600 text-sm">logout</span>
+          ${escapeHtml(room.nextCheckOut || '-')}
+        </div>
+      </td>
+      <td class="p-3">
+        <div class="flex items-center gap-2">
+          <span class="material-icons text-gray-600 text-sm">login</span>
+          ${escapeHtml(room.nextCheckIn || '-')}
+        </div>
+      </td>
+      <td class="p-3 text-center">
+        <div class="flex items-center justify-center gap-1 flex-wrap">
+          <!-- View -->
+          <button onclick="viewRoom('${encodeURIComponent(room.roomNumber)}')" 
+                  class="px-2 py-1 text-yellow-700 hover:bg-yellow-100 rounded transition text-sm"
+                  title="View Room">
+            <span class="material-icons text-sm">visibility</span>
+          </button>
 
-      // after DOM update, apply pagination
-      setupPagination();
-      showPage(1);
-    }
+          <!-- Edit -->
+          <button onclick="editRoom('${encodeURIComponent(room.roomNumber)}')" 
+                  class="px-2 py-1 text-yellow-700 hover:bg-yellow-100 rounded transition text-sm"
+                  title="Edit Room">
+            <span class="material-icons text-sm">edit</span>
+          </button>
+
+          <!-- Freeze/Unfreeze -->
+          <button onclick="toggleFreeze('${encodeURIComponent(room.roomNumber)}')" 
+                  class="px-2 py-1 ${room.frozen 
+                    ? 'text-green-700 hover:bg-green-100' 
+                    : 'text-purple-700 hover:bg-purple-100'} rounded transition text-sm"
+                  title="${room.frozen ? 'Unfreeze Room' : 'Freeze Room'}">
+            <span class="material-icons text-sm">${room.frozen ? 'lock_open' : 'lock'}</span>
+          </button>
+        </div>
+      </td>
+    `;
+
+    tbody.appendChild(tr);
+  });
+
+  // ✅ Pagination setup
+  setupPagination();
+  showPage(1);
+}
+
 
     function escapeHtml(str) {
       if (typeof str !== 'string') return str;

@@ -61,68 +61,104 @@ function renderRefundRow(refund) {
   const statusIcon = getStatusIcon(refund.status);
   const isDisabled = ['Approved', 'Rejected'].includes(refund.status);
 
+  // Dynamic color for the payments icon based on status
+  const paymentIconColor = {
+    'approved': 'text-green-600',
+    'pending': 'text-yellow-600',
+    'processing': 'text-blue-600',
+    'rejected': 'text-red-600'
+  }[refund.status.toLowerCase()] || 'text-gray-600';
+
+  // Dynamic color for reason icon
+  const reasonIconColor = refund.reason.toLowerCase().includes("issue") || refund.reason.toLowerCase().includes("invalid")
+    ? 'text-red-600'
+    : 'text-gray-600';
+
   return `
     <tr class="hover:bg-gray-50">
-      <td class="p-3">
+      <!-- Refund ID -->
+      <td class="p-3 font-medium text-blue-600">
         <div class="flex items-center gap-2">
-          <span class="material-icons text-lg text-gray-400">receipt</span>
-          <span>#${refund.refundId}</span>
+          <span class="material-icons text-gray-600 text-sm">receipt</span>
+          #${refund.refundId}
         </div>
       </td>
+
+      <!-- Booking ID -->
       <td class="p-3">
         <div class="flex items-center gap-2">
-          <span class="material-icons text-lg text-gray-400">confirmation_number</span>
-          <span>#${refund.bookingId}</span>
+          <span class="material-icons text-gray-600 text-sm">confirmation_number</span>
+          #${refund.bookingId}
         </div>
       </td>
+
+      <!-- Initiated Date -->
       <td class="p-3">
         <div class="flex items-center gap-2">
-          <span class="material-icons text-lg text-gray-400">event</span>
-          <span>${refund.initiatedOn}</span>
+          <span class="material-icons text-gray-600 text-sm">event</span>
+          ${refund.initiatedOn}
         </div>
       </td>
+
+      <!-- Reason -->
       <td class="hidden md:table-cell p-3">
         <div class="flex items-center gap-2">
-          <span class="material-icons text-lg text-gray-400">info</span>
-          <span>${refund.reason}</span>
+          <span class="material-icons ${reasonIconColor} text-sm">info</span>
+          ${refund.reason}
         </div>
       </td>
+
+      <!-- Refund Amount -->
       <td class="p-3">
         <div class="flex items-center gap-2">
-          <span class="material-icons text-lg text-gray-400">payments</span>
-          <span class="text-${statusColor}-600 font-medium">₹${refund.refundAmount.toLocaleString()}</span>
+          <span class="material-icons ${paymentIconColor} text-sm">payments</span>
+          <span class="text-${statusColor}-700 font-medium">₹${refund.refundAmount.toLocaleString()}</span>
         </div>
       </td>
+
+      <!-- Status -->
       <td class="p-3">
-        <div class="flex items-center">
-          <span class="px-3 py-1 rounded-full bg-${statusColor}-100 text-${statusColor}-700 text-xs font-medium flex items-center gap-1">
-            <span class="material-icons text-sm">${statusIcon}</span>
-            <span class="hidden md:inline">${refund.status}</span>
-          </span>
-        </div>
+        <span class="px-3 py-1 rounded-full bg-${statusColor}-100 text-${statusColor}-700 text-xs font-medium flex items-center gap-1">
+          <span class="material-icons text-sm">${statusIcon}</span>
+          <span class="hidden md:inline">${refund.status}</span>
+        </span>
       </td>
+
+      <!-- Actions -->
       <td class="p-3 text-center">
-        <div class="flex justify-center gap-2">
+        <div class="flex items-center justify-center gap-1 flex-wrap">
+          <!-- View -->
           <button onclick="window.location.href='/Features/RefundManagement/Admin/AdminRefundDetails/index.html'"
-            class="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center gap-1">
+            class="px-2 py-1 text-yellow-700 hover:bg-yellow-100 rounded transition text-sm"
+            title="View Refund">
             <span class="material-icons text-sm">visibility</span>
-            <span class="hidden md:inline">View</span>
           </button>
-          <button ${isDisabled ? 'disabled' : ''}
-            class="p-2 ${isDisabled ? 'bg-gray-300 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'} text-white rounded-lg flex items-center gap-1">
-            <span class="material-icons text-sm">check</span>
-            <span class="hidden md:inline">Accept</span>
-          </button>
-          <button ${isDisabled ? 'disabled' : ''}
-            class="p-2 ${isDisabled ? 'bg-gray-300 cursor-not-allowed' : 'bg-red-500 hover:bg-red-600'} text-white rounded-lg flex items-center gap-1">
-            <span class="material-icons text-sm">close</span>
-            <span class="hidden md:inline">Reject</span>
-          </button>
+
+          <!-- Accept -->
+          ${isDisabled ? `
+            <button disabled class="px-2 py-1 text-gray-400 rounded text-sm cursor-not-allowed">
+              <span class="material-icons text-sm">check</span>
+            </button>` : `
+            <button class="px-2 py-1 text-green-700 hover:bg-green-100 rounded transition text-sm"
+              title="Accept Refund">
+              <span class="material-icons text-sm">check</span>
+            </button>`}
+
+          <!-- Reject -->
+          ${isDisabled ? `
+            <button disabled class="px-2 py-1 text-gray-400 rounded text-sm cursor-not-allowed">
+              <span class="material-icons text-sm">close</span>
+            </button>` : `
+            <button class="px-2 py-1 text-red-700 hover:bg-red-100 rounded transition text-sm"
+              title="Reject Refund">
+              <span class="material-icons text-sm">close</span>
+            </button>`}
         </div>
       </td>
     </tr>
   `;
 }
+
 
 // Initialize the table when the document is loaded
 document.addEventListener('DOMContentLoaded', () => {
