@@ -9,84 +9,50 @@
 </head>
 <body class="bg-gray-50 flex flex-col min-h-screen">
 
-  <!-- Navbar placeholder (will be loaded via fetch) -->
+  <!-- Navbar placeholder -->
   <div id="navbar"></div>
 
-  <div class="flex flex-1 mt-20 max-w-7xl mx-auto w-full px-4 gap-6 relative">
+  <!-- ✅ Layout -->
+  <div class="flex flex-col lg:flex-row flex-1 max-w-7xl mx-auto w-full py-6 px-4 lg:px-8 gap-6 mt-20">
 
-    <!-- Main Sidebar (Global Navigation) -->
-    <aside class="w-64 bg-white shadow-lg rounded-2xl p-6 h-fit">
-      <nav class="space-y-4 text-gray-700 font-medium">
-        <a href="/Features/LandingPages/Customer/index.html" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Overview</a>
-        <a href="/Features/BookingManagement/Customer/MyBookings/index.html" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Bookings</a>
-        <a href="/Features/UserManagement/Customer/SavedRoomsCustomer/index.html" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Wishlist</a>
-        <a href="/Features/IssueManagement/Customer/MyIssues/index.html" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Issues</a>
-        <a href="/Features/RefundManagement/Customer/MyRefunds/index.html" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Refunds</a>
-        <a href="/Features/UserManagement/Customer/ProfileDisplayCustomer/index.html" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Profile</a>
-        <a href="/Features/ReportManagement/Customer/ReportSections/index.html" class="block py-2 border-b text-yellow-700 font-semibold">Reports</a>
+    <!-- ✅ Customer Sidebar -->
+    <aside class="w-full lg:w-64 bg-white shadow-lg rounded-2xl p-4 md:p-6 h-fit overflow-x-auto lg:overflow-visible">
+      <nav class="flex lg:block space-x-4 lg:space-x-0 lg:space-y-4 text-gray-700 font-medium text-sm md:text-base">
+        <a href="/Features/Dashboard/Customer/index.html" data-page="dashboard" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Overview</a>
+        <a href="/Features/BookingManagement/Customer/MyBookings/index.html" data-page="booking" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Bookings</a>
+        <a href="/Features/UserManagement/Customer/SavedRoomsCustomer/index.html" data-page="saved" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Wishlist</a>
+        <a href="/Features/IssueManagement/Customer/MyIssues/index.html" data-page="issues" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Issues</a>
+        <a href="/Features/RefundManagement/Customer/MyRefunds/index.html" data-page="refunds" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">My Refunds</a>
+        <a href="/Features/UserManagement/Customer/ProfileDisplayCustomer/index.html" data-page="profile" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Profile</a>
+        <a href="/Features/ReportManagement/Customer/ReportSections/index.html" data-page="report" class="block py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg border-b md:border-0 hover:text-yellow-600 transition">Reports</a>
       </nav>
     </aside>
 
-    <!-- Reports Sidebar (Hidden Drawer, Scrollable) -->
-    <aside id="sidebar"
-      class="fixed top-20 left-0 w-72 h-[80vh] overflow-y-auto bg-white border-r border-gray-200 shadow-lg rounded-r-xl transform -translate-x-full transition-transform duration-300 z-30">
-      <div class="p-4">
-        <input id="reportSearch" type="text" placeholder="Search reports"
-          class="w-full border rounded-lg px-3 py-2 mb-4 text-sm focus:ring-yellow-500 focus:border-yellow-500"/>
-        <nav id="reportList" class="space-y-4 text-gray-700 text-sm">
-          <div>
-            <h3 class="font-semibold text-gray-800 mb-2">Bookings</h3>
-            <ul class="space-y-1">
-              <li><a href="room-occupancy.html" class="block px-2 py-1 rounded font-semibold">My Stay History</a></li>
-              <li><a href="cancellation-history.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Cancellation History</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="font-semibold text-gray-800 mb-2">Payments & Refunds</h3>
-            <ul class="space-y-1">
-              <li><a href="payments-received.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Payments Made</a></li>
-              <li><a href="refund-history.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Refund History</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="font-semibold text-gray-800 mb-2">Issues</h3>
-            <ul>
-              <li><a href="issues-summary.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">My Reported Issues</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="font-semibold text-gray-800 mb-2">Profile</h3>
-            <ul>
-              <li><a href="saved-rooms.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Wishlist</a></li>
-              <li><a href="review-history.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">My Reviews & Ratings</a></li>
-            </ul>
-          </div>
-          <!-- Add more report links here if needed -->
-        </nav>
-      </div>
-    </aside>
+    <!-- ✅ Main Content -->
+    <main class="flex-1">
+      <div class="bg-white shadow rounded-xl p-6 h-[calc(100vh-8rem)] overflow-y-auto">
 
-    <!-- Main Content -->
-    <main class="flex-1 p-6 bg-white shadow rounded-xl relative">
+      <!-- Title + Actions -->
       <div class="flex items-center justify-between mb-6">
-        <!-- Left: Title -->
-        <h1 class="text-xl font-semibold flex items-center space-x-2">
-          <span class="material-icons text-gray-600 cursor-pointer" id="menuToggle" title="Open reports menu">menu</span>
-          <span>My Stay History</span>
-          <span class="text-gray-500 text-sm">(From 01/01/2024 To 23/09/2025)</span>
-        </h1>
+        <div class="flex items-center space-x-4">
+          <!-- Back to Reports Button -->
+          <button onclick="history.back()" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors">
+            <span class="material-icons">arrow_back</span>
+            <span class="text-sm font-medium">Back to Reports</span>
+          </button>
+          
+          <h1 class="text-xl font-semibold flex items-center space-x-2">
+            <span>My Stay History</span>
+            <span class="text-gray-500 text-sm">(From 01/01/2024 To 23/09/2025)</span>
+          </h1>
+        </div>
 
-        <!-- Right: Actions -->
+        <!-- Actions -->
         <div class="flex items-center space-x-3">
           <!-- Print -->
-          <div class="relative group">
-            <button id="printBtn" class="border px-3 py-2 rounded hover:bg-gray-100 flex items-center space-x-2">
-              <span class="material-icons text-gray-600">print</span>
-            </button>
-            <div class="absolute hidden group-hover:block bg-white border rounded shadow-lg mt-2 right-0 text-sm">
-              <a href="#" class="block px-4 py-2 hover:bg-gray-100">Print Preference</a>
-            </div>
-          </div>
+          <button id="printBtn" class="border px-3 py-2 rounded hover:bg-gray-100 flex items-center space-x-2">
+            <span class="material-icons text-gray-600">print</span>
+          </button>
 
           <!-- Export -->
           <div class="relative">
@@ -104,29 +70,64 @@
       </div>
 
       <!-- Filters -->
-      <div class="flex flex-wrap items-center space-x-4 mb-6">
-        <div class="min-w-[180px]">
-          <label class="block text-xs font-medium text-gray-600">Date Range</label>
-          <select id="dateRange" class="border rounded px-3 py-2 text-sm w-full">
-            <option>This Month</option>
-            <option>Last 3 Months</option>
-            <option>This Year</option>
-            <option value="custom">Custom</option>
-          </select>
+      <div class="mb-6">
+        <!-- First Row - Main Filters -->
+        <div class="flex items-center gap-4 mb-3">
+          <div class="flex flex-col">
+            <label class="text-xs font-medium text-gray-600 mb-1">Date Range</label>
+            <select id="dateRange" class="border rounded px-3 py-2 text-sm min-w-[180px] h-[38px]">
+              <option value="all" id="dateAll">All Dates</option>
+              <option value="thisMonth" id="dateThisMonth">This Month</option>
+              <option value="last3Months" id="dateLast3Months">Last 3 Months</option>
+              <option value="thisYear" id="dateThisYear">This Year</option>
+            </select>
+          </div>
+          
+          <div class="flex flex-col">
+            <label class="text-xs font-medium text-gray-600 mb-1">Status</label>
+            <select id="statusFilter" class="border border-gray-300 rounded px-3 py-2 text-sm min-w-[150px] h-[38px] focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white">
+              <option value="all">All Status</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="pending">Pending</option>
+            </select>
+          </div>
+          
+          <!-- Custom Button - Aligned at bottom -->
+          <div class="flex flex-col">
+            <div class="h-[17px]"></div> <!-- Spacer to align with other elements -->
+            <button id="customBtn" class="px-3 py-1 bg-orange-500 text-white rounded hover:bg-orange-600 font-medium text-xs h-[32px]">
+              Custom Dates
+            </button>
+          </div>
+          
+          <div class="flex-1"></div>
+          <div class="flex items-end gap-2">
+            <div class="flex flex-col">
+              <div class="h-[17px]"></div> <!-- Spacer -->
+              <button id="clearFilterBtn" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 h-[38px]">Clear Filters</button>
+            </div>
+            <div class="flex flex-col">
+              <div class="h-[17px]"></div> <!-- Spacer -->
+              <button id="applyFilterBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 h-[38px]">Apply Filter</button>
+            </div>
+          </div>
         </div>
-        <div class="min-w-[150px]">
-          <label class="block text-xs font-medium text-gray-600">Status</label>
-          <select id="statusFilter" class="border rounded px-3 py-2 text-sm w-full">
-            <option>All</option>
-            <option>Completed</option>
-            <option>Cancelled</option>
-          </select>
+        
+        <!-- Second Row - Custom Date Inputs (hidden by default, aligned left) -->
+        <div id="customDateInputs" class="hidden flex items-center gap-2">
+          <div class="flex items-center gap-2">
+            <label class="text-xs font-medium text-gray-600">From:</label>
+            <input type="date" id="fromDate" class="border rounded px-2 py-1 text-xs h-[32px] w-[120px] focus:ring-1 focus:ring-orange-500 focus:border-orange-500" />
+          </div>
+          <div class="flex items-center gap-2">
+            <label class="text-xs font-medium text-gray-600">To:</label>
+            <input type="date" id="toDate" class="border rounded px-2 py-1 text-xs h-[32px] w-[120px] focus:ring-1 focus:ring-orange-500 focus:border-orange-500" />
+          </div>
         </div>
-        <div class="flex-1"></div>
-        <button id="runReportBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Run Report</button>
       </div>
 
-      <!-- Report Table -->
+      <!-- Table -->
       <div class="overflow-x-auto rounded-xl border">
         <table class="w-full text-sm">
           <thead class="bg-gray-100 border-b">
@@ -137,45 +138,75 @@
               <th class="text-left p-3 font-medium">Check-Out</th>
               <th class="text-center p-3 font-medium">Nights</th>
               <th class="text-right p-3 font-medium">Amount Paid</th>
+              <th class="text-center p-3 font-medium">Status</th>
               <th class="text-center p-3 font-medium">Certificate</th>
             </tr>
           </thead>
           <tbody id="reportBody">
-            <tr class="border-b hover:bg-gray-50">
+            <tr class="border-b hover:bg-gray-50" data-status="completed" data-checkin="2025-09-12" data-checkout="2025-09-14">
               <td class="p-3">#1234</td>
               <td class="p-3">Deluxe Room</td>
               <td class="p-3">12 Sep 2025</td>
               <td class="p-3">14 Sep 2025</td>
               <td class="text-center p-3">2</td>
               <td class="text-right p-3">₹8,000</td>
+              <td class="text-center p-3"><span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">Completed</span></td>
               <td class="text-center p-3"><a href="#" class="text-blue-600 hover:underline">Download</a></td>
             </tr>
-            <tr class="border-b hover:bg-gray-50">
+            <tr class="border-b hover:bg-gray-50" data-status="completed" data-checkin="2025-08-01" data-checkout="2025-08-05">
               <td class="p-3">#1235</td>
               <td class="p-3">Suite</td>
               <td class="p-3">01 Aug 2025</td>
               <td class="p-3">05 Aug 2025</td>
               <td class="text-center p-3">4</td>
               <td class="text-right p-3">₹25,000</td>
+              <td class="text-center p-3"><span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">Completed</span></td>
               <td class="text-center p-3"><a href="#" class="text-blue-600 hover:underline">Download</a></td>
             </tr>
+            <tr class="border-b hover:bg-gray-50" data-status="cancelled" data-checkin="2025-07-15" data-checkout="2025-07-18">
+              <td class="p-3">#1236</td>
+              <td class="p-3">Standard Room</td>
+              <td class="p-3">15 Jul 2025</td>
+              <td class="p-3">18 Jul 2025</td>
+              <td class="text-center p-3">3</td>
+              <td class="text-right p-3">₹12,000</td>
+              <td class="text-center p-3"><span class="bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded-full">Cancelled</span></td>
+              <td class="text-center p-3"><span class="text-gray-400">N/A</span></td>
+            </tr>
+            <tr class="border-b hover:bg-gray-50" data-status="completed" data-checkin="2025-06-10" data-checkout="2025-06-12">
+              <td class="p-3">#1237</td>
+              <td class="p-3">Deluxe Room</td>
+              <td class="p-3">10 Jun 2025</td>
+              <td class="p-3">12 Jun 2025</td>
+              <td class="text-center p-3">2</td>
+              <td class="text-right p-3">₹8,000</td>
+              <td class="text-center p-3"><span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">Completed</span></td>
+              <td class="text-center p-3"><a href="#" class="text-blue-600 hover:underline">Download</a></td>
+            </tr>
+            <tr class="border-b hover:bg-gray-50" data-status="pending" data-checkin="2025-05-20" data-checkout="2025-05-23">
+              <td class="p-3">#1238</td>
+              <td class="p-3">Suite</td>
+              <td class="p-3">20 May 2025</td>
+              <td class="p-3">23 May 2025</td>
+              <td class="text-center p-3">3</td>
+              <td class="text-right p-3">₹18,750</td>
+              <td class="text-center p-3"><span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">Pending</span></td>
+              <td class="text-center p-3"><span class="text-gray-400">Processing</span></td>
+            </tr>
           </tbody>
-          <!-- Total Row -->
           <tfoot class="bg-gray-50 border-t">
             <tr>
               <td colspan="4" class="p-3 font-semibold text-right">Total</td>
-              <td id="totalNights" class="text-center p-3 font-semibold">6</td>
-              <td id="totalAmount" class="text-right p-3 font-semibold">₹33,000</td>
-              <td></td>
+              <td id="totalNights" class="text-center p-3 font-semibold">14</td>
+              <td id="totalAmount" class="text-right p-3 font-semibold">₹71,750</td>
+              <td colspan="2"></td>
             </tr>
           </tfoot>
         </table>
       </div>
-    </main>
-  </div>
+    </div>
+  </main>
 
-  <!-- Footer placeholder -->
-  <div id="footer"></div>
 
   <!-- PDF Export Modal (advanced) -->
   <div id="pdfModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
@@ -370,6 +401,13 @@
       </div>
     </div>
   </div>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer"></div>
+
     <!-- // fetch("/Features/Components/Navbars/LoggedCustomerNavbar/index.html").then(r => r.text()).then(d => { document.getElementById("navbar").innerHTML = d; }).catch(()=>{}); -->
     <!-- // fetch("/Features/Components/Footers/CustomerFooter/index.html").then(r => r.text()).then(d => { document.getElementById("footer").innerHTML = d; }).catch(()=>{}); -->
 
@@ -377,4 +415,4 @@
 <script src="./script.js"></script>
 </body>
 </html>
- 
+

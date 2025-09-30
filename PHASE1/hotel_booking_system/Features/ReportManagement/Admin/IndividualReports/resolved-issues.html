@@ -15,82 +15,24 @@
   <!-- Admin Main Sidebar (always visible) -->
   <div id="old_sidebar" class="fixed top-16 left-0 w-64 h-screen shadow-lg bg-white"></div>
 
-<!-- Reports Drawer Sidebar (toggle menu) -->
-<aside id="sidebar"
-  class="fixed top-16 left-0 w-72 h-[calc(100vh-4rem)] overflow-y-auto bg-white border-r border-gray-200 shadow-lg rounded-r-xl transform -translate-x-full transition-transform duration-300 z-30">
-  <div class="p-4">
-    <!-- Search -->
-    <input id="reportSearch" type="text" placeholder="Search reports"
-      class="w-full border rounded-lg px-3 py-2 mb-4 text-sm focus:ring-yellow-500 focus:border-yellow-500"/>
-    
-    <nav id="reportList" class="space-y-4 text-gray-700 text-sm">
-
-      <!-- 📌 Bookings -->
-      <div>
-        <h3 class="font-semibold text-gray-800 mb-2">Bookings</h3>
-        <ul class="space-y-1">
-          <li><a href="room-occupancy.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Room Occupancy</a></li>
-          <li><a href="room-usage-trends.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Room Usage Trends</a></li>
-          <li><a href="room-details.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Room Details</a></li>
-          <li><a href="booking-trends.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Booking Trends</a></li>
-          <li><a href="cancellation-history.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Cancellation History</a></li>
-        </ul>
-      </div>
-
-      <!-- 👤 Customers -->
-      <div>
-        <h3 class="font-semibold text-gray-800 mb-2">Customers</h3>
-        <ul class="space-y-1">
-          <li><a href="customer-activity.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Customer Activity</a></li>
-          <li><a href="top-customer.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Top Customers</a></li>
-        </ul>
-      </div>
-
-      <!-- 📑 Issues -->
-      <div>
-        <h3 class="font-semibold text-gray-800 mb-2">Issues</h3>
-        <ul class="space-y-1">
-          <li><a href="reported-issues.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Reported Issues</a></li>
-          <li><a href="resolved-issues.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Resolved Issues</a></li>
-          <li><a href="pending-issues.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Pending Issues</a></li>
-        </ul>
-      </div>
-
-      <!-- 💸 Refunds -->
-      <div>
-        <h3 class="font-semibold text-gray-800 mb-2">Refunds</h3>
-        <ul class="space-y-1">
-          <li><a href="refund-history.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Refund History</a></li>
-          <li><a href="processed-refunds.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Processed Refunds</a></li>
-          <li><a href="pending-refunds.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Pending Refunds</a></li>
-        </ul>
-      </div>
-
-      <!-- 💰 Payments -->
-      <div>
-        <h3 class="font-semibold text-gray-800 mb-2">Payments</h3>
-        <ul class="space-y-1">
-          <li><a href="payments-overview.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Payments Overview</a></li>
-          <li><a href="Revenue-overview.html" class="block px-2 py-1 hover:bg-yellow-100 rounded">Revenue Overview</a></li>
-        </ul>
-      </div>
-
-    </nav>
-  </div>
-</aside>
-
-
   <!-- Main Content -->
   <main class="ml-64 pt-20 p-6">
     <div class="bg-white shadow rounded-xl p-6">
 
       <!-- Title + Actions -->
       <div class="flex items-center justify-between mb-6">
-        <h1 class="text-xl font-semibold flex items-center space-x-2">
-          <span class="material-icons text-gray-600 cursor-pointer" id="menuToggle" title="Open reports menu">menu</span>
-          <span>My Stay History</span>
-          <span class="text-gray-500 text-sm">(From 01/01/2024 To 23/09/2025)</span>
-        </h1>
+        <div class="flex items-center space-x-4">
+          <!-- Back to Reports Button -->
+          <button onclick="history.back()" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors">
+            <span class="material-icons">arrow_back</span>
+            <span class="text-sm font-medium">Back to Reports</span>
+          </button>
+          
+          <h1 class="text-xl font-semibold flex items-center space-x-2">
+            <span>My Stay History</span>
+            <span class="text-gray-500 text-sm">(From 01/01/2024 To 23/09/2025)</span>
+          </h1>
+        </div>
 
         <!-- Actions -->
         <div class="flex items-center space-x-3">
@@ -115,26 +57,59 @@
       </div>
 
       <!-- Filters -->
-      <div class="flex flex-wrap items-center space-x-4 mb-6">
-        <div class="min-w-[180px]">
-          <label class="block text-xs font-medium text-gray-600">Date Range</label>
-          <select id="dateRange" class="border rounded px-3 py-2 text-sm w-full">
-            <option>This Month</option>
-            <option>Last 3 Months</option>
-            <option>This Year</option>
-            <option value="custom">Custom</option>
+      <div class="flex items-center gap-4 mb-6">
+        <div class="flex flex-col">
+          <label class="text-xs font-medium text-gray-600 mb-1">Date Range</label>
+          <select id="dateRange" class="border rounded px-3 py-2 text-sm min-w-[180px] h-[38px]">
+            <option value="all" id="dateAll">All Dates</option>
+            <option value="thisMonth" id="dateThisMonth">This Month</option>
+            <option value="last3Months" id="dateLast3Months">Last 3 Months</option>
+            <option value="thisYear" id="dateThisYear">This Year</option>
           </select>
         </div>
-        <div class="min-w-[150px]">
-          <label class="block text-xs font-medium text-gray-600">Status</label>
-          <select id="statusFilter" class="border rounded px-3 py-2 text-sm w-full">
-            <option>All</option>
-            <option>Completed</option>
-            <option>Cancelled</option>
+        
+        <div class="flex flex-col">
+          <label class="text-xs font-medium text-gray-600 mb-1">Customer</label>
+          <select id="customerFilter" class="border border-gray-300 rounded px-3 py-2 text-sm min-w-[150px] h-[38px] focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white">
+            <option value="all">All Customers</option>
+            <!-- Options will be populated dynamically from table data -->
           </select>
         </div>
+        
+        <!-- Custom Button - Aligned at bottom -->
+        <div class="flex flex-col">
+          <div class="h-[17px]"></div> <!-- Spacer to align with other elements -->
+          <button id="customBtn" class="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 font-medium text-sm h-[38px]">
+            Custom Dates
+          </button>
+        </div>
+        
+        <!-- Custom Date Inputs (hidden by default) - Inline with other elements -->
+        <div id="customDateInputs" class="hidden flex items-end gap-2">
+          <div class="flex flex-col">
+            <div class="h-[17px]"></div> <!-- Spacer -->
+            <input type="date" id="fromDate" class="border rounded px-3 py-2 text-sm h-[38px] focus:ring-2 focus:ring-orange-500 focus:border-orange-500" />
+          </div>
+          <div class="flex items-end">
+            <span class="text-gray-500 text-sm mb-2">to</span>
+          </div>
+          <div class="flex flex-col">
+            <div class="h-[17px]"></div> <!-- Spacer -->
+            <input type="date" id="toDate" class="border rounded px-3 py-2 text-sm h-[38px] focus:ring-2 focus:ring-orange-500 focus:border-orange-500" />
+          </div>
+        </div>
+        
         <div class="flex-1"></div>
-        <button id="runReportBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Run Report</button>
+        <div class="flex items-end gap-2">
+          <div class="flex flex-col">
+            <div class="h-[17px]"></div> <!-- Spacer -->
+            <button id="clearFilterBtn" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 h-[38px]">Clear Filters</button>
+          </div>
+          <div class="flex flex-col">
+            <div class="h-[17px]"></div> <!-- Spacer -->
+            <button id="applyFilterBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 h-[38px]">Apply Filter</button>
+          </div>
+        </div>
       </div>
 
       <!-- Table -->
@@ -143,6 +118,7 @@
           <thead class="bg-gray-100 border-b">
             <tr>
               <th class="text-left p-3 font-medium">Booking ID</th>
+              <th class="text-left p-3 font-medium">Customer</th>
               <th class="text-left p-3 font-medium">Room Type</th>
               <th class="text-left p-3 font-medium">Check-In</th>
               <th class="text-left p-3 font-medium">Check-Out</th>
@@ -152,8 +128,9 @@
             </tr>
           </thead>
           <tbody id="reportBody">
-            <tr class="border-b hover:bg-gray-50">
+            <tr class="border-b hover:bg-gray-50" data-status="completed" data-checkin="2025-09-12" data-checkout="2025-09-14" data-customer="John Smith">
               <td class="p-3">#1234</td>
+              <td class="p-3">John Smith</td>
               <td class="p-3">Deluxe Room</td>
               <td class="p-3">12 Sep 2025</td>
               <td class="p-3">14 Sep 2025</td>
@@ -161,8 +138,9 @@
               <td class="text-right p-3">₹8,000</td>
               <td class="text-center p-3"><a href="#" class="text-blue-600 hover:underline">Download</a></td>
             </tr>
-            <tr class="border-b hover:bg-gray-50">
+            <tr class="border-b hover:bg-gray-50" data-status="completed" data-checkin="2025-08-01" data-checkout="2025-08-05" data-customer="Sarah Johnson">
               <td class="p-3">#1235</td>
+              <td class="p-3">Sarah Johnson</td>
               <td class="p-3">Suite</td>
               <td class="p-3">01 Aug 2025</td>
               <td class="p-3">05 Aug 2025</td>
@@ -170,12 +148,42 @@
               <td class="text-right p-3">₹25,000</td>
               <td class="text-center p-3"><a href="#" class="text-blue-600 hover:underline">Download</a></td>
             </tr>
+            <tr class="border-b hover:bg-gray-50" data-status="cancelled" data-checkin="2025-07-15" data-checkout="2025-07-18" data-customer="Michael Davis">
+              <td class="p-3">#1236</td>
+              <td class="p-3">Michael Davis</td>
+              <td class="p-3">Standard Room</td>
+              <td class="p-3">15 Jul 2025</td>
+              <td class="p-3">18 Jul 2025</td>
+              <td class="text-center p-3">3</td>
+              <td class="text-right p-3">₹12,000</td>
+              <td class="text-center p-3"><span class="text-gray-400">N/A</span></td>
+            </tr>
+            <tr class="border-b hover:bg-gray-50" data-status="completed" data-checkin="2025-06-10" data-checkout="2025-06-12" data-customer="Emily Wilson">
+              <td class="p-3">#1237</td>
+              <td class="p-3">Emily Wilson</td>
+              <td class="p-3">Deluxe Room</td>
+              <td class="p-3">10 Jun 2025</td>
+              <td class="p-3">12 Jun 2025</td>
+              <td class="text-center p-3">2</td>
+              <td class="text-right p-3">₹8,000</td>
+              <td class="text-center p-3"><a href="#" class="text-blue-600 hover:underline">Download</a></td>
+            </tr>
+            <tr class="border-b hover:bg-gray-50" data-status="cancelled" data-checkin="2025-05-20" data-checkout="2025-05-23" data-customer="John Smith">
+              <td class="p-3">#1238</td>
+              <td class="p-3">John Smith</td>
+              <td class="p-3">Suite</td>
+              <td class="p-3">20 May 2025</td>
+              <td class="p-3">23 May 2025</td>
+              <td class="text-center p-3">3</td>
+              <td class="text-right p-3">₹18,750</td>
+              <td class="text-center p-3"><span class="text-gray-400">N/A</span></td>
+            </tr>
           </tbody>
           <tfoot class="bg-gray-50 border-t">
             <tr>
-              <td colspan="4" class="p-3 font-semibold text-right">Total</td>
-              <td id="totalNights" class="text-center p-3 font-semibold">6</td>
-              <td id="totalAmount" class="text-right p-3 font-semibold">₹33,000</td>
+              <td colspan="5" class="p-3 font-semibold text-right">Total</td>
+              <td id="totalNights" class="text-center p-3 font-semibold">14</td>
+              <td id="totalAmount" class="text-right p-3 font-semibold">₹71,750</td>
               <td></td>
             </tr>
           </tfoot>

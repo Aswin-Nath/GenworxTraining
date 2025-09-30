@@ -1,23 +1,25 @@
-// ✅ Logged-in Customer Navbar Loader
+// ✅ Navbar Loader with Notifications (Customer navbar)
 fetch("/Features/Components/Navbars/LoggedCustomerNavbar/index.html")
   .then(res => res.text())
   .then(html => {
     document.getElementById("navbar").innerHTML = html;
+    initNotifications(); // 🔔 call after navbar loads
 
-    // ✅ mobile menu toggle
-    const menuBtn = document.getElementById("menuBtn");
-    const mobileMenu = document.getElementById("mobileMenu");
-    if (menuBtn && mobileMenu) {
-      menuBtn.addEventListener("click", () => {
-        mobileMenu.classList.toggle("open");
-      });
-    }
+    // ✅ Highlight Reports sidebar link
+    document.querySelectorAll("aside nav a").forEach(link => {
+      if (link.dataset.page === "report") {
+        link.classList.add("text-yellow-700", "font-semibold");
+      }
+    });
+  });
 
-    // ✅ init notifications for logged-in users
-    initNotifications();
+// ✅ Footer Loading
+fetch("/Features/Components/Footers/CustomerFooter/index.html")
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("footer").innerHTML = data;
   })
-  .catch(err => console.error("❌ LoggedCustomerNavbar load failed:", err));
-
+  .catch(err => console.error("❌ Footer load failed:", err));
 
 // ✅ Notifications Initializer
 function initNotifications() {
@@ -38,7 +40,7 @@ function initNotifications() {
 
   const renderNotifs = (listId) => {
     const list = document.getElementById(listId);
-    if (!list) return; // safe skip if element missing
+    if (!list) return;
     list.innerHTML = latestNotifs.map(n => `
       <div class="px-4 py-3 flex items-start space-x-3 hover:bg-gray-50">
         <div>${notifIcon(n.type)}</div>
@@ -50,15 +52,12 @@ function initNotifications() {
     `).join("");
   };
 
-  // render into desktop + mobile lists
   renderNotifs("notifList");
   renderNotifs("notifListMobile");
 
-  // show red dot indicators
   document.getElementById("notifDot")?.classList.remove("hidden");
   document.getElementById("notifDotMobile")?.classList.remove("hidden");
 
-  // dropdown toggle helper
   const toggleDropdown = (btnId, dropId) => {
     const btn = document.getElementById(btnId);
     const drop = document.getElementById(dropId);
@@ -78,35 +77,158 @@ function initNotifications() {
   toggleDropdown("notifBtn", "notifDropdown");
   toggleDropdown("notifBtnMobile", "notifDropdownMobile");
 }
-    fetch("/Features/Components/Footers/CustomerFooter/index.html").then(r => r.text()).then(d => { document.getElementById("footer").innerHTML = d; }).catch(()=>{});
+
+// Toggle custom date inputs visibility - COMPLETE CONTROL
+function toggleCustomDateInputs() {
+  var customInputs = document.getElementById('customDateInputs');
+  var customBtn = document.getElementById('customBtn');
+  
+  console.log('toggleCustomDateInputs called');
+  
+  if (customInputs && customBtn) {
+    var isHidden = customInputs.classList.contains('hidden');
+    console.log('Custom inputs currently hidden:', isHidden);
     
-     const menuToggle = document.getElementById("menuToggle");
-  const sidebar = document.getElementById("sidebar");
-  let overlay;
-  menuToggle.addEventListener("click", () => {
-    const isClosed = sidebar.classList.contains("-translate-x-full");
-    sidebar.classList.toggle("-translate-x-full");
-    toggleOverlay(isClosed); // show overlay only if we just opened
+    if (isHidden) {
+      // Show custom date inputs
+      customInputs.classList.remove('hidden');
+      customInputs.classList.add('flex');
+      customBtn.textContent = 'Hide Custom Dates';
+      customBtn.classList.add('bg-orange-600');
+      customBtn.classList.remove('bg-orange-500');
+      customBtn.classList.remove('hover:bg-orange-600');
+      customBtn.classList.add('hover:bg-orange-700');
+      
+      console.log('Custom date inputs SHOWN');
+    } else {
+      // Hide custom date inputs
+      customInputs.classList.add('hidden');
+      customInputs.classList.remove('flex');
+      customBtn.textContent = 'Custom Dates';
+      customBtn.classList.add('bg-orange-500');
+      customBtn.classList.remove('bg-orange-600');
+      customBtn.classList.add('hover:bg-orange-600');
+      customBtn.classList.remove('hover:bg-orange-700');
+      
+      // Clear custom date values when hiding
+      var fromDate = document.getElementById('fromDate');
+      var toDate = document.getElementById('toDate');
+      if (fromDate) fromDate.value = '';
+      if (toDate) toDate.value = '';
+      
+      console.log('Custom date inputs HIDDEN and cleared');
+    }
+  } else {
+    console.error('Could not find custom inputs or button elements');
+  }
+}
+
+// Global apply filters function (handles both dropdown and custom dates)
+function applyFilters() {
+  var dateRange = document.getElementById('dateRange').value;
+  var statusFilter = document.getElementById('statusFilter').value;
+  var fromDateInput = document.getElementById('fromDate').value;
+  var toDateInput = document.getElementById('toDate').value;
+  var customInputsVisible = !document.getElementById('customDateInputs').classList.contains('hidden');
+  var rows = document.querySelectorAll('#reportBody tr');
+
+  console.log('Applying filters - Date Range:', dateRange, 'Status:', statusFilter, 'Custom visible:', customInputsVisible);
+
+  // Get date range bounds
+  var fromDate = null;
+  var toDate = null;
+  var currentDate = new Date();
+
+  // Check if custom date inputs are visible AND have values - prioritize them
+  if (customInputsVisible && (fromDateInput || toDateInput)) {
+    if (fromDateInput && toDateInput) {
+      fromDate = new Date(fromDateInput);
+      toDate = new Date(toDateInput);
+      console.log('Using CUSTOM date inputs:', fromDate, toDate);
+    } else if (fromDateInput) {
+      fromDate = new Date(fromDateInput);
+      toDate = new Date(); // Today
+      console.log('Using CUSTOM from date only:', fromDate);
+    } else if (toDateInput) {
+      fromDate = new Date('2020-01-01'); // Far past date
+      toDate = new Date(toDateInput);
+      console.log('Using CUSTOM to date only:', toDate);
+    }
+  } else if (dateRange !== 'all') {
+    // Use dropdown selection only if custom is not active
+    console.log('Using DROPDOWN selection:', dateRange);
+    switch (dateRange) {
+      case 'thisMonth':
+        fromDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+        toDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+        break;
+      case 'last3Months':
+        fromDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 3, 1);
+        toDate = currentDate;
+        break;
+      case 'thisYear':
+        fromDate = new Date(currentDate.getFullYear(), 0, 1);
+        toDate = new Date(currentDate.getFullYear(), 11, 31);
+        break;
+    }
+  } else {
+    // No date filtering (All Dates selected and no custom dates)
+    console.log('No date filtering applied');
+    fromDate = null;
+    toDate = null;
+  }
+
+  filterRows(rows, fromDate, toDate, statusFilter);
+}
+
+// Common function to filter rows
+function filterRows(rows, fromDate, toDate, statusFilter) {
+  var visibleRows = 0;
+
+  rows.forEach(function (row) {
+    var shouldShow = true;
+    
+    // Status filter
+    if (statusFilter !== 'all') {
+      var rowStatus = row.getAttribute('data-status') || '';
+      console.log('Checking status:', rowStatus, 'against filter:', statusFilter);
+      if (rowStatus !== statusFilter) {
+        shouldShow = false;
+      }
+    }
+
+    // Date range filter
+    if (fromDate && toDate && shouldShow) {
+      var checkinDateStr = row.getAttribute('data-checkin');
+      if (checkinDateStr) {
+        var checkinDate = new Date(checkinDateStr);
+        console.log('Comparing date:', checkinDate, 'between', fromDate, 'and', toDate);
+        if (isNaN(checkinDate.getTime()) || checkinDate < fromDate || checkinDate > toDate) {
+          shouldShow = false;
+        }
+      }
+    }
+
+    if (shouldShow) {
+      row.style.display = '';
+      visibleRows++;
+    } else {
+      row.style.display = 'none';
+    }
   });
 
-  function toggleOverlay(show) {
-    if (window.innerWidth > 1024) return; // don't overlay on large screens
-    if (!overlay) {
-      overlay = document.createElement("div");
-      overlay.id = "drawerOverlay";
-      overlay.className = "fixed inset-0 bg-black bg-opacity-30 z-20";
-      overlay.addEventListener("click", () => {
-        sidebar.classList.add("-translate-x-full");
-        overlay.remove();
-      });
-    }
-    if (show && !document.body.contains(overlay)) {
-      document.body.appendChild(overlay);
-    } else if (!show) {
-      overlay?.remove();
-    }
-    if (sidebar.classList.contains("-translate-x-full")) overlay?.remove();
+  // Recalculate totals
+  if (typeof recalcTotals === 'function') {
+    recalcTotals();
   }
+  
+  console.log('Filter applied, visible rows:', visibleRows);
+  
+  if (visibleRows === 0) {
+    console.log('No records match the selected filters');
+  }
+}
+    // Customer page - no sidebar needed
 
    const exportToggle = document.getElementById("exportToggle");
   const exportMenu = document.getElementById("exportMenu");
@@ -116,17 +238,6 @@ function initNotifications() {
   });
   document.addEventListener("click", () => {
     if (!exportMenu.classList.contains("hidden")) exportMenu.classList.add("hidden");
-  });
-
-
-    const reportSearch = document.getElementById("reportSearch");
-  const reportList = document.getElementById("reportList");
-  reportSearch.addEventListener("input", () => {
-    const q = reportSearch.value.trim().toLowerCase();
-    Array.from(reportList.querySelectorAll("a")).forEach((a) => {
-      const txt = a.textContent.trim().toLowerCase();
-      a.style.display = txt.includes(q) ? "" : "none";
-    });
   });
 
 
@@ -254,9 +365,6 @@ function initNotifications() {
     xlsModal.classList.add("hidden");
   });
   (function () {
-  // ensure overlay var exists in this scope (if your other code also uses overlay that's fine)
-  var overlay = window.__reportsDrawerOverlay || null;
-  window.__reportsDrawerOverlay = overlay;
 
   /* ------------------------
      Print button (DOM-safe, no template backticks)
@@ -321,15 +429,86 @@ function initNotifications() {
   }
 
   /* ------------------------
-     Run Report button
+     Apply Filter button (handles both dropdown and custom dates)
      ------------------------ */
-  var runBtn = document.getElementById('runReportBtn');
-  if (runBtn) {
-    runBtn.addEventListener('click', function () {
-      showToast('Report applied — showing filtered results (demo)', 2500);
-      recalcTotals();
+  var applyBtn = document.getElementById('applyFilterBtn');
+  if (applyBtn) {
+    applyBtn.addEventListener('click', function () {
+      console.log('Apply filter button clicked');
+      applyFilters();
+      showToast('Filters applied successfully', 2500);
     });
+    console.log('Apply filter button event listener added');
+  } else {
+    console.error('Apply filter button not found');
   }
+
+  /* ------------------------
+     Custom Button - toggles date inputs
+     ------------------------ */
+  var customBtn = document.getElementById('customBtn');
+  if (customBtn) {
+    customBtn.addEventListener('click', function () {
+      console.log('Custom button clicked');
+      toggleCustomDateInputs();
+    });
+    console.log('Custom button event listener added');
+  } else {
+    console.error('Custom button not found');
+  }
+
+  /* ------------------------
+     Clear Filters button
+     ------------------------ */
+  var clearBtn = document.getElementById('clearFilterBtn');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', function () {
+      console.log('Clear filter button clicked');
+      clearFilters();
+      showToast('Filters cleared', 2000);
+    });
+    console.log('Clear filter button event listener added');
+  } else {
+    console.error('Clear filter button not found');
+  }
+
+  /* ------------------------
+     Clear filters functionality
+     ------------------------ */
+  function clearFilters() {
+    // Reset filter controls to default values
+    document.getElementById('dateRange').value = 'all';
+    document.getElementById('statusFilter').value = 'all';
+    document.getElementById('fromDate').value = '';
+    document.getElementById('toDate').value = '';
+    
+    // Force hide custom date inputs
+    var customInputs = document.getElementById('customDateInputs');
+    var customBtn = document.getElementById('customBtn');
+    if (customInputs && customBtn) {
+      customInputs.classList.add('hidden');
+      customInputs.classList.remove('flex');
+      customBtn.textContent = 'Custom Dates';
+      customBtn.classList.add('bg-orange-500');
+      customBtn.classList.remove('bg-orange-600');
+      customBtn.classList.add('hover:bg-orange-600');
+      customBtn.classList.remove('hover:bg-orange-700');
+      console.log('Custom date inputs hidden during clear filters');
+    }
+    
+    // Show all rows
+    var rows = document.querySelectorAll('#reportBody tr');
+    rows.forEach(function (row) {
+      row.style.display = '';
+    });
+
+    // Recalculate totals for all visible rows
+    recalcTotals();
+  }
+
+  /* ------------------------
+     Filter functionality (now handled globally above)
+     ------------------------ */
 
   /* ------------------------
      Toast utility (safe DOM)
@@ -352,23 +531,26 @@ function initNotifications() {
   }
 
   /* ------------------------
-     Recalculate totals from table rows
+     Recalculate totals from visible table rows only
      ------------------------ */
   function recalcTotals() {
     var nights = 0;
     var amount = 0;
     var rows = document.querySelectorAll('#reportBody tr');
     rows.forEach(function (tr) {
-      try {
-        var nightsCell = tr.children[4];
-        var amountCell = tr.children[5];
-        var n = parseInt((nightsCell && nightsCell.textContent) ? nightsCell.textContent.trim() : '0', 10) || 0;
-        var amtText = (amountCell && amountCell.textContent) ? amountCell.textContent.trim() : '0';
-        amtText = amtText.replace(/₹/g, '').replace(/,/g, '').trim();
-        var a = parseFloat(amtText) || 0;
-        nights += n;
-        amount += a;
-      } catch (e) { /* skip malformed row */ }
+      // Only count visible rows
+      if (tr.style.display !== 'none') {
+        try {
+          var nightsCell = tr.children[4];
+          var amountCell = tr.children[5];
+          var n = parseInt((nightsCell && nightsCell.textContent) ? nightsCell.textContent.trim() : '0', 10) || 0;
+          var amtText = (amountCell && amountCell.textContent) ? amountCell.textContent.trim() : '0';
+          amtText = amtText.replace(/₹/g, '').replace(/,/g, '').trim();
+          var a = parseFloat(amtText) || 0;
+          nights += n;
+          amount += a;
+        } catch (e) { /* skip malformed row */ }
+      }
     });
 
     var totalNightsEl = document.getElementById('totalNights');
@@ -389,28 +571,88 @@ function initNotifications() {
       var xlsModal = document.getElementById('xlsModal');
       var dateModal = document.getElementById('dateModal');
       var exportMenu = document.getElementById('exportMenu');
-      var sb = document.getElementById('sidebar');
 
       if (pdfModal) pdfModal.classList.add('hidden');
       if (xlsModal) xlsModal.classList.add('hidden');
       if (dateModal) dateModal.classList.add('hidden');
       if (exportMenu) exportMenu.classList.add('hidden');
-      if (sb) sb.classList.add('-translate-x-full');
-
-      // overlay cleanup (if overlay exists and is attached)
-      if (overlay && overlay.parentNode) {
-        overlay.parentNode.removeChild(overlay);
-      }
     }
   });
 
-  // responsive cleanup overlay when resizing
-  window.addEventListener('resize', function () {
-    if (window.innerWidth > 1024 && overlay && overlay.parentNode) {
-      overlay.parentNode.removeChild(overlay);
-    }
-  });
+
 
   // expose recalc for external calls if needed
   window.recalcStayTotals = recalcTotals;
 })();
+
+// Add global error handler
+window.addEventListener('error', function(e) {
+  console.error('Page error:', e.error);
+});
+
+// Ensure page is set up when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+  // Wait a bit for any dynamic content to load
+  setTimeout(function() {
+    try {
+      // Ensure custom inputs are hidden on page load
+      var customInputs = document.getElementById('customDateInputs');
+      var customBtn = document.getElementById('customBtn');
+      if (customInputs && customBtn) {
+        customInputs.classList.add('hidden');
+        customInputs.classList.remove('flex');
+        customBtn.textContent = 'Custom Dates';
+        customBtn.classList.add('bg-orange-500');
+        customBtn.classList.remove('bg-orange-600');
+        customBtn.classList.add('hover:bg-orange-600');
+        customBtn.classList.remove('hover:bg-orange-700');
+        console.log('Custom date inputs initialized as hidden');
+      }
+      
+      // Add change event listener to status filter for auto-apply
+      const statusFilter = document.getElementById('statusFilter');
+      if (statusFilter) {
+        statusFilter.addEventListener('change', function() {
+          console.log('Status filter changed to:', this.value);
+          // Automatically apply filters when status is selected
+          if (typeof applyFilters === 'function') {
+            applyFilters();
+          }
+        });
+        
+        console.log('Status filter auto-apply setup complete');
+      }
+
+      // Add event listeners for date inputs (logging)
+      const fromDate = document.getElementById('fromDate');
+      const toDate = document.getElementById('toDate');
+      const dateRange = document.getElementById('dateRange');
+
+      // Add event listener to date range dropdown - NO AUTO HIDE
+      if (dateRange) {
+        dateRange.addEventListener('change', function() {
+          console.log('Date range changed to:', this.value);
+          // DO NOT auto-hide custom inputs - let user control it manually
+        });
+        console.log('Date range dropdown event listener added (no auto-hide)');
+      }
+
+      if (fromDate) {
+        fromDate.addEventListener('change', function() {
+          console.log('From date changed to:', this.value);
+        });
+      }
+
+      if (toDate) {
+        toDate.addEventListener('change', function() {
+          console.log('To date changed to:', this.value);
+        });
+      }
+
+      console.log('Customer page initialized successfully');
+
+    } catch (e) {
+      console.error('Error initializing customer page:', e);
+    }
+  }, 500);
+});
