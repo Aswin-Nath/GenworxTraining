@@ -43,6 +43,7 @@ const adminBookingsData = [
     totalAmount: 12500,
     status: "Active",
     modifications: "None",
+    modificationRequested: false,
     guests: 2,
     specialRequests: "Early check-in requested"
   },
@@ -57,7 +58,8 @@ const adminBookingsData = [
     checkOut: "2024-10-03",
     totalAmount: 18750,
     status: "Check-in Today",
-    modifications: "Room upgrade requested",
+    modifications: "Room change",
+    modificationRequested: true,
     guests: 3,
     specialRequests: "Late checkout"
   },
@@ -73,6 +75,7 @@ const adminBookingsData = [
     totalAmount: 25000,
     status: "Check-out Today",
     modifications: "None",
+    modificationRequested: false,
     guests: 4,
     specialRequests: "Airport transfer"
   },
@@ -88,6 +91,7 @@ const adminBookingsData = [
     totalAmount: 9750,
     status: "Completed",
     modifications: "Date change",
+    modificationRequested: true,
     guests: 2,
     specialRequests: "Ground floor room"
   },
@@ -103,6 +107,7 @@ const adminBookingsData = [
     totalAmount: 45000,
     status: "Pending",
     modifications: "None",
+    modificationRequested: false,
     guests: 2,
     specialRequests: "Champagne and flowers"
   },
@@ -118,6 +123,7 @@ const adminBookingsData = [
     totalAmount: 15000,
     status: "Cancelled",
     modifications: "Cancellation",
+    modificationRequested: false,
     guests: 2,
     specialRequests: "Refund processed"
   },
@@ -133,6 +139,7 @@ const adminBookingsData = [
     totalAmount: 22500,
     status: "No Show",
     modifications: "None",
+    modificationRequested: false,
     guests: 3,
     specialRequests: "Business center access"
   },
@@ -147,7 +154,8 @@ const adminBookingsData = [
     checkOut: "2024-10-04",
     totalAmount: 11250,
     status: "Active",
-    modifications: "Additional guest",
+    modifications: "Both change",
+    modificationRequested: true,
     guests: 3,
     specialRequests: "Extra bed required"
   },
@@ -163,6 +171,7 @@ const adminBookingsData = [
     totalAmount: 35000,
     status: "Completed",
     modifications: "None",
+    modificationRequested: false,
     guests: 2,
     specialRequests: "Private dining"
   },
@@ -177,7 +186,8 @@ const adminBookingsData = [
     checkOut: "2024-10-13",
     totalAmount: 16875,
     status: "Pending",
-    modifications: "Room type change",
+    modifications: "Room change",
+    modificationRequested: true,
     guests: 2,
     specialRequests: "Spa appointment"
   }
@@ -297,7 +307,7 @@ function renderBookingsTable() {
   }
 
   tableBody.innerHTML = currentBookings.map(booking => `
-    <tr class="hover:bg-gray-50 ${booking.modifications !== 'None' ? 'bg-orange-50 border-l-4 border-l-orange-400' : ''}">
+    <tr class="${booking.modificationRequested ? 'modification-requested' : 'hover:bg-gray-50'}">
       <td class="p-3 font-medium text-blue-600">${booking.id}</td>
       <td class="p-3">
         <div class="flex items-center gap-2">
@@ -337,32 +347,38 @@ function renderBookingsTable() {
             <span class="material-icons text-sm">visibility</span>
           </button>
           
-          <!-- Room Transfer button - only for active or pending bookings -->
-          ${['Active', 'Pending'].includes(booking.status) ? `
+          <!-- Modify button - only for modification requests -->
+          ${booking.modificationRequested ? `
+            <button onclick="modifyBooking('${booking.id}')" class="px-2 py-1 bg-red-600 text-white hover:bg-red-700 rounded transition text-sm shadow-lg" title="Handle Modification Request">
+              <span class="material-icons text-sm font-bold">edit_note</span>
+            </button>
+          ` : `
+            <button class="px-2 py-1 text-gray-400 rounded transition text-sm cursor-not-allowed" title="No modification request">
+              <span class="material-icons text-sm">edit_note</span>
+            </button>
+          `}
+          
+          <!-- Room Transfer button - only for active or pending bookings without modification requests -->
+          ${['Active', 'Pending'].includes(booking.status) && !booking.modificationRequested ? `
             <button onclick="transferRoom('${booking.id}')" class="px-2 py-1 text-yellow-700 hover:bg-yellow-100 rounded transition text-sm" title="Transfer Room">
               <span class="material-icons text-sm">swap_horiz</span>
             </button>
           ` : `
-            <button class="px-2 py-1 text-gray-400 rounded transition text-sm cursor-not-allowed" title="Room transfer not available for ${booking.status.toLowerCase()} bookings">
+            <button class="px-2 py-1 text-gray-400 rounded transition text-sm cursor-not-allowed" title="Room transfer ${booking.modificationRequested ? 'disabled - modification pending' : 'not available for ' + booking.status.toLowerCase() + ' bookings'}">
               <span class="material-icons text-sm">swap_horiz</span>
             </button>
           `}
           
-          <!-- Cancel button - only for non-started bookings -->
-          ${!['Active', 'Check-in Today', 'Check-out Today', 'Completed', 'Cancelled'].includes(booking.status) ? `
+          <!-- Cancel button - only for non-started bookings without modification requests -->
+          ${!['Active', 'Check-in Today', 'Check-out Today', 'Completed', 'Cancelled'].includes(booking.status) && !booking.modificationRequested ? `
             <button onclick="cancelAdminBooking('${booking.id}')" class="px-2 py-1 text-red-700 hover:bg-red-100 rounded transition text-sm" title="Cancel Booking">
               <span class="material-icons text-sm">cancel</span>
             </button>
           ` : `
-            <button class="px-2 py-1 text-gray-400 rounded transition text-sm cursor-not-allowed" title="Cannot cancel ${booking.status.toLowerCase()} booking">
+            <button class="px-2 py-1 text-gray-400 rounded transition text-sm cursor-not-allowed" title="Cannot cancel - ${booking.modificationRequested ? 'modification pending' : booking.status.toLowerCase() + ' booking'}">
               <span class="material-icons text-sm">cancel</span>
             </button>
           `}
-          
-          <!-- Print button - always enabled but shows download cursor -->
-          <button onclick="printBooking('${booking.id}')" class="px-2 py-1 text-gray-700 hover:bg-gray-100 rounded transition text-sm cursor-download" title="Download booking details">
-            <span class="material-icons text-sm">download</span>
-          </button>
         </div>
       </td>
     </tr>
@@ -886,3 +902,20 @@ window.addEventListener('click', (e) => {
         closeAllRoomsModal();
     }
 });
+
+// Handle modification requests
+function modifyBooking(bookingId) {
+    const booking = adminBookingsData.find(b => b.id === bookingId);
+    if (!booking) {
+        showToast('Booking not found!', 'error');
+        return;
+    }
+    
+    if (!booking.modificationRequested) {
+        showToast('No modification request found for this booking!', 'error');
+        return;
+    }
+    
+    // Redirect to individual booking page where admin can handle the modification
+    window.location.href = `/Features/BookingManagement/Admin/IndividualBookings/index.html?id=${bookingId}`;
+}
