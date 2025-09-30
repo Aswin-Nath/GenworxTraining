@@ -10,15 +10,24 @@ function modifyBooking() {
   window.location.href = '/Features/BookingManagement/Customer/EditBookings/index.html';
 }
 
-function cancelBooking() {
-  if (confirm('Are you sure you want to cancel this booking? This action cannot be undone.')) {
-    showToast('Booking cancellation request submitted successfully!', 'success');
-    // Here you would typically make an API call to cancel the booking
-  }
+// Modal functionality has been moved to DOMContentLoaded event listener
+
+// Raise Issue Modal functionality
+function openRaiseIssueModal() {
+  const modal = document.getElementById('raiseIssueModal');
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
 }
 
-function raiseIssue() {
-  window.location.href = '/Features/IssueManagement/Customer/MyIssues/index.html';
+function closeRaiseIssueModal() {
+  const modal = document.getElementById('raiseIssueModal');
+  modal.classList.add('hidden');
+  document.body.style.overflow = '';
+  
+  // Reset form
+  document.getElementById('raiseIssueForm').reset();
+  document.getElementById('imagePreview').innerHTML = '';
+  document.getElementById('imagePreview').classList.add('hidden');
 }
 
 // ✅ Invoice Download Function
@@ -491,4 +500,205 @@ reviewForm.addEventListener('submit', (e) => {
     // Reset form
     reviewForm.reset();
     charCount.textContent = '0';
+});
+
+// ✅ Modal Cancel Functionality
+document.addEventListener('DOMContentLoaded', () => {
+  // Elements
+  const modal = document.getElementById('unifiedCancelModal');
+  const ucmTitle = document.getElementById('ucmTitle');
+  const ucmSubtitle = document.getElementById('ucmSubtitle');
+  const ucmBody = document.getElementById('ucmBody');
+  const ucmConfirmText = document.getElementById('ucmConfirmText');
+  const ucmBookingReason = document.getElementById('ucmBookingReason');
+  const ucmConfirmMsg = document.getElementById('ucmConfirmMsg');
+  const reasonInput = document.getElementById('ucmReasonInput');
+  const closeBtn = document.getElementById('ucmClose');
+  const abortBtn = document.getElementById('ucmAbort');
+  const confirmBtn = document.getElementById('ucmConfirm');
+  const toastContainer = document.getElementById('unifiedToast');
+
+  let currentTrigger = null; // element that opened modal
+  let currentType = null;
+  let currentId = null;
+  let currentLabel = null;
+
+  // Helper: show toast (non-blocking)
+  function showToast(message, tone = 'success') {
+    const toast = document.createElement('div');
+    const bg = tone === 'error' ? 'bg-red-600' : 'bg-green-600';
+    toast.className = `${bg} text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-3`;
+    toast.style.minWidth = '220px';
+    toast.innerHTML = `<div class="flex-1 text-sm">${message}</div><button aria-label="close" class="opacity-80 hover:opacity-100">✕</button>`;
+    toastContainer.appendChild(toast);
+    toast.querySelector('button').addEventListener('click', () => toast.remove());
+    setTimeout(() => { try { toast.remove(); } catch (e) {} }, 4000);
+  }
+
+  // open unified modal configured by type
+  function openUnifiedModal(triggerEl) {
+    currentTrigger = triggerEl;
+    currentType = triggerEl.dataset.cancel; // booking | issue | refund
+    currentId = triggerEl.dataset.id || null;
+    currentLabel = triggerEl.dataset.label || (currentType ? currentType.toUpperCase() : 'Item');
+
+    // set header/subtitle and body
+    if (currentType === 'booking') {
+      ucmTitle.textContent = 'Cancel Booking';
+      ucmSubtitle.textContent = currentLabel + (currentId ? ` • ID ${currentId}` : '');
+      ucmConfirmText.classList.add('hidden');
+      ucmBookingReason.classList.remove('hidden');
+      reasonInput.value = '';
+      confirmBtn.textContent = 'Yes — Cancel Booking';
+    } else {
+      // fallback (generic)
+      ucmTitle.textContent = 'Cancel';
+      ucmSubtitle.textContent = currentLabel || '';
+      ucmConfirmMsg.textContent = 'Confirm cancel?';
+      ucmConfirmText.classList.remove('hidden');
+      ucmBookingReason.classList.add('hidden');
+      confirmBtn.textContent = 'Yes — Cancel';
+    }
+
+    // show modal
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    // autofocus confirm for keyboard users
+    confirmBtn.focus();
+  }
+
+  function closeUnifiedModal() {
+    modal.classList.add('hidden');
+    document.body.style.overflow = '';
+    currentTrigger = null;
+    currentType = null;
+    currentId = null;
+    currentLabel = null;
+  }
+
+  // Global click handler: any button with [data-cancel] opens POLICY first
+  document.body.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-cancel]');
+    if (!btn) return;
+    e.preventDefault();
+
+    currentTrigger = btn;
+    currentType = btn.dataset.cancel;
+    currentId = btn.dataset.id || null;
+    currentLabel = btn.dataset.label || (currentType ? currentType.toUpperCase() : 'Item');
+
+    // show policy modal first
+    document.getElementById("cancelPolicyModal").classList.remove("hidden");
+    document.getElementById("cancelPolicyModal").classList.add("flex");
+  });
+
+  // Policy modal buttons
+  const cancelPolicyModal = document.getElementById("cancelPolicyModal");
+  const proceedToCancel = document.getElementById("proceedToCancel");
+  const cpmClose = document.getElementById("cpmClose");
+  const cpmCloseBtn = document.getElementById("cpmCloseBtn");
+
+  [cpmClose, cpmCloseBtn].forEach(btn => {
+    btn?.addEventListener("click", () => {
+      cancelPolicyModal.classList.add("hidden");
+      cancelPolicyModal.classList.remove("flex");
+    });
+  });
+
+  proceedToCancel?.addEventListener("click", () => {
+    cancelPolicyModal.classList.add("hidden");
+    cancelPolicyModal.classList.remove("flex");
+    openUnifiedModal(currentTrigger); // now open the actual cancel modal
+  });
+
+  // Modal controls
+  closeBtn.addEventListener('click', closeUnifiedModal);
+  abortBtn.addEventListener('click', closeUnifiedModal);
+
+  // clicking overlay closes if clicking directly on modal background
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeUnifiedModal();
+  });
+
+  // ESC closes
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeUnifiedModal();
+  });
+
+  // Confirm action: show toast only (no DOM update)
+  confirmBtn.addEventListener('click', () => {
+    const reason = (currentType === 'booking') ? (reasonInput.value || null) : null;
+    closeUnifiedModal();
+
+    // choose message
+    let msg = 'Cancelled';
+    if (currentType === 'booking') msg = currentLabel ? `${currentLabel} cancelled.` : 'Booking cancelled.';
+    // If reason present, add short note to toast message
+    if (reason) {
+      showToast(`${msg} Reason noted.`, 'success');
+    } else {
+      showToast(msg, 'success');
+    }
+  });
+
+  // ✅ Raise Issue Modal Event Listeners
+  const raiseIssueModal = document.getElementById('raiseIssueModal');
+  const rimClose = document.getElementById('rimClose');
+  const rimCancel = document.getElementById('rimCancel');
+  const raiseIssueForm = document.getElementById('raiseIssueForm');
+  const issueImages = document.getElementById('issueImages');
+  const imagePreview = document.getElementById('imagePreview');
+
+  // Close modal events
+  [rimClose, rimCancel].forEach(btn => {
+    btn?.addEventListener('click', closeRaiseIssueModal);
+  });
+
+  // Close modal when clicking outside
+  raiseIssueModal?.addEventListener('click', (e) => {
+    if (e.target === raiseIssueModal) closeRaiseIssueModal();
+  });
+
+  // Image upload preview
+  issueImages?.addEventListener('change', (e) => {
+    imagePreview.innerHTML = '';
+    const files = Array.from(e.target.files);
+    
+    if (files.length > 0) {
+      imagePreview.classList.remove('hidden');
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          const div = document.createElement('div');
+          div.className = 'relative';
+          div.innerHTML = `
+            <img src="${ev.target.result}" class="h-24 w-full object-cover rounded-lg shadow">
+            <button type="button" class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
+                    onclick="this.parentElement.remove(); if(document.getElementById('imagePreview').children.length === 0) document.getElementById('imagePreview').classList.add('hidden')">✕</button>
+          `;
+          imagePreview.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+      });
+    } else {
+      imagePreview.classList.add('hidden');
+    }
+  });
+
+  // Form submission
+  raiseIssueForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const title = document.getElementById('issueTitle').value;
+    const description = document.getElementById('issueDescription').value;
+    
+    if (!title.trim() || !description.trim()) {
+      showToast('Please fill in all required fields', 'error');
+      return;
+    }
+    
+    // Here you would typically submit to an API
+    closeRaiseIssueModal();
+    showToast('Issue reported successfully! We will contact you soon.', 'success');
+  });
 });
