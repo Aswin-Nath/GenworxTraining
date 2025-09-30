@@ -1,3 +1,34 @@
+// Toast functionality
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toastMessage');
+    const toastIcon = document.getElementById('toastIcon');
+    
+    toastMessage.textContent = message;
+    
+    // Update toast styling based on type
+    toast.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300 z-50`;
+    
+    if (type === 'success') {
+        toast.classList.add('bg-green-500', 'text-white');
+        toastIcon.textContent = 'check_circle';
+    } else if (type === 'error') {
+        toast.classList.add('bg-red-500', 'text-white');
+        toastIcon.textContent = 'error';
+    } else if (type === 'info') {
+        toast.classList.add('bg-blue-500', 'text-white');
+        toastIcon.textContent = 'info';
+    }
+    
+    // Show toast
+    toast.classList.remove('translate-x-full', 'opacity-0');
+    
+    // Hide after 3 seconds
+    setTimeout(() => {
+        toast.classList.add('translate-x-full', 'opacity-0');
+    }, 3000);
+}
+
  // ✅ Navbar + Footer loading
 const isAdminLoggedIn = localStorage.getItem("is_admin_logged_in") === "true";
 const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";

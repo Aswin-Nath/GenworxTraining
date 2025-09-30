@@ -364,18 +364,18 @@ function viewRefund(bookingId) {
 function showToast(message, type = 'success') {
   const toast = document.createElement('div');
   const bgColor = type === 'success' ? 'bg-green-600' : type === 'info' ? 'bg-blue-600' : 'bg-red-600';
-  toast.className = `${bgColor} text-white px-4 py-2 rounded-lg shadow-lg fixed bottom-4 right-4 z-50 transition-all duration-300 transform translate-y-full opacity-0`;
+  toast.className = `${bgColor} text-white px-4 py-2 rounded-lg shadow-lg fixed top-4 right-4 z-50 transition-all duration-300 transform translate-x-full opacity-0`;
   toast.textContent = message;
   document.body.appendChild(toast);
   
   // Show toast
   setTimeout(() => {
-    toast.classList.remove('translate-y-full', 'opacity-0');
+    toast.classList.remove('translate-x-full', 'opacity-0');
   }, 100);
   
   // Hide toast
   setTimeout(() => {
-    toast.classList.add('translate-y-full', 'opacity-0');
+    toast.classList.add('translate-x-full', 'opacity-0');
     setTimeout(() => toast.remove(), 300);
   }, 3000);
 }

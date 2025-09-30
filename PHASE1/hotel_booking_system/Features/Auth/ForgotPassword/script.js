@@ -2,6 +2,7 @@
 function showToast(message, type = 'success') {
     const toast = document.getElementById('toast');
     const toastMessage = document.getElementById('toastMessage');
+    const toastIcon = document.getElementById('toastIcon');
     
     toastMessage.textContent = message;
     
@@ -10,10 +11,13 @@ function showToast(message, type = 'success') {
     
     if (type === 'success') {
         toast.classList.add('bg-green-500', 'text-white');
+        toastIcon.textContent = 'check_circle';
     } else if (type === 'error') {
         toast.classList.add('bg-red-500', 'text-white');
+        toastIcon.textContent = 'error';
     } else if (type === 'info') {
         toast.classList.add('bg-blue-500', 'text-white');
+        toastIcon.textContent = 'info';
     }
     
     // Show toast

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toast System Demo - LuxuryStay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-md px-6 py-4">
+        <div class="flex items-center justify-center">
+            <h1 class="text-2xl font-bold text-gray-800">🍞 Toast Notification System Demo</h1>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Description -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Toast System Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <div class="flex items-center mb-2">
+                        <span class="material-icons text-green-600 mr-2">check_circle</span>
+                        <h3 class="font-medium text-green-800">Success Toast</h3>
+                    </div>
+                    <p class="text-green-700">Form submissions, successful actions, confirmations</p>
+                </div>
+                <div class="bg-red-50 p-4 rounded-lg">
+                    <div class="flex items-center mb-2">
+                        <span class="material-icons text-red-600 mr-2">error</span>
+                        <h3 class="font-medium text-red-800">Error Toast</h3>
+                    </div>
+                    <p class="text-red-700">Validation errors, failed operations, warnings</p>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <div class="flex items-center mb-2">
+                        <span class="material-icons text-blue-600 mr-2">info</span>
+                        <h3 class="font-medium text-blue-800">Info Toast</h3>
+                    </div>
+                    <p class="text-blue-700">General information, form resets, tips</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo Buttons -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Try These Actions</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Auth Actions -->
+                <div class="space-y-3">
+                    <h3 class="font-medium text-gray-700 border-b pb-2">Authentication</h3>
+                    <button onclick="showToast('🎉 Account created successfully!', 'success')" 
+                            class="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                        Signup Success
+                    </button>
+                    <button onclick="showToast('✅ Welcome back! Login successful.', 'success')" 
+                            class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        Login Success
+                    </button>
+                    <button onclick="showToast('📧 Password reset link sent to your email!', 'success')" 
+                            class="w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+                        Reset Password
+                    </button>
+                    <button onclick="showToast('❌ Invalid email or password!', 'error')" 
+                            class="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                        Login Error
+                    </button>
+                </div>
+
+                <!-- Booking Actions -->
+                <div class="space-y-3">
+                    <h3 class="font-medium text-gray-700 border-b pb-2">Booking Actions</h3>
+                    <button onclick="showToast('🏨 Booking B-2024-001 confirmed! Admin notified.', 'success')" 
+                            class="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                        Book Room
+                    </button>
+                    <button onclick="showToast('🚫 Booking cancelled successfully! Request sent to admin.', 'success')" 
+                            class="w-full px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700">
+                        Cancel Booking
+                    </button>
+                    <button onclick="showToast('📝 Modification request sent to admin for approval.', 'info')" 
+                            class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        Modify Booking
+                    </button>
+                    <button onclick="showToast('⚠️ No rooms available for selected dates!', 'error')" 
+                            class="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                        No Availability
+                    </button>
+                </div>
+
+                <!-- Admin Actions -->
+                <div class="space-y-3">
+                    <h3 class="font-medium text-gray-700 border-b pb-2">Admin Actions</h3>
+                    <button onclick="showToast('✅ Booking request approved successfully!', 'success')" 
+                            class="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                        Approve Request
+                    </button>
+                    <button onclick="showToast('❌ Request rejected! Customer has been notified.', 'error')" 
+                            class="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                        Reject Request
+                    </button>
+                    <button onclick="showToast('📊 Report generated and sent to your email.', 'info')" 
+                            class="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+                        Generate Report
+                    </button>
+                    <button onclick="showToast('🔄 All filters have been reset.', 'info')" 
+                            class="w-full px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
+                        Reset Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Implementation Info -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Implementation</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="font-medium text-gray-700 mb-3">HTML Structure</h3>
+                    <pre class="bg-gray-100 p-3 rounded text-xs overflow-x-auto"><code>&lt;!-- Toast Notification --&gt;
+&lt;div id="toast" class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full opacity-0 transition-all duration-300 z-50"&gt;
+    &lt;div class="flex items-center gap-2"&gt;
+        &lt;span id="toastIcon" class="material-icons text-sm"&gt;check_circle&lt;/span&gt;
+        &lt;span id="toastMessage"&gt;Success message!&lt;/span&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+                <div>
+                    <h3 class="font-medium text-gray-700 mb-3">JavaScript Usage</h3>
+                    <pre class="bg-gray-100 p-3 rounded text-xs overflow-x-auto"><code>// Show different toast types
+showToast('Success message!', 'success');
+showToast('Error message!', 'error');
+showToast('Info message!', 'info');
+
+// Examples
+showToast('🎉 Account created!', 'success');
+showToast('❌ Invalid input!', 'error');
+showToast('ℹ️ Form reset!', 'info');</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Links to Auth Pages -->
+        <div class="bg-white rounded-lg shadow-md p-6 mt-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Test Live Pages</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <a href="/Features/Auth/LoginPage/index.html" 
+                   class="block bg-blue-600 text-white text-center py-3 px-4 rounded-lg hover:bg-blue-700 transition">
+                    🔑 Login Page
+                </a>
+                <a href="/Features/Auth/SignupPage/index.html" 
+                   class="block bg-green-600 text-white text-center py-3 px-4 rounded-lg hover:bg-green-700 transition">
+                    📝 Signup Page
+                </a>
+                <a href="/Features/Auth/ForgotPassword/index.html" 
+                   class="block bg-purple-600 text-white text-center py-3 px-4 rounded-lg hover:bg-purple-700 transition">
+                    🔒 Forgot Password
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full opacity-0 transition-all duration-300 z-50">
+        <div class="flex items-center gap-2">
+            <span id="toastIcon" class="material-icons text-sm">check_circle</span>
+            <span id="toastMessage">Demo toast message!</span>
+        </div>
+    </div>
+
+    <script>
+        // Toast functionality (same as in auth pages)
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            const toastIcon = document.getElementById('toastIcon');
+            
+            toastMessage.textContent = message;
+            
+            // Update toast styling based on type
+            toast.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300 z-50`;
+            
+            if (type === 'success') {
+                toast.classList.add('bg-green-500', 'text-white');
+                toastIcon.textContent = 'check_circle';
+            } else if (type === 'error') {
+                toast.classList.add('bg-red-500', 'text-white');
+                toastIcon.textContent = 'error';
+            } else if (type === 'info') {
+                toast.classList.add('bg-blue-500', 'text-white');
+                toastIcon.textContent = 'info';
+            }
+            
+            // Show toast
+            toast.classList.remove('translate-x-full', 'opacity-0');
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                toast.classList.add('translate-x-full', 'opacity-0');
+            }, 3000);
+        }
+
+        // Show welcome message
+        setTimeout(() => {
+            showToast('🍞 Welcome to the Toast System Demo!', 'info');
+        }, 1000);
+    </script>
+</body>
+</html>
