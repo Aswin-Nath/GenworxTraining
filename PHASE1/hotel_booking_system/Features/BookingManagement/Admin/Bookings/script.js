@@ -349,7 +349,7 @@ function renderBookingsTable() {
           
           <!-- Modify button - only for modification requests -->
           ${booking.modificationRequested ? `
-            <button onclick="modifyBooking('${booking.id}')" class="px-2 py-1 bg-red-600 text-white hover:bg-red-700 rounded transition text-sm shadow-lg" title="Handle Modification Request">
+            <button onclick="window.location.href='/Features/BookingManagement/Admin/ModifyCustomerBooking/index.html'" class="px-2 py-1 bg-red-600 text-white hover:bg-red-700 rounded transition text-sm shadow-lg" title="Handle Modification Request">
               <span class="material-icons text-sm font-bold">edit_note</span>
             </button>
           ` : `

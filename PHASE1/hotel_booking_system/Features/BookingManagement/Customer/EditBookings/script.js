@@ -1,328 +1,1071 @@
+  /***********************************************
+  Prototype Edit Booking (table-based) — client-only
+  Replace dummy data & fetch calls with real APIs
+  ***********************************************/
 
-    // Navbar + Footer
- const isAdminLoggedIn = localStorage.getItem("is_admin_logged_in") === "true";
-const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
+  // ---------- Dummy data ----------
+  const bookingData = {
+    id: "B1234",
+    createdAt: "2025-08-10", // used for fairness calc (booking creation)
+    rooms: [
+      {
+        uid: "r1",
+        id: 1,
+        type: "Deluxe Room",
+        adults: 2,
+        children: 0,
+        checkIn: "2025-09-22",
+        checkOut: "2025-09-24",
+        img: "/assets/room1.jpg",
+        price: 4500 // per night
+      },
+      {
+        uid: "r2",
+        id: 2,
+        type: "Executive Suite",
+        adults: 3,
+        children: 1,
+        checkIn: "2025-09-22",
+        checkOut: "2025-09-24",
+        img: "/assets/room2.jpg",
+        price: 6200
+      }
+    ]
+  };
 
-// ✅ Navbar loader
-let navbarPath = "/Features/Components/Navbars/NotCustomerNavbar/index.html"; // default (logged-out)
-
-if (isCustomerLoggedIn) {
-  navbarPath = "/Features/Components/Navbars/LoggedCustomerNavbar/index.html";
-}
-
-fetch(navbarPath)
-  .then(res => res.text())
-  .then(html => {
-    document.getElementById("navbar").innerHTML = html;
-
-    // 👉 only initialize notifications if NOT logged-out navbar
-    if (navbarPath !== "/Features/Components/Navbars/NotCustomerNavbar/index.html") {
-      initNotifications();
-    }
-  })
-  .catch(err => console.error("❌ Navbar load failed:", err));
-
-
-// ✅ Footer loader (always loads)
-fetch("/Features/Components/Footers/CustomerFooter/index.html")
-  .then(res => res.text())
-  .then(html => {
-    document.getElementById("footer").innerHTML = html;
-  });
-
-
-// ✅ Notifications Initializer
-function initNotifications() {
-  const latestNotifs = [
-    { type: "booking", msg: "New booking: Room 201 confirmed", time: "2m ago" },
-    { type: "issue", msg: "Issue reported in Room 105", time: "30m ago" },
-    { type: "refund", msg: "Refund processed for BK#1234", time: "1h ago" }
+  const roomCatalog = [
+    { type: "Deluxe Room", minAdults: 1, maxAdults: 2, minChildren: 0, maxChildren: 1, price: 4500 },
+    { type: "Executive Suite", minAdults: 2, maxAdults: 3, minChildren: 0, maxChildren: 2, price: 6200 },
+    { type: "Presidential Suite", minAdults: 2, maxAdults: 5, minChildren: 0, maxChildren: 4, price: 9500 },
+    { type: "Family Room", minAdults: 2, maxAdults: 4, minChildren: 1, maxChildren: 3, price: 5200 }
   ];
 
-  const notifIcon = (type) => {
-    switch (type) {
-      case "booking": return `<i class="fas fa-calendar-check text-green-600"></i>`;
-      case "issue": return `<i class="fas fa-exclamation-triangle text-red-600"></i>`;
-      case "refund": return `<i class="fas fa-money-bill-wave text-yellow-500"></i>`;
-      default: return `<i class="fas fa-bell text-gray-500"></i>`;
-    }
+  const refundPolicy = [
+    { minDays: 30, percent: 0.90 },
+    { minDays: 15, percent: 0.70 },
+    { minDays: 7, percent: 0.50 },
+    { minDays: 3, percent: 0.30 },
+    { minDays: 0, percent: 0.10 } // <3 days => 10%
+  ];
+
+  const adminAcceptWindowMin = 30; // minutes
+
+  // ---------- helpers ----------
+  const byId = id => document.getElementById(id);
+  const fmtINR = n => "₹" + Number(n).toLocaleString("en-IN");
+  function parseDate(str){ if(!str) return null; const [y,m,d]=str.split("-"); return new Date(Number(y),Number(m)-1,Number(d)); }
+  function daysBetween(d1,d2){ return Math.floor((d2 - d1)/(1000*60*60*24)); }
+  function nightsBetween(ci,co){ const c=parseDate(ci), o=parseDate(co); if(!c||!o) return 0; return Math.max(0, daysBetween(c,o)); }
+
+  function getRefundPercent(createdAtStr, origCheckInStr){
+    const created = parseDate(createdAtStr);
+    const checkIn = parseDate(origCheckInStr);
+    if(!created||!checkIn) return 0;
+    const db = daysBetween(created, checkIn);
+    if(db <= 0) return 0; // check-in day or earlier => 0
+    for(const bracket of refundPolicy) if(db >= bracket.minDays) return bracket.percent;
+    return 0;
+  }
+
+  // ---------- state ----------
+  let state = {
+    booking: JSON.parse(JSON.stringify(bookingData)), // applied / preview values
+    edits: {}, // per uid: newType, adults, children, checkIn, checkOut, preview
+    adminRequest: null
   };
 
-  const renderNotifs = (listId) => {
-    const list = document.getElementById(listId);
-    if (!list) return;
-    list.innerHTML = latestNotifs.map(n => `
-      <div class="px-4 py-3 flex items-start space-x-3 hover:bg-gray-50">
-        <div>${notifIcon(n.type)}</div>
-        <div class="flex-1">
-          <p class="text-sm text-gray-700">${n.msg}</p>
-          <span class="text-xs text-gray-400">${n.time}</span>
+  // init edits from original booking
+  function initState(){
+    state.booking.rooms.forEach(r => {
+      state.edits[r.uid] = {
+        newType: r.type,
+        adults: r.adults,
+        children: r.children,
+        checkIn: r.checkIn,
+        checkOut: r.checkOut,
+        applied: false,
+        preview: {}
+      };
+    });
+  }
+
+  // ---------- render flow ----------
+  function initUI(){
+    byId("bookingId").textContent = state.booking.id;
+    byId("bookingCreatedAt").textContent = state.booking.createdAt;
+    renderRoomsTable();
+    updateTotalsFooter();
+    updateButtonForCurrentChanges();
+  }
+
+  // Remove flow bar function as we're using tab-based structure now
+
+  function renderRoomsTable(){
+    const tbody = byId("roomsTableBody");
+    tbody.innerHTML = "";
+    state.booking.rooms.forEach((room) => {
+      const uid = room.uid;
+      const edit = state.edits[uid];
+      const origNights = nightsBetween(room.checkIn, room.checkOut) || 1;
+      const oldSubtotal = room.price * origNights;
+      const refundPercent = getRefundPercent(state.booking.createdAt, room.checkIn);
+      const refundAmt = Number((oldSubtotal * refundPercent).toFixed(0));
+      // new nights based on edit values
+      const newNights = nightsBetween(edit.checkIn, edit.checkOut) || origNights;
+      const newRate = (roomCatalog.find(rc => rc.type === edit.newType) || {}).price || room.price;
+      const newSubtotal = newRate * newNights;
+      const netChange = newSubtotal - refundAmt;
+
+      // set preview
+      edit.preview = { origNights, oldSubtotal, refundPercent, refundAmt, newNights, newRate, newSubtotal, netChange };
+
+      // occupancy validation
+      const occupancyOk = validateOccupancy(edit.newType, edit.adults, edit.children);
+
+      // Check if this room has changes
+      const hasChanges = edit.newType !== room.type || edit.adults !== room.adults || 
+                         edit.children !== room.children || edit.checkIn !== room.checkIn || 
+                         edit.checkOut !== room.checkOut;
+
+      const tr = document.createElement("tr");
+      tr.className = `${hasChanges ? 'bg-yellow-50 border-l-4 border-yellow-400' : 'hover:bg-gray-50'} transition-colors`;
+      tr.innerHTML = `
+        <td class="px-3 py-3">
+          <div class="font-medium text-gray-800">Room #${room.id}</div>
+          <div class="text-xs text-gray-500">${room.type}</div>
+        </td>
+
+        <td class="px-3 py-3">
+          <div class="text-xs space-y-1">
+            <div><strong>Dates:</strong> ${room.checkIn} → ${room.checkOut}</div>
+            <div><strong>Guests:</strong> ${room.adults}A + ${room.children}C</div>
+            <div><strong>Type:</strong> ${room.type}</div>
+            <div><strong>Nights:</strong> ${origNights}</div>
+          </div>
+        </td>
+
+        <td class="px-3 py-3">
+          <div class="space-y-2">
+            <div class="flex gap-1">
+              <input id="ad-${uid}" type="number" min="1" value="${edit.adults}" class="w-12 p-1 border rounded text-xs text-center" title="Adults">
+              <input id="ch-${uid}" type="number" min="0" value="${edit.children}" class="w-12 p-1 border rounded text-xs text-center" title="Children">
+            </div>
+            <select id="type-${uid}" class="w-full p-1 border rounded text-xs">
+              ${roomCatalog.map(rc => `<option value="${rc.type}">${rc.type}</option>`).join("")}
+            </select>
+            <div id="occ-${uid}" class="text-xs"></div>
+            <div class="text-xs text-blue-600">${newNights} nights</div>
+          </div>
+        </td>
+
+        <td class="px-3 py-3 text-right">
+          <div class="text-xs space-y-1">
+            <div class="text-gray-600">Old: <span class="font-medium">${fmtINR(oldSubtotal)}</span></div>
+            <div class="text-green-600">Refund: <span class="font-medium">${fmtINR(refundAmt)}</span></div>
+            <div class="text-blue-600">New: <span class="font-medium">${fmtINR(newSubtotal)}</span></div>
+            <div class="font-semibold ${netChange >= 0 ? 'text-red-600' : 'text-green-600'}">
+              Net: ${netChange >= 0 ? '+' : ''}${fmtINR(netChange)}
+            </div>
+          </div>
+        </td>
+
+        <td class="px-3 py-3 text-center">
+          <div class="flex flex-col gap-1">
+            <button id="apply-${uid}" class="px-2 py-1 bg-yellow-600 text-white rounded text-xs hover:bg-yellow-700">Apply</button>
+            <button id="reset-${uid}" class="px-2 py-1 bg-gray-200 rounded text-xs hover:bg-gray-300">Reset</button>
+          </div>
+        </td>
+      `;
+
+      tbody.appendChild(tr);
+
+      // set selected newType
+      byId(`type-${uid}`).value = edit.newType;
+
+      // compact occupancy display
+      const occEl = byId(`occ-${uid}`);
+      if (occupancyOk.ok) {
+        occEl.innerHTML = `<span class="text-green-600">✓ Valid</span>`;
+      } else {
+        occEl.innerHTML = `<span class="text-red-500 text-xs">⚠ ${occupancyOk.msg}</span>`;
+      }
+
+      // wire inputs
+      byId(`ad-${uid}`).addEventListener("change", (e) => {
+        state.edits[uid].adults = Number(e.target.value) || 1;
+        rerenderRow(uid);
+      });
+      byId(`ch-${uid}`).addEventListener("change", (e) => {
+        state.edits[uid].children = Number(e.target.value) || 0;
+        rerenderRow(uid);
+      });
+      byId(`type-${uid}`).addEventListener("change", (e) => {
+        state.edits[uid].newType = e.target.value;
+        rerenderRow(uid);
+      });
+
+      // apply & reset buttons
+      byId(`apply-${uid}`).addEventListener("click", () => {
+        // apply into state.booking room preview (local only)
+        const idx = state.booking.rooms.findIndex(r=>r.uid===uid);
+        if(idx >= 0){
+          const editNow = state.edits[uid];
+          const rc = roomCatalog.find(rc => rc.type === editNow.newType) || {};
+          state.booking.rooms[idx].type = editNow.newType;
+          state.booking.rooms[idx].adults = editNow.adults;
+          state.booking.rooms[idx].children = editNow.children;
+          state.booking.rooms[idx].checkIn = editNow.checkIn;
+          state.booking.rooms[idx].checkOut = editNow.checkOut;
+          state.booking.rooms[idx].price = rc.price || state.booking.rooms[idx].price;
+          state.edits[uid].applied = true;
+          renderRoomsTable();
+          updateTotalsFooter();
+          updateButtonForCurrentChanges();
+        }
+      });
+
+      byId(`reset-${uid}`).addEventListener("click", () => {
+        // revert edits for this row to original booking data
+        const orig = bookingData.rooms.find(r=>r.uid===uid);
+        state.edits[uid] = {
+          newType: orig.type,
+          adults: orig.adults,
+          children: orig.children,
+          checkIn: orig.checkIn,
+          checkOut: orig.checkOut,
+          applied: false,
+          preview: {}
+        };
+        renderRoomsTable();
+        updateTotalsFooter();
+        updateButtonForCurrentChanges();
+      });
+    });
+  }
+
+  function rerenderRow(uid){
+    // recompute preview for this row (without applying)
+    const orig = bookingData.rooms.find(r=>r.uid===uid);
+    const edit = state.edits[uid];
+    const origNights = nightsBetween(orig.checkIn, orig.checkOut) || 1;
+    const oldSubtotal = orig.price * origNights;
+    const refundPercent = getRefundPercent(state.booking.createdAt, orig.checkIn);
+    const refundAmt = Math.round(oldSubtotal * refundPercent);
+    const newNights = nightsBetween(edit.checkIn, edit.checkOut) || origNights;
+    const newRate = (roomCatalog.find(rc => rc.type === edit.newType) || {}).price || orig.price;
+    const newSubtotal = newRate * newNights;
+    edit.preview = { origNights, oldSubtotal, refundPercent, refundAmt, newNights, newRate, newSubtotal, netChange: newSubtotal - refundAmt };
+
+    // lightweight rerender by refreshing whole table (simpler)
+    renderRoomsTable();
+    updateTotalsFooter();
+    
+    // Update button based on current changes
+    updateButtonForCurrentChanges();
+  }
+
+  function validateOccupancy(type, adults, children){
+    const rc = roomCatalog.find(r=>r.type===type);
+    if(!rc) return { ok: false, msg: "Unknown type" };
+    if(adults < rc.minAdults) return { ok: false, msg: `Min ${rc.minAdults} adults required` };
+    if(adults > rc.maxAdults) return { ok: false, msg: `Max ${rc.maxAdults} adults` };
+    if(children < rc.minChildren) return { ok: false, msg: `Min ${rc.minChildren} children required` };
+    if(children > rc.maxChildren) return { ok: false, msg: `Max ${rc.maxChildren} children` };
+    return { ok: true };
+  }
+
+  function updateTotalsFooter(){
+    let oldTotal=0, refundTotal=0, newTotal=0;
+    
+    // Calculate based on current edit state (not applied state)
+    bookingData.rooms.forEach(orig => {
+      const uid = orig.uid;
+      const edit = state.edits[uid];
+      
+      // Calculate original amounts
+      const origNights = nightsBetween(orig.checkIn, orig.checkOut) || 1;
+      const oldSub = orig.price * origNights;
+      const refundP = getRefundPercent(state.booking.createdAt, orig.checkIn);
+      const refundAmt = Math.round(oldSub * refundP);
+      
+      // Calculate new amounts based on edits
+      const newNights = nightsBetween(edit.checkIn, edit.checkOut) || origNights;
+      const newRate = (roomCatalog.find(rc => rc.type === edit.newType) || {}).price || orig.price;
+      const newSub = newRate * newNights;
+      
+      oldTotal += oldSub;
+      refundTotal += refundAmt;
+      newTotal += newSub;
+    });
+    
+    const net = newTotal - refundTotal;
+    byId("footer-old-total").textContent = fmtINR(oldTotal);
+    byId("footer-refund-total").textContent = "- " + fmtINR(refundTotal);
+    byId("footer-new-total").textContent = fmtINR(newTotal);
+    
+    // Update net total with appropriate color
+    const netElement = byId("footer-net-total");
+    netElement.textContent = (net >= 0 ? "+" : "") + fmtINR(net);
+    netElement.className = net >= 0 ? "font-bold text-lg text-red-600" : "font-bold text-lg text-green-600";
+  }
+
+  // ---------- Update Button for Current Changes ----------
+  function updateButtonForCurrentChanges() {
+    let hasRoomChanges = false, hasDateChanges = false, hasGuestChanges = false;
+    
+    bookingData.rooms.forEach(orig => {
+      const uid = orig.uid;
+      const edit = state.edits[uid];
+      
+      if (orig.type !== edit.newType) hasRoomChanges = true;
+      if (orig.checkIn !== edit.checkIn || orig.checkOut !== edit.checkOut) hasDateChanges = true;
+      if (orig.adults !== edit.adults || orig.children !== edit.children) hasGuestChanges = true;
+    });
+    
+    updateSendRequestButton(hasRoomChanges, hasDateChanges, hasGuestChanges);
+  }
+
+  // ---------- Summary tab rendering ----------
+  function renderSummary(){
+    const tbody = byId("summaryTableBody");
+    tbody.innerHTML = "";
+    let refundsTotal = 0, newChargesTotal = 0;
+    let hasRoomChanges = false, hasDateChanges = false, hasGuestChanges = false;
+    
+    // Use current edit state for summary calculations
+    bookingData.rooms.forEach(orig => {
+      const uid = orig.uid;
+      const edit = state.edits[uid];
+      const r = state.booking.rooms.find(rr=>rr.uid===uid) || orig; // fallback to original if not applied
+      
+      const origNights = nightsBetween(orig.checkIn, orig.checkOut) || 1;
+      const oldSub = orig.price * origNights;
+      const refundP = getRefundPercent(state.booking.createdAt, orig.checkIn);
+      const refundAmt = Math.round(oldSub * refundP);
+      
+      // Use edit state for new calculations
+      const newNights = nightsBetween(edit.checkIn, edit.checkOut) || origNights;
+      const newRate = (roomCatalog.find(rc => rc.type === edit.newType) || {}).price || orig.price;
+      const newSub = newRate * newNights;
+      const net = newSub - refundAmt;
+      refundsTotal += refundAmt;
+      newChargesTotal += newSub;
+
+      // Check for different types of changes
+      if (orig.type !== edit.newType) hasRoomChanges = true;
+      if (orig.checkIn !== edit.checkIn || orig.checkOut !== edit.checkOut) hasDateChanges = true;
+      if (orig.adults !== edit.adults || orig.children !== edit.children) hasGuestChanges = true;
+
+      // Check for changes based on edit state
+      const hasChanges = orig.type !== edit.newType || orig.checkIn !== edit.checkIn || orig.checkOut !== edit.checkOut ||
+                         orig.adults !== edit.adults || orig.children !== edit.children;
+
+      const tr = document.createElement("tr");
+      tr.className = `${hasChanges ? 'bg-yellow-50' : 'hover:bg-gray-50'} transition-colors`;
+      tr.innerHTML = `
+        <td class="px-3 py-3">
+          <div class="font-medium">Room #${orig.id}</div>
+          <div class="text-xs text-gray-500">${orig.type}</div>
+        </td>
+        <td class="px-3 py-3">
+          <div class="text-xs space-y-1">
+            ${orig.type !== edit.newType ? `<div><strong>Type:</strong> ${orig.type} → ${edit.newType}</div>` : ''}
+            ${orig.checkIn !== edit.checkIn || orig.checkOut !== edit.checkOut ? 
+              `<div><strong>Dates:</strong> ${orig.checkIn}→${orig.checkOut} → ${edit.checkIn}→${edit.checkOut}</div>` : ''}
+            ${orig.adults !== edit.adults || orig.children !== edit.children ? 
+              `<div><strong>Guests:</strong> ${orig.adults}A+${orig.children}C → ${edit.adults}A+${edit.children}C</div>` : ''}
+            ${!hasChanges ? '<div class="text-gray-500">No changes</div>' : ''}
+          </div>
+        </td>
+        <td class="px-3 py-3 text-right">
+          <div class="font-semibold text-green-600">${fmtINR(refundAmt)}</div>
+        </td>
+        <td class="px-3 py-3 text-right">
+          <div class="font-semibold text-blue-600">${fmtINR(newSub)}</div>
+        </td>
+        <td class="px-3 py-3 text-right">
+          <div class="font-bold ${net >= 0 ? 'text-red-600' : 'text-green-600'}">
+            ${net >= 0 ? '+' : ''}${fmtINR(net)}
+          </div>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+    const summaryNet = newChargesTotal - refundsTotal;
+    
+    byId("summary-refunds-total").textContent = "- " + fmtINR(refundsTotal);
+    byId("summary-newcharges-total").textContent = fmtINR(newChargesTotal);
+    
+    // Update summary net total with appropriate color
+    const summaryNetElement = byId("summary-net-total");
+    summaryNetElement.textContent = (summaryNet >= 0 ? "+" : "") + fmtINR(summaryNet);
+    summaryNetElement.className = summaryNet >= 0 ? "font-bold text-lg text-red-600" : "font-bold text-lg text-green-600";
+    
+    // Update button based on change types
+    updateSendRequestButton(hasRoomChanges, hasDateChanges, hasGuestChanges);
+  }
+
+  // ---------- Update Send Request Button ----------
+  function updateSendRequestButton(hasRoomChanges, hasDateChanges, hasGuestChanges) {
+    const sendBtn = byId("sendRequestBtn");
+    const buttonContainer = sendBtn.parentElement;
+    
+    // Update tab header text based on change types
+    const tabTitle = byId("tab-summary").querySelector('.font-semibold');
+    const tabSubtitle = byId("tab-summary").querySelector('.text-xs');
+    
+    // If only guest changes (no room or date changes), no admin approval needed
+    if (hasGuestChanges && !hasRoomChanges && !hasDateChanges) {
+      // Update tab header
+      tabTitle.textContent = "Update Count";
+      tabSubtitle.textContent = "Apply guest count changes instantly";
+      
+      // Update button
+      sendBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Update Count';
+      sendBtn.className = "px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow hover:shadow-lg transition-all font-semibold";
+      sendBtn.disabled = false;
+      sendBtn.title = "Update guest count changes automatically";
+      
+      // Add info message
+      let infoMsg = buttonContainer.querySelector('.guest-changes-info');
+      if (!infoMsg) {
+        infoMsg = document.createElement('div');
+        infoMsg.className = 'guest-changes-info bg-green-50 border border-green-200 rounded-lg p-3 mb-3';
+        infoMsg.innerHTML = `
+          <div class="flex items-center gap-2 text-green-800">
+            <i class="fas fa-info-circle"></i>
+            <span class="text-sm font-medium">Guest count changes only - No admin approval required</span>
+          </div>
+        `;
+        buttonContainer.insertBefore(infoMsg, sendBtn.parentElement);
+      }
+    } 
+    // If room or date changes, admin approval needed
+    else if (hasRoomChanges || hasDateChanges) {
+      // Update tab header
+      tabTitle.textContent = "Summary & Request";
+      tabSubtitle.textContent = "Review changes and send to admin";
+      
+      // Update button
+      sendBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Send Request to Admin';
+      sendBtn.className = "px-6 py-3 luxury-gradient text-white rounded-lg shadow hover:shadow-lg transition-all font-semibold";
+      sendBtn.disabled = false;
+      sendBtn.title = "Send modification request to admin for approval";
+      
+      // Add admin request info
+      let infoMsg = buttonContainer.querySelector('.admin-request-info');
+      if (!infoMsg) {
+        infoMsg = document.createElement('div');
+        infoMsg.className = 'admin-request-info bg-orange-50 border border-orange-200 rounded-lg p-3 mb-3';
+        infoMsg.innerHTML = `
+          <div class="flex items-center gap-2 text-orange-800">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span class="text-sm font-medium">Room or date changes require admin approval</span>
+          </div>
+        `;
+        buttonContainer.insertBefore(infoMsg, sendBtn.parentElement);
+      }
+      
+      // Remove guest changes info if it exists
+      const guestInfo = buttonContainer.querySelector('.guest-changes-info');
+      if (guestInfo) guestInfo.remove();
+    }
+    // No changes at all
+    else {
+      // Update tab header
+      tabTitle.textContent = "Summary & Request";
+      tabSubtitle.textContent = "Make changes to continue";
+      
+      // Update button
+      sendBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Send Request to Admin';
+      sendBtn.className = "px-6 py-3 bg-gray-400 text-white rounded-lg shadow cursor-not-allowed";
+      sendBtn.disabled = true;
+      sendBtn.title = "No changes to apply";
+      
+      // Remove all info messages
+      const guestInfo = buttonContainer.querySelector('.guest-changes-info');
+      const adminInfo = buttonContainer.querySelector('.admin-request-info');
+      if (guestInfo) guestInfo.remove();
+      if (adminInfo) adminInfo.remove();
+    }
+  }
+
+  // ---------- Controls & Tabs ----------
+  function hookControls(){
+    // Debug: Check if elements exist
+    console.log("hookControls called");
+    console.log("tab-edit exists:", !!byId("tab-edit"));
+    console.log("tab-summary exists:", !!byId("tab-summary"));
+    console.log("panel-edit exists:", !!byId("panel-edit"));
+    console.log("panel-summary exists:", !!byId("panel-summary"));
+
+    // load navbar & footer similar to earlier code
+    const isCustomerLoggedIn = localStorage.getItem("is_customer_logged_in") === "true";
+    let navbarPath = "/Features/Components/Navbars/NotCustomerNavbar/index.html";
+    if (isCustomerLoggedIn) navbarPath = "/Features/Components/Navbars/LoggedCustomerNavbar/index.html";
+    fetch(navbarPath).then(r => r.text()).then(html => { byId("navbar").innerHTML = html; });
+
+    fetch("/Features/Components/Footers/CustomerFooter/index.html").then(r => r.text()).then(html => { byId("footer").innerHTML = html; });
+
+    // Enhanced Tab switching with error handling
+    const editTabBtn = byId("tab-edit");
+    const summaryTabBtn = byId("tab-summary");
+    const editPanel = byId("panel-edit");
+    const summaryPanel = byId("panel-summary");
+
+    if (editTabBtn && summaryTabBtn && editPanel && summaryPanel) {
+      editTabBtn.addEventListener("click", (e) => { 
+        e.preventDefault();
+        console.log("Edit tab clicked"); // Debug log
+        
+        // Update tab styling
+        editTabBtn.classList.add("tab-active"); 
+        editTabBtn.classList.remove("tab-inactive");
+        summaryTabBtn.classList.remove("tab-active"); 
+        summaryTabBtn.classList.add("tab-inactive");
+        
+        // Update aria attributes
+        editTabBtn.setAttribute("aria-selected", "true");
+        summaryTabBtn.setAttribute("aria-selected", "false");
+        
+        // Update step indicators - find the div elements with the correct classes
+        const editIndicator = editTabBtn.querySelector('div[class*="w-8"]');
+        const summaryIndicator = summaryTabBtn.querySelector('div[class*="w-8"]');
+        
+        console.log("Edit indicator:", editIndicator);
+        console.log("Summary indicator:", summaryIndicator);
+        
+        if (editIndicator) {
+          editIndicator.className = "w-10 h-10 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg transform scale-110 transition-all";
+        }
+        if (summaryIndicator) {
+          summaryIndicator.className = "w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center text-sm font-medium";
+        }
+        
+        // Show/hide panels
+        editPanel.classList.remove("hidden"); 
+        summaryPanel.classList.add("hidden"); 
+        console.log("Edit panel shown, summary panel hidden");
+      });
+      
+      summaryTabBtn.addEventListener("click", (e) => { 
+        e.preventDefault();
+        console.log("Summary tab clicked"); // Debug log
+        
+        // Update tab styling
+        summaryTabBtn.classList.add("tab-active"); 
+        summaryTabBtn.classList.remove("tab-inactive");
+        editTabBtn.classList.remove("tab-active"); 
+        editTabBtn.classList.add("tab-inactive");
+        
+        // Update aria attributes
+        summaryTabBtn.setAttribute("aria-selected", "true");
+        editTabBtn.setAttribute("aria-selected", "false");
+        
+        // Update step indicators - find the div elements with the correct classes
+        const editIndicator = editTabBtn.querySelector('div[class*="w-8"]');
+        const summaryIndicator = summaryTabBtn.querySelector('div[class*="w-8"]');
+        
+        if (summaryIndicator) {
+          summaryIndicator.className = "w-10 h-10 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg transform scale-110 transition-all";
+        }
+        if (editIndicator) {
+          editIndicator.className = "w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center text-sm font-medium";
+        }
+        
+        // Show/hide panels and render summary
+        summaryPanel.classList.remove("hidden"); 
+        editPanel.classList.add("hidden"); 
+        renderSummary(); 
+        console.log("Summary panel shown, edit panel hidden");
+      });
+    } else {
+      console.error("Tab elements not found:", {
+        editTabBtn: !!editTabBtn,
+        summaryTabBtn: !!summaryTabBtn,
+        editPanel: !!editPanel,
+        summaryPanel: !!summaryPanel
+      });
+    }
+
+    // global date chooser
+    const sameToggle = byId("sameDatesToggle");
+    const globalChooser = byId("globalDateChooser");
+    sameToggle.addEventListener("change", (e) => {
+      globalChooser.style.display = e.target.checked ? "none" : "grid";
+      if(e.target.checked){
+        // reset per-row edits checkIn/out to the original booking's values
+        bookingData.rooms.forEach(orig => {
+          state.edits[orig.uid].checkIn = orig.checkIn;
+          state.edits[orig.uid].checkOut = orig.checkOut;
+        });
+        renderRoomsTable();
+        updateTotalsFooter();
+        updateButtonForCurrentChanges();
+      }
+    });
+    globalChooser.style.display = sameToggle.checked ? "none" : "grid";
+
+    byId("globalCheckIn").addEventListener("change", (e) => {
+      const v = e.target.value;
+      bookingData.rooms.forEach(orig => {
+        // set new check-in in edit state and compute default check-out by keeping original nights
+        const origN = nightsBetween(orig.checkIn, orig.checkOut) || 1;
+        const inDate = parseDate(v);
+        const out = new Date(inDate); out.setDate(inDate.getDate() + origN);
+        const isoOut = out.toISOString().slice(0,10);
+        state.edits[orig.uid].checkIn = v;
+        state.edits[orig.uid].checkOut = isoOut;
+      });
+      renderRoomsTable();
+      updateTotalsFooter();
+      updateButtonForCurrentChanges();
+    });
+
+    byId("globalCheckOut").addEventListener("change", (e) => {
+      const v = e.target.value;
+      bookingData.rooms.forEach(orig => { 
+        state.edits[orig.uid].checkOut = v; 
+      });
+      renderRoomsTable();
+      updateTotalsFooter();
+      updateButtonForCurrentChanges();
+    });
+
+    // top-level actions
+    byId("backBtn").addEventListener("click", () => { if(history.length>1) history.back(); else window.location.href = "/Features/BookingManagement/Customer/MyBookings/index.html"; });
+    byId("resetTopBtn").addEventListener("click", () => { if(!confirm("Reset all edits to original booking values?")) return; state.booking = JSON.parse(JSON.stringify(bookingData)); initState(); renderRoomsTable(); updateTotalsFooter(); updateButtonForCurrentChanges(); });
+
+    // summary tab actions
+    byId("summaryResetBtn").addEventListener("click", () => { if(!confirm("Reset all edits?")) return; state.booking = JSON.parse(JSON.stringify(bookingData)); initState(); renderRoomsTable(); updateTotalsFooter(); updateButtonForCurrentChanges(); byId("tab-edit").click(); });
+    byId("sendRequestBtn").addEventListener("click", () => {
+      // Check what type of changes were made
+      let hasRoomChanges = false, hasDateChanges = false, hasGuestChanges = false;
+      
+      bookingData.rooms.forEach(orig => {
+        const uid = orig.uid;
+        const edit = state.edits[uid];
+        
+        if (orig.type !== edit.newType) hasRoomChanges = true;
+        if (orig.checkIn !== edit.checkIn || orig.checkOut !== edit.checkOut) hasDateChanges = true;
+        if (orig.adults !== edit.adults || orig.children !== edit.children) hasGuestChanges = true;
+      });
+      
+      // If only guest changes, apply automatically
+      if (hasGuestChanges && !hasRoomChanges && !hasDateChanges) {
+        applyGuestChanges();
+      } 
+      // If room or date changes, show admin request modal
+      else if (hasRoomChanges || hasDateChanges) {
+        showModalRequestSent();
+      }
+    });
+
+    // download quote button (simple export)
+    byId("downloadQuote").addEventListener("click", () => {
+      const payload = {
+        bookingId: state.booking.id,
+        summary: state.booking.rooms.map(r => {
+          const orig = bookingData.rooms.find(rr=>rr.uid===r.uid);
+          const origN = nightsBetween(orig.checkIn, orig.checkOut) || 1;
+          const oldSub = orig.price * origN;
+          const refund = Math.round(oldSub * getRefundPercent(state.booking.createdAt, orig.checkIn));
+          const newN = nightsBetween(r.checkIn, r.checkOut) || origN;
+          const newSub = r.price * newN;
+          return { room: r.id, oldType: orig.type, newType: r.type, refund, newSub };
+        })
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = `${state.booking.id}_edit_quote.json`; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+  }
+
+  // ---------- Toast Notification ----------
+  function showToast(message, type = "success") {
+    const toastContainer = document.getElementById("toastContainer") || createToastContainer();
+    
+    const toast = document.createElement("div");
+    toast.className = `fixed top-6 right-6 z-[60] transform translate-x-full transition-transform duration-300 ease-out`;
+    
+    const bgColor = type === "success" ? "bg-green-500" : type === "error" ? "bg-red-500" : "bg-blue-500";
+    const icon = type === "success" ? "fa-check-circle" : type === "error" ? "fa-exclamation-circle" : "fa-info-circle";
+    
+    toast.innerHTML = `
+      <div class="${bgColor} text-white px-6 py-4 rounded-xl shadow-lg flex items-center gap-3 max-w-md">
+        <i class="fas ${icon} text-lg"></i>
+        <span class="font-medium">${message}</span>
+        <button onclick="this.parentElement.parentElement.remove()" class="ml-2 text-white hover:text-gray-200">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    `;
+    
+    toastContainer.appendChild(toast);
+    
+    // Animate in
+    setTimeout(() => {
+      toast.classList.remove("translate-x-full");
+    }, 100);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+      toast.classList.add("translate-x-full");
+      setTimeout(() => {
+        if (toast.parentNode) {
+          toast.remove();
+        }
+      }, 300);
+    }, 5000);
+  }
+  
+  function createToastContainer() {
+    const container = document.createElement("div");
+    container.id = "toastContainer";
+    container.className = "fixed top-0 right-0 z-[60] p-6 pointer-events-none";
+    container.style.pointerEvents = "none";
+    document.body.appendChild(container);
+    
+    // Allow clicks on toast content
+    container.addEventListener("click", (e) => {
+      e.target.style.pointerEvents = "auto";
+    });
+    
+    return container;
+  }
+
+  // ---------- Guest Changes Application ----------
+  function applyGuestChanges() {
+    showModalUpdateCount();
+  }
+  
+  function showModalUpdateCount() {
+    const container = byId("modalsContainer");
+    const html = `
+      <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black bg-opacity-20 backdrop-blur-sm"></div>
+        <div class="relative bg-white rounded-2xl p-8 shadow-2xl max-w-lg w-full mx-4 border border-gray-100">
+          <!-- Close Button -->
+          <button id="closeModal" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors text-gray-500 hover:text-gray-700">
+            <i class="fas fa-times"></i>
+          </button>
+          
+          <!-- Header -->
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
+              <i class="fas fa-users text-white text-lg"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-gray-800">Update Guest Count</h3>
+              <p class="text-sm text-gray-500">Confirm guest count changes</p>
+            </div>
+          </div>
+          
+          <!-- Content -->
+          <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 mb-6 border border-green-100">
+            <p class="text-gray-700 leading-relaxed">
+              You're about to update the guest counts for your booking. These changes will be applied immediately without requiring admin approval.
+            </p>
+            <div class="mt-3 p-3 bg-green-100 border border-green-200 rounded-lg">
+              <p class="text-sm text-green-800">
+                <i class="fas fa-check-circle mr-2"></i>
+                No admin approval required - Changes will be applied instantly!
+              </p>
+            </div>
+          </div>
+          
+          <!-- Actions -->
+          <div class="flex gap-3 justify-end">
+            <button id="cancelUpdate" class="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-xl transition-colors border border-gray-200">
+              <i class="fas fa-times mr-2"></i>Cancel
+            </button>
+            <button id="confirmUpdate" class="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold rounded-xl shadow-lg transition-all transform hover:scale-105">
+              <i class="fas fa-check mr-2"></i>Confirm & Update
+            </button>
+          </div>
         </div>
       </div>
-    `).join("");
-  };
-
-  renderNotifs("notifList");
-  renderNotifs("notifListMobile");
-
-  document.getElementById("notifDot")?.classList.remove("hidden");
-  document.getElementById("notifDotMobile")?.classList.remove("hidden");
-
-  const toggleDropdown = (btnId, dropId) => {
-    const btn = document.getElementById(btnId);
-    const drop = document.getElementById(dropId);
-    if (btn && drop) {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        drop.classList.toggle("hidden");
-      });
-      document.addEventListener("click", (e) => {
-        if (!btn.contains(e.target) && !drop.contains(e.target)) {
-          drop.classList.add("hidden");
+    `;
+    container.innerHTML = html;
+    
+    // Close modal handlers
+    const closeModal = () => { container.innerHTML = ""; };
+    byId("closeModal").addEventListener("click", closeModal);
+    byId("cancelUpdate").addEventListener("click", closeModal);
+    
+    // Update handler
+    byId("confirmUpdate").addEventListener("click", () => {
+      // Close modal first
+      closeModal();
+      
+      // Apply all guest count changes
+      bookingData.rooms.forEach(orig => {
+        const uid = orig.uid;
+        const edit = state.edits[uid];
+        const idx = state.booking.rooms.findIndex(r => r.uid === uid);
+        
+        if (idx >= 0) {
+          // Update guest counts in the booking
+          state.booking.rooms[idx].adults = edit.adults;
+          state.booking.rooms[idx].children = edit.children;
+          state.edits[uid].applied = true;
         }
       });
-    }
-  };
+      
+      // Update the UI
+      renderRoomsTable();
+      updateTotalsFooter();
+      
+      // Show success toast
+      showToast("Guest counts updated successfully! No admin approval required.", "success");
+      
+      // Redirect to Individual Bookings after 1.5 seconds
+      setTimeout(() => {
+        window.location.href = "/Features/BookingManagement/Customer/IndividualBookingsCustomer/index.html";
+      }, 1500);
+    });
+    
+    // Click outside to close
+    container.addEventListener("click", (e) => {
+      if (e.target === container || e.target.classList.contains('bg-opacity-20')) {
+        closeModal();
+      }
+    });
+    
+    // Escape key to close
+    document.addEventListener("keydown", function escapeHandler(e) {
+      if (e.key === "Escape") {
+        closeModal();
+        document.removeEventListener("keydown", escapeHandler);
+      }
+    });
+  }
 
-  toggleDropdown("notifBtn", "notifDropdown");
-  toggleDropdown("notifBtnMobile", "notifDropdownMobile");
-}
+  // ---------- Admin request flow ----------
+  function showModalRequestSent(){
+    const container = byId("modalsContainer");
+    const reqId = "REQ-"+Date.now();
+    const html = `
+      <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black bg-opacity-20 backdrop-blur-sm"></div>
+        <div class="relative bg-white rounded-2xl p-8 shadow-2xl max-w-lg w-full mx-4 border border-gray-100">
+          <!-- Close Button -->
+          <button id="closeModal" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors text-gray-500 hover:text-gray-700">
+            <i class="fas fa-times"></i>
+          </button>
+          
+          <!-- Header -->
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center">
+              <i class="fas fa-paper-plane text-white text-lg"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-gray-800">Send Request to Admin</h3>
+              <p class="text-sm text-gray-500">Submit your booking changes</p>
+            </div>
+          </div>
+          
+          <!-- Content -->
+          <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 mb-6 border border-blue-100">
+            <p class="text-gray-700 leading-relaxed">
+              You're about to send your booking edit request to admin for review.
+            </p>
+            <div class="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <p class="text-sm text-yellow-800">
+                <i class="fas fa-info-circle mr-2"></i>
+                By clicking "Confirm & Send", you agree to the booking modification terms and conditions.
+              </p>
+            </div>
+          </div>
+          
+          <!-- Actions -->
+          <div class="flex gap-3 justify-end">
+            <button id="cancelSend" class="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-xl transition-colors border border-gray-200">
+              <i class="fas fa-times mr-2"></i>Cancel
+            </button>
+            <button id="confirmSend" class="px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-semibold rounded-xl shadow-lg transition-all transform hover:scale-105">
+              <i class="fas fa-check mr-2"></i>Confirm & Send
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+    container.innerHTML = html;
+    
+    // Close modal handlers
+    const closeModal = () => { container.innerHTML = ""; };
+    byId("closeModal").addEventListener("click", closeModal);
+    byId("cancelSend").addEventListener("click", closeModal);
+    
+    // Send request handler
+    byId("confirmSend").addEventListener("click", () => {
+      // Close modal first
+      closeModal();
+      
+      // Show toast notification
+      showToast("Request sent successfully! You have agreed to the booking modification terms.", "success");
+      
+      // Redirect to Individual Bookings after 1.5 seconds
+      setTimeout(() => {
+        window.location.href = "/Features/BookingManagement/Customer/IndividualBookingsCustomer/index.html";
+      }, 1500);
+    });
+    
+    // Click outside to close
+    container.addEventListener("click", (e) => {
+      if (e.target === container || e.target.classList.contains('bg-opacity-20')) {
+        closeModal();
+      }
+    });
+    
+    // Escape key to close
+    document.addEventListener("keydown", function escapeHandler(e) {
+      if (e.key === "Escape") {
+        closeModal();
+        document.removeEventListener("keydown", escapeHandler);
+      }
+    });
+    byId("confirmSend").addEventListener("click", ()=>{ container.innerHTML = ""; triggerAdminRequest(); });
+  }
 
-    fetch("/Features/Components/Footers/CustomerFooter/index.html").then(res => res.text()).then(data => { document.getElementById("footer").innerHTML = data; });
+  function triggerAdminRequest(){
+    // simulate network send and admin search -> then show admin offer modal
+    const req = { id: "REQ-"+Date.now(), timestamp: Date.now(), status: "pending" };
+    state.adminRequest = req;
+    // show a quick "request sent" toast/modal
+    const container = byId("modalsContainer");
 
-    // Dummy Booking Data
-    const bookingData = {
-      id: "B1234",
-      rooms: [
-        { id: 1, type: "Deluxe Room", adults: 2, children: 0, checkIn: "2025-09-22", checkOut: "2025-09-24", img: "/assets/room1.jpg", price: 4500 },
-        { id: 2, type: "Executive Suite", adults: 3, children: 1, checkIn: "2025-09-22", checkOut: "2025-09-24", img: "/assets/room2.jpg", price: 6200 }
-      ]
-    };
-    // Render Flow Bar
-    function renderFlowBar() {
-      const flowBar = document.getElementById("flowBar");
-      flowBar.innerHTML = "";
-      bookingData.rooms.forEach((room, idx) => {
-        const step = document.createElement("div");
-        step.className = "step flex flex-col items-center cursor-pointer";
-        step.dataset.step = idx + 1;
-        step.innerHTML = `
-          <div class="circle w-10 h-10 flex items-center justify-center rounded-full 
-            ${idx === 0 ? "border-yellow-600 text-yellow-700" : "border-gray-400 text-gray-500"} 
-            border-2 font-bold">${idx + 1}</div>
-          <p class="text-sm mt-2">Room ${idx + 1}</p>
-        `;
-        flowBar.appendChild(step);
-        if (idx < bookingData.rooms.length) {
-          const line = document.createElement("div");
-          line.className = "w-16 h-0.5 bg-gray-400";
-          flowBar.appendChild(line);
-        }
+    // simulate admin response after 2-4s
+    setTimeout(() => {
+      // build offers: attempt same/new types
+      const offers = state.booking.rooms.map(r => {
+        // sometimes propose same, sometimes upgrade/downgrade
+        const candidate = roomCatalog.find(rc => rc.type===r.type) || roomCatalog[0];
+        const alt = roomCatalog[Math.floor(Math.random()*roomCatalog.length)];
+        const pick = Math.random() > 0.5 ? candidate : alt;
+        const nights = nightsBetween(r.checkIn, r.checkOut) || 1;
+        return { uid: r.uid, origType: bookingData.rooms.find(o=>o.uid===r.uid).type, origPrice: bookingData.rooms.find(o=>o.uid===r.uid).price, offeredType: pick.type, offeredRate: pick.price, nights };
       });
-      const finalStep = document.createElement("div");
-      finalStep.className = "step flex flex-col items-center cursor-pointer";
-      finalStep.dataset.step = bookingData.rooms.length + 1;
-      finalStep.innerHTML = `
-        <div class="circle w-10 h-10 flex items-center justify-center rounded-full border-2 border-gray-400 text-gray-500 font-bold">${bookingData.rooms.length + 1}</div>
-        <p class="text-sm mt-2">Final Review</p>
-      `;
-      flowBar.appendChild(finalStep);
-    }
+      state.adminRequest.status = "offered";
+      state.adminRequest.offer = { id: "OFF-"+Date.now(), offers };
+      showModalAdminOffer();
+    }, 2000 + Math.random()*2000);
+  }
 
-    // Editable Summary Form
-    function editableSummaryForm(room) {
-      return `
-        <div class="bg-white rounded-2xl shadow p-6 mb-8">
-          <h3 class="text-xl font-bold text-gray-800 mb-4">Edit Current Booking</h3>
-          <div class="grid md:grid-cols-2 gap-6">
+  function showModalAdminOffer(){
+    const container = byId("modalsContainer");
+    const offer = state.adminRequest.offer;
+    const expiresAt = Date.now() + adminAcceptWindowMin*60*1000;
+    state.adminRequest.expiresAt = expiresAt;
+
+    const html = `
+      <div class="fixed inset-0 z-50 flex items-center justify-center">
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+        <div class="bg-white rounded-xl p-6 shadow-lg max-w-3xl w-full">
+          <div class="flex justify-between items-start">
             <div>
-              <label class="block text-sm font-medium text-gray-700">Room Type</label>
-              <select class="border rounded-lg p-3 w-full focus:ring-2 focus:ring-yellow-500" id="roomType-${room.id}">
-                <option ${room.type === "Deluxe Room" ? "selected" : ""}>Deluxe Room</option>
-                <option ${room.type === "Executive Suite" ? "selected" : ""}>Executive Suite</option>
-                <option ${room.type === "Presidential Suite" ? "selected" : ""}>Presidential Suite</option>
-              </select>
+              <h3 class="text-lg font-semibold">Admin Offer</h3>
+              <div class="muted text-sm mt-1">Offer ID: ${offer.id}</div>
             </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Adults</label>
-              <input type="number" id="adults-${room.id}" value="${room.adults}" min="1" class="border rounded-lg p-3 w-full focus:ring-2 focus:ring-yellow-500">
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Children</label>
-              <input type="number" id="children-${room.id}" value="${room.children}" min="0" class="border rounded-lg p-3 w-full focus:ring-2 focus:ring-yellow-500">
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Check-in</label>
-              <input type="date" id="checkIn-${room.id}" value="${room.checkIn}" class="border rounded-lg p-3 w-full focus:ring-2 focus:ring-yellow-500">
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Check-out</label>
-              <input type="date" id="checkOut-${room.id}" value="${room.checkOut}" class="border rounded-lg p-3 w-full focus:ring-2 focus:ring-yellow-500">
+            <div class="text-right">
+              <div class="muted text-sm">Respond within</div>
+              <div id="offerTimer" class="text-xl font-bold text-yellow-600">--:--</div>
             </div>
           </div>
-        </div>
-      `;
-    }
 
-    // Billing Sidebar Template
-    function billingSidebar(room) {
-      return `
-        <div class="bg-white rounded-2xl shadow p-6 space-y-4">
-          <h3 class="text-xl font-bold text-gray-800 border-b pb-2">Billing Summary</h3>
-          <div class="flex justify-between text-gray-600"><span>Room Type</span><span>${room.type}</span></div>
-          <div class="flex justify-between text-gray-600"><span>Price/Night</span><span>₹${room.price}</span></div>
-          <div class="flex justify-between text-gray-600"><span>Guests</span><span>${room.adults}A, ${room.children}C</span></div>
-          <div class="flex justify-between text-gray-600"><span>Nights</span><span>2</span></div>
-          <hr>
-          <div class="flex justify-between font-bold text-lg"><span>Total</span><span>₹${room.price * 2}</span></div>
-        </div>
-      `;
-    }
-
-    // Room Cards Template
-    function roomCardsTemplate(room) {
-      return `
-        <div class="bg-white rounded-3xl shadow-lg overflow-hidden grid md:grid-cols-2 gap-6 p-6 md:p-10">
-          <div>
-            <img src="${room.img}" alt="${room.type}" class="w-full h-80 object-cover rounded-xl">
-            <h2 class="mt-6 text-3xl font-bold text-gray-800">${room.type}</h2>
-            <div class="flex space-x-6 mt-4 text-gray-600">
-              <p>👤 ${room.adults} Adults</p>
-              <p>🛏️ Queen Bed</p>
-              <p>📐 28 Sq.mt</p>
-            </div>
-            <div class="mt-4 flex space-x-4">
-              <button class="openModal text-red-600 font-medium hover:underline">Room details</button>
-              <button class="openReviews text-yellow-600 font-medium hover:underline">View Reviews</button>
-            </div>
-          </div>
-          <div class="space-y-6">
-            <div class="border rounded-xl p-6 hover:shadow-md transition">
-              <h3 class="font-bold text-lg text-gray-800">Room Only</h3>
-              <ul class="list-disc ml-6 mt-2 text-gray-600 space-y-1">
-                <li>Includes WiFi</li>
-                <li>Flexible cancellation</li>
-              </ul>
-              <div class="mt-4 flex justify-between items-center">
-                <p class="text-2xl font-bold">₹${room.price} / night</p>
-                <button class="px-5 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition">Select</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    // Render Step Sections
-    function renderStepSections() {
-      const container = document.getElementById("stepSections");
-      container.innerHTML = "";
-
-      bookingData.rooms.forEach((room, idx) => {
-        const stepDiv = document.createElement("div");
-        stepDiv.className = `step-content ${idx === 0 ? "" : "hidden"}`;
-        stepDiv.dataset.step = idx + 1;
-
-        stepDiv.innerHTML = `
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Left (70%) -->
-            <div class="lg:col-span-2 space-y-8">
-              ${editableSummaryForm(room)}
-              <div id="roomCardsContainer-${room.id}" class="space-y-8"></div>
-            </div>
-            <!-- Right (30%) -->
-            <aside class="lg:col-span-1">
-              ${billingSidebar(room)}
-            </aside>
-          </div>
-        `;
-
-        container.appendChild(stepDiv);
-      });
-
-      // ✅ Final Review step
-      const finalDiv = document.createElement("div");
-      finalDiv.className = "step-content hidden";
-      finalDiv.dataset.step = bookingData.rooms.length + 1;
-      finalDiv.innerHTML = `
-        <div class="bg-white rounded-3xl shadow-lg p-10 space-y-6 text-center">
-          <h2 class="text-3xl font-bold text-gray-800">Final Review</h2>
-          <p class="text-gray-600">All booking details have been updated. Click below to proceed.</p>
-          <div class="bg-gray-50 p-6 rounded-xl space-y-3 text-left">
-            ${bookingData.rooms.map(r => `
-              <div class="flex justify-between">
-                <span>Room ${r.id}</span>
-                <span>${r.type} | ${r.adults} Adults, ${r.children} Children | ${r.checkIn} → ${r.checkOut}</span>
+          <div class="mt-4 space-y-3">
+            ${offer.offers.map(o => `
+              <div class="p-3 rounded border flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                  <img src="/assets/room1.jpg" class="w-24 h-16 object-cover rounded" alt="">
+                  <div>
+                    <div class="font-medium">${o.offeredType}</div>
+                    <div class="text-xs muted">${o.nights} nights • ${fmtINR(o.offeredRate)} / night</div>
+                    <div class="text-xs muted">(orig: ${o.origType} • ${fmtINR(o.origPrice)} / night)</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="text-sm muted">Net diff</div>
+                  <div class="font-bold">${fmtINR((o.offeredRate*o.nights) - (o.origPrice*o.nights))}</div>
+                </div>
               </div>
             `).join("")}
           </div>
-          <button id="proceedBtn" 
-            class="w-full md:w-1/2 py-3 bg-gradient-to-r from-yellow-500 to-red-500 text-white rounded-lg shadow hover:opacity-90">
-            Proceed to Payment →
-          </button>
+
+          <div class="mt-6 flex justify-end gap-3">
+            <button id="rejectOffer" class="px-4 py-2 bg-white border rounded">Reject</button>
+            <button id="acceptOffer" class="px-4 py-2 bg-yellow-600 text-white rounded">Accept Offer</button>
+          </div>
         </div>
-      `;
-      container.appendChild(finalDiv);
-    }
+      </div>
+    `;
+    container.innerHTML = html;
 
-    // Step Handling
-    function showStep(stepNum) {
-      document.querySelectorAll(".step-content").forEach(c => {
-        c.classList.toggle("hidden", c.dataset.step != stepNum);
+    // countdown
+    const timerEl = byId("offerTimer");
+    const iv = setInterval(()=>{
+      const rem = state.adminRequest.expiresAt - Date.now();
+      if(rem <= 0){ clearInterval(iv); container.innerHTML = ""; alert("Offer expired."); state.adminRequest.status = "expired"; return; }
+      const mins = Math.floor(rem/(60*1000));
+      const secs = Math.floor((rem%(60*1000))/1000);
+      timerEl.textContent = `${String(mins).padStart(2,"0")}:${String(secs).padStart(2,"0")}`;
+    }, 1000);
+
+    // handlers
+    byId("rejectOffer").addEventListener("click", ()=>{
+      state.adminRequest.status = "rejected";
+      container.innerHTML = "";
+      alert("Offer rejected. Admin will be notified.");
+    });
+    byId("acceptOffer").addEventListener("click", ()=>{
+      // apply offered rooms into booking (local)
+      state.adminRequest.offer.offers.forEach(o => {
+        const idx = state.booking.rooms.findIndex(r=>r.uid===o.uid);
+        if(idx>=0){
+          state.booking.rooms[idx].type = o.offeredType;
+          state.booking.rooms[idx].price = o.offeredRate;
+        }
       });
-      document.querySelectorAll(".step .circle").forEach(circle => {
-        circle.classList.remove("border-yellow-600", "text-yellow-700");
-        circle.classList.add("border-gray-400", "text-gray-500");
-      });
-      const activeCircle = document.querySelector(`.step[data-step='${stepNum}'] .circle`);
-      if (activeCircle) {
-        activeCircle.classList.remove("border-gray-400", "text-gray-500");
-        activeCircle.classList.add("border-yellow-600", "text-yellow-700");
-      }
+      state.adminRequest.status = "accepted";
+      container.innerHTML = "";
+      renderRoomsTable();
+      updateTotalsFooter();
+      alert("Offer accepted. Booking updated (local demo).");
+    });
+  }
+
+  // ---------- Boot ----------
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM fully loaded, initializing...");
+    initState();
+    initUI();
+    hookControls();
+    
+    // Initialize to first tab 
+    const editTab = byId("tab-edit");
+    const summaryTab = byId("tab-summary");
+    const editPanel = byId("panel-edit");
+    const summaryPanel = byId("panel-summary");
+    
+    console.log("Initial tab setup - elements found:", {
+      editTab: !!editTab,
+      summaryTab: !!summaryTab, 
+      editPanel: !!editPanel,
+      summaryPanel: !!summaryPanel
+    });
+    
+    // Ensure edit tab is active on load
+    if (editTab && summaryTab && editPanel && summaryPanel) {
+      editTab.classList.add("tab-active");
+      editTab.classList.remove("tab-inactive");
+      summaryTab.classList.add("tab-inactive");
+      summaryTab.classList.remove("tab-active");
+      editPanel.classList.remove("hidden");
+      summaryPanel.classList.add("hidden");
     }
+    
+    // Set initial button state
+    updateSendRequestButton(false, false, false);
+  });
 
-    // Init
-    renderFlowBar();
-    renderStepSections();
-    let currentStep = 1;
-    showStep(currentStep);
-
-    // Buttons
-    document.getElementById("nextRoomBtn").addEventListener("click", () => {
-      if (currentStep < bookingData.rooms.length) {
-        currentStep++;
-        showStep(currentStep);
-      } else {
-        showStep(bookingData.rooms.length + 1);
-      }
-    });
-
-    document.getElementById("searchRoomsBtn").addEventListener("click", () => {
-      const room = bookingData.rooms[currentStep - 1];
-      const selectedType = document.getElementById(`roomType-${room.id}`).value;
-      const adults = document.getElementById(`adults-${room.id}`).value;
-      const children = document.getElementById(`children-${room.id}`).value;
-      const checkIn = document.getElementById(`checkIn-${room.id}`).value;
-      const checkOut = document.getElementById(`checkOut-${room.id}`).value;
-
-      const container = document.getElementById(`roomCardsContainer-${room.id}`);
-      container.innerHTML = `
-        <p class="text-gray-600 mb-4">Showing available rooms for <strong>${selectedType}</strong> (${adults} Adults, ${children} Children) from ${checkIn} to ${checkOut}:</p>
-        ${roomCardsTemplate({ ...room, type: "Deluxe Room", price: 4500 })}
-        ${roomCardsTemplate({ ...room, type: "Executive Suite", price: 6200 })}
-        ${roomCardsTemplate({ ...room, type: "Presidential Suite", price: 9500 })}
-      `;
-    });
-        // Sidebar highlight
-    document.querySelectorAll("aside nav a").forEach(link => {
-      if (link.dataset.page === "booking") {
-        link.classList.add("text-yellow-700", "font-semibold");
-      }
-    });
-
-    // ✅ Final Step Redirect
-    document.addEventListener("click", (e) => {
-      if (e.target.id === "proceedBtn") {
-        window.location.href = "/Features/BookingManagement/Customer/PaymentsPage/index.html"; // change "X.html" to your desired page
-      }
-    });

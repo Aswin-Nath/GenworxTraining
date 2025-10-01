@@ -135,15 +135,9 @@ function initNotifications() {
           </div>
         </div>
         <div class="flex gap-2">
-          <button onclick="viewModificationDetails()" class="px-3 py-1 bg-orange-100 text-orange-800 rounded hover:bg-orange-200 text-sm">
-            View Details
-          </button>
-          <button onclick="window.location.href='../Customer/EditBookings/index.html'" class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm flex items-center gap-1">
+          <button onclick="window.location.href='/Features/BookingManagement/Admin/ModifyCustomerBooking/index.html'" class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm flex items-center gap-1">
             <span class="material-icons text-sm">edit</span>
             Edit
-          </button>
-          <button onclick="dismissModificationAlert()" class="px-2 py-1 text-orange-600 hover:text-orange-800">
-            <span class="material-icons text-sm">close</span>
           </button>
         </div>
       </div>
@@ -458,104 +452,7 @@ function initNotifications() {
     </div>
   </main>
 
-  <!-- Modification Details Modal -->
-  <div id="modificationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
-    <div class="bg-white rounded-2xl max-w-2xl w-full m-4 p-6 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between mb-6">
-        <h3 class="text-xl font-semibold text-gray-800 flex items-center gap-2">
-          <span class="material-icons text-orange-500">edit_note</span>
-          Modification Request Details
-        </h3>
-        <button onclick="closeModificationModal()" class="text-gray-400 hover:text-gray-600">
-          <span class="material-icons">close</span>
-        </button>
-      </div>
-      
-      <div class="space-y-6">
-        <!-- Request Overview -->
-        <div class="bg-orange-50 rounded-lg p-4 border border-orange-200">
-          <h4 class="font-semibold text-orange-800 mb-3">Request Summary</h4>
-          <div class="grid md:grid-cols-2 gap-4 text-sm">
-            <div>
-              <p><span class="font-medium">Request Date:</span> 20 Sept 2023, 3:45 PM</p>
-              <p><span class="font-medium">Request Type:</span> Room Change & Date Extension</p>
-              <p><span class="font-medium">Priority:</span> <span class="px-2 py-1 bg-orange-100 text-orange-800 rounded text-xs">Medium</span></p>
-            </div>
-            <div>
-              <p><span class="font-medium">Customer:</span> Arjun Kumar</p>
-              <p><span class="font-medium">Status:</span> <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-xs">Pending Review</span></p>
-              <p><span class="font-medium">Estimated Impact:</span> ₹2,500 additional</p>
-            </div>
-          </div>
-        </div>
 
-        <!-- Requested Changes -->
-        <div>
-          <h4 class="font-semibold text-gray-800 mb-3">Requested Changes</h4>
-          <div class="space-y-4">
-            <!-- Room Change Request -->
-            <div class="border rounded-lg p-4 bg-gray-50">
-              <h5 class="font-medium text-gray-800 mb-2 flex items-center gap-2">
-                <span class="material-icons text-blue-600 text-sm">swap_horiz</span>
-                Room Transfer Request
-              </h5>
-              <div class="grid md:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p><span class="font-medium">From:</span> Room 304 (Deluxe Room)</p>
-                  <p><span class="font-medium">Reason:</span> AC malfunction</p>
-                </div>
-                <div>
-                  <p><span class="font-medium">To:</span> Room 402 (Executive Suite)</p>
-                  <p><span class="font-medium">Additional Cost:</span> ₹1,500/night</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Date Extension Request -->
-            <div class="border rounded-lg p-4 bg-gray-50">
-              <h5 class="font-medium text-gray-800 mb-2 flex items-center gap-2">
-                <span class="material-icons text-purple-600 text-sm">calendar_today</span>
-                Date Extension Request
-              </h5>
-              <div class="grid md:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p><span class="font-medium">Current Check-out:</span> 25 Sept 2023</p>
-                  <p><span class="font-medium">Reason:</span> Flight delayed</p>
-                </div>
-                <div>
-                  <p><span class="font-medium">New Check-out:</span> 26 Sept 2023</p>
-                  <p><span class="font-medium">Additional Cost:</span> ₹1,000</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Customer Message -->
-        <div>
-          <h4 class="font-semibold text-gray-800 mb-3">Customer Message</h4>
-          <div class="bg-blue-50 rounded-lg p-4 border border-blue-200">
-            <p class="text-gray-700 italic">
-              "Hi, we're experiencing issues with the AC in Room 304 and it's quite uncomfortable for our family with young children. 
-              Could we please be moved to a better room? Also, our flight got delayed so we'll need to extend our stay by one night. 
-              Please let us know about the additional charges. Thank you for your understanding."
-            </p>
-            <p class="text-sm text-gray-500 mt-2">Submitted via: Mobile App</p>
-          </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="flex justify-end gap-3 pt-4 border-t">
-          <button onclick="rejectModification()" class="px-4 py-2 text-red-700 border border-red-300 rounded-lg hover:bg-red-50">
-            Reject Request
-          </button>
-          <button onclick="approveModification()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-            Approve Changes
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Room Transfer Modal -->
   <div id="roomTransferModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">

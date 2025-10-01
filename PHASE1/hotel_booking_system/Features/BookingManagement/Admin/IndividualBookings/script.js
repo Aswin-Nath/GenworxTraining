@@ -13,49 +13,8 @@ fetch("/Features/Components/Sidebars/AdminMainPageSidebar/index.html")
         });
     });
 
-// Modification Request Functions
-function viewModificationDetails() {
-    const modal = document.getElementById('modificationModal');
-    modal.classList.remove('hidden');
-}
 
-function closeModificationModal() {
-    const modal = document.getElementById('modificationModal');
-    modal.classList.add('hidden');
-}
 
-function approveModification() {
-    closeModificationModal();
-    showToast('Modification request approved successfully', 'success');
-    
-    // Hide the modification alert
-    setTimeout(() => {
-        const alert = document.getElementById('modificationAlert');
-        if (alert) {
-            alert.style.display = 'none';
-        }
-    }, 1000);
-}
-
-function rejectModification() {
-    closeModificationModal();
-    showToast('Modification request rejected', 'warning');
-    
-    // Hide the modification alert
-    setTimeout(() => {
-        const alert = document.getElementById('modificationAlert');
-        if (alert) {
-            alert.style.display = 'none';
-        }
-    }, 1000);
-}
-
-function dismissModificationAlert() {
-    const alert = document.getElementById('modificationAlert');
-    if (alert) {
-        alert.style.display = 'none';
-    }
-}
 
 // Room Transfer Functions
 function transferRoom(roomNumber) {
@@ -161,18 +120,6 @@ function showToast(message, type = 'success') {
     }, 3000);
 }
 
-// Close modals when clicking outside
-window.addEventListener('click', function(e) {
-    const modificationModal = document.getElementById('modificationModal');
-    const transferModal = document.getElementById('roomTransferModal');
-    
-    if (e.target === modificationModal) {
-        closeModificationModal();
-    }
-    if (e.target === transferModal) {
-        closeTransferModal();
-    }
-});
 
 // Initialize page
 document.addEventListener('DOMContentLoaded', function() {
@@ -182,7 +129,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // For example, checking if there are pending modification requests
     const urlParams = new URLSearchParams(window.location.search);
     const bookingId = urlParams.get('id');
-    
     if (bookingId) {
         console.log('Loading details for booking:', bookingId);
         // In a real app, you would fetch the booking details from an API
