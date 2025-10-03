@@ -2,138 +2,131 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Admin Modify Booking — LuxuryStay (Prototype)</title>
+  <title>Admin Modify Booking — Integrated Layout</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
   <style>
-    /* Tab styles */
-    .tab-active { 
-      background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%) !important;
-      border-bottom: 4px solid #d97706 !important;
-      color: #92400e !important;
-      font-weight: 700 !important;
-      transform: translateY(-2px);
-      border-top-left-radius: 12px;
-      border-top-right-radius: 12px;
+    :root {
+      --admin-start: #4f46e5;
+      --admin-end: #06b6d4;
     }
-    .tab-inactive {
-      background: #f9fafb !important;
-      border-bottom: 2px solid #e5e7eb !important;
-      color: #6b7280 !important;
-      font-weight: 500 !important;
-      transition: all 0.22s ease;
+    .admin-gradient { background: linear-gradient(135deg, var(--admin-start) 0%, var(--admin-end) 100%); }
+    .tab-active {
+      background: linear-gradient(135deg, rgba(79,70,229,0.12), rgba(6,182,212,0.06));
+      border-bottom: 4px solid rgba(79,70,229,0.28);
+      color: #1f2937; font-weight:700; transform:translateY(-2px);
+      border-top-left-radius:12px; border-top-right-radius:12px;
     }
-    .preset-active { background: #fef3c7 !important; border: 1px solid #f59e0b; }
-    .luxury-gradient {
-      background: linear-gradient(135deg, #d97706 0%, #dc2626 100%);
-    }
-    .muted { color: #6b7280; }
-    /* small helpers */
-    .small { font-size: 0.85rem; }
+    .tab-inactive { background:#f8fafc; border-bottom:2px solid #e6eefc; color:#374151; }
+    .clock-pill { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px;
+                 background:linear-gradient(90deg, rgba(99,102,241,0.08), rgba(6,182,212,0.04));
+                 border:1px solid rgba(99,102,241,0.12); color:#0f172a; font-weight:600; }
+    .small { font-size:0.85rem; }
+    /* keep modal backdrop above sidebar/navbar */
+    #modalsContainer > .fixed { z-index: 70; }
   </style>
 </head>
-<body class="bg-gray-50 min-h-screen font-sans text-sm">
+<body class="bg-gray-50">
 
-  <!-- Page container -->
-  <div class="max-w-7xl mx-auto px-4 lg:px-8 py-8">
+  <!-- Navbar injected here -->
+  <div id="navbar"></div>
 
-    <!-- Header -->
-    <div class="bg-white rounded-2xl p-4 shadow mb-6 border border-gray-100">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-4">
-          <button id="backBtn" class="px-3 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700 flex items-center gap-2">
-            <i class="fas fa-arrow-left"></i> Back
-          </button>
-          <div>
-            <h1 class="text-lg font-semibold text-gray-800">Modify Booking — Admin Console</h1>
-            <p class="text-xs text-gray-600">ID: <span id="bookingId" class="font-semibold text-yellow-700"></span> • Created: <span id="bookingCreatedAt"></span></p>
-          </div>
+  <!-- Sidebar injected here -->
+  <div id="sidebar" class="fixed top-16 left-0 w-64 h-screen shadow-lg bg-white"></div>
+
+  <!-- Main area (keeps your ml-64 layout) -->
+  <main class="ml-64 pt-16 p-8 h-screen overflow-y-auto space-y-8">
+
+    <!-- Top header card -->
+    <div class="relative rounded-2xl border-2 border-yellow-500 bg-yellow-50 py-8 text-center shadow">
+      <h2 class="text-3xl text-gray-800 font-bold">Booking Details — Modify (Admin)</h2>
+      <p class="text-gray-600 mt-2">Overview + modify guest requests (booking id shown below)</p>
+    </div>
+
+    <!-- Compact header and actions -->
+    <div class="flex items-center justify-between gap-4">
+      <div class="flex items-center gap-4">
+        <button id="backBtn" class="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg flex items-center gap-2">
+          <span class="material-icons text-sm">arrow_back</span> Back
+        </button>
+        <div>
+          <div class="text-xs text-gray-500">Booking</div>
+          <div class="text-xl font-semibold text-indigo-700" id="bookingIdHeader">#B1001</div>
         </div>
+      </div>
 
-        <div class="flex items-center gap-3">
-          <div id="globalOfferStatus" class="text-xs text-gray-600"></div>
-          <button id="downloadStateBtn" title="Download current state JSON" class="px-3 py-2 bg-gray-100 border rounded text-gray-700 hover:bg-gray-200">
-            <i class="fas fa-download"></i>
-          </button>
-        </div>
+      <div class="flex items-center gap-3">
+        <div id="globalOfferStatus" class="text-sm text-gray-700 small"></div>
+        <div id="countdownPill" class="clock-pill hidden"><i class="fas fa-clock text-indigo-600"></i><span id="globalCountdownLabel">00:00:00</span></div>
       </div>
     </div>
 
-    <!-- Tabs card -->
+    <!-- TABS card -->
     <div class="bg-white rounded-2xl shadow border border-gray-100">
-
-      <!-- Tab nav -->
+      <!-- tabs nav -->
       <div class="border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100 rounded-t-2xl">
         <div class="flex" role="tablist">
           <button id="tab-details" class="flex-1 py-4 px-6 text-left tab-active" role="tab" aria-selected="true">
             <div class="flex items-center gap-3">
-              <div class="w-9 h-9 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
+              <div class="w-9 h-9 bg-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
               <div>
-                <div class="font-semibold">Customer Details</div>
-                <div class="text-xs text-gray-500">Booking & requested changes</div>
+                <div class="font-semibold text-base">Customer Details</div>
+                <div class="text-xs text-gray-500">Booking info & requested changes</div>
               </div>
             </div>
           </button>
-
-          <button id="tab-rooms" class="flex-1 py-4 px-6 text-left tab-inactive" role="tab" aria-selected="false">
+          <button id="tab-rooms" class="flex-1 py-4 px-6 text-left tab-inactive rounded-tr-2xl" role="tab" aria-selected="false">
             <div class="flex items-center gap-3">
               <div class="w-9 h-9 bg-gray-200 text-gray-600 rounded-full flex items-center justify-center text-sm font-medium">2</div>
               <div>
-                <div class="font-semibold">Room Allocation</div>
-                <div class="text-xs text-gray-500">Search & lock rooms</div>
-              </div>
-            </div>
-          </button>
-
-          <button id="tab-invoice" class="flex-1 py-4 px-6 text-left tab-inactive rounded-tr-2xl" role="tab" aria-selected="false">
-            <div class="flex items-center gap-3">
-              <div class="w-9 h-9 bg-gray-200 text-gray-600 rounded-full flex items-center justify-center text-sm font-medium">3</div>
-              <div>
-                <div class="font-semibold">Invoice</div>
-                <div class="text-xs text-gray-500">Preview & send invoice</div>
+                <div class="font-semibold text-base">Room Allocation</div>
+                <div class="text-xs text-gray-500">Search & select rooms for customer</div>
               </div>
             </div>
           </button>
         </div>
       </div>
 
-      <!-- Panels -->
       <div id="tabPanels" class="p-6 space-y-6">
 
         <!-- Panel 1: Customer Details -->
         <section id="panel-details" class="space-y-4">
-          <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-            <h3 class="font-semibold text-gray-800 flex items-center gap-2"><i class="fas fa-calendar-alt text-yellow-600"></i> Booking Dates (Global)</h3>
-            <div class="mt-2 text-sm">
-              <div>Check-in: <span id="oldCheckIn" class="font-medium"></span> → <span id="newCheckIn" class="font-medium text-blue-600"></span></div>
-              <div>Check-out: <span id="oldCheckOut" class="font-medium"></span> → <span id="newCheckOut" class="font-medium text-blue-600"></span></div>
+          <div class="bg-indigo-50 border border-indigo-100 rounded-lg p-4 flex items-center justify-between">
+            <div>
+              <h3 class="text-indigo-700 font-semibold">Booking Dates (Global)</h3>
+              <div class="text-sm text-gray-700">
+                Check-in: <span id="oldCheckIn"></span> → <span id="newCheckIn" class="font-semibold text-indigo-600"></span><br>
+                Check-out: <span id="oldCheckOut"></span> → <span id="newCheckOut" class="font-semibold text-indigo-600"></span>
+              </div>
+            </div>
+            <div class="text-right text-sm text-gray-600">
+              <div>Customer: <strong id="customerName">—</strong></div>
+              <div id="customerContact">—</div>
             </div>
           </div>
 
-          <div class="bg-white rounded-lg border border-gray-200 shadow overflow-x-auto">
-            <div class="bg-gray-50 px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+          <div class="bg-white rounded-lg border border-gray-200 shadow overflow-hidden">
+            <div class="bg-indigo-50 px-4 py-3 border-b">
               <h3 class="font-semibold text-gray-800">Room-by-Room Comparison</h3>
-              <div class="text-xs text-gray-500">Old → New counts highlight differences</div>
             </div>
-            <table class="min-w-full text-sm">
-              <thead class="bg-yellow-50">
-                <tr>
-                  <th class="px-3 py-2 text-left">Room</th>
-                  <th class="px-3 py-2 text-left">Old Type</th>
-                  <th class="px-3 py-2 text-left">New Type</th>
-                  <th class="px-3 py-2 text-left">Adults</th>
-                  <th class="px-3 py-2 text-left">Children</th>
-                  <th class="px-3 py-2 text-left">Status</th>
-                </tr>
-              </thead>
-              <tbody id="comparisonTableBody" class="divide-y divide-gray-100"></tbody>
-            </table>
-          </div>
-
-          <div class="bg-white rounded-lg border border-gray-200 p-4">
-            <h4 class="font-semibold text-gray-800">Customer Notes</h4>
-            <p id="customerNotes" class="text-gray-600 mt-2 small"></p>
+            <div class="overflow-x-auto">
+              <table class="min-w-full text-sm">
+                <thead class="bg-indigo-50">
+                  <tr>
+                    <th class="px-3 py-2 text-left">Room</th>
+                    <th class="px-3 py-2 text-left">Old Type</th>
+                    <th class="px-3 py-2 text-left">New Type</th>
+                    <th class="px-3 py-2 text-left">Adults</th>
+                    <th class="px-3 py-2 text-left">Children</th>
+                    <th class="px-3 py-2 text-left">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="comparisonTableBody" class="divide-y divide-gray-100"></tbody>
+              </table>
+            </div>
           </div>
         </section>
 
@@ -142,983 +135,1021 @@
           <div class="bg-white rounded-lg border border-gray-200 p-4 shadow">
             <div class="flex items-center justify-between">
               <div>
-                <h3 class="font-semibold text-gray-800">Global Lock Timer</h3>
-                <p class="text-xs text-gray-500">Locks selected rooms for the chosen duration. After expiry rooms auto-unlock.</p>
+                <h3 class="font-semibold text-gray-800">Room Selection Settings</h3>
+                <p class="text-xs text-gray-500">Configure room selection preferences and options.</p>
               </div>
               <div class="flex items-center gap-3">
-                <div class="flex gap-2">
-                  <button class="preset-btn px-3 py-1 rounded border text-xs" data-mins="15">15m</button>
-                  <button class="preset-btn px-3 py-1 rounded border text-xs" data-mins="30">30m</button>
-                  <button class="preset-btn px-3 py-1 rounded border text-xs" data-mins="60">1h</button>
-                  <button class="preset-btn px-3 py-1 rounded border text-xs" data-mins="120">2h</button>
-                </div>
-                <input id="customLockInput" type="time" class="border rounded px-2 py-1 text-xs" />
-                <div class="text-sm text-yellow-700 font-semibold" id="lockCountdown">Not active</div>
+                <input id="durationHours" type="number" min="0" value="0" class="w-16 border rounded px-2 py-1 text-sm" />
+                <label class="text-sm text-gray-600">hrs</label>
+                <input id="durationMinutes" type="number" min="0" max="59" value="30" class="w-16 border rounded px-2 py-1 text-sm" />
+                <label class="text-sm text-gray-600">mins</label>
+                <button id="resetSelectedBtn" class="px-3 py-2 border rounded text-sm bg-red-50 text-red-700">Reset Selected</button>
               </div>
             </div>
           </div>
 
-          <!-- Room request cards -->
           <div id="roomRequestsContainer" class="space-y-3"></div>
 
-          <!-- Locked cart -->
           <div class="bg-white rounded-lg border border-gray-200 shadow overflow-hidden">
-            <div class="bg-gray-50 px-4 py-3 border-b border-gray-200 flex items-center justify-between">
-              <h3 class="font-semibold text-gray-800">Locked Rooms Cart</h3>
-              <div class="text-xs text-gray-500">Rooms reserved for the current offer</div>
+            <div class="bg-indigo-50 px-4 py-3 border-b flex items-center justify-between">
+              <h3 class="font-semibold text-gray-800">Selected Rooms Summary</h3>
+              <div class="text-xs text-gray-500">Currently selected rooms for this booking</div>
             </div>
             <div class="overflow-x-auto">
               <table class="min-w-full text-sm">
-                <thead class="bg-yellow-50">
+                <thead class="bg-indigo-50">
                   <tr>
                     <th class="px-3 py-2 text-left">Room No</th>
                     <th class="px-3 py-2 text-left">Type</th>
                     <th class="px-3 py-2 text-right">Rate / night</th>
                     <th class="px-3 py-2 text-right">Nights</th>
                     <th class="px-3 py-2 text-right">Total</th>
-                    <th class="px-3 py-2 text-center">Action</th>
+                    <th class="px-3 py-2 text-center">Remove</th>
                   </tr>
                 </thead>
-                <tbody id="lockedCartBody" class="divide-y divide-gray-100"></tbody>
-                <tfoot class="bg-yellow-50">
+                <tbody id="selectedCartBody" class="divide-y divide-gray-100"></tbody>
+                <tfoot class="bg-indigo-50">
                   <tr>
                     <td colspan="4" class="px-3 py-2 text-right font-bold">Cart Totals:</td>
-                    <td class="px-3 py-2 text-right font-semibold" id="cartTotals">₹0</td>
+                    <td class="px-3 py-2 text-right font-semibold" id="selectedCartTotal">₹0</td>
                     <td></td>
                   </tr>
                 </tfoot>
               </table>
             </div>
+            
+            <!-- Send to Customer Button -->
+            <div class="px-4 py-3 bg-gray-50 border-t">
+              <button id="sendToCustomerBtn" class="w-full px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed transition-colors" disabled>
+                <i class="fas fa-paper-plane mr-2"></i>
+                Send to Customer
+              </button>
+              <div class="text-xs text-gray-500 mt-1 text-center" id="sendButtonStatus">Please assign rooms to all requests before sending</div>
+            </div>
           </div>
-        </section>
 
-        <!-- Panel 3: Invoice -->
-        <section id="panel-invoice" class="hidden space-y-4">
+          <!-- Old Rooms (Original Booking) Summary -->
           <div class="bg-white rounded-lg border border-gray-200 shadow overflow-hidden">
-            <div class="bg-gray-50 px-4 py-3 border-b">
-              <h3 class="font-semibold text-gray-800">Invoice Preview (Room types only)</h3>
+            <div class="bg-amber-50 px-4 py-3 border-b flex items-center justify-between">
+              <h3 class="font-semibold text-gray-800">Old Rooms (Original Booking)</h3>
+              <div class="text-xs text-gray-500">Previously booked rooms</div>
             </div>
             <div class="overflow-x-auto">
               <table class="min-w-full text-sm">
-                <thead class="bg-yellow-50">
+                <thead class="bg-amber-50">
                   <tr>
-                    <th class="px-3 py-2 text-left">Room</th>
-                    <th class="px-3 py-2 text-left">Old Type</th>
-                    <th class="px-3 py-2 text-left">New Type</th>
-                    <th class="px-3 py-2 text-right">Refund</th>
-                    <th class="px-3 py-2 text-right">New Price</th>
-                    <th class="px-3 py-2 text-right">Net</th>
+                    <th class="px-3 py-2 text-left">Room No</th>
+                    <th class="px-3 py-2 text-left">Room Type</th>
+                    <th class="px-3 py-2 text-right">Nights</th>
+                    <th class="px-3 py-2 text-right">Rate / night</th>
+                    <th class="px-3 py-2 text-right">Total</th>
                   </tr>
                 </thead>
-                <tbody id="invoiceTableBody" class="divide-y divide-gray-100"></tbody>
-                <tfoot class="bg-yellow-50">
+                <tbody id="oldRoomsBody" class="divide-y divide-gray-100"></tbody>
+                <tfoot class="bg-amber-50">
                   <tr>
-                    <td colspan="3" class="px-3 py-2 text-right font-bold">Totals:</td>
-                    <td class="px-3 py-2 text-right font-bold text-green-600" id="invoiceRefundTotal">₹0</td>
-                    <td class="px-3 py-2 text-right font-bold text-blue-600" id="invoiceNewTotal">₹0</td>
-                    <td class="px-3 py-2 text-right font-bold" id="invoiceNetTotal">₹0</td>
+                    <td colspan="4" class="px-3 py-2 text-right font-bold">Old Total:</td>
+                    <td class="px-3 py-2 text-right font-semibold" id="oldRoomsTotal">₹0</td>
                   </tr>
                 </tfoot>
               </table>
             </div>
           </div>
 
-          <div class="bg-white rounded-lg border border-gray-200 p-4">
-            <textarea id="adminRemarks" placeholder="Add optional remark to the customer (visible on invoice)" class="w-full border rounded p-2 text-sm" rows="3"></textarea>
-          </div>
-
-          <div class="flex justify-between items-center">
-            <div class="text-xs text-gray-500">After sending invoice, customer will have the remaining lock time to accept/pay. On acceptance refund & payment flow triggers.</div>
-            <div class="flex gap-3">
-              <button id="downloadInvoiceBtn" class="px-4 py-2 border rounded text-sm">Download Invoice JSON</button>
-              <button id="sendInvoiceBtn" class="px-5 py-2 luxury-gradient text-white rounded-lg shadow font-semibold">
-                <i class="fas fa-paper-plane mr-2"></i> Send Invoice
-              </button>
+          <!-- New Rooms (Current Selection) Summary -->
+          <div class="bg-white rounded-lg border border-gray-200 shadow overflow-hidden">
+            <div class="bg-emerald-50 px-4 py-3 border-b flex items-center justify-between">
+              <h3 class="font-semibold text-gray-800">New Rooms (Current Selection)</h3>
+              <div class="text-xs text-gray-500">Currently selected rooms</div>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="min-w-full text-sm">
+                <thead class="bg-emerald-50">
+                  <tr>
+                    <th class="px-3 py-2 text-left">Room No</th>
+                    <th class="px-3 py-2 text-left">Room Type</th>
+                    <th class="px-3 py-2 text-right">Nights</th>
+                    <th class="px-3 py-2 text-right">Rate / night</th>
+                    <th class="px-3 py-2 text-right">Total</th>
+                  </tr>
+                </thead>
+                <tbody id="newRoomsBody" class="divide-y divide-gray-100"></tbody>
+                <tfoot class="bg-emerald-50">
+                  <tr>
+                    <td colspan="4" class="px-3 py-2 text-right font-bold">New Total:</td>
+                    <td class="px-3 py-2 text-right font-semibold" id="newRoomsTotal">₹0</td>
+                  </tr>
+                </tfoot>
+              </table>
             </div>
           </div>
 
-          <!-- Logs -->
-          <div class="bg-white rounded-lg border border-gray-200 p-4">
-            <h4 class="font-semibold">Logs</h4>
-            <ul id="logsList" class="mt-2 list-disc pl-5 text-gray-600 small"></ul>
+          <!-- Net Difference Section -->
+          <div class="bg-white rounded-lg border border-gray-200 shadow overflow-hidden">
+            <div class="bg-slate-50 px-4 py-3 border-b">
+              <h3 class="font-semibold text-gray-800">Net Difference Summary</h3>
+            </div>
+            <div class="p-4">
+              <div class="space-y-3">
+                <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                  <span class="text-sm font-medium text-gray-600">Old Total:</span>
+                  <span class="font-semibold text-gray-800" id="netOldTotal">₹0</span>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                  <span class="text-sm font-medium text-gray-600">New Total:</span>
+                  <span class="font-semibold text-gray-800" id="netNewTotal">₹0</span>
+                </div>
+                <div class="flex justify-between items-center py-3 bg-gray-50 px-3 rounded-lg">
+                  <span class="text-base font-bold text-gray-800">Net Difference:</span>
+                  <div class="text-right">
+                    <div class="font-bold text-lg" id="netDifference">₹0</div>
+                    <div class="text-xs" id="netDifferenceStatus">No Change</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
       </div>
     </div>
 
-    <!-- Modals container -->
-    <div id="modalsContainer"></div>
+    <!-- Footer small -->
+    <div class="text-center text-xs text-gray-500">LuxuryStay Admin Prototype — integrated layout</div>
+  </main>
 
-  </div>
+  <!-- Modals container -->
+  <div id="modalsContainer"></div>
 
-  <!-- SCRIPT: Full logic -->
-  <script>
-  /******************************************************************
-   * Admin ModifyBooking Prototype - Single-file
-   * - Tabs
-   * - Booking render (Old -> New)
-   * - Room search modal & locking
-   * - Global lock timer, auto-unlock
-   * - Locked cart, invoice preview, send invoice
-   * - Logs
-   * - Dummy data; replace with APIs
-   ******************************************************************/
+  <!-- Toast -->
+  <div id="toast" class="fixed top-14 right-6 bg-indigo-600 text-white px-6 py-3 rounded-lg shadow-lg transform -translate-y-6 opacity-0 transition-all duration-300 z-60"></div>
 
-  /* ---------------------------
-     Dummy data (replace with API fetch)
-     - bookingData: booking-level info
-     - roomCatalog: all room types and room objects with numbers
-     ----------------------------*/
-  const bookingData = {
-    id: "B89012",
-    createdAt: "2025-08-20",
-    oldCheckIn: "2025-09-22",
-    newCheckIn: "2025-09-25", // customer requested new dates
-    oldCheckOut: "2025-09-24",
-    newCheckOut: "2025-09-27",
-    customer: {
-      name: "Ravi Kumar",
-      phone: "+91-98765-43210",
-      email: "ravi@example.com",
-      notes: "Prefer rooms with sea view, late check-in (after 6 PM) requested."
-    },
-    rooms: [
-      // each object corresponds to a room in booking (room number allocation originally may be in backend)
-      { uid: "rA", id: 1, oldType: "Deluxe Room", newType: "Executive Suite", oldAdults: 2, newAdults: 3, oldChildren: 0, newChildren: 1, oldPrice: 4500, newPrice: 6200 },
-      { uid: "rB", id: 2, oldType: "Family Room", newType: "Family Room", oldAdults: 2, newAdults: 2, oldChildren: 1, newChildren: 1, oldPrice: 5200, newPrice: 5200 },
-      { uid: "rC", id: 3, oldType: "Deluxe Room", newType: "Deluxe Room", oldAdults: 1, newAdults: 1, oldChildren: 0, newChildren: 0, oldPrice: 4500, newPrice: 4500 }
-    ]
-  };
+<script>
+/* ============================
+   Inject Navbar + Sidebar (keeps your code)
+   ============================ */
+fetch('/Features/Components/Navbars/AdminMainPageNavbar/index.html')
+  .then(r => r.text())
+  .then(html => {
+    document.getElementById('navbar').innerHTML = html;
+    // init notifications if your navbar provides containers
+    if(typeof initNotifications === "function") initNotifications();
+  })
+  .catch(err => {
+    console.warn('Navbar load failed, using fallback header', err);
+    document.getElementById('navbar').innerHTML = `
+      <div class="fixed top-0 left-0 right-0 bg-white shadow z-30">
+        <div class="max-w-7xl mx-auto p-4 flex justify-between items-center">
+          <div class="font-bold text-yellow-600">LuxuryStay (fallback)</div>
+        </div>
+      </div>`;
+  });
 
-  // Room catalog: types and actual room inventory (rooms with numbers)
-  const roomCatalog = [
-    { type: "Deluxe Room", price: 4500, capacity: { minAdults:1, maxAdults:2, minChildren:0, maxChildren:1 } },
-    { type: "Executive Suite", price: 6200, capacity: { minAdults:2, maxAdults:3, minChildren:0, maxChildren:2 } },
-    { type: "Presidential Suite", price: 9500, capacity: { minAdults:2, maxAdults:5, minChildren:0, maxChildren:4 } },
-    { type: "Family Room", price: 5200, capacity: { minAdults:2, maxAdults:4, minChildren:1, maxChildren:3 } }
-  ];
+fetch('/Features/Components/Sidebars/AdminMainPageSidebar/index.html')
+  .then(r => r.text())
+  .then(html => {
+    document.getElementById('sidebar').innerHTML = html;
+    // highlight booking link if present
+    const currentPage = "booking";
+    document.querySelectorAll('#sidebar a').forEach(link => {
+      if(link.dataset && link.dataset.page === currentPage){
+        link.classList.add('text-yellow-600','font-bold');
+      }
+    });
+  })
+  .catch(err => {
+    console.warn('Sidebar load failed', err);
+  });
 
-  // Actual rooms (inventory) with current availability (true => available)
-  // For demo, some rooms are available, some locked, some unavailable
-  const roomInventory = [
-    { roomNo: "R101", type: "Deluxe Room", available: true },
-    { roomNo: "R102", type: "Deluxe Room", available: true },
-    { roomNo: "R103", type: "Deluxe Room", available: false }, // maintenance
-    { roomNo: "R201", type: "Executive Suite", available: true },
-    { roomNo: "R202", type: "Executive Suite", available: true },
-    { roomNo: "R203", type: "Executive Suite", available: true },
-    { roomNo: "R301", type: "Family Room", available: true },
-    { roomNo: "R302", type: "Family Room", available: true },
-    { roomNo: "R401", type: "Presidential Suite", available: true }
-  ];
+/* ============================
+   Dummy booking data & inventory (replace with real API)
+   ============================ */
+const booking = {
+  id: "B1001",
+  createdAt: "2025-09-15",
+  oldCheckIn: "2025-09-21",
+  newCheckIn: "2025-09-25",
+  oldCheckOut: "2025-09-25",
+  newCheckOut: "2025-09-29",
+  customer: { name: "Arjun Kumar", email:"arjun.kumar@example.com", phone:"+91 99887 77665", notes: "High floor preferred" },
+  rooms: [
+    { uid:"r1", id:1, oldRoomNo:"101", oldType:"Deluxe Room", newType:"Executive Suite", oldAdults:2, newAdults:3, oldChildren:0, newChildren:1, oldPrice:12000, newPrice:18000 },
+    { uid:"r2", id:2, oldRoomNo:"201", oldType:"Executive Suite", newType:"Executive Suite", oldAdults:2, newAdults:2, oldChildren:0, newChildren:0, oldPrice:18000, newPrice:18000 },
+    { uid:"r3", id:3, oldRoomNo:"102", oldType:"Deluxe Room", newType:"Deluxe Room", oldAdults:1, newAdults:1, oldChildren:0, newChildren:0, oldPrice:12000, newPrice:12000 },
+    { uid:"r4", id:4, oldRoomNo:"301", oldType:"Family Room", newType:"Presidential Suite", oldAdults:4, newAdults:6, oldChildren:2, newChildren:2, oldPrice:14000, newPrice:25000 }
+  ]
+};
 
-  /* ---------------------------
-     State
-     ----------------------------*/
-  const state = {
-    booking: JSON.parse(JSON.stringify(bookingData)), // copy
-    // lockedRooms: map roomNo -> {roomNo, type, rate, nights, lockedAt, expiresAt, lockedByAdmin}
-    lockedRooms: {},
-    // adminOffer: null or { id, sentAt, expiresAt, status } when invoice sent
-    adminOffer: null,
-    // logs: array of {ts, text}
-    logs: [],
-    // globalLockDurationMinutes (when admin sets or uses preset)
-    globalLockDurationMins: 30,
-    // timer ids
-    lockTimerInterval: null,
-    offerCountdownInterval: null
-  };
+const roomCatalog = [
+  { type:"Deluxe Room", price:12000, capacity:2, description:"Standard luxury room for couples" }, 
+  { type:"Executive Suite", price:18000, capacity:4, description:"Premium suite with extra space" }, 
+  { type:"Family Room", price:14000, capacity:6, description:"Spacious room perfect for families" },
+  { type:"Presidential Suite", price:25000, capacity:8, description:"Ultimate luxury suite for VIP guests" }
+];
 
-  /* ---------------------------
-     Utility helpers
-     ----------------------------*/
-  const el = id => document.getElementById(id);
-  const fmtINR = n => "₹" + Number(n).toLocaleString("en-IN");
-  function nowTs(){ return new Date().toISOString(); }
-  function addLog(text){
-    state.logs.unshift({ ts: nowTs(), text });
-    renderLogs();
+const roomInventory = [
+  { roomNo:"101", type:"Deluxe Room", available:true },
+  { roomNo:"102", type:"Deluxe Room", available:false }, // Occupied
+  { roomNo:"103", type:"Deluxe Room", available:true },
+  { roomNo:"201", type:"Executive Suite", available:true },
+  { roomNo:"202", type:"Executive Suite", available:false }, // Occupied  
+  { roomNo:"203", type:"Executive Suite", available:true },
+  { roomNo:"301", type:"Family Room", available:true },
+  { roomNo:"302", type:"Family Room", available:false }, // Occupied
+  { roomNo:"303", type:"Family Room", available:true },
+  { roomNo:"401", type:"Presidential Suite", available:false }, // All Presidential Suites occupied to force recommendations
+  { roomNo:"402", type:"Presidential Suite", available:false },
+  { roomNo:"403", type:"Presidential Suite", available:false }
+];
+
+/* ============================
+   App state
+   - selectedRooms: currently selected rooms for modification
+   - roomAssignments: tracks which room is assigned to which request
+   ============================ */
+const state = {
+  selectedRooms: {},  // roomNo -> {roomNo,type,rate,nights}
+  roomAssignments: {} // requestId -> roomNo (one room per request)
+};
+
+/* ============================
+   DOM helpers & initial render
+   ============================ */
+const $ = id => document.getElementById(id);
+const fmtINR = n => "₹" + Number(n).toLocaleString("en-IN");
+function nightsBetween(ci, co) {
+  const a = new Date(ci + "T00:00:00"), b = new Date(co + "T00:00:00");
+  const d = Math.floor((b - a) / (1000*60*60*24));
+  return Math.max(1, d);
+}
+
+function initUI(){
+  // header
+  $("bookingIdHeader").textContent = booking.id;
+  $("oldCheckIn").textContent = booking.oldCheckIn;
+  $("newCheckIn").textContent = booking.newCheckIn;
+  $("oldCheckOut").textContent = booking.oldCheckOut;
+  $("newCheckOut").textContent = booking.newCheckOut;
+  $("customerName").textContent = booking.customer.name;
+  $("customerContact").textContent = `${booking.customer.email} • ${booking.customer.phone}`;
+
+  renderComparisonTable();
+  renderRoomRequestCards();
+  renderSelectedCart();
+  hookTabs();
+  hookResetSelected();
+  hookSendToCustomer();
+  $("backBtn").addEventListener("click", ()=> history.back());
+}
+
+function renderComparisonTable(){
+  const tbody = $("comparisonTableBody");
+  tbody.innerHTML = "";
+  booking.rooms.forEach(r => {
+    const changed = r.oldType !== r.newType || r.oldAdults !== r.newAdults || r.oldChildren !== r.newChildren;
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td class="px-3 py-2">${r.oldRoomNo ? r.oldRoomNo : `Room #${r.id}`}</td>
+      <td class="px-3 py-2">${r.oldType}</td>
+      <td class="px-3 py-2 ${r.oldType!==r.newType ? 'text-indigo-600 font-semibold':''}">${r.newType}</td>
+      <td class="px-3 py-2">${r.oldAdults} → <span class="text-indigo-600 font-semibold">${r.newAdults}</span></td>
+      <td class="px-3 py-2">${r.oldChildren} → <span class="text-indigo-600 font-semibold">${r.newChildren}</span></td>
+      <td class="px-3 py-2">${changed ? '<span class="text-yellow-600 font-semibold">Change requested</span>' : '<span class="text-gray-500">No change</span>'}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function renderRoomRequestCards(){
+  const container = $("roomRequestsContainer");
+  container.innerHTML = "";
+  booking.rooms.forEach((r, idx) => {
+    const changed = r.oldType !== r.newType || r.oldAdults !== r.newAdults || r.oldChildren !== r.newChildren;
+    const assignedRoom = state.roomAssignments[r.uid];
+    const isAssigned = assignedRoom && state.selectedRooms[assignedRoom];
+    
+    const card = document.createElement("div");
+    card.className = `bg-white rounded-xl border-2 shadow-sm transition-all hover:shadow-md ${
+      changed ? 'border-amber-200 bg-amber-50' : 'border-gray-200'
+    }`;
+    
+    card.innerHTML = `
+      <div class="p-6">
+        <!-- Header Section -->
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
+              ${r.id}
+            </div>
+            <div>
+              <h4 class="font-semibold text-gray-800">Room Request #${r.id}</h4>
+              <p class="text-sm text-gray-500">${r.oldRoomNo ? `Originally Room ${r.oldRoomNo}` : 'New request'}</p>
+            </div>
+          </div>
+          
+          ${isAssigned ? 
+            `<div class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium flex items-center gap-2">
+              <i class="fas fa-check-circle"></i>
+              Room ${assignedRoom}
+            </div>` : 
+            changed ? 
+              `<div class="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm font-medium flex items-center gap-2">
+                <i class="fas fa-clock"></i>
+                Needs Assignment
+              </div>` :
+              `<div class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm font-medium">
+                No Action Needed
+              </div>`
+          }
+        </div>
+        
+        <!-- Details Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+          <!-- Room Type -->
+          <div class="bg-gray-50 rounded-lg p-3">
+            <div class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Room Type</div>
+            ${r.oldType !== r.newType ? 
+              `<div class="text-sm">
+                <span class="text-gray-600">${r.oldType}</span>
+                <i class="fas fa-arrow-right text-gray-400 mx-2"></i>
+                <span class="font-semibold text-indigo-600">${r.newType}</span>
+              </div>` :
+              `<div class="text-sm font-medium text-gray-800">${r.newType}</div>`
+            }
+          </div>
+          
+          <!-- Dates -->
+          <div class="bg-gray-50 rounded-lg p-3">
+            <div class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Check-in → Check-out</div>
+            <div class="text-sm font-medium text-gray-800">
+              ${booking.newCheckIn} → ${booking.newCheckOut}
+            </div>
+          </div>
+          
+          <!-- Adults -->
+          <div class="bg-gray-50 rounded-lg p-3">
+            <div class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Adults</div>
+            ${r.oldAdults !== r.newAdults ? 
+              `<div class="text-sm">
+                <span class="text-gray-600">${r.oldAdults}</span>
+                <i class="fas fa-arrow-right text-gray-400 mx-2"></i>
+                <span class="font-semibold text-indigo-600">${r.newAdults}</span>
+              </div>` :
+              `<div class="text-sm font-medium text-gray-800">${r.newAdults}</div>`
+            }
+          </div>
+          
+          <!-- Children -->
+          <div class="bg-gray-50 rounded-lg p-3">
+            <div class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Children</div>
+            ${r.oldChildren !== r.newChildren ? 
+              `<div class="text-sm">
+                <span class="text-gray-600">${r.oldChildren}</span>
+                <i class="fas fa-arrow-right text-gray-400 mx-2"></i>
+                <span class="font-semibold text-indigo-600">${r.newChildren}</span>
+              </div>` :
+              `<div class="text-sm font-medium text-gray-800">${r.newChildren}</div>`
+            }
+          </div>
+        </div>
+        
+        <!-- Action Section -->
+        <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+          <div class="text-sm text-gray-600">
+            ${changed ? 
+              `<span class="flex items-center gap-2">
+                <i class="fas fa-exclamation-triangle text-amber-500"></i>
+                Requires room assignment
+              </span>` :
+              `<span class="flex items-center gap-2">
+                <i class="fas fa-check-circle text-green-500"></i>
+                No changes - keep original room
+              </span>`
+            }
+          </div>
+          
+          <div class="flex gap-2">
+            ${!changed ? '' :
+              isAssigned ? 
+                `<button class="removeRoomBtn px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-2" data-request-id="${r.uid}">
+                  <i class="fas fa-times"></i>
+                  Remove Assignment
+                </button>` :
+                `<button class="searchRoomsBtn px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-2" data-idx="${idx}" data-request-id="${r.uid}">
+                  <i class="fas fa-search"></i>
+                  Find Rooms
+                </button>`
+            }
+          </div>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  // attach search handlers
+  Array.from(document.querySelectorAll(".searchRoomsBtn")).forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      openSearchModalForRoom(Number(btn.dataset.idx), btn.dataset.requestId);
+    });
+  });
+
+  // attach remove handlers
+  Array.from(document.querySelectorAll(".removeRoomBtn")).forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const requestId = btn.dataset.requestId;
+      const assignedRoom = state.roomAssignments[requestId];
+      if (assignedRoom) {
+        delete state.selectedRooms[assignedRoom];
+        delete state.roomAssignments[requestId];
+        renderRoomRequestCards();
+        renderSelectedCart();
+        showToast("Room unassigned successfully.", "success");
+      }
+    });
+  });
+  
+  // Update Send to Customer button state after rendering room requests
+  updateSendToCustomerButton();
+}
+
+function updateSendToCustomerButton() {
+  const sendBtn = $("sendToCustomerBtn");
+  const statusText = $("sendButtonStatus");
+  
+  // Get requests that need room assignments (those with changes)
+  const requestsNeedingRooms = booking.rooms.filter(r => {
+    const changed = r.newType !== r.oldType || r.newAdults !== r.oldAdults || r.newChildren !== r.oldChildren;
+    return changed;
+  });
+  
+  // Check if all requests that need rooms have assignments
+  const allAssigned = requestsNeedingRooms.every(r => state.roomAssignments[r.uid]);
+  
+  if (requestsNeedingRooms.length === 0) {
+    sendBtn.disabled = true;
+    statusText.textContent = "No room changes detected";
+  } else if (allAssigned) {
+    sendBtn.disabled = false;
+    statusText.textContent = `Ready to send ${Object.keys(state.roomAssignments).length} room(s) to customer`;
+  } else {
+    sendBtn.disabled = true;
+    const assignedCount = Object.keys(state.roomAssignments).length;
+    const totalCount = requestsNeedingRooms.length;
+    statusText.textContent = `${assignedCount}/${totalCount} rooms assigned - Please assign all rooms before sending`;
   }
-  function parseDateStr(s){
-    if(!s) return null;
-    const [y,m,d] = s.split("-");
-    return new Date(Number(y), Number(m)-1, Number(d));
-  }
-  function nightsBetween(checkInStr, checkOutStr){
-    const ci = parseDateStr(checkInStr), co = parseDateStr(checkOutStr);
-    if(!ci || !co) return 0;
-    const diff = Math.floor((co - ci) / (1000*60*60*24));
-    return diff > 0 ? diff : 0;
-  }
-  const bookingNights = nightsBetween(state.booking.oldCheckIn, state.booking.oldCheckOut) || nightsBetween(state.booking.newCheckIn, state.booking.newCheckOut) || 1;
+}
 
-  /* ---------------------------
-     Initial render
-     ----------------------------*/
-  function init(){
-    // fill header
-    el("bookingId").textContent = state.booking.id;
-    el("bookingCreatedAt").textContent = state.booking.createdAt;
-    el("oldCheckIn").textContent = state.booking.oldCheckIn;
-    el("newCheckIn").textContent = state.booking.newCheckIn;
-    el("oldCheckOut").textContent = state.booking.oldCheckOut;
-    el("newCheckOut").textContent = state.booking.newCheckOut;
-    el("customerNotes").textContent = state.booking.customer.notes || "—";
+function renderSelectedCart(){
+  const tbody = $("selectedCartBody");
+  tbody.innerHTML = "";
+  let total = 0;
+  const nights = nightsBetween(booking.newCheckIn, booking.newCheckOut);
+  Object.values(state.selectedRooms).forEach(item => {
+    const tr = document.createElement("tr");
+    const tot = item.rate * nights;
+    total += tot;
+    tr.innerHTML = `
+      <td class="px-3 py-2">${item.roomNo}</td>
+      <td class="px-3 py-2">${item.type}</td>
+      <td class="px-3 py-2 text-right">${fmtINR(item.rate)}</td>
+      <td class="px-3 py-2 text-right">${nights}</td>
+      <td class="px-3 py-2 text-right">${fmtINR(tot)}</td>
+      <td class="px-3 py-2 text-center"><button class="remove-selected-btn px-2 py-1 bg-red-50 text-red-700 rounded text-xs" data-room="${item.roomNo}">Remove</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  $("selectedCartTotal").textContent = fmtINR(total);
 
-    renderComparisonTable();
-    renderRoomRequests();
-    renderLockedCart();
-    renderInvoiceTable();
-    renderLogs();
-    hookTabs();
-    hookPresets();
-    hookDownloadState();
-    hookDownloadInvoice();
-    hookSendInvoice();
-    hookBack();
+  Array.from(document.querySelectorAll(".remove-selected-btn")).forEach(b => {
+    b.addEventListener("click", ()=> {
+      const roomNo = b.dataset.room;
+      const room = state.selectedRooms[roomNo];
+      
+      // Also remove from room assignments if this room was assigned to a request
+      if (room && room.requestId) {
+        delete state.roomAssignments[room.requestId];
+      }
+      
+      delete state.selectedRooms[roomNo];
+      renderSelectedCart();
+      renderRoomRequestCards();
+    });
+  });
+  
+  // Update Send to Customer button state after rendering selected cart
+  updateSendToCustomerButton();
+  
+  // Also update the old/new rooms comparison tables
+  renderOldRoomsTable();
+  renderNewRoomsTable();
+  renderNetDifferenceSection();
+}
 
-    // initialize lock countdown UI (inactive)
-    updateLockCountdownUI();
-  }
-
-  /* ---------------------------
-     Render Comparison table (Tab 1)
-     ----------------------------*/
-  function renderComparisonTable(){
-    const tbody = el("comparisonTableBody");
-    tbody.innerHTML = "";
-    state.booking.rooms.forEach(r => {
-      const changed = r.oldType !== r.newType || r.oldAdults !== r.newAdults || r.oldChildren !== r.newChildren;
+function renderOldRoomsTable(){
+  const tbody = $("oldRoomsBody");
+  tbody.innerHTML = "";
+  let total = 0;
+  const nights = nightsBetween(booking.oldCheckIn, booking.oldCheckOut);
+  
+  if (booking.rooms.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5" class="px-3 py-4 text-center text-gray-500 text-sm">No original rooms found</td>
+      </tr>
+    `;
+  } else {
+    // Use actual original booking room data
+    booking.rooms.forEach(room => {
       const tr = document.createElement("tr");
+      const rate = room.oldPrice;
+      const roomTotal = rate * nights;
+      total += roomTotal;
+      
+      // Use actual room number from original booking
+      const roomNo = room.oldRoomNo || `R${room.id}`;
+      
       tr.innerHTML = `
-        <td class="px-3 py-2">Room #${r.id}</td>
-        <td class="px-3 py-2">${r.oldType}</td>
-        <td class="px-3 py-2 ${r.oldType!==r.newType ? 'text-blue-600 font-semibold' : ''}">${r.newType}</td>
-        <td class="px-3 py-2">${r.oldAdults} → <span class="text-blue-600 font-semibold">${r.newAdults}</span></td>
-        <td class="px-3 py-2">${r.oldChildren} → <span class="text-blue-600 font-semibold">${r.newChildren}</span></td>
-        <td class="px-3 py-2">${changed ? '<span class="text-yellow-600 font-semibold">Change requested</span>' : '<span class="text-gray-500">No change</span>'}</td>
+        <td class="px-3 py-2">${roomNo}</td>
+        <td class="px-3 py-2">${room.oldType}</td>
+        <td class="px-3 py-2 text-right">${nights}</td>
+        <td class="px-3 py-2 text-right">${fmtINR(rate)}</td>
+        <td class="px-3 py-2 text-right">${fmtINR(roomTotal)}</td>
       `;
       tbody.appendChild(tr);
     });
   }
+  
+  $("oldRoomsTotal").textContent = fmtINR(total);
+  return total;
+}
 
-  /* ---------------------------
-     Render Room Requests (Tab 2)
-     - For each booking room show a card:
-       - OldType -> NewType
-       - Adults old->new, children old->new
-       - If no change requested show "No change requested"
-       - If change requested show "Search Rooms" button
-     ----------------------------*/
-  function renderRoomRequests(){
-    const container = el("roomRequestsContainer");
-    container.innerHTML = "";
-    state.booking.rooms.forEach((r, idx) => {
-      const changed = r.oldType !== r.newType || r.oldAdults !== r.newAdults || r.oldChildren !== r.newChildren;
-      const card = document.createElement("div");
-      card.className = "bg-white rounded-lg border border-gray-200 p-4 flex items-start justify-between";
-      card.innerHTML = `
-        <div class="flex-1">
-          <div class="flex items-center gap-3">
-            <div class="font-semibold">Room Request #${r.id}</div>
-            <div class="text-xs text-gray-500">(${r.oldType} → ${r.newType})</div>
-          </div>
-          <div class="mt-2 text-xs text-gray-600">
-            <div>Dates (global): <span class="font-medium">${state.booking.newCheckIn}</span> → <span class="font-medium">${state.booking.newCheckOut}</span></div>
-            <div class="mt-1">Adults: <strong>${r.oldAdults}</strong> → <strong class="text-blue-600">${r.newAdults}</strong> • Children: <strong>${r.oldChildren}</strong> → <strong class="text-blue-600">${r.newChildren}</strong></div>
-          </div>
+function renderNewRoomsTable(){
+  const tbody = $("newRoomsBody");
+  tbody.innerHTML = "";
+  let total = 0;
+  const nights = nightsBetween(booking.newCheckIn, booking.newCheckOut);
+  
+  const selectedRooms = Object.values(state.selectedRooms);
+  
+  if (selectedRooms.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5" class="px-3 py-4 text-center text-gray-500 text-sm">No rooms selected yet</td>
+      </tr>
+    `;
+  } else {
+    // Use currently selected rooms
+    selectedRooms.forEach(item => {
+      const tr = document.createElement("tr");
+      const roomTotal = item.rate * nights;
+      total += roomTotal;
+      
+      tr.innerHTML = `
+        <td class="px-3 py-2">${item.roomNo}</td>
+        <td class="px-3 py-2">${item.type}</td>
+        <td class="px-3 py-2 text-right">${nights}</td>
+        <td class="px-3 py-2 text-right">${fmtINR(item.rate)}</td>
+        <td class="px-3 py-2 text-right">${fmtINR(roomTotal)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+  
+  $("newRoomsTotal").textContent = fmtINR(total);
+  return total;
+}
+
+function renderNetDifferenceSection(){
+  // Calculate totals
+  const oldTotal = calculateOldRoomsTotal();
+  const newTotal = calculateNewRoomsTotal();
+  const difference = newTotal - oldTotal;
+  
+  // Update display values
+  $("netOldTotal").textContent = fmtINR(oldTotal);
+  $("netNewTotal").textContent = fmtINR(newTotal);
+  $("netDifference").textContent = fmtINR(Math.abs(difference));
+  
+  const differenceElement = $("netDifference");
+  const statusElement = $("netDifferenceStatus");
+  
+  // Reset classes
+  differenceElement.className = "font-bold text-lg";
+  
+  if (difference > 0) {
+    // Customer pays extra
+    differenceElement.classList.add("text-red-600");
+    statusElement.textContent = "Customer Pays Extra";
+    statusElement.className = "text-xs text-red-500";
+  } else if (difference < 0) {
+    // Refund to customer
+    differenceElement.classList.add("text-green-600");
+    statusElement.textContent = "Refund to Customer";
+    statusElement.className = "text-xs text-green-500";
+  } else {
+    // No difference
+    differenceElement.classList.add("text-gray-600");
+    statusElement.textContent = "No Change";
+    statusElement.className = "text-xs text-gray-500";
+  }
+}
+
+function calculateOldRoomsTotal(){
+  const nights = nightsBetween(booking.oldCheckIn, booking.oldCheckOut);
+  return booking.rooms.reduce((total, room) => total + (room.oldPrice * nights), 0);
+}
+
+function calculateNewRoomsTotal(){
+  const nights = nightsBetween(booking.newCheckIn, booking.newCheckOut);
+  return Object.values(state.selectedRooms).reduce((total, room) => total + (room.rate * nights), 0);
+}
+
+/* ============================
+   Search modal - Single selection for room requests
+   ============================ */
+function openSearchModalForRoom(roomIndex, requestId){
+  const req = booking.rooms[roomIndex];
+  const modalId = `modal-search-${req.uid}`;
+  const mc = $("modalsContainer");
+  
+  // Get available rooms of the requested type
+  const exactMatches = roomInventory.filter(r => 
+    r.type === req.newType && 
+    r.available && 
+    !state.selectedRooms[r.roomNo]
+  );
+  
+  // Get recommended rooms (different types but available)
+  let recommendations = [];
+  if (exactMatches.length === 0) {
+    // Get all available rooms that are not the requested type
+    const availableAlternatives = roomInventory.filter(r => 
+      r.type !== req.newType && 
+      r.available && 
+      !state.selectedRooms[r.roomNo]
+    );
+    
+    // Prioritize recommendations based on capacity and upgrade potential
+    const requestedCapacity = req.newAdults + req.newChildren;
+    const sortedAlternatives = availableAlternatives.sort((a, b) => {
+      const aCatalog = roomCatalog.find(rc => rc.type === a.type);
+      const bCatalog = roomCatalog.find(rc => rc.type === b.type);
+      
+      if (!aCatalog || !bCatalog) return 0;
+      
+      // Prefer rooms that can accommodate the guests
+      const aCanAccommodate = aCatalog.capacity >= requestedCapacity;
+      const bCanAccommodate = bCatalog.capacity >= requestedCapacity;
+      
+      if (aCanAccommodate && !bCanAccommodate) return -1;
+      if (!aCanAccommodate && bCanAccommodate) return 1;
+      
+      // If both can accommodate or both cannot, sort by price (cheaper first)
+      return aCatalog.price - bCatalog.price;
+    });
+    
+    recommendations = sortedAlternatives.slice(0, 6); // Show up to 6 recommendations
+  }
+  
+  mc.innerHTML = `
+    <div id="${modalId}" class="fixed inset-0 z-70 flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+      <div class="relative bg-white rounded-2xl p-6 shadow-2xl w-full max-w-4xl">
+        <button id="${modalId}-close" class="absolute top-4 right-4 p-2 rounded bg-gray-100 hover:bg-gray-200"><i class="fas fa-times"></i></button>
+        <h3 class="text-lg font-semibold mb-2">Select Room for Request #${req.id}</h3>
+        <p class="text-sm text-gray-600 mb-4">Requested: <strong>${req.newType}</strong> for ${req.newAdults} adults, ${req.newChildren} children</p>
+        
+        <div class="space-y-4 max-h-96 overflow-y-auto">
+          ${exactMatches.length > 0 ? `
+            <div>
+              <h4 class="font-medium text-gray-800 mb-2 flex items-center gap-2">
+                <i class="fas fa-check-circle text-green-500"></i>
+                Available ${req.newType} Rooms
+              </h4>
+              <div id="${modalId}-exact-list" class="grid grid-cols-1 gap-2"></div>
+            </div>
+          ` : ''}
+          
+          ${recommendations.length > 0 ? `
+            <div>
+              <h4 class="font-medium text-gray-800 mb-2 flex items-center gap-2">
+                <i class="fas fa-lightbulb text-yellow-500"></i>
+                Recommended Alternative Rooms
+              </h4>
+              <p class="text-xs text-gray-500 mb-2">No ${req.newType} available. Consider these alternatives:</p>
+              <div id="${modalId}-rec-list" class="grid grid-cols-1 gap-2"></div>
+            </div>
+          ` : ''}
+          
+          ${exactMatches.length === 0 && recommendations.length === 0 ? `
+            <div class="text-center py-8 text-gray-500">
+              <i class="fas fa-bed text-4xl text-gray-300 mb-4"></i>
+              <p class="font-medium">No rooms available for this request</p>
+              <p class="text-sm mt-2">Requested: <strong>${req.newType}</strong> for ${req.newAdults} adults, ${req.newChildren} children</p>
+              <p class="text-xs mt-2 text-gray-400">All rooms are currently occupied or assigned to other requests.</p>
+              <div class="mt-4 p-3 bg-gray-50 rounded-lg text-xs text-left">
+                <p class="font-medium text-gray-700 mb-2">Suggestions:</p>
+                <ul class="space-y-1 text-gray-600">
+                  <li>• Check if other room assignments can be modified</li>
+                  <li>• Consider adjusting the check-in/check-out dates</li>
+                  <li>• Contact guest to discuss alternative room types</li>
+                </ul>
+              </div>
+            </div>
+          ` : ''}
         </div>
-        <div class="flex flex-col items-end gap-2">
-          ${changed ? `<button class="searchRoomsBtn px-3 py-1 bg-yellow-600 text-white rounded text-sm" data-uid="${r.uid}" data-index="${idx}"><i class="fas fa-search mr-1"></i> Search Rooms</button>` : `<div class="text-sm text-gray-500">No action needed</div>`}
-          <div class="text-xs text-gray-500">Type capacity validated on search</div>
+        
+        <div class="mt-4 flex justify-end gap-2">
+          <button id="${modalId}-cancel" class="px-4 py-2 border rounded text-sm">Cancel</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Populate exact matches
+  if (exactMatches.length > 0) {
+    const exactList = $(`${modalId}-exact-list`);
+    exactMatches.forEach(room => {
+      const div = document.createElement("div");
+      div.className = "p-3 border rounded-lg hover:bg-green-50 hover:border-green-300 cursor-pointer transition-all";
+      div.innerHTML = `
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="font-medium text-lg">${room.roomNo}</div>
+            <div class="text-sm text-gray-600">${room.type}</div>
+            <div class="text-xs text-green-600 mt-1">✓ Perfect match</div>
+          </div>
+          <div class="text-right">
+            <div class="text-lg font-semibold text-gray-800">${fmtINR(getRoomPrice(room.type))}</div>
+            <div class="text-xs text-gray-500">per night</div>
+          </div>
         </div>
       `;
-      container.appendChild(card);
-    });
-
-    // attach handlers to search buttons
-    Array.from(container.querySelectorAll(".searchRoomsBtn")).forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        const uid = btn.dataset.uid;
-        const idx = Number(btn.dataset.index);
-        openSearchModalForRoom(idx);
-      });
+      div.addEventListener("click", () => assignRoomToRequest(room.roomNo, requestId, modalId));
+      exactList.appendChild(div);
     });
   }
 
-  /* ---------------------------
-     Search Modal
-     - Show available rooms matching requested type & capacity
-     - Support multi-select locks (checkbox) or Lock individually
-     - "Lock Selected" will lock chosen rooms in state.lockedRooms with expiration
-     - Respect existing lockedRooms and inventory availability
-     ----------------------------*/
-  function openSearchModalForRoom(roomIndex){
-    const rq = state.booking.rooms[roomIndex];
-    // Compute required capacity from requested counts
-    const requiredAdults = rq.newAdults;
-    const requiredChildren = rq.newChildren;
-    const reqType = rq.newType;
-
-    // Build modal content
-    const modalId = "modal-search-"+rq.uid;
-    const container = el("modalsContainer");
-    container.innerHTML = `
-      <div id="${modalId}" class="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
-        <div class="relative bg-white rounded-2xl p-6 shadow-2xl w-full max-w-3xl">
-          <button id="${modalId}-close" class="absolute top-4 right-4 p-2 rounded bg-gray-100 hover:bg-gray-200"><i class="fas fa-times"></i></button>
-          <h3 class="text-lg font-semibold mb-2">Search Rooms — ${reqType}</h3>
-          <p class="text-xs text-gray-600 mb-4">Showing rooms that match the requested type & capacity for the booking dates.</p>
-          <div class="mb-3">
-            <div class="text-xs text-gray-600">Select room numbers to lock. Locked rooms are reserved for the global lock duration.</div>
+  // Populate recommendations
+  if (recommendations.length > 0) {
+    const recList = $(`${modalId}-rec-list`);
+    const requestedCapacity = req.newAdults + req.newChildren;
+    
+    recommendations.forEach(room => {
+      const roomCatalogInfo = roomCatalog.find(rc => rc.type === room.type);
+      const canAccommodate = roomCatalogInfo && roomCatalogInfo.capacity >= requestedCapacity;
+      const isUpgrade = roomCatalogInfo && getRoomPrice(room.type) > getRoomPrice(req.newType);
+      
+      let reasonText = "⚡ Alternative option";
+      let reasonClass = "text-yellow-600";
+      
+      if (canAccommodate && isUpgrade) {
+        reasonText = "⭐ Upgrade - Perfect fit";
+        reasonClass = "text-blue-600";
+      } else if (canAccommodate) {
+        reasonText = "✓ Can accommodate guests";
+        reasonClass = "text-green-600";
+      } else if (isUpgrade) {
+        reasonText = "⭐ Upgrade option";
+        reasonClass = "text-blue-600";
+      }
+      
+      const div = document.createElement("div");
+      div.className = "p-3 border rounded-lg hover:bg-yellow-50 hover:border-yellow-300 cursor-pointer transition-all";
+      div.innerHTML = `
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="font-medium text-lg">${room.roomNo}</div>
+            <div class="text-sm text-gray-600">${room.type}</div>
+            <div class="text-xs ${reasonClass} mt-1">${reasonText}</div>
+            ${roomCatalogInfo ? `<div class="text-xs text-gray-500 mt-1">Capacity: ${roomCatalogInfo.capacity} guests</div>` : ''}
           </div>
-          <div id="${modalId}-list" class="grid grid-cols-1 gap-2 max-h-64 overflow-y-auto"></div>
-          <div class="mt-4 flex justify-between items-center">
-            <div class="text-xs text-gray-500">If none available, you can propose alternative types from catalog.</div>
-            <div class="flex gap-2">
-              <button id="${modalId}-alt" class="px-3 py-2 border rounded text-sm">Suggest Alternatives</button>
-              <button id="${modalId}-lockselected" class="px-3 py-2 bg-yellow-600 text-white rounded text-sm">Lock Selected</button>
+          <div class="text-right">
+            <div class="text-lg font-semibold text-gray-800">${fmtINR(getRoomPrice(room.type))}</div>
+            <div class="text-xs text-gray-500">per night</div>
+            ${isUpgrade ? '<div class="text-xs text-blue-500">Upgrade</div>' : ''}
+          </div>
+        </div>
+      `;
+      div.addEventListener("click", () => assignRoomToRequest(room.roomNo, requestId, modalId));
+      recList.appendChild(div);
+    });
+  }
+
+  $(`${modalId}-close`).addEventListener("click", ()=> mc.innerHTML = "");
+  $(`${modalId}-cancel`).addEventListener("click", ()=> mc.innerHTML = "");
+}
+
+function getRoomPrice(roomType) {
+  const catalog = roomCatalog.find(r => r.type === roomType);
+  return catalog ? catalog.price : 0;
+}
+
+function assignRoomToRequest(roomNo, requestId, modalId) {
+  // Remove any previously assigned room for this request
+  const previousRoom = state.roomAssignments[requestId];
+  if (previousRoom) {
+    delete state.selectedRooms[previousRoom];
+  }
+  
+  // Assign new room
+  state.roomAssignments[requestId] = roomNo;
+  addRoomToSelectedCart(roomNo, requestId);
+  
+  // Close modal and refresh UI
+  $("modalsContainer").innerHTML = "";
+  renderRoomRequestCards();
+  renderSelectedCart();
+  showToast(`Room ${roomNo} assigned successfully!`, "success");
+}
+
+function addRoomToSelectedCart(roomNo, requestId = null){
+  const inv = roomInventory.find(r=>r.roomNo===roomNo);
+  if(!inv) return;
+  const nights = nightsBetween(booking.newCheckIn, booking.newCheckOut);
+  const rate = roomCatalog.find(rc => rc.type === inv.type)?.price || 0;
+  state.selectedRooms[roomNo] = { roomNo, type: inv.type, rate, nights, requestId };
+}
+
+/* ============================
+   Reset Selected (modal)
+   ============================ */
+function hookResetSelected(){
+  $("resetSelectedBtn").addEventListener("click", ()=> {
+    if(Object.keys(state.selectedRooms).length === 0){ showToast("No selected rooms to reset.","info"); return; }
+    showConfirmModal("Reset Selected Rooms", "Remove all selected rooms from the cart? This will not affect already locked rooms.", ()=> {
+      state.selectedRooms = {};
+      renderSelectedCart();
+      showToast("Selected rooms reset.", "success");
+    });
+  });
+}
+
+/* ============================
+   Send to Customer with Room Locking
+   ============================ */
+function hookSendToCustomer(){
+  $("sendToCustomerBtn").addEventListener("click", ()=> {
+    if($("sendToCustomerBtn").disabled) return;
+    
+    const assignedRooms = Object.values(state.selectedRooms);
+    const lockDuration = 30; // 30 minutes lock duration
+    
+    showRoomLockingModal(assignedRooms, lockDuration, ()=> {
+      lockRoomsAndSendToCustomer(assignedRooms, lockDuration);
+    });
+  });
+}
+
+function showRoomLockingModal(rooms, lockDuration, onConfirm){
+  const mc = $("modalsContainer");
+  const roomCount = rooms.length;
+  const roomList = rooms.map(r => `${r.roomNo} (${r.type})`).join(', ');
+  
+  mc.innerHTML = `
+    <div class="fixed inset-0 z-70 flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+      <div class="relative bg-white rounded-2xl p-6 shadow-2xl max-w-lg w-full border-2 border-orange-200">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+            <i class="fas fa-exclamation-triangle text-orange-600 text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-gray-900">Confirm Locking Rooms</h3>
+            <div class="text-sm text-orange-600">This action will temporarily reserve rooms</div>
+          </div>
+        </div>
+        
+        <div class="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-4">
+          <p class="text-sm text-gray-700 mb-3">
+            You are about to lock <strong>${roomCount} room(s)</strong> for <strong>${lockDuration} minutes</strong>. 
+            During this time, they won't be available for other bookings.
+          </p>
+          
+          <div class="text-xs text-gray-600 mb-2">
+            <strong>Rooms to be locked:</strong>
+          </div>
+          <div class="text-xs bg-white rounded border p-2 font-mono text-gray-800">
+            ${roomList}
+          </div>
+        </div>
+        
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
+          <div class="flex items-start gap-2">
+            <i class="fas fa-info-circle text-yellow-600 text-sm mt-0.5"></i>
+            <div class="text-xs text-gray-700">
+              <strong>What happens next:</strong>
+              <ul class="mt-1 space-y-1 ml-2">
+                <li>• Selected rooms will be locked in the system</li>
+                <li>• Customer will receive booking modification notification</li>
+                <li>• You'll be redirected to the Bookings management page</li>
+              </ul>
             </div>
           </div>
         </div>
-      </div>
-    `;
 
-    // populate list with filtered inventory
-    const listEl = el(`${modalId}-list`);
-    listEl.innerHTML = "";
-
-    // filter function: type matches, available true and not currently locked by admin/others
-    const availableRooms = roomInventory.filter(rm => rm.type === reqType && rm.available && !state.lockedRooms[rm.roomNo]);
-    if(availableRooms.length === 0){
-      listEl.innerHTML = `<div class="p-4 text-sm text-gray-600">No rooms available of type <strong>${reqType}</strong> for selected dates. Try alternatives.</div>`;
-    } else {
-      availableRooms.forEach(rm => {
-        const div = document.createElement("div");
-        div.className = "p-3 border rounded flex items-center justify-between";
-        div.innerHTML = `
-          <div>
-            <div class="font-medium">${rm.roomNo}</div>
-            <div class="text-xs text-gray-500">${rm.type}</div>
-          </div>
-          <div class="flex items-center gap-2">
-            <label class="text-xs text-gray-600 mr-2">Select</label>
-            <input type="checkbox" class="room-select-checkbox" data-room="${rm.roomNo}" />
-            <button class="lock-single-btn px-3 py-1 bg-gray-100 border rounded text-xs ml-2" data-room="${rm.roomNo}"><i class="fas fa-lock mr-1"></i> Lock</button>
-          </div>
-        `;
-        listEl.appendChild(div);
-      });
-    }
-
-    // handlers
-    el(`${modalId}-close`).addEventListener("click", () => { container.innerHTML = ""; });
-    el(`${modalId}-lockselected`).addEventListener("click", () => {
-      const checked = Array.from(listEl.querySelectorAll(".room-select-checkbox")).filter(cb => cb.checked).map(cb => cb.dataset.room);
-      if(checked.length === 0){
-        alert("Select at least one room to lock.");
-        return;
-      }
-      // lock each
-      checked.forEach(roomNo => lockRoom(roomNo, rq.newType));
-      container.innerHTML = "";
-      renderLockedCart();
-      addLog(`Admin locked ${checked.join(", ")} for ${state.globalLockDurationMins} mins.`);
-    });
-
-    // individual lock buttons
-    Array.from(listEl.querySelectorAll(".lock-single-btn")).forEach(btn => {
-      btn.addEventListener("click", () => {
-        const roomNo = btn.dataset.room;
-        lockRoom(roomNo, rq.newType);
-        container.innerHTML = "";
-        renderLockedCart();
-        addLog(`Admin locked ${roomNo} for ${state.globalLockDurationMins} mins.`);
-      });
-    });
-
-    // alternative suggestion (simple fallback)
-    el(`${modalId}-alt`).addEventListener("click", () => {
-      // show alternatives modal
-      showAltSuggestionsModal(reqType);
-    });
-  }
-
-  function showAltSuggestionsModal(originalType){
-    const container = el("modalsContainer");
-    const modalId = "modal-alt";
-    container.innerHTML = `
-      <div id="${modalId}" class="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
-        <div class="relative bg-white rounded-2xl p-6 shadow-2xl w-full max-w-xl">
-          <button id="${modalId}-close" class="absolute top-4 right-4 p-2 rounded bg-gray-100 hover:bg-gray-200"><i class="fas fa-times"></i></button>
-          <h3 class="text-lg font-semibold mb-2">Alternative Suggestions</h3>
-          <p class="text-xs text-gray-600 mb-3">Rooms similar to <strong>${originalType}</strong> (by price proximity)</p>
-          <div id="${modalId}-list" class="space-y-2"></div>
+        <div class="flex gap-3 pt-2">
+          <button id="lockConfirmBtn" class="flex-1 px-4 py-3 bg-orange-600 text-white font-medium rounded-lg hover:bg-orange-700 transition-colors">
+            <i class="fas fa-lock mr-2"></i>
+            Confirm & Lock
+          </button>
+          <button id="lockCancelBtn" class="flex-1 px-4 py-3 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors">
+            Cancel
+          </button>
         </div>
       </div>
-    `;
-    const listEl = el(`${modalId}-list`);
-    // find catalog price for originalType
-    const base = roomCatalog.find(rc => rc.type === originalType);
-    const alternatives = roomCatalog.filter(rc => rc.type !== originalType).sort((a,b) => Math.abs(a.price - base.price) - Math.abs(b.price - base.price));
-    alternatives.forEach(alt => {
-      const div = document.createElement("div");
-      div.className = "p-3 border rounded flex items-center justify-between";
-      div.innerHTML = `
-        <div>
-          <div class="font-medium">${alt.type}</div>
-          <div class="text-xs text-gray-500">₹${alt.price} / night</div>
-        </div>
-        <div class="flex items-center gap-2">
-          <button class="suggest-lock-btn px-3 py-1 bg-yellow-600 text-white rounded text-sm" data-type="${alt.type}">Search ${alt.type}</button>
-        </div>
-      `;
-      listEl.appendChild(div);
-    });
-    el(`${modalId}-close`).addEventListener("click", () => { container.innerHTML = ""; });
-    Array.from(listEl.querySelectorAll(".suggest-lock-btn")).forEach(btn => {
-      btn.addEventListener("click", () => {
-        // close alt modal and open search modal for that type (simulate by adding a temporary change into booking room)
-        container.innerHTML = "";
-        // For simplicity open a global search modal showing that type (not tied to a specific booking room)
-        openGlobalTypeSearchModal(btn.dataset.type);
-      });
-    });
-  }
+    </div>
+  `;
 
-  function openGlobalTypeSearchModal(type){
-    const container = el("modalsContainer");
-    const modalId = "modal-global-search-"+type;
-    container.innerHTML = `
-      <div id="${modalId}" class="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
-        <div class="relative bg-white rounded-2xl p-6 shadow-2xl w-full max-w-3xl">
-          <button id="${modalId}-close" class="absolute top-4 right-4 p-2 rounded bg-gray-100 hover:bg-gray-200"><i class="fas fa-times"></i></button>
-          <h3 class="text-lg font-semibold mb-2">Search Rooms — ${type}</h3>
-          <p class="text-xs text-gray-600 mb-4">Global search for available rooms of type <strong>${type}</strong>.</p>
-          <div id="${modalId}-list" class="grid grid-cols-1 gap-2 max-h-64 overflow-y-auto"></div>
-          <div class="mt-4 flex justify-end gap-2">
-            <button id="${modalId}-close2" class="px-3 py-2 border rounded">Close</button>
-          </div>
+  $("lockConfirmBtn").addEventListener("click", ()=> { mc.innerHTML = ""; onConfirm && onConfirm(); });
+  $("lockCancelBtn").addEventListener("click", ()=> mc.innerHTML = "");
+}
+
+function lockRoomsAndSendToCustomer(rooms, lockDuration) {
+  // Simulate locking rooms in database
+  const lockedUntil = new Date(Date.now() + lockDuration * 60 * 1000);
+  
+  // Lock rooms in inventory (simulate database update)
+  rooms.forEach(room => {
+    const invRoom = roomInventory.find(r => r.roomNo === room.roomNo);
+    if (invRoom) {
+      invRoom.available = false;
+      invRoom.lockedUntil = lockedUntil;
+      invRoom.lockedFor = booking.id;
+    }
+  });
+  
+  // Show success message
+  const roomCount = rooms.length;
+  showToast(`${roomCount} room(s) locked and sent to customer successfully! Redirecting...`, "success");
+  
+  // Redirect to bookings page after 2 seconds
+  setTimeout(() => {
+    window.location.href = '/Features/BookingManagement/Admin/Bookings/index.html';
+  }, 2000);
+}
+
+/* ============================
+   Confirm modal helper
+   ============================ */
+function showConfirmModal(title, message, onConfirm){
+  const mc = $("modalsContainer");
+  mc.innerHTML = `
+    <div class="fixed inset-0 z-70 flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+      <div class="relative bg-white rounded-2xl p-6 shadow max-w-md w-full">
+        <h3 class="text-lg font-semibold mb-2">${title}</h3>
+        <p class="text-sm text-gray-600 mb-4">${message}</p>
+        <div class="flex justify-end gap-3">
+          <button id="confirmCancel" class="px-4 py-2 border rounded">Cancel</button>
+          <button id="confirmOk" class="px-4 py-2 bg-indigo-600 text-white rounded">Confirm</button>
         </div>
       </div>
-    `;
-    const listEl = el(`${modalId}-list`);
-    const availableRooms = roomInventory.filter(rm => rm.type === type && rm.available && !state.lockedRooms[rm.roomNo]);
-    if(availableRooms.length === 0){
-      listEl.innerHTML = `<div class="p-4 text-sm text-gray-600">No rooms available of type <strong>${type}</strong>.</div>`;
-    } else {
-      availableRooms.forEach(rm => {
-        const div = document.createElement("div");
-        div.className = "p-3 border rounded flex items-center justify-between";
-        div.innerHTML = `
-          <div>
-            <div class="font-medium">${rm.roomNo}</div>
-            <div class="text-xs text-gray-500">${rm.type}</div>
-          </div>
-          <div>
-            <button class="lock-single-btn px-3 py-1 bg-gray-100 border rounded text-xs" data-room="${rm.roomNo}" data-type="${rm.type}"><i class="fas fa-lock mr-1"></i> Lock</button>
-          </div>
-        `;
-        listEl.appendChild(div);
-      });
-    }
-    el(`${modalId}-close`).addEventListener("click", ()=> container.innerHTML = "");
-    el(`${modalId}-close2`).addEventListener("click", ()=> container.innerHTML = "");
-    Array.from(listEl.querySelectorAll(".lock-single-btn")).forEach(btn => {
-      btn.addEventListener("click", ()=> {
-        const roomNo = btn.dataset.room;
-        const rtype = btn.dataset.type;
-        lockRoom(roomNo, rtype);
-        container.innerHTML = "";
-        renderLockedCart();
-        addLog(`Admin locked ${roomNo} (${rtype}) via alternative suggestion for ${state.globalLockDurationMins} mins.`);
-      });
-    });
+    </div>
+  `;
+  $("confirmCancel").addEventListener("click", ()=> mc.innerHTML = "");
+  $("confirmOk").addEventListener("click", ()=> { mc.innerHTML = ""; onConfirm && onConfirm(); });
+}
+
+/* ============================
+   Toast
+   ============================ */
+function showToast(msg, type="success"){
+  const t = $("toast");
+  t.classList.remove("bg-green-500","bg-red-500","bg-blue-500","bg-yellow-500");
+  t.classList.add(type==="success"?"bg-green-500":type==="error"?"bg-red-500":type==="info"?"bg-blue-500":"bg-yellow-500");
+  t.textContent = msg;
+  t.style.transform = 'translateY(0)';
+  t.style.opacity = '1';
+  setTimeout(()=> { t.style.transform = 'translateY(-24px)'; t.style.opacity='0'; }, 2600);
+}
+
+
+
+/* ============================
+   Tabs wiring
+   ============================ */
+function hookTabs(){
+  const detailsBtn = $("tab-details"), roomsBtn = $("tab-rooms");
+  const detailsPanel = $("panel-details"), roomsPanel = $("panel-rooms");
+  function switchTab(btn,panel){
+    [detailsBtn, roomsBtn].forEach(b=>{ b.classList.remove("tab-active"); b.classList.add("tab-inactive"); });
+    btn.classList.add("tab-active"); btn.classList.remove("tab-inactive");
+    [detailsPanel, roomsPanel].forEach(p=>p.classList.add("hidden"));
+    panel.classList.remove("hidden");
   }
+  detailsBtn.addEventListener("click", ()=> switchTab(detailsBtn,detailsPanel));
+  roomsBtn.addEventListener("click", ()=> switchTab(roomsBtn,roomsPanel));
+}
 
-  /* ---------------------------
-     Lock / Unlock logic
-     - lockRoom: marks in state.lockedRooms with expiresAt
-     - automatically starts global lock countdown if not started
-     - unlockRoom: removes from lockedRooms
-     - auto-unlock when expires
-     ----------------------------*/
-  function lockRoom(roomNo, type){
-    const inventoryItem = roomInventory.find(r => r.roomNo === roomNo);
-    if(!inventoryItem) return alert("Room not found");
-    if(!inventoryItem.available) return alert("Room currently unavailable");
-    if(state.lockedRooms[roomNo]) return alert("Room already locked");
-    const rate = roomCatalog.find(rc => rc.type === type)?.price || inventoryItem.price || 0;
-    const nights = nightsBetween(state.booking.newCheckIn, state.booking.newCheckOut) || 1;
+/* ============================
+   Init
+   ============================ */
+document.addEventListener("DOMContentLoaded", ()=> {
+  initUI();
+});
 
-    const now = Date.now();
-    const expiresAt = now + state.globalLockDurationMins * 60 * 1000;
-
-    state.lockedRooms[roomNo] = {
-      roomNo, type, rate, nights, lockedAt: now, expiresAt, lockedBy: "admin"
-    };
-
-    addLog(`Locked ${roomNo} (${type}) until ${new Date(expiresAt).toLocaleString()}.`);
-    // visually mark inventory item as locked (for UI searches)
-    // (we don't mutate inventory.available because a real system checks DB/redis; but mark it logically)
-    renderLockedCart();
-
-    // ensure lock timer is running
-    startLockCountdown();
-  }
-
-  function unlockRoom(roomNo, reason = "manual"){
-    if(!state.lockedRooms[roomNo]) return;
-    delete state.lockedRooms[roomNo];
-    addLog(`Unlocked ${roomNo} (${reason}).`);
-    renderLockedCart();
-  }
-
-  function unlockAllExpired(){
-    const now = Date.now();
-    const expired = Object.values(state.lockedRooms).filter(l => l.expiresAt <= now).map(l => l.roomNo);
-    expired.forEach(roomNo => {
-      unlockRoom(roomNo, "expired");
-    });
-  }
-
-  /* ---------------------------
-     Lock countdown UI
-     ----------------------------*/
-  function startLockCountdown(){
-    // clear previous
-    if(state.lockTimerInterval) clearInterval(state.lockTimerInterval);
-    state.lockTimerInterval = setInterval(() => {
-      // compute earliest expiresAt across lockedRooms
-      const lockEntries = Object.values(state.lockedRooms);
-      if(lockEntries.length === 0){
-        updateLockCountdownUI();
-        clearInterval(state.lockTimerInterval);
-        state.lockTimerInterval = null;
-        return;
-      }
-      const earliest = Math.min(...lockEntries.map(l => l.expiresAt));
-      const remMs = earliest - Date.now();
-      if(remMs <= 0){
-        unlockAllExpired();
-      }
-      updateLockCountdownUI();
-    }, 1000);
-    updateLockCountdownUI();
-  }
-
-  function updateLockCountdownUI(){
-    const lockEntries = Object.values(state.lockedRooms);
-    const elCountdown = el("lockCountdown");
-    if(lockEntries.length === 0){
-      elCountdown.textContent = "Not active";
-      return;
-    }
-    const earliest = Math.min(...lockEntries.map(l => l.expiresAt));
-    const remMs = Math.max(0, earliest - Date.now());
-    const mins = Math.floor(remMs / (60*1000));
-    const secs = Math.floor((remMs % (60*1000)) / 1000);
-    elCountdown.textContent = `${String(mins).padStart(2,"0")}:${String(secs).padStart(2,"0")} (expires earliest)`;
-  }
-
-  /* ---------------------------
-     Render Locked Cart
-     ----------------------------*/
-  function renderLockedCart(){
-    const tbody = el("lockedCartBody");
-    tbody.innerHTML = "";
-    let total = 0;
-    Object.values(state.lockedRooms).forEach(lock => {
-      const tr = document.createElement("tr");
-      const tot = lock.rate * lock.nights;
-      total += tot;
-      const expiresInMs = Math.max(0, lock.expiresAt - Date.now());
-      const mins = Math.floor(expiresInMs / (60*1000));
-      const secs = Math.floor((expiresInMs % (60*1000)) / 1000);
-      tr.innerHTML = `
-        <td class="px-3 py-2">${lock.roomNo}</td>
-        <td class="px-3 py-2">${lock.type}</td>
-        <td class="px-3 py-2 text-right">${fmtINR(lock.rate)}</td>
-        <td class="px-3 py-2 text-right">${lock.nights}</td>
-        <td class="px-3 py-2 text-right">${fmtINR(tot)}</td>
-        <td class="px-3 py-2 text-center">
-          <div class="flex flex-col items-center">
-            <button class="unlock-btn px-2 py-1 bg-gray-100 rounded text-xs" data-room="${lock.roomNo}">Unlock</button>
-            <div class="text-xs text-gray-500 mt-1">exp ${String(mins).padStart(2,"0")}:${String(secs).padStart(2,"0")}</div>
-          </div>
-        </td>
-      `;
-      tbody.appendChild(tr);
-    });
-
-    el("cartTotals").textContent = fmtINR(total);
-
-    // attach unlock handlers
-    Array.from(document.querySelectorAll(".unlock-btn")).forEach(b => {
-      b.addEventListener("click", () => {
-        const room = b.dataset.room;
-        unlockRoom(room, "admin-unlock");
-      });
-    });
-
-    // lock countdown state
-    if(Object.keys(state.lockedRooms).length > 0){
-      startLockCountdown();
-    } else {
-      updateLockCountdownUI();
-    }
-
-    // invoice recalculation
-    renderInvoiceTable();
-  }
-
-  /* ---------------------------
-     Invoice rendering (Tab 3)
-     - Only room-type + pricing
-     - invoice entries correspond to booking rooms; if a booking room change applied (based on lockedRooms or booking newType) we consider newPrice else oldPrice
-     - For prototype, we compute refund = oldPrice * nights (if booking changed) * refundPercent simulated
-     ----------------------------*/
-  function renderInvoiceTable(){
-    const tbody = el("invoiceTableBody");
-    tbody.innerHTML = "";
-    let refundTotal = 0, newTotal = 0;
-
-    // For demo, refundPercent: simple fixed rules based on days before check-in (not robust)
-    function getRefundPercent(){
-      // simple heuristic: if request reschedule far enough -> 0.9 else 0.5 etc
-      return 0.5; // placeholder
-    }
-    const refundPercent = getRefundPercent();
-    const nights = nightsBetween(state.booking.newCheckIn, state.booking.newCheckOut) || 1;
-
-    // Build invoice entries based on booking.rooms
-    state.booking.rooms.forEach(r => {
-      // decide final applied price: if admin locked a room and that locked room's type equals r.newType or admin applied alternative -> treat newPrice = type price from lockedRooms mapping or fallback to r.newPrice
-      // For simplicity, if r.oldType !== r.newType treat as change and compute refund & new price
-      const changed = r.oldType !== r.newType;
-      const oldSub = r.oldPrice * nights;
-      const refund = Math.round(oldSub * refundPercent);
-      const newSub = r.newPrice * nights;
-      const net = newSub - refund;
-      refundTotal += refund;
-      newTotal += newSub;
-
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td class="px-3 py-2">Room #${r.id}</td>
-        <td class="px-3 py-2">${r.oldType}</td>
-        <td class="px-3 py-2 ${changed ? 'text-blue-600 font-semibold' : ''}">${r.newType}</td>
-        <td class="px-3 py-2 text-right text-green-600">${fmtINR(refund)}</td>
-        <td class="px-3 py-2 text-right text-blue-600">${fmtINR(newSub)}</td>
-        <td class="px-3 py-2 text-right ${net>=0? 'text-red-600 font-semibold':'text-green-600'}">${net>=0? '+' : ''}${fmtINR(net)}</td>
-      `;
-      tbody.appendChild(tr);
-    });
-
-    const netTotal = newTotal - refundTotal;
-    el("invoiceRefundTotal").textContent = fmtINR(refundTotal);
-    el("invoiceNewTotal").textContent = fmtINR(newTotal);
-    el("invoiceNetTotal").textContent = (netTotal >= 0 ? '+' : '') + fmtINR(netTotal);
-  }
-
-  /* ---------------------------
-     Logs
-     ----------------------------*/
-  function renderLogs(){
-    const ul = el("logsList");
-    ul.innerHTML = "";
-    state.logs.forEach(l => {
-      const li = document.createElement("li");
-      li.textContent = `[${new Date(l.ts).toLocaleString()}] ${l.text}`;
-      ul.appendChild(li);
-    });
-  }
-
-  /* ---------------------------
-     Tabs wiring
-     ----------------------------*/
-  function hookTabs(){
-    const detailsBtn = el("tab-details"), roomsBtn = el("tab-rooms"), invoiceBtn = el("tab-invoice");
-    const detailsPanel = el("panel-details"), roomsPanel = el("panel-rooms"), invoicePanel = el("panel-invoice");
-
-    function switchTab(btn, panel){
-      [detailsBtn, roomsBtn, invoiceBtn].forEach(b => { b.classList.remove("tab-active"); b.classList.add("tab-inactive"); });
-      btn.classList.add("tab-active");
-      btn.classList.remove("tab-inactive");
-      [detailsPanel, roomsPanel, invoicePanel].forEach(p => p.classList.add("hidden"));
-      panel.classList.remove("hidden");
-    }
-
-    detailsBtn.addEventListener("click", () => switchTab(detailsBtn, detailsPanel));
-    roomsBtn.addEventListener("click", () => switchTab(roomsBtn, roomsPanel));
-    invoiceBtn.addEventListener("click", () => { renderInvoiceTable(); switchTab(invoiceBtn, invoicePanel); });
-  }
-
-  /* ---------------------------
-     Preset duration and custom input
-     ----------------------------*/
-  function hookPresets(){
-    Array.from(document.querySelectorAll(".preset-btn")).forEach(btn => {
-      btn.addEventListener("click", () => {
-        Array.from(document.querySelectorAll(".preset-btn")).forEach(b => b.classList.remove("preset-active"));
-        btn.classList.add("preset-active");
-        const mins = Number(btn.dataset.mins);
-        state.globalLockDurationMins = mins || 30;
-        addLog(`Global lock duration set to ${state.globalLockDurationMins} minutes.`);
-      });
-    });
-    // custom input: map hh:mm to minutes
-    el("customLockInput").addEventListener("change", (e) => {
-      // input type=time gives hh:mm, convert to minutes
-      const val = e.target.value;
-      if(!val) return;
-      const [hh, mm] = val.split(":").map(Number);
-      const mins = hh*60 + mm;
-      if(mins > 0){
-        state.globalLockDurationMins = mins;
-        Array.from(document.querySelectorAll(".preset-btn")).forEach(b => b.classList.remove("preset-active"));
-        addLog(`Global lock duration set to custom ${mins} minutes.`);
-      }
-    });
-  }
-
-  /* ---------------------------
-     Send invoice flow
-     - When send: set adminOffer with expiresAt = earliest lock expiry (or now + globalLockDuration)
-     - If no locked rooms, warn
-     - When sent: start countdown to expiry shown in globalOfferStatus
-     - Simulate customer accepts/rejects via buttons in logs (for testing)
-     ----------------------------*/
-  function hookSendInvoice(){
-    el("sendInvoiceBtn").addEventListener("click", () => {
-      // need at least one locked room or if no changes, sending invoice for "no changes" still possible
-      // If booking has changes but no locked rooms -> warn
-      const hasChanges = state.booking.rooms.some(r => r.oldType !== r.newType || r.oldAdults !== r.newAdults || r.oldChildren !== r.newChildren);
-      const hasLocked = Object.keys(state.lockedRooms).length > 0;
-      if(hasChanges && !hasLocked){
-        if(!confirm("No rooms locked. Are you sure you want to send invoice without locking rooms?")) return;
-      }
-      // Compute expiration: earliest locked room expiry or now + globalLockDuration
-      let expiresAt = Date.now() + state.globalLockDurationMins * 60 * 1000;
-      const locked = Object.values(state.lockedRooms);
-      if(locked.length > 0) expiresAt = Math.min(...locked.map(l => l.expiresAt));
-
-      state.adminOffer = {
-        id: "OFF-" + Date.now(),
-        sentAt: Date.now(),
-        expiresAt,
-        status: "pending",
-        remarks: el("adminRemarks").value || ""
-      };
-
-      addLog(`Invoice ${state.adminOffer.id} sent to customer. Expires at ${new Date(expiresAt).toLocaleString()}.`);
-      // start offer countdown
-      startOfferCountdown();
-      // update invoice status UI
-      updateOfferUI();
-
-      // simulate notifying customer (in real: send push/email)
-      alert("Invoice sent (demo). Customer has the remaining lock time to accept.");
-    });
-  }
-
-  function startOfferCountdown(){
-    if(state.offerCountdownInterval) clearInterval(state.offerCountdownInterval);
-    state.offerCountdownInterval = setInterval(() => {
-      if(!state.adminOffer) { clearInterval(state.offerCountdownInterval); return; }
-      const rem = state.adminOffer.expiresAt - Date.now();
-      if(rem <= 0){
-        // expired
-        state.adminOffer.status = "expired";
-        addLog(`Invoice ${state.adminOffer.id} expired.`);
-        updateOfferUI();
-        clearInterval(state.offerCountdownInterval);
-        state.offerCountdownInterval = null;
-        // auto-unlock rooms that were associated with offer
-        // In our design lockedRooms are global; if offer expired, all locked rooms remain unlocked
-        Object.keys(state.lockedRooms).forEach(roomNo => unlockRoom(roomNo, "offer-expired"));
-        return;
-      }
-      updateOfferUI();
-    }, 1000);
-    updateOfferUI();
-  }
-
-  function updateOfferUI(){
-    const statusEl = el("globalOfferStatus");
-    if(!state.adminOffer){
-      statusEl.textContent = "";
-      return;
-    }
-    const remMs = Math.max(0, state.adminOffer.expiresAt - Date.now());
-    const mins = Math.floor(remMs / (60*1000));
-    const secs = Math.floor((remMs % (60*1000)) / 1000);
-    statusEl.textContent = `Offer ${state.adminOffer.id} • ${state.adminOffer.status.toUpperCase()} • Expires in ${String(mins).padStart(2,"0")}:${String(secs).padStart(2,"0")}`;
-    // If pending, offer actions for demo: accept or reject
-    if(state.adminOffer.status === "pending"){
-      // create small accept/reject demo controls in the header (only for prototype)
-      if(!el("offerActions")){
-        const header = document.querySelector(".bg-white.rounded-2xl.p-4");
-        const div = document.createElement("div");
-        div.id = "offerActions";
-        div.className = "ml-4 flex items-center gap-2";
-        div.innerHTML = `
-          <button id="demoAccept" class="px-2 py-1 bg-green-600 text-white rounded text-xs">Demo Accept</button>
-          <button id="demoReject" class="px-2 py-1 bg-red-500 text-white rounded text-xs">Demo Reject</button>
-        `;
-        header.appendChild(div);
-        el("demoAccept").addEventListener("click", demoAcceptOffer);
-        el("demoReject").addEventListener("click", demoRejectOffer);
-      }
-    } else {
-      // remove demo actions if exists
-      const oa = el("offerActions");
-      if(oa) oa.remove();
-    }
-  }
-
-  function demoAcceptOffer(){
-    if(!state.adminOffer) return;
-    state.adminOffer.status = "accepted";
-    addLog(`Customer accepted invoice ${state.adminOffer.id}.`);
-    // On acceptance: apply changes to booking (for demo we mark booking rooms newType applied, and schedule refund)
-    applyOfferAcceptance();
-    updateOfferUI();
-    // clear countdown
-    if(state.offerCountdownInterval) { clearInterval(state.offerCountdownInterval); state.offerCountdownInterval = null; }
-    // remove locks (consider them confirmed -> they remain booked; for prototype we remove from lockedRooms to allow new admin actions)
-    Object.keys(state.lockedRooms).forEach(rn => delete state.lockedRooms[rn]);
-    renderLockedCart();
-    // simulate refund trigger & payment collection
-    addLog(`Refund scheduled (T+2 days) for customer. Payment capture attempted for extra charges.`);
-    alert("Customer accepted — demo: booking updated, refund scheduled (T+2 days).");
-  }
-
-  function demoRejectOffer(){
-    if(!state.adminOffer) return;
-    state.adminOffer.status = "rejected";
-    addLog(`Customer rejected invoice ${state.adminOffer.id}.`);
-    // auto-unlock rooms
-    Object.keys(state.lockedRooms).forEach(roomNo => unlockRoom(roomNo, "offer-rejected"));
-    updateOfferUI();
-    if(state.offerCountdownInterval) { clearInterval(state.offerCountdownInterval); state.offerCountdownInterval = null; }
-    alert("Customer rejected the offer. Rooms unlocked.");
-  }
-
-  function applyOfferAcceptance(){
-    // For each booking room, if oldType != newType, set oldType = newType and oldPrice = newPrice (applied)
-    state.booking.rooms.forEach(r => {
-      if(r.oldType !== r.newType || r.oldAdults !== r.newAdults || r.oldChildren !== r.newChildren){
-        addLog(`Applied change for Room #${r.id}: ${r.oldType} -> ${r.newType}`);
-        r.oldType = r.newType;
-        r.oldAdults = r.newAdults;
-        r.oldChildren = r.newChildren;
-        r.oldPrice = r.newPrice;
-      }
-    });
-    renderComparisonTable();
-    renderInvoiceTable();
-  }
-
-  /* ---------------------------
-     Download state / invoice helpers
-     ----------------------------*/
-  function hookDownloadState(){
-    el("downloadStateBtn").addEventListener("click", () => {
-      const data = {
-        booking: state.booking,
-        lockedRooms: state.lockedRooms,
-        adminOffer: state.adminOffer,
-        logs: state.logs
-      };
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${state.booking.id}_admin_state.json`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    });
-  }
-
-  function hookDownloadInvoice(){
-    el("downloadInvoiceBtn").addEventListener("click", () => {
-      const payload = buildInvoicePayload();
-      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${state.booking.id}_invoice.json`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-      addLog(`Invoice JSON downloaded (${payload.invoiceId})`);
-    });
-  }
-
-  function buildInvoicePayload(){
-    const invoiceId = "INV-" + Date.now();
-    const nights = nightsBetween(state.booking.newCheckIn, state.booking.newCheckOut) || 1;
-    const items = state.booking.rooms.map(r => {
-      // compute refund simple
-      const refund = Math.round(r.oldPrice * nights * 0.5); // demo percent
-      const newPrice = r.newPrice * nights;
-      const net = newPrice - refund;
-      return {
-        roomId: r.id,
-        oldType: r.oldType,
-        newType: r.newType,
-        refund, newPrice, net
-      };
-    });
-    const refundTotal = items.reduce((a,b)=>a+b.refund,0);
-    const newTotal = items.reduce((a,b)=>a+b.newPrice,0);
-    const netTotal = newTotal - refundTotal;
-    return {
-      invoiceId,
-      bookingId: state.booking.id,
-      nights,
-      issuedAt: new Date().toISOString(),
-      items,
-      totals: { refundTotal, newTotal, netTotal },
-      remarks: el("adminRemarks").value || ""
-    };
-  }
-
-  /* ---------------------------
-     Hook: Download / Demo / Back
-     ----------------------------*/
-  function hookBack(){
-    el("backBtn").addEventListener("click", () => {
-      if(confirm("Go back to bookings list? (demo)")) {
-        // For demo, just alert
-        alert("Returning to bookings list (demo).");
-      }
-    });
-  }
-
-  /* ---------------------------
-     Periodic housekeeping: expire locks
-     ----------------------------*/
-  setInterval(() => {
-    // auto-unlock expired
-    unlockAllExpired();
-  }, 5000);
-
-  /* ---------------------------
-     Init
-     ----------------------------*/
-  init();
-
-  </script>
-
+</script>
 </body>
 </html>
