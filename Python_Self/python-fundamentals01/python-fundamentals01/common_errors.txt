@@ -1,0 +1,24 @@
+| Category              | Exception Name        | When It's Raised (Example)               |
+| --------------------- | --------------------- | ---------------------------------------- |
+| **Arithmetic Errors** | `ZeroDivisionError`   | Division by zero → `10 / 0`              |
+|                       | `OverflowError`       | Too large for float                      |
+|                       | `FloatingPointError`  | Floating point error (rare)              |
+| **Type Errors**       | `TypeError`           | Wrong type used → `"a" + 1`              |
+|                       | `ValueError`          | Correct type, wrong value → `int("abc")` |
+|                       | `IndexError`          | List index out of range                  |
+|                       | `KeyError`            | Missing dict key → `dict["not-there"]`   |
+|                       | `AttributeError`      | Missing method/attribute → `None.foo()`  |
+| **Name & Scope**      | `NameError`           | Using a variable that doesn't exist      |
+|                       | `UnboundLocalError`   | Local variable used before assignment    |
+| **Import Errors**     | `ImportError`         | Module not found                         |
+|                       | `ModuleNotFoundError` | Specific type of ImportError             |
+| **IO Errors**         | `FileNotFoundError`   | File doesn’t exist                       |
+|                       | `PermissionError`     | No permission to read/write              |
+|                       | `IsADirectoryError`   | Expected a file but got a directory      |
+|                       | `IOError`             | General input/output error               |
+| **Assertion**         | `AssertionError`      | When `assert` fails                      |
+| **Custom & Base**     | `Exception`           | Base class of all exceptions             |
+|                       | `RuntimeError`        | Generic runtime error                    |
+|                       | `NotImplementedError` | Method not yet written                   |
+|                       | `StopIteration`       | Raised when iterators are done           |
+|                       | `KeyboardInterrupt`   | Ctrl+C pressed in terminal               |
