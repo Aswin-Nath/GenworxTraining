@@ -1,0 +1,13 @@
+syntax = "proto3";
+package server_streaming;
+service NumberService {
+  // Returns a stream of numbers in the given range  
+  rpc GetNumbers (Range) returns (stream Number) {}
+}
+message Range {
+  int32 start = 1;
+  int32 end = 2;
+}
+message Number {
+  int32 value = 1;
+}

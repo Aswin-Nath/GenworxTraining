@@ -1,0 +1,129 @@
+syntax = "proto3";
+
+package microservices;
+
+// User Service - Manages user data and authentication
+service UserService {
+  rpc GetUser(GetUserRequest) returns (UserResponse) {}
+  rpc CreateUser(CreateUserRequest) returns (UserResponse) {}
+  rpc ValidateUser(ValidateUserRequest) returns (ValidateUserResponse) {}
+}
+
+// Inventory Service - Manages product inventory
+service InventoryService {
+  rpc GetProduct(GetProductRequest) returns (ProductResponse) {}
+  rpc CheckStock(CheckStockRequest) returns (StockResponse) {}
+  rpc UpdateStock(UpdateStockRequest) returns (StockResponse) {}
+  rpc ListProducts(ListProductsRequest) returns (ProductListResponse) {}
+}
+
+// Order Service - Manages orders and coordinates with other services
+service OrderService {
+  rpc CreateOrder(CreateOrderRequest) returns (OrderResponse) {}
+  rpc GetOrder(GetOrderRequest) returns (OrderResponse) {}
+  rpc ListUserOrders(ListUserOrdersRequest) returns (OrderListResponse) {}
+}
+
+// User related messages
+message GetUserRequest {
+  int32 user_id = 1;
+}
+
+message CreateUserRequest {
+  string name = 1;
+  string email = 2;
+}
+
+message ValidateUserRequest {
+  int32 user_id = 1;
+}
+
+message UserResponse {
+  int32 user_id = 1;
+  string name = 2;
+  string email = 3;
+  bool success = 4;
+  string message = 5;
+}
+
+message ValidateUserResponse {
+  bool is_valid = 1;
+  string message = 2;
+}
+
+// Product and Inventory related messages
+message GetProductRequest {
+  int32 product_id = 1;
+}
+
+message CheckStockRequest {
+  int32 product_id = 1;
+  int32 quantity = 2;
+}
+
+message UpdateStockRequest {
+  int32 product_id = 1;
+  int32 quantity_change = 2; // positive for add, negative for subtract
+}
+
+message ListProductsRequest {
+  // Empty for now, could add filters later
+}
+
+message ProductResponse {
+  int32 product_id = 1;
+  string name = 2;
+  double price = 3;
+  int32 stock_quantity = 4;
+  bool success = 5;
+  string message = 6;
+}
+
+message StockResponse {
+  int32 product_id = 1;
+  int32 current_stock = 2;
+  bool available = 3;
+  bool success = 4;
+  string message = 5;
+}
+
+message ProductListResponse {
+  repeated ProductResponse products = 1;
+  bool success = 2;
+  string message = 3;
+}
+
+// Order related messages
+message CreateOrderRequest {
+  int32 user_id = 1;
+  repeated OrderItem items = 2;
+}
+
+message OrderItem {
+  int32 product_id = 1;
+  int32 quantity = 2;
+}
+
+message GetOrderRequest {
+  int32 order_id = 1;
+}
+
+message ListUserOrdersRequest {
+  int32 user_id = 1;
+}
+
+message OrderResponse {
+  int32 order_id = 1;
+  int32 user_id = 2;
+  repeated OrderItem items = 3;
+  double total_amount = 4;
+  string status = 5;
+  bool success = 6;
+  string message = 7;
+}
+
+message OrderListResponse {
+  repeated OrderResponse orders = 1;
+  bool success = 2;
+  string message = 3;
+}

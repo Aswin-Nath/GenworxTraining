@@ -1,0 +1,10 @@
+syntax = "proto3";
+package bi_streaming;
+service Chat {
+  // Bidirectional chat stream  
+  rpc StreamChat (stream Message) returns (stream Message) {}
+}
+message Message {
+  string text = 1;
+  int64 timestamp = 2;
+}
