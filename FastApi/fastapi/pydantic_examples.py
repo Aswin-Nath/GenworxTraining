@@ -111,7 +111,7 @@ print(f"User Data: {user.model_dump()}")
 class Product(BaseModel):
     name: Annotated[str, Field(min_length=1, max_length=100, description="Product name")]
     price: Annotated[float, Field(gt=0, description="Product price must be positive")]
-    quantity: Annotated[int2, Field(ge=0, default=0, description="Available quantity")]
+    quantity: Annotated[int, Field(ge=0, default=0, description="Available quantity")]
     description: Optional[str] = Field(None, max_length=500)
     tags: List[str] = Field(default_factory=list)
     
@@ -188,7 +188,6 @@ class UserAccount(BaseModel):
     status: Status = Status.PENDING
     created_at: datetime = Field(default_factory=datetime.now)
     profile_url: Optional[HttpUrl] = None
-    
     model_config = ConfigDict(use_enum_values=True)
 
 # 4. NESTED MODELS
