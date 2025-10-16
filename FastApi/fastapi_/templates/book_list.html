@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+
+</head>
+<body>
+    {% if books|length==0 %}
+    No Books Available
+    {% else %}
+    {% for book in books %}
+    {{book.title}} {{book.author}} {{book.year}}
+    {% endfor %}
+    {% endif %}
+</body>
+</html>
