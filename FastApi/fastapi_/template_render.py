@@ -1,16 +1,18 @@
-from fastapi import FastAPI,Request,HTTPException
+from fastapi import FastAPI,Request,HTTPException,Form
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from routes.books.dashboard import router
 import contextvars
-from routes.books.book import data
+from routes.books.book import data, book_router
 
 
 request_var=contextvars.ContextVar("request",default=None)
 
 app=FastAPI()
+# Include templating router BEFORE the books API router to prevent path conflicts with /books/{book_id}
 app.include_router(router)
+app.include_router(book_router, prefix="/books", tags=["Books"])
 app.mount("/static",StaticFiles(directory="static"),name="static")
 templates=Jinja2Templates(directory="templates")
 templates.env.globals["get_request"] = lambda: request_var.get()
@@ -42,10 +44,30 @@ def hello_world(request:Request):
 def greet_user(request:Request,username:str):
     return templates.TemplateResponse("greet.html",{"request":request,"name":username})
 
-@app.get("/books")
+@app.get("/books/list")
 def display_books(request:Request):
     return templates.TemplateResponse("book_list.html",{"request":request,"books":data})
 
 @app.get("/about")
 def display_about(request:Request):
     return templates.TemplateResponse("about.html",{"request":request})
+
+
+@app.get("/add-book", response_class=HTMLResponse)
+def add_book_form(request: Request):
+    return templates.TemplateResponse("add_book.html", {"request": request})
+
+
+@app.post("/add-book", response_class=HTMLResponse)
+def add_book_submit(
+    request: Request,
+    title: str = Form(...),
+    author: str = Form(...),
+    year: int = Form(...),
+):
+    new_id = max([b.get("id", 0) for b in data] or [0]) + 1
+    data.append({"id": new_id, "title": title, "author": author, "year": year})
+    return templates.TemplateResponse(
+        "confirm_book.html",
+        {"request": request, "title": title, "author": author, "year": year, "id": new_id},
+    )

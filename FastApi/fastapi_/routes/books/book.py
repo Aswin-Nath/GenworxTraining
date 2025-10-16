@@ -28,7 +28,7 @@ def get_book_by_author(author:str):
     else:
         return {"message":"Books not found","Books":[]}
 
-@book_router.get("/{book_id}")
+@book_router.get("/{book_id:int}")
 def get_book_by_id(book_id:int):
     for book in data:
         if book["id"]==book_id:

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Add Book</title>
+	<link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+	<style>
+		form { max-width: 480px; margin: 2rem auto; display: grid; gap: .75rem; }
+		label { font-weight: 600; }
+		input { padding: .5rem; }
+		button { padding: .5rem 1rem; cursor: pointer; }
+	</style>
+	</head>
+<body>
+	<h1 style="text-align:center;">Add a new book</h1>
+	<form action="{{ url_for('add_book_submit') }}" method="post">
+		<div>
+			<label for="title">Title</label>
+			<input type="text" id="title" name="title" required minlength="1">
+		</div>
+		<div>
+			<label for="author">Author</label>
+			<input type="text" id="author" name="author" required minlength="1">
+		</div>
+		<div>
+			<label for="year">Year</label>
+			<input type="number" id="year" name="year" required min="0">
+		</div>
+		<button type="submit">Submit</button>
+	</form>
+	<p style="text-align:center;"><a href="{{ url_for('display_books') }}">Back to books</a></p>
+</body>
+</html>
