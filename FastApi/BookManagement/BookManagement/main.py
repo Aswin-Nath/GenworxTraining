@@ -1,9 +1,9 @@
 # from fastapi import FastAPI
 # from fastapi
 from fastapi import FastAPI
-from routers.author_router import author_router
-from routers.book_router import book_router
-from routers.borrow_router import borrow_router
+from app.routers.author_router import author_router
+from app.routers.book_router import book_router
+from app.routers.borrow_router import borrow_router
 app=FastAPI()
 
 app.include_router(author_router,prefix="/authors",tags=["Authors"])
