@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES6",                // JS version to output
+    "module": "commonjs",           // Module system
+    "rootDir": "./src",             // Where TS source files live
+    "outDir": "./dist",             // Where compiled JS should go
+    "strict": true,                 // (optional) enable all type checks
+    "esModuleInterop": true         // (optional) for import/export compatibility
+  },
+  "include": ["src"]                // Compile everything inside /src
+}
