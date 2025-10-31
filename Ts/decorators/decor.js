@@ -1,3 +1,10 @@
+var __runInitializers = (this && this.__runInitializers) || function (thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
 var __esDecorate = (this && this.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
     function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
     var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
@@ -25,38 +32,35 @@ var __esDecorate = (this && this.__esDecorate) || function (ctor, descriptorIn, 
     if (target) Object.defineProperty(target, contextIn.name, descriptor);
     done = true;
 };
-var __runInitializers = (this && this.__runInitializers) || function (thisArg, initializers, value) {
-    var useValue = arguments.length > 2;
-    for (var i = 0; i < initializers.length; i++) {
-        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
-    }
-    return useValue ? value : void 0;
-};
-var __setFunctionName = (this && this.__setFunctionName) || function (f, name, prefix) {
-    if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
-    return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
-};
-function Logger(constructor) {
-    console.log("Class Created:", constructor.name);
+// @experimentalDecorators
+function first() {
+    console.log("first(): factory evaluated");
+    return function (target, propertyKey, descriptor) {
+        console.log("first(): called");
+    };
 }
-var Person = function () {
-    var _classDecorators = [Logger];
-    var _classDescriptor;
-    var _classExtraInitializers = [];
-    var _classThis;
-    var Person = _classThis = /** @class */ (function () {
-        function Person_1(name) {
-            this.name = name;
-        }
-        return Person_1;
-    }());
-    __setFunctionName(_classThis, "Person");
-    (function () {
-        var _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : void 0;
-        __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
-        Person = _classThis = _classDescriptor.value;
-        if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
-        __runInitializers(_classThis, _classExtraInitializers);
-    })();
-    return Person = _classThis;
+function second() {
+    console.log("second(): factory evaluated");
+    return function (target, propertyKey, descriptor) {
+        console.log("second(): called");
+    };
+}
+var ExampleClass = function () {
+    var _a;
+    var _instanceExtraInitializers = [];
+    var _method_decorators;
+    return _a = /** @class */ (function () {
+            function ExampleClass() {
+                __runInitializers(this, _instanceExtraInitializers);
+            }
+            ExampleClass.prototype.method = function () { };
+            return ExampleClass;
+        }()),
+        (function () {
+            var _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : void 0;
+            _method_decorators = [first(), second()];
+            __esDecorate(_a, null, _method_decorators, { kind: "method", name: "method", static: false, private: false, access: { has: function (obj) { return "method" in obj; }, get: function (obj) { return obj.method; } }, metadata: _metadata }, null, _instanceExtraInitializers);
+            if (_metadata) Object.defineProperty(_a, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        })(),
+        _a;
 }();
